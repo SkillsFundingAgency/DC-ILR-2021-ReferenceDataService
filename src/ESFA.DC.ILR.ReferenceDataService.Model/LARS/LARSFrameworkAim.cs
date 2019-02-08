@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
@@ -10,12 +11,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public int PwayCode { get; set; }
 
-        public string LearnAimRef { get; set; }
-
         public int? FrameworkComponentType { get; set; }
 
         public DateTime EffectiveFrom { get; set; }
 
         public DateTime? EffectiveTo { get; set; }
+
+        public List<LARSFramework> LARSFrameworks { get; set; }
+
+        public List<LARSFrameworkApprenticeshipFunding> LARSFrameworkApprenticeshipFundings { get; set; }
     }
 }

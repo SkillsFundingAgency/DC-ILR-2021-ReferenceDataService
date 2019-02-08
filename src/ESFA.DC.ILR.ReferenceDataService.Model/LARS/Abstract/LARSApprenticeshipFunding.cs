@@ -4,14 +4,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS.Abstract
 {
     public class LARSApprenticeshipFunding
     {
-        public int ApprenticeshipCode { get; set; }
-
-        public string ApprenticeshipType { get; set; }
-
-        public int ProgType { get; set; }
-
-        public int? PwayCode { get; set; }
-
         public string FundingCategory { get; set; }
 
         public DateTime EffectiveFrom { get; set; }
