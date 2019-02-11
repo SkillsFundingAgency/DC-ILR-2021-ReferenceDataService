@@ -1,13 +1,9 @@
-﻿using System;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
-    public class LARSAnnualValue
+    public class LARSAnnualValue : AbstractTimeBoundedEntity
     {
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
-
         public int? BasicSkills { get; set; }
 
         public int? BasicSkillsType { get; set; }

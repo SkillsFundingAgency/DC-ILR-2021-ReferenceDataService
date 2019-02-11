@@ -1,14 +1,10 @@
-﻿using System;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS.Abstract
 {
-    public class LARSApprenticeshipFunding
+    public class LARSApprenticeshipFunding : AbstractTimeBoundedEntity
     {
         public string FundingCategory { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
 
         public int? BandNumber { get; set; }
 

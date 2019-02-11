@@ -1,8 +1,9 @@
 ﻿using System;
+using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
 {
-    public class ONSData
+    public class ONSData : AbstractTimeBoundedEntity
     {
        public DateTime? Termination { get; set; }
 
@@ -11,10 +12,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
         public string Lep1 { get; set; }
 
         public string Lep2 { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
 
         public string Nuts { get; set; }
     }

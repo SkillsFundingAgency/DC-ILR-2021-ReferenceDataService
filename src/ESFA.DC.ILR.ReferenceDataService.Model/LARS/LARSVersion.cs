@@ -2,6 +2,6 @@
 {
     public class LARSVersion
     {
-        public string LARSCurrentVersion { get; set; }
+        public string Version { get; set; }
     }
 }
