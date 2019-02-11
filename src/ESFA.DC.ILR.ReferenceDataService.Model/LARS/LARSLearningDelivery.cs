@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
@@ -41,5 +42,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
         public string AwardOrgCode { get; set; }
 
         public int? EFACOFType { get; set; }
+
+        public List<LARSAnnualValue> LARSAnnualValues { get; set; }
+
+        public List<LARSCareerLearningPilot> LARSCareerLearningPilots { get; set; }
+
+        public List<LARSFrameworkAim> LARSFrameworkAims { get; set; }
+
+        public List<LARSFunding> LARSFundings { get; set; }
+
+        public List<LARSLearningDeliveryCategory> LARSLearningDeliveryCategories { get; set; }
+
+        public List<LARSValidity> LARSValidities { get; set; }
     }
 }

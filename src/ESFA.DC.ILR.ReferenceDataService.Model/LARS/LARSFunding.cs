@@ -6,8 +6,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
     public class LARSFunding
     {
-        public string LearnAimRef { get; set; }
-
         public string FundingCategory { get; set; }
 
         public DateTime EffectiveFrom { get; set; }

@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.ValidationService.Data.External.LARS.Interface
+namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
     public class LARSStandardFunding
     {
-        public int StandardCode { get; set; }
-
         public string FundingCategory { get; set; }
 
         public DateTime EffectiveFrom { get; set; }

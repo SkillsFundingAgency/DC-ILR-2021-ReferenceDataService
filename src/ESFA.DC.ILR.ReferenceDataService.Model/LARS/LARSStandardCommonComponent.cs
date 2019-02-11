@@ -8,8 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
     {
         public int CommonComponent { get; set; }
 
-        public int StandardCode { get; set; }
-
         public DateTime EffectiveFrom { get; set; }
 
         public DateTime? EffectiveTo { get; set; }
