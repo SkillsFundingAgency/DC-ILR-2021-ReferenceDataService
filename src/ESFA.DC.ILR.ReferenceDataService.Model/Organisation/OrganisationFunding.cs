@@ -1,15 +1,9 @@
-﻿using System;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisation
 {
-    public class OrganisationFunding
+    public class OrganisationFunding : AbstractTimeBoundedEntity
     {
-        public long UKPRN { get; set; }
-
-        public DateTime OrgFundEffectiveFrom { get; set; }
-
-        public DateTime? OrgFundEffectiveTo { get; set; }
-
         public string OrgFundFactor { get; set; }
 
         public string OrgFundFactType { get; set; }

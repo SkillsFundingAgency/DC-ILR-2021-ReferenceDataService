@@ -1,13 +1,9 @@
-﻿using System;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
 {
-    public class CareerLearningPilot
+    public class CareerLearningPilot : AbstractTimeBoundedEntity
     {
         public string AreaCode { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
     }
 }

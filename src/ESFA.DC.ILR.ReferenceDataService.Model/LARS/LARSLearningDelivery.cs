@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
-    public class LARSLearningDelivery
+    public class LARSLearningDelivery : AbstractTimeBoundedEntity
     {
         public string LearnAimRef { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
 
         public string LearnAimRefType { get; set; }
 

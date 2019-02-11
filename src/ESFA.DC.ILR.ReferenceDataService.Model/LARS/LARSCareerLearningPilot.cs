@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
-    public class LARSCareerLearningPilot
+    public class LARSCareerLearningPilot : AbstractTimeBoundedEntity
     {
         public string AreaCode { get; set; }
 
         public decimal? SubsidyRate { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
     }
 }

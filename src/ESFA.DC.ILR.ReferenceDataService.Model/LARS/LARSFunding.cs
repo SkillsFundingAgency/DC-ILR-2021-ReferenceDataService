@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
-    public class LARSFunding
+    public class LARSFunding : AbstractTimeBoundedEntity
     {
         public string FundingCategory { get; set; }
-
-        public DateTime EffectiveFrom { get; set; }
-
-        public DateTime? EffectiveTo { get; set; }
 
         public decimal? RateUnWeighted { get; set; }
 
