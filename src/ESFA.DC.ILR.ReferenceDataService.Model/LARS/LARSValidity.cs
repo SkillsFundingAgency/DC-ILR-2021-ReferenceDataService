@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
     {
         public string ValidityCategory { get; set; }
 
-        public DateTime? StartDate => EffectiveFrom;
+        public DateTime StartDate => EffectiveFrom;
 
         public DateTime? LastNewStartDate { get; set; }
 
