@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Employers
 {
-    public class LargeEmployer : AbstractTimeBoundedEntity
+    public class LargeEmployerEffectiveDates : AbstractTimeBoundedEntity
     {
     }
 }

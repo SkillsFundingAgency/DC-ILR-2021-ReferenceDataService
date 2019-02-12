@@ -8,6 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Employers
 
         public bool IsLargeEmployer { get; set; }
 
-        public List<LargeEmployer> LargeEmployers { get; set; }
+        public List<LargeEmployerEffectiveDates> LargeEmployerEffectiveDates { get; set; }
     }
 }
