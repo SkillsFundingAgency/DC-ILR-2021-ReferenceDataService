@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.Organisation;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -24,8 +24,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.ReferenceData
             _organisations = organisations;
         }
 
-        public async Task<IReadOnlyDictionary<long, Organisation>> RetrieveAsync(IReadOnlyCollection<long> ukprns, CancellationToken cancellationToken)
+        public async Task<IReadOnlyDictionary<long, Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
         {
+            var ukprns = ukprnsInput.Select(u => (long)u).ToList();
+
             var campusIdentifiers =
                 await _organisations
                 .CampusIdentifiers
