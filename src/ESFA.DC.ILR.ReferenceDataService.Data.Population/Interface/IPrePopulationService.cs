@@ -1,11 +1,11 @@
-﻿using ESFA.DC.ILR.Model.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ESFA.DC.ILR.Model.Interface;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface
 {
     public interface IPrePopulationService
     {
-        IReadOnlyCollection<long> UniqueUKPRNsFromMessage(IMessage message);
+        IReadOnlyCollection<int> UniqueUKPRNsFromMessage(IMessage message);
 
         IReadOnlyCollection<string> UniqueEpaOrgIdsFromMessage(IMessage message);
 
@@ -20,6 +20,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
         IReadOnlyCollection<int> UniqueSTDCodesFromMessage(IMessage message);
 
         // Not sure if needed yet
-        // IReadOnlyCollection<LARSFrameworkKey> UniqueFrameworksFromMessage(IMessage message);        
+        // IReadOnlyCollection<LARSFrameworkKey> UniqueFrameworksFromMessage(IMessage message);
     }
 }

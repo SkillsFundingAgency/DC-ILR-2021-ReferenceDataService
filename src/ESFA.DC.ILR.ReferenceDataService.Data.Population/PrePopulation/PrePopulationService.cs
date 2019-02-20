@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.PrePopulation
 {
-    public abstract class PrePopulationService : IPrePopulationService
+    public class PrePopulationService : IPrePopulationService
     {
         // Not sure if needed yet
         // public IEnumerable<FrameworkKey> UniqueFrameworksFromMessage(IMessage message)
@@ -153,19 +153,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.PrePopulation
             return new HashSet<string>(learnAimRefs, StringComparer.OrdinalIgnoreCase);
         }
 
-        public virtual IReadOnlyCollection<string> UniqueEpaOrgIdsFromMessage(IMessage message)
+        public IReadOnlyCollection<string> UniqueEpaOrgIdsFromMessage(IMessage message)
         {
             var epaOrgIds =
                 message?
                 .Learners?
-                .SelectMany(l => l.LearningDeliveries
-                .Select(ld => ld.EPAOrgID))
+                .Where(l => l.LearningDeliveries != null)
+                .SelectMany(l => l.LearningDeliveries)
+                .Where(ld => ld.EPAOrgID != null)
+                .Select(ld => ld.EPAOrgID)
                 .ToList() ?? new List<string>();
 
             return new HashSet<string>(epaOrgIds, StringComparer.OrdinalIgnoreCase);
         }
 
-        public IReadOnlyCollection<long> UniqueUKPRNsFromMessage(IMessage message)
+        public IReadOnlyCollection<int> UniqueUKPRNsFromMessage(IMessage message)
         {
             return UniqueLearningProviderUKPRNFromMessage(message)
                 .Union(UniqueLearnerPrevUKPRNsFromMessage(message))
@@ -175,45 +177,45 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.PrePopulation
                 .ToList();
         }
 
-        public virtual IEnumerable<long> UniqueLearningProviderUKPRNFromMessage(IMessage message)
+        public virtual IEnumerable<int> UniqueLearningProviderUKPRNFromMessage(IMessage message)
         {
             return
-                new List<long>
+                new List<int>
                 {
                    message == null ? 0 : message.LearningProviderEntity.UKPRN
                 };
         }
 
-        public virtual IEnumerable<long> UniqueLearnerPrevUKPRNsFromMessage(IMessage message)
+        public virtual IEnumerable<int> UniqueLearnerPrevUKPRNsFromMessage(IMessage message)
         {
             return message?
                        .Learners?
                        .Where(l => l.PrevUKPRNNullable != null)
-                       .Select(l => (long)l.PrevUKPRNNullable)
+                       .Select(l => l.PrevUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<long>();
+                   ?? new List<int>();
         }
 
-        public virtual IEnumerable<long> UniqueLearnerPMUKPRNsFromMessage(IMessage message)
+        public virtual IEnumerable<int> UniqueLearnerPMUKPRNsFromMessage(IMessage message)
         {
             return message?
                        .Learners?
                        .Where(l => l.PMUKPRNNullable != null)
-                       .Select(l => (long)l.PMUKPRNNullable)
+                       .Select(l => l.PMUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<long>();
+                   ?? new List<int>();
         }
 
-        public virtual IEnumerable<long> UniqueLearningDeliveryPartnerUKPRNsFromMessage(IMessage message)
+        public virtual IEnumerable<int> UniqueLearningDeliveryPartnerUKPRNsFromMessage(IMessage message)
         {
             return message?
                        .Learners?
                        .Where(l => l.LearningDeliveries != null)
                        .SelectMany(l => l.LearningDeliveries)
                        .Where(ld => ld.PartnerUKPRNNullable != null)
-                       .Select(ld => (long)ld.PartnerUKPRNNullable)
+                       .Select(ld => ld.PartnerUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<long>();
+                   ?? new List<int>();
         }
     }
 }
