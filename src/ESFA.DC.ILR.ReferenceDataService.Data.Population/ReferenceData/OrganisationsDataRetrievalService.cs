@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.ReferenceData
             _organisations = organisations;
         }
 
-        public async Task<IReadOnlyDictionary<long, Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
+        public async Task<IReadOnlyDictionary<int, Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
         {
             var ukprns = ukprnsInput.Select(u => (long)u).ToList();
 
@@ -45,10 +45,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.ReferenceData
                           .Include(mo => mo.OrgFundings)
                           .Where(mo => ukprns.Contains(mo.Ukprn))
                           .ToDictionary(
-                              o => o.Ukprn,
+                              o => (int)o.Ukprn,
                               o => new Organisation
                               {
-                                  UKPRN = o.Ukprn,
+                                  UKPRN = (int)o.Ukprn,
                                   LegalOrgType = o.OrgDetail?.LegalOrgType,
                                   PartnerUKPRN = o.OrgPartnerUkprns?.Any(op => op.Ukprn == o.Ukprn),
                                   CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),

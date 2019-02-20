@@ -4,7 +4,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.Organisation
 {
     public class Organisation
     {
-        public long UKPRN { get; set; }
+        public int UKPRN { get; set; }
 
         public bool? PartnerUKPRN { get; set; }
 
