@@ -14,6 +14,9 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="ESFA.DC.Data.Organisations.Model" Version="0.2.0-alpha0014" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.1.171" />
+    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.1.163" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

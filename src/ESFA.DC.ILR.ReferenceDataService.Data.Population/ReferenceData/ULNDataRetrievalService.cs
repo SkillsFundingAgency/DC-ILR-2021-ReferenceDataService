@@ -12,7 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.ReferenceData
 {
     public class ULNDataRetrievalService : IULNDataRetrievalService
     {
-        private const int BatchSize = 5;
+        private const int BatchSize = 5000;
 
         private readonly IUlnContext _uln;
 
@@ -23,12 +23,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.ReferenceData
 
         public async Task<IReadOnlyCollection<ULN>> RetrieveAsync(IReadOnlyCollection<long> ulns, CancellationToken cancellationToken)
         {
-            return await
-                _uln.UniqueLearnerNumbers
-               .Where(u => ulns.Contains(u.Uln))
-               .Batch(BatchSize).ToAsyncEnumerable()
-               .SelectMany(u => u.Select(uln => new ULN { UniqueLearnerNumber = uln.Uln }))
-               .ToList();
+            var result = new List<ULN>();
+
+            var batches = ulns.Batch(BatchSize);
+
+            foreach (var batch in batches)
+            {
+                result.AddRange(
+                    await _uln.UniqueLearnerNumbers
+                     .Where(u => batch.Contains(u.Uln))
+                     .Select(uln => new ULN { UniqueLearnerNumber = uln.Uln })
+                     .ToListAsync(cancellationToken));
+            }
+
+            return result;
         }
     }
 }

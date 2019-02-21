@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<IAsyncEnumerable<T>> Batch<T>(
+        public static IEnumerable<IEnumerable<T>> Batch<T>(
         this IEnumerable<T> source, int size)
         {
             T[] bucket = null;
@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                     continue;
                 }
 
-                yield return bucket.ToAsyncEnumerable();
+                yield return bucket;
 
                 bucket = null;
                 count = 0;
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             // Return the last bucket with all remaining elements
             if (bucket != null && count > 0)
             {
-                yield return bucket.Take(count).ToAsyncEnumerable();
+                yield return bucket.Take(count);
             }
         }
     }

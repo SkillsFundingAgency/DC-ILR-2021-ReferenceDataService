@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 new UniqueLearnerNumber { Uln = 6 },
                 new UniqueLearnerNumber { Uln = 7 },
                 new UniqueLearnerNumber { Uln = 8 },
-                new UniqueLearnerNumber { Uln = 8 },
+                new UniqueLearnerNumber { Uln = 9 },
                 new UniqueLearnerNumber { Uln = 10 },
                 new UniqueLearnerNumber { Uln = 11 },
                 new UniqueLearnerNumber { Uln = 12 },
