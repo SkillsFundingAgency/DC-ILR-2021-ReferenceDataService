@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var serviceResult = await NewService(ulnMock.Object).RetrieveAsync(ulns, CancellationToken.None);
 
             serviceResult.Count().Should().Be(21);
-            serviceResult.Should().Contain(ulnList.Select(u => u.Uln).ToList());
+            serviceResult.Select(u => u.UniqueLearnerNumber).ToList().Should().BeEquivalentTo(ulnList.Select(u => u.Uln).ToList());
         }
 
         private ULNDataRetrievalService NewService(IUlnContext uln = null)
