@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.LARS.Abstract
 {
-    public class LARSApprenticeshipFunding : AbstractTimeBoundedEntity
+    public class AbstractLARSApprenticeshipFunding : AbstractTimeBoundedEntity
     {
         public string FundingCategory { get; set; }
 

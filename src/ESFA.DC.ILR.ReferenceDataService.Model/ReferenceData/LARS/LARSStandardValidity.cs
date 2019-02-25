@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.LARS
 {
-    public class LARSFrameworkApprenticeshipFunding : AbstractLARSApprenticeshipFunding
+    public class LARSStandardValidity : AbstractLARSValidity
     {
     }
 }

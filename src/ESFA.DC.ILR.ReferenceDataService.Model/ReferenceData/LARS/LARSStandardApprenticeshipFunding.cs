@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.LARS
 {
-    public class LARSStandardApprenticeshipFunding : LARSApprenticeshipFunding
+    public class LARSStandardApprenticeshipFunding : AbstractLARSApprenticeshipFunding
     {
         public int ProgType { get; set; }
 

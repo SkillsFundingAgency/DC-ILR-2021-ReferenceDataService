@@ -1,16 +1,8 @@
-﻿using System;
-using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.LARS.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.LARS
 {
-    public class LARSValidity : AbstractTimeBoundedEntity
+    public class LARSValidity : AbstractLARSValidity
     {
-        public string ValidityCategory { get; set; }
-
-        public DateTime StartDate => EffectiveFrom;
-
-        public DateTime? LastNewStartDate { get; set; }
-
-        public DateTime? EndDate => EffectiveTo;
     }
 }
