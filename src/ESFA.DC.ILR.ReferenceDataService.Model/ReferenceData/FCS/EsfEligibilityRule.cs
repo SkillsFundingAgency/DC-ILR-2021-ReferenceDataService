@@ -6,6 +6,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.FCS
     {
         public bool Benefits { get; set; }
 
+        public int? CalcMethod { get; set; }
+
+        public string TenderSpecReference { get; set; }
+
+        public string LotReference { get; set; }
+
         public int? MinAge { get; set; }
 
         public int? MaxAge { get; set; }

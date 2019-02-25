@@ -15,8 +15,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.ReferenceData.FCS
 
         public string FundingStreamPeriodCode { get; set; }
 
-        public int? CalcMethod { get; set; }
-
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
