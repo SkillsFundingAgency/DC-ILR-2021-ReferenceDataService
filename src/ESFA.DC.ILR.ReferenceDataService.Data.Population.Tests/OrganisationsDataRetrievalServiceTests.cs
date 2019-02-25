@@ -73,15 +73,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             organisations.Select(k => k.Key).Should().Contain(2);
             organisations.Select(k => k.Key).Should().NotContain(3);
 
-            organisations.Where(k => k.Key == 1).Select(v => v.Value.UKPRN).Single().Should().Be(1);
-            organisations.Where(k => k.Key == 1).Select(v => v.Value.LegalOrgType).Single().Should().Be("LegalType1");
-            organisations.Where(k => k.Key == 1).Select(v => v.Value.CampusIdentifers.Single()).Single().Should().Be("CampId_01");
-            organisations.Where(k => k.Key == 1).Select(v => v.Value.PartnerUKPRN).Single().Should().BeTrue();
+            organisations[1].UKPRN.Should().Be(1);
+            organisations[1].LegalOrgType.Should().Be("LegalType1");
+            organisations[1].CampusIdentifers.Single().Should().Be("CampId_01");
+            organisations[1].PartnerUKPRN.Should().BeTrue();
 
-            organisations.Where(k => k.Key == 2).Select(v => v.Value.UKPRN).Single().Should().Be(2);
-            organisations.Where(k => k.Key == 2).Select(v => v.Value.LegalOrgType).Single().Should().Be("LegalType2");
-            organisations.Where(k => k.Key == 2).Select(v => v.Value.CampusIdentifers).Single().Should().BeNullOrEmpty();
-            organisations.Where(k => k.Key == 2).Select(v => v.Value.PartnerUKPRN).Single().Should().BeFalse();
+            organisations[2].UKPRN.Should().Be(2);
+            organisations[2].LegalOrgType.Should().Be("LegalType2");
+            organisations[2].CampusIdentifers.Should().BeNullOrEmpty();
+            organisations[2].PartnerUKPRN.Should().BeFalse();
         }
 
         private OrganisationsDataRetrievalService NewService(IOrganisationsContext organisations = null)

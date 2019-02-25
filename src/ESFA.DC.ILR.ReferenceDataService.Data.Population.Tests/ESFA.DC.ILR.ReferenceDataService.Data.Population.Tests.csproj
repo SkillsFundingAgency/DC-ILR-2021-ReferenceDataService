@@ -52,6 +52,9 @@
     <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.1.171.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.1.171\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ReferenceData.EPA.Model, Version=0.1.176.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.EPA.Model.0.1.176\lib\netstandard2.0\ESFA.DC.ReferenceData.EPA.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.1.171.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.1.171\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
@@ -177,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FCSDataRetrievalServiceTests.cs" />
+    <Compile Include="EpaOrganisationsDataRetrievalServiceTests.cs" />
     <Compile Include="PrePopulationServiceTests.cs" />
     <Compile Include="OrganisationsDataRetrievalServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
