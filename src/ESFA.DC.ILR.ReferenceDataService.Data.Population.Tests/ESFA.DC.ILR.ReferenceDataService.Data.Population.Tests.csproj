@@ -58,6 +58,9 @@
     <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.1.171.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.1.171\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ReferenceData.LARS.Model, Version=0.1.176.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.LARS.Model.0.1.176\lib\netstandard2.0\ESFA.DC.ReferenceData.LARS.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ReferenceData.ULN.Model, Version=0.1.163.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.ULN.Model.0.1.163\lib\netstandard2.0\ESFA.DC.ReferenceData.ULN.Model.dll</HintPath>
     </Reference>
@@ -179,13 +182,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FCSDataRetrievalServiceTests.cs" />
-    <Compile Include="EpaOrganisationsDataRetrievalServiceTests.cs" />
-    <Compile Include="PrePopulationServiceTests.cs" />
-    <Compile Include="OrganisationsDataRetrievalServiceTests.cs" />
+    <Compile Include="ReferenceDataServiceTests.cs" />
+    <Compile Include="Repository\FcsServiceTests.cs" />
+    <Compile Include="Repository\EpaOrganisationsServiceTests.cs" />
+    <Compile Include="Mapper\PostcodesMapperTests.cs" />
+    <Compile Include="Mapper\LearnAimRefMapperTests.cs" />
+    <Compile Include="Mapper\StdCodeMapperTests.cs" />
+    <Compile Include="Mapper\LearningProviderUkprnMapperTests.cs" />
+    <Compile Include="Mapper\UlnMapperTests.cs" />
+    <Compile Include="Mapper\UkprnsMapperTests.cs" />
+    <Compile Include="Mapper\EpaOrgIdMapperTests.cs" />
+    <Compile Include="Mapper\EmpIdMapperTests.cs" />
+    <Compile Include="Repository\LarsLearningDeliveryServiceTests.cs" />
+    <Compile Include="Repository\OrganisationsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EmployersDataRetrievalServiceTests.cs" />
-    <Compile Include="ULNDataRetrievalServiceTests.cs" />
+    <Compile Include="Repository\EmployersServiceTests.cs" />
+    <Compile Include="Repository\UlnServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
