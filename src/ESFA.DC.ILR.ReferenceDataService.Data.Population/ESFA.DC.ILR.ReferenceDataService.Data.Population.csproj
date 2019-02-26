@@ -13,11 +13,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
+    <PackageReference Include="ESFA.DC.Data.Organisations.Model" Version="0.2.0-alpha0014" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.1.171" />
+    <PackageReference Include="ESFA.DC.ReferenceData.EPA.Model" Version="0.1.176" />
+    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.1.171" />
+    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.1.163" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj" />
   </ItemGroup>
 
 </Project>
