@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface
 {
     public interface IEpaOrganisationsDataRetrievalService
     {
-        Task<IReadOnlyDictionary<string, List<EPAOrganisation>>> RetrieveAsync(IReadOnlyCollection<string> eepaOrgIds, CancellationToken cancellationToken);
+        Task<IReadOnlyDictionary<string, List<EPAOrganisation>>> RetrieveAsync(IReadOnlyCollection<string> epaOrgIds, CancellationToken cancellationToken);
     }
 }

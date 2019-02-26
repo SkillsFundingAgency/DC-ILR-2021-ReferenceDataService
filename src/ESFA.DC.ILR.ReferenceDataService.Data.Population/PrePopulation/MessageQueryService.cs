@@ -6,7 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.PrePopulation
 {
-    public class PrePopulationService : IPrePopulationService
+    public class MessageQueryService : IMessageQueryService
     {
         // Not sure if needed yet
         // public IEnumerable<FrameworkKey> UniqueFrameworksFromMessage(IMessage message)
@@ -30,7 +30,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.PrePopulation
         //                    new FrameworkKey(g.Key.FworkCode.Value, g.Key.ProgType.Value, g.Key.PwayCode.Value))
         //            ?? new List<FrameworkKey>();
         // }
-
         public IReadOnlyCollection<int> UniqueSTDCodesFromMessage(IMessage message)
         {
             var stdCodes =

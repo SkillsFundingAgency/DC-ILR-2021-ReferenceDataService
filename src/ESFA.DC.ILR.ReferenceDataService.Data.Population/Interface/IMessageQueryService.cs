@@ -3,7 +3,7 @@ using ESFA.DC.ILR.Model.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface
 {
-    public interface IPrePopulationService
+    public interface IMessageQueryService
     {
         IReadOnlyCollection<int> UniqueUKPRNsFromMessage(IMessage message);
 
