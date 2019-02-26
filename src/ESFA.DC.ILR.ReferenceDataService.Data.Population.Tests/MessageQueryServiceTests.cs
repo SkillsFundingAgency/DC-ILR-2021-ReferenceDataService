@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 {
-    public class PrePopulationServiceTests
+    public class MessageQueryServiceTests
     {
         [Fact]
         public void UniqueSTDCodesFromMessage()
@@ -284,9 +284,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private PrePopulationService NewService()
+        private MessageQueryService NewService()
         {
-            return new PrePopulationService();
+            return new MessageQueryService();
         }
     }
 }
