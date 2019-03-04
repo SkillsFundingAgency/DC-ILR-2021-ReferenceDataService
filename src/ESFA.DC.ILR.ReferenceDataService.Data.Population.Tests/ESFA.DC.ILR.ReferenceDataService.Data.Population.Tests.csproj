@@ -193,6 +193,7 @@
     <Compile Include="Mapper\UkprnsMapperTests.cs" />
     <Compile Include="Mapper\EpaOrgIdMapperTests.cs" />
     <Compile Include="Mapper\EmpIdMapperTests.cs" />
+    <Compile Include="Repository\LarsStandardServiceTests.cs" />
     <Compile Include="Repository\LarsLearningDeliveryServiceTests.cs" />
     <Compile Include="Repository\OrganisationsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

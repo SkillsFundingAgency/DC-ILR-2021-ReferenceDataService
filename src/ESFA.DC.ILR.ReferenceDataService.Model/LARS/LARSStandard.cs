@@ -16,5 +16,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
         public List<LARSStandardCommonComponent> LARSStandardCommonComponents { get; set; }
 
         public List<LARSStandardFunding> LARSStandardFundings { get; set; }
+
+        public List<LARSStandardValidity> LARSStandardValidities { get; set; }
     }
 }

@@ -38,7 +38,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         EffectiveTo = ls.EffectiveTo,
                         LARSStandardApprenticeshipFundings = ls.LarsApprenticeshipStdFundings.Select(LARSStandardAppFundingFromEntity).ToList(),
                         LARSStandardCommonComponents = ls.LarsStandardCommonComponents.Select(LARSStandardComCmpFromEntity).ToList(),
-                        LARSStandardFundings = ls.LarsStandardFundings.Select(LARSStandardFundingFromEntity).ToList()
+                        LARSStandardFundings = ls.LarsStandardFundings.Select(LARSStandardFundingFromEntity).ToList(),
+                        LARSStandardValidities = ls.LarsStandardValidities.Select(LARSStandardValidityFromEntity).ToList()
                     }).ToListAsync(cancellationToken);
 
             return larsStandards
@@ -99,6 +100,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             };
 
             return larsAppStdFunding ?? new LARSStandardApprenticeshipFunding();
+        }
+
+        private LARSStandardValidity LARSStandardValidityFromEntity(LarsStandardValidity larsValidity)
+        {
+            var validity = new LARSStandardValidity
+            {
+                EffectiveFrom = larsValidity.StartDate,
+                EffectiveTo = larsValidity.EndDate,
+                LastNewStartDate = larsValidity.LastNewStartDate,
+                ValidityCategory = larsValidity.ValidityCategory
+            };
+
+            return validity ?? new LARSStandardValidity();
         }
     }
 }
