@@ -152,14 +152,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 PwayCode = larsFramework.PwayCode,
                 EffectiveFromNullable = larsFramework.EffectiveFrom,
                 EffectiveTo = larsFramework.EffectiveTo,
-                LARSFrameworkCommonComponents = larsFramework?.LarsFrameworkCmnComps?.Select(LARSFrameworkFromEntity).ToList(),
+                LARSFrameworkCommonComponents = larsFramework?.LarsFrameworkCmnComps?.Select(LARSFrameworkComCmpFromEntity).ToList(),
                 LARSFrameworkApprenticeshipFundings = larsFramework?.LarsApprenticeshipFworkFundings?.Select(LARSFrameworkAppFundingFromEntity).ToList()
             };
 
             return framework ?? new LARSFramework();
         }
 
-        private LARSFrameworkCommonComponent LARSFrameworkFromEntity(LarsFrameworkCmnComp larsFrameworkCmnComp)
+        private LARSFrameworkCommonComponent LARSFrameworkComCmpFromEntity(LarsFrameworkCmnComp larsFrameworkCmnComp)
         {
             var frameworkCmnComp = new LARSFrameworkCommonComponent
             {
@@ -194,31 +194,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             return larsAppFworkFunding ?? new LARSFrameworkApprenticeshipFunding();
         }
-
-        // private LARSStandardApprenticeshipFunding LARSStandardAppFundingFromEntity(LarsApprenticeshipStdFunding larsApprenticeshipStdFunding)
-        // {
-        //     var larsAppStdFunding = new LARSStandardApprenticeshipFunding
-        //     {
-        //         BandNumber = larsApprenticeshipStdFunding.BandNumber,
-        //         CareLeaverAdditionalPayment = larsApprenticeshipStdFunding.CareLeaverAdditionalPayment,
-        //         CoreGovContributionCap = larsApprenticeshipStdFunding.CoreGovContributionCap,
-        //         Duration = larsApprenticeshipStdFunding.Duration,
-        //         EffectiveFrom = larsApprenticeshipStdFunding.EffectiveFrom,
-        //         EffectiveTo = larsApprenticeshipStdFunding.EffectiveTo,
-        //         FundableWithoutEmployer = larsApprenticeshipStdFunding.FundableWithoutEmployer,
-        //         FundingCategory = larsApprenticeshipStdFunding.FundingCategory,
-        //         MaxEmployerLevyCap = larsApprenticeshipStdFunding.MaxEmployerLevyCap,
-        //         ProgType = 25,
-        //         PwayCode = 0,
-        //         ReservedValue2 = larsApprenticeshipStdFunding.ReservedValue2,
-        //         ReservedValue3 = larsApprenticeshipStdFunding.ReservedValue3,
-        //         SixteenToEighteenEmployerAdditionalPayment = larsApprenticeshipStdFunding._1618employerAdditionalPayment,
-        //         SixteenToEighteenFrameworkUplift = larsApprenticeshipStdFunding._1618frameworkUplift,
-        //         SixteenToEighteenIncentive = larsApprenticeshipStdFunding._1618incentive,
-        //         SixteenToEighteenProviderAdditionalPayment = larsApprenticeshipStdFunding._1618providerAdditionalPayment
-        //     };
-        //
-        //   return larsAppStdFunding ?? new LARSStandardApprenticeshipFunding();
-        // }
     }
 }
