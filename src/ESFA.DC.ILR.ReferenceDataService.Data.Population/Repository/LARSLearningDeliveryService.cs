@@ -27,6 +27,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyDictionary<string, LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> learnAimRefs, CancellationToken cancellationToken)
         {
             var larsLearningDeliveries = await _larsContext.LARS_LearningDeliveries
+                .Include(ld => ld.LarsAnnualValues)
+                .Include(ld => ld.LarsCareerLearningPilots)
+                .Include(ld => ld.LarsLearningDeliveryCategories)
+                .Include(ld => ld.LarsFrameworkAims)
+                .Include(ld => ld.LarsFrameworkAims.Select(lfa => lfa.LarsFramework))
+                .Include(ld => ld.LarsFrameworkAims.Select(lfa => lfa.LarsFramework).Select(lf => lf.LarsFrameworkCmnComps))
+                .Include(ld => ld.LarsFrameworkAims.Select(lfa => lfa.LarsFramework).Select(lf => lf.LarsApprenticeshipFworkFundings))
+                .Include(ld => ld.LarsFundings)
+                .Include(ld => ld.LarsValidities)
                 .Where(l => learnAimRefs.Contains(l.LearnAimRef))
                 .Select(
                     ld => new LARSLearningDelivery
