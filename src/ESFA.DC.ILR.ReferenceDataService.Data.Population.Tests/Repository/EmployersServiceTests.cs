@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using FluentAssertions;
@@ -73,6 +74,76 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.Where(e => e.LargeEmployerEffectiveDates.Count() > 0).Count().Should().Be(9);
             serviceResult.Where(e => e.ERN == 8).SelectMany(l => l.LargeEmployerEffectiveDates).Should().HaveCount(2);
             serviceResult.Select(e => e.ERN).ToList().Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
+        }
+
+        [Fact]
+        public void LargeEmployerEffectiveDatesForEmpId()
+        {
+            IEnumerable<LargeEmployer> lempList = new List<LargeEmployer>
+            {
+                new LargeEmployer { Ern = 1, EffectiveFrom = new DateTime(2018, 8, 1) },
+                new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 8, 1), EffectiveTo = new DateTime(2018, 10, 31) },
+                new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 11, 1) },
+                new LargeEmployer { Ern = 3, EffectiveFrom = new DateTime(2018, 8, 1) }
+            };
+
+            var result = NewService().LargeEmployerEffectiveDatesForEmpId(lempList, 1);
+
+            result.Should().HaveCount(1);
+            result.Should().BeEquivalentTo(new List<LargeEmployerEffectiveDates> { new LargeEmployerEffectiveDates { EffectiveFrom = new DateTime(2018, 8, 1) } });
+        }
+
+        [Fact]
+        public void LargeEmployerEffectiveDatesForEmpId_MultipleDates()
+        {
+            IEnumerable<LargeEmployer> lempList = new List<LargeEmployer>
+            {
+                new LargeEmployer { Ern = 1, EffectiveFrom = new DateTime(2018, 8, 1) },
+                new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 8, 1), EffectiveTo = new DateTime(2018, 10, 31) },
+                new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 11, 1) },
+                new LargeEmployer { Ern = 3, EffectiveFrom = new DateTime(2018, 8, 1) }
+            };
+
+            var result = NewService().LargeEmployerEffectiveDatesForEmpId(lempList, 2);
+
+            result.Should().HaveCount(2);
+            result.Should().BeEquivalentTo(
+                new List<LargeEmployerEffectiveDates>
+                {
+                    new LargeEmployerEffectiveDates { EffectiveFrom = new DateTime(2018, 8, 1),  EffectiveTo = new DateTime(2018, 10, 31) },
+                    new LargeEmployerEffectiveDates { EffectiveFrom = new DateTime(2018, 11, 1) }
+                });
+        }
+
+        [Fact]
+        public void LargeEmployerEffectiveDatesForEmpId_MisMatch()
+        {
+            var lEmpOne = new LargeEmployer { Ern = 1, EffectiveFrom = new DateTime(2018, 8, 1) };
+            var lEmpTwoClosed = new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 8, 1), EffectiveTo = new DateTime(2018, 10, 31) };
+            var lEmpTwoOpen = new LargeEmployer { Ern = 2, EffectiveFrom = new DateTime(2018, 11, 1) };
+            var lEmpThree = new LargeEmployer { Ern = 3, EffectiveFrom = new DateTime(2018, 8, 1) };
+
+            IEnumerable<LargeEmployer> lempList = new List<LargeEmployer>
+            {
+                lEmpOne,
+                lEmpTwoClosed,
+                lEmpTwoOpen,
+                lEmpThree
+            };
+
+            var result = NewService().LargeEmployerEffectiveDatesForEmpId(lempList, 4);
+
+            result.Should().HaveCount(0);
+            result.Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void LargeEmployerEffectiveDatesForEmpId_NullLargeEmployers()
+        {
+            var result = NewService().LargeEmployerEffectiveDatesForEmpId(null, 4);
+
+            result.Should().HaveCount(0);
+            result.Should().BeNullOrEmpty();
         }
 
         private EmployersService NewService(IEmployersContext employers = null)

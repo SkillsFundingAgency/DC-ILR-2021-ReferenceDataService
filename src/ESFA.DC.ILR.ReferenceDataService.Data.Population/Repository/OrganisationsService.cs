@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .CampusIdentifiers
                 .Where(c => ukprns.Contains(c.MasterUkprn))
                 .GroupBy(mu => mu.MasterUkprn)
-                .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken);
+                .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken) ?? new Dictionary<long, List<string>>();
 
             var organisations = await _organisations
                   .MasterOrganisations
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
                           CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),
-                          OrganisationFundings = o.OrgFundings.Where(of => ukprns.Contains(of.Ukprn)).Select(OrgFundingFromEntity).ToList(),
+                          OrganisationFundings = o.OrgFundings.Select(OrgFundingFromEntity).ToList(),
                       })
                       .ToListAsync(cancellationToken);
 
@@ -65,6 +65,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public OrganisationFunding OrgFundingFromEntity(OrgFunding entity)
         {
+            if (entity == null)
+            {
+                return new OrganisationFunding();
+            }
+
             return new OrganisationFunding()
             {
                 OrgFundFactor = entity.FundingFactor,
