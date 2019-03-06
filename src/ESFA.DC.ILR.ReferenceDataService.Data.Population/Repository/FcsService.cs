@@ -26,6 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyDictionary<string, FcsContractAllocation>> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
         {
             var contractAllocations = await _fcs.ContractAllocations
+                .Include(ca => ca.ContractDeliverables)
                 .Where(ca => ca.DeliveryUkprn == ukprn)
                 .Select(ca => new FcsContractAllocation
                 {
@@ -53,6 +54,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToListAsync(cancellationToken);
 
             var eligibilityRules = await _fcs.EsfEligibilityRules
+                .Include(e => e.EsfEligibilityRuleEmploymentStatuses)
+                .Include(e => e.EsfEligibilityRuleLocalAuthorities)
+                .Include(e => e.EsfEligibilityRuleLocalEnterprisePartnerships)
+                .Include(e => e.EsfEligibilityRuleSectorSubjectAreaLevels)
                .Select(r => new EsfEligibilityRule
                {
                    LotReference = r.LotReference,

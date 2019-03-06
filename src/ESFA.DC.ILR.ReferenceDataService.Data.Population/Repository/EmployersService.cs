@@ -50,21 +50,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .Select(empId => new Employers
                 {
                     ERN = empId,
-                    LargeEmployerEffectiveDates = LargeEmployerEffectiveDatesForEmpId(largeEmployers, empId)
+                    LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
+                    .Select(le => new LargeEmployerEffectiveDates
+                    {
+                        EffectiveFrom = le.EffectiveFrom,
+                        EffectiveTo = le.EffectiveTo
+                    }).ToList()
                 }).ToList();
-        }
-
-        private List<LargeEmployerEffectiveDates> LargeEmployerEffectiveDatesForEmpId(IEnumerable<LargeEmployer> largeEmployers, int empId)
-        {
-            return
-                largeEmployers
-                .Where(l => l.Ern == empId)
-                .GroupBy(l => l.Ern)
-                .SelectMany(e => e.Select(led => new LargeEmployerEffectiveDates
-                {
-                    EffectiveFrom = led.EffectiveFrom,
-                    EffectiveTo = led.EffectiveTo
-                })).ToList();
         }
     }
 }

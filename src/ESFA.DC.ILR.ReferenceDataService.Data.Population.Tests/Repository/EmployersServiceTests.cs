@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using FluentAssertions;
@@ -59,6 +60,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new LargeEmployer { Ern = 8, EffectiveFrom = new DateTime(2018, 8, 1), EffectiveTo = new DateTime(2018, 10, 31) },
                 new LargeEmployer { Ern = 8, EffectiveFrom = new DateTime(2018, 11, 1) },
                 new LargeEmployer { Ern = 10, EffectiveFrom = new DateTime(2018, 8, 1) },
+                new LargeEmployer { Ern = 50, EffectiveFrom = new DateTime(2018, 8, 1) },
+                new LargeEmployer { Ern = 51, EffectiveFrom = new DateTime(2018, 8, 1) },
+                new LargeEmployer { Ern = 52, EffectiveFrom = new DateTime(2018, 8, 1) },
             };
 
             var edrsDbMock = edrsList.AsQueryable().BuildMockDbSet();

@@ -27,6 +27,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyDictionary<int, LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
         {
             var larsStandards = await _larsContext.LARS_Standards
+                .Include(ls => ls.LarsStandardAims)
+                .Include(ls => ls.LarsApprenticeshipStdFundings)
+                .Include(ls => ls.LarsStandardCommonComponents)
+                .Include(ls => ls.LarsStandardFundings)
+                .Include(ls => ls.LarsStandardValidities)
                 .Where(l => stdCodes.Contains(l.StandardCode))
                 .Select(
                     ls => new LARSStandard
@@ -47,9 +52,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToDictionary(key => key.Key, value => value.FirstOrDefault());
         }
 
-        private LARSStandardFunding LARSStandardFundingFromEntity(LarsStandardFunding larsStandardFunding)
+        public LARSStandardFunding LARSStandardFundingFromEntity(LarsStandardFunding larsStandardFunding)
         {
-            var funding = new LARSStandardFunding
+            if (larsStandardFunding == null)
+            {
+                return new LARSStandardFunding();
+            }
+
+            return new LARSStandardFunding
             {
                 AchievementIncentive = larsStandardFunding.AchievementIncentive,
                 BandNumber = larsStandardFunding.BandNumber,
@@ -58,27 +68,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 EffectiveTo = larsStandardFunding.EffectiveTo,
                 FundableWithoutEmployer = larsStandardFunding.FundableWithoutEmployer,
                 FundingCategory = larsStandardFunding.FundingCategory,
-                SixteenToEighteenIncentive = larsStandardFunding._1618incentive
+                SixteenToEighteenIncentive = larsStandardFunding._1618incentive,
+                SmallBusinessIncentive = larsStandardFunding.SmallBusinessIncentive
             };
-
-            return funding ?? new LARSStandardFunding();
         }
 
-        private LARSStandardCommonComponent LARSStandardComCmpFromEntity(LarsStandardCommonComponent larsStandardCommonComponent)
+        public LARSStandardCommonComponent LARSStandardComCmpFromEntity(LarsStandardCommonComponent larsStandardCommonComponent)
         {
-            var commonComponent = new LARSStandardCommonComponent
+            if (larsStandardCommonComponent == null)
+            {
+                return new LARSStandardCommonComponent();
+            }
+
+            return new LARSStandardCommonComponent
             {
                 CommonComponent = larsStandardCommonComponent.CommonComponent,
                 EffectiveFrom = larsStandardCommonComponent.EffectiveFrom,
                 EffectiveTo = larsStandardCommonComponent.EffectiveTo
             };
-
-            return commonComponent ?? new LARSStandardCommonComponent();
         }
 
-        private LARSStandardApprenticeshipFunding LARSStandardAppFundingFromEntity(LarsApprenticeshipStdFunding larsApprenticeshipStdFunding)
+        public LARSStandardApprenticeshipFunding LARSStandardAppFundingFromEntity(LarsApprenticeshipStdFunding larsApprenticeshipStdFunding)
         {
-            var larsAppStdFunding = new LARSStandardApprenticeshipFunding
+            if (larsApprenticeshipStdFunding == null)
+            {
+                return new LARSStandardApprenticeshipFunding();
+            }
+
+            return new LARSStandardApprenticeshipFunding
             {
                 BandNumber = larsApprenticeshipStdFunding.BandNumber,
                 CareLeaverAdditionalPayment = larsApprenticeshipStdFunding.CareLeaverAdditionalPayment,
@@ -89,8 +106,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 FundableWithoutEmployer = larsApprenticeshipStdFunding.FundableWithoutEmployer,
                 FundingCategory = larsApprenticeshipStdFunding.FundingCategory,
                 MaxEmployerLevyCap = larsApprenticeshipStdFunding.MaxEmployerLevyCap,
-                ProgType = 25,
-                PwayCode = 0,
+                ProgType = larsApprenticeshipStdFunding.ProgType,
+                PwayCode = larsApprenticeshipStdFunding.PwayCode,
                 ReservedValue2 = larsApprenticeshipStdFunding.ReservedValue2,
                 ReservedValue3 = larsApprenticeshipStdFunding.ReservedValue3,
                 SixteenToEighteenEmployerAdditionalPayment = larsApprenticeshipStdFunding._1618employerAdditionalPayment,
@@ -98,21 +115,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 SixteenToEighteenIncentive = larsApprenticeshipStdFunding._1618incentive,
                 SixteenToEighteenProviderAdditionalPayment = larsApprenticeshipStdFunding._1618providerAdditionalPayment
             };
-
-            return larsAppStdFunding ?? new LARSStandardApprenticeshipFunding();
         }
 
-        private LARSStandardValidity LARSStandardValidityFromEntity(LarsStandardValidity larsValidity)
+        public LARSStandardValidity LARSStandardValidityFromEntity(LarsStandardValidity larsValidity)
         {
-            var validity = new LARSStandardValidity
+            if (larsValidity == null)
+            {
+                return new LARSStandardValidity();
+            }
+
+            return new LARSStandardValidity
             {
                 EffectiveFrom = larsValidity.StartDate,
                 EffectiveTo = larsValidity.EndDate,
                 LastNewStartDate = larsValidity.LastNewStartDate,
                 ValidityCategory = larsValidity.ValidityCategory
             };
-
-            return validity ?? new LARSStandardValidity();
         }
     }
 }
