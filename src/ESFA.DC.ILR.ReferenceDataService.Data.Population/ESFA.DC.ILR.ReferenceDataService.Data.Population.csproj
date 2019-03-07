@@ -20,6 +20,7 @@
     <PackageReference Include="ESFA.DC.ReferenceData.EPA.Model" Version="0.1.176" />
     <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.1.171" />
     <PackageReference Include="ESFA.DC.ReferenceData.LARS.Model" Version="0.1.184" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.1.218" />
     <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.1.163" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">

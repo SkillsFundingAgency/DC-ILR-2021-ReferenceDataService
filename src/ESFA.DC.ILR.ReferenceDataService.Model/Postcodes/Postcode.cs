@@ -2,9 +2,9 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
 {
-    public class Postcodes
+    public class Postcode
     {
-        public string Postcode { get; set; }
+        public string PostCode { get; set; }
 
         public List<ONSData> ONSData { get; set; }
 
