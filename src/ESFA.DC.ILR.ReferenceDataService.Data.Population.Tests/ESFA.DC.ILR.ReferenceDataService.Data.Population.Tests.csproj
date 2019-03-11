@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReferenceDataServiceTests.cs" />
+    <Compile Include="Repository\MetaDataServiceTests.cs" />
     <Compile Include="Repository\FcsServiceTests.cs" />
     <Compile Include="Repository\EpaOrganisationsServiceTests.cs" />
     <Compile Include="Mapper\PostcodesMapperTests.cs" />

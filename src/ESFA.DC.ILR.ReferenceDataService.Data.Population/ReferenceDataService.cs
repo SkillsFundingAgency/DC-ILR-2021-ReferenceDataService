@@ -5,7 +5,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
-    public class ReferenceDataService<TOut, TMapOut>
+    public class ReferenceDataService<TOut, TMapOut> : IReferenceDataService<TOut, TMapOut>
     {
         private IMessageMapper<TMapOut> _messageMapper;
         private IRetrievalService<TOut, TMapOut> _retrievalService;
