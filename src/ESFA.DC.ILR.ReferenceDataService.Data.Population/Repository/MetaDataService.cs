@@ -38,23 +38,36 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
         {
-            var referenceDataVersions = new List<ReferenceDataVersion>();
+            var larsVersion =
+                await _larsContext.LARS_Versions
+                .OrderByDescending(v => v.MainDataSchemaName)
+                .Select(v => new ReferenceDataVersion(LarsVersionName, v.MainDataSchemaName))
+                .FirstOrDefaultAsync();
 
-            var versionsDictionary = await _larsContext.LARS_Versions.OrderByDescending(v => v.MainDataSchemaName).Select(v => new ReferenceDataVersion(LarsVersionName, v.MainDataSchemaName))
-                   .Union(_organisationsContext.OrgVersions.OrderByDescending(v => v.MainDataSchemaName).Select(v => new ReferenceDataVersion(OrganisationsVersionName, v.MainDataSchemaName)))
-                   .Union(_postcodesContext.VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => new ReferenceDataVersion(PostcodesVersionName, v.VersionNumber)))
-                   .Union(_employersContext.LargeEmployerSourceFiles.OrderByDescending(v => v.Id).Select(v => new ReferenceDataVersion(EmployersVersionName, v.Id.ToString())))
-                   .GroupBy(n => n.Name)
-                   .ToDictionaryAsync(k => k.Key, v => v, cancellationToken)
+            var orgVersion = await _organisationsContext.OrgVersions
+                .OrderByDescending(v => v.MainDataSchemaName)
+                .Select(v => new ReferenceDataVersion(OrganisationsVersionName, v.MainDataSchemaName))
+                .FirstOrDefaultAsync();
 
-            foreach (var key in versionsDictionary)
-            {
-                referenceDataVersions.Add(key.Value.OrderByDescending(v => v.Version).FirstOrDefault());
-            }
+            var postcodesVersion = await _postcodesContext.VersionInfos
+                .OrderByDescending(v => v.VersionNumber)
+                .Select(v => new ReferenceDataVersion(PostcodesVersionName, v.VersionNumber))
+                .FirstOrDefaultAsync();
+
+            var employersVersion = await _employersContext.LargeEmployerSourceFiles
+                .OrderByDescending(v => v.Id)
+                .Select(v => new ReferenceDataVersion(EmployersVersionName, v.Id.ToString()))
+                .FirstOrDefaultAsync();
 
             return new MetaData
             {
-                ReferenceDataVersions = referenceDataVersions
+                ReferenceDataVersions = new List<ReferenceDataVersion>
+                {
+                    larsVersion,
+                    orgVersion,
+                    postcodesVersion,
+                    employersVersion
+                }
             };
         }
     }
