@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
-using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using FluentAssertions;
@@ -73,10 +72,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var serviceResult = await NewService(employersMock.Object).RetrieveAsync(empIds, CancellationToken.None);
 
-            serviceResult.Count().Should().Be(21);
-            serviceResult.Where(e => e.LargeEmployerEffectiveDates.Count() > 0).Count().Should().Be(9);
-            serviceResult.Where(e => e.ERN == 8).SelectMany(l => l.LargeEmployerEffectiveDates).Should().HaveCount(2);
-            serviceResult.Select(e => e.ERN).ToList().Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
+            serviceResult.Keys.Should().HaveCount(21);
+            serviceResult.Keys.Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
+            serviceResult.SelectMany(e => e.Value.LargeEmployerEffectiveDates).Should().HaveCount(10);
+            serviceResult[8].LargeEmployerEffectiveDates.Should().HaveCount(2);
         }
 
         private EmployersService NewService(IEmployersContext employers = null)

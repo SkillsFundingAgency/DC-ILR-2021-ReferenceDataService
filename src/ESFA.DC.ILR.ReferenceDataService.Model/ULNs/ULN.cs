@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.ULN
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.ULNs
 {
     public class ULN
     {

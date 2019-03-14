@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Employers
 {
-    public class Employers
+    public class Employer
     {
         public int ERN { get; set; }
 

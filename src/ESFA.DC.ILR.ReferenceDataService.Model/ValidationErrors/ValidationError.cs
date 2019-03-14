@@ -1,6 +1,6 @@
 ﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.ValidationErrors
 {
-    public class ValidationErrors
+    public class ValidationError
     {
         public enum SeverityLevel
         {
