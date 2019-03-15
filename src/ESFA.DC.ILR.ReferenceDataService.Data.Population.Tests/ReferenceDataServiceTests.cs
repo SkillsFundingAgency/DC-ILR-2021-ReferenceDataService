@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Model.ULN;
+using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;

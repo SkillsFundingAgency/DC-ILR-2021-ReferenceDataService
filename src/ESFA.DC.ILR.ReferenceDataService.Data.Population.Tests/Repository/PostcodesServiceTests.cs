@@ -113,7 +113,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             IEnumerable<MasterPostcode> postcodesList = new List<MasterPostcode>
             {
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode1",
                     SfaPostcodeDisadvantages = new List<SfaPostcodeDisadvantage>
                     {
@@ -130,7 +131,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     },
                 },
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode2",
                     EfaPostcodeDisadvantages = new List<EfaPostcodeDisadvantage>
                     {
@@ -147,7 +149,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     },
                 },
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode3",
                     DasPostcodeDisadvantages = new List<DasPostcodeDisadvantage>
                     {
@@ -164,7 +167,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     },
                 },
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode4",
                     SfaPostcodeAreaCosts = new List<SfaPostcodeAreaCost>
                     {
@@ -181,7 +185,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     },
                 },
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode5",
                     CareerLearningPilotPostcodes = new List<CareerLearningPilotPostcode>
                     {
@@ -198,7 +203,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     },
                 },
-                new MasterPostcode {
+                new MasterPostcode
+                {
                     Postcode = "Postcode6",
                     OnsPostcodes = new List<OnsPostcode>
                     {

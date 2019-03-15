@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
-using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class EmployersService : IRetrievalService<IReadOnlyCollection<Employers>, IReadOnlyCollection<int>>
+    public class EmployersService : IRetrievalService<IReadOnlyDictionary<int, Employer>, IReadOnlyCollection<int>>
     {
         private const int BatchSize = 5000;
         private readonly IEmployersContext _employersContext;
@@ -22,12 +21,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _employersContext = employersContext;
         }
 
-        public async Task<IReadOnlyCollection<Employers>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken)
+        public async Task<IReadOnlyDictionary<int, Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken)
         {
             var edrsEmpIds = new List<int>();
-            var largeEmployers = new List<LargeEmployer>();
-
-            var result = new List<Employers>();
+            var largeEmployers = new List<ReferenceData.Employers.Model.LargeEmployer>();
 
             var batches = input.Batch(BatchSize);
 
@@ -45,9 +42,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                      .ToListAsync(cancellationToken));
             }
 
-            return
+          return
                 edrsEmpIds
-                .Select(empId => new Employers
+                .ToDictionary(e => e, empId => new Employer
                 {
                     ERN = empId,
                     LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
@@ -56,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         EffectiveFrom = le.EffectiveFrom,
                         EffectiveTo = le.EffectiveTo
                     }).ToList()
-                }).ToList();
+                });
         }
     }
 }

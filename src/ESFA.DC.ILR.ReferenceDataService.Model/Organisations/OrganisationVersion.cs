@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisation
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
 {
     public class OrganisationVersion
     {
