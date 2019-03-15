@@ -1,7 +1,7 @@
 ﻿using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 
-namespace ESFA.DC.ILR.ValidationService.Data.Population.Mapper.Message
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
 {
     public class LearningProviderUkprnMapper : IMessageMapper<int>
     {
