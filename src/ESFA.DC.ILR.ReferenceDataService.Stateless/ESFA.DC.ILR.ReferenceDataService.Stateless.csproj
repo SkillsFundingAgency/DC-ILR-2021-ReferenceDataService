@@ -92,8 +92,8 @@
     <Reference Include="ESFA.DC.Queueing.Interface, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Queueing.Interface.0.1.14-beta0001\lib\netstandard2.0\ESFA.DC.Queueing.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Serialization.Json, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Serialization.Json.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Json.dll</HintPath>
@@ -259,13 +259,6 @@
     <Compile Include="Context\ReferenceDataJobContextMessageContext.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceFabric\Config\Interface\IServiceFabricConfigurationService.cs" />
-    <Compile Include="ServiceFabric\Config\Interface\IStatelessServiceConfiguration.cs" />
-    <Compile Include="ServiceFabric\Config\ServiceFabricConfigurationService.cs" />
-    <Compile Include="ServiceFabric\Config\StatelessServiceConfiguration.cs" />
-    <Compile Include="ServiceFabric\Modules\SerializationModule.cs" />
-    <Compile Include="ServiceFabric\Modules\StatelessServiceModule.cs" />
-    <Compile Include="ServiceFabric\Stateless.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceEventSource.cs" />
   </ItemGroup>
@@ -289,6 +282,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj">
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ServiceFabric.Common\ESFA.DC.ServiceFabric.Common.csproj">
+      <Project>{58E3DEEF-4019-4B36-8C10-2ACA009E7D14}</Project>
+      <Name>ESFA.DC.ServiceFabric.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

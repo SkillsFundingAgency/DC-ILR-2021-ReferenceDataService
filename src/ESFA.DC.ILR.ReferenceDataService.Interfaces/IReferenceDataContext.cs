@@ -8,6 +8,6 @@
 
         string Container { get; }
 
-        string ValidationErrorsKey { get; }
+        string OutputReferenceDataFileKey { get; }
     }
 }

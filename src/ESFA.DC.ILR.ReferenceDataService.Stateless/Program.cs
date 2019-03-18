@@ -6,8 +6,8 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
-using ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Config;
-using ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Modules;
+using ESFA.DC.ILR.ServiceFabric.Common.Config;
+using ESFA.DC.ILR.ServiceFabric.Common.Modules;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 
@@ -31,13 +31,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 builder.RegisterServiceFabricSupport();
 
-                builder.RegisterStatelessService<ServiceFabric.Stateless>("ESFA.DC.ILR.ReferenceDataService.StatelessType");
+                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR.ReferenceDataService.StatelessType");
 
                 using (var container = builder.Build())
                 {
                     var manager = container.Resolve<IJobContextManager<JobContextMessage>>();
 
-                    ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(ServiceFabric.Stateless).Name);
+                    ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(ServiceFabric.Common.Stateless).Name);
 
                     // Prevents this host process from terminating so services keep running.
                     Thread.Sleep(Timeout.Infinite);
@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
             containerBuilder.RegisterModule<SerializationModule>();
 
-            //containerBuilder.RegisterModule<ReferenceDataOrchestrationServicesModule>();
+            containerBuilder.RegisterModule<ReferenceDataOrchestrationServicesModule>();
             containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
             containerBuilder.RegisterModule<RepositoryModule>();
             containerBuilder.RegisterModule<ReferenceDataPopulationModule>();

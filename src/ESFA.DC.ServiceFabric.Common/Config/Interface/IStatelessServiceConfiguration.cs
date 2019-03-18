@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Config.Interface
+﻿namespace ESFA.DC.ILR.ServiceFabric.Common.Config.Interface
 {
     public interface IStatelessServiceConfiguration
     {

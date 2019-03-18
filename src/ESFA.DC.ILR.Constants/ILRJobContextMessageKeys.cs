@@ -8,6 +8,6 @@
 
         public const string Container = "Container";
 
-        public const string ValidationErrors = "ValidationErrors";
+        public const string OutputReferenceDataFileKey = "IlrReferenceData";
     }
 }

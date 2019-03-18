@@ -6,7 +6,7 @@ using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric
+namespace ESFA.DC.ILR.ServiceFabric.Common
 {
     public class Stateless : StatelessService
     {

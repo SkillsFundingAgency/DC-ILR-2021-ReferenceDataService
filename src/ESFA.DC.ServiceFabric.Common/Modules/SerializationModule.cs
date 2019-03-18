@@ -3,7 +3,7 @@ using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.Serialization.Xml;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Modules
+namespace ESFA.DC.ILR.ServiceFabric.Common.Modules
 {
     public class SerializationModule : Module
     {

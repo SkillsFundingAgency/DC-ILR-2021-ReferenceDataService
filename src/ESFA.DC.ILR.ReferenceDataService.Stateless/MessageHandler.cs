@@ -15,10 +15,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
     public class MessageHandler : IMessageHandler<JobContextMessage>
     {
         private readonly ILifetimeScope _lifetimeScope;
+        private readonly ILogger _logger;
 
-        public MessageHandler(ILifetimeScope lifetimeScope)
+        public MessageHandler(ILifetimeScope lifetimeScope, ILogger logger)
         {
             _lifetimeScope = lifetimeScope;
+            _logger = logger;
         }
 
         public async Task<bool> HandleAsync(JobContextMessage message, CancellationToken cancellationToken)
@@ -38,6 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
                 }
                 catch (ReferenceDataServiceFailureException exception)
                 {
+                    _logger.LogError("Reference Data Service Message Handler Exception", exception);
                 }
 
                 return true;

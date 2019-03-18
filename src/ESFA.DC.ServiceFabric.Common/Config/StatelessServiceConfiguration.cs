@@ -1,6 +1,6 @@
-﻿using ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Config.Interface;
+﻿using ESFA.DC.ILR.ServiceFabric.Common.Config.Interface;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Config
+namespace ESFA.DC.ILR.ServiceFabric.Common.Config
 {
     public class StatelessServiceConfiguration : IStatelessServiceConfiguration
     {

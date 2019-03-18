@@ -27,6 +27,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string Container => _jobContextMessage.KeyValuePairs[ILRJobContextMessageKeys.Container].ToString();
 
-        public string ValidationErrorsKey => _jobContextMessage.KeyValuePairs[ILRJobContextMessageKeys.ValidationErrors].ToString();
+        public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ILRJobContextMessageKeys.OutputReferenceDataFileKey].ToString();
     }
 }

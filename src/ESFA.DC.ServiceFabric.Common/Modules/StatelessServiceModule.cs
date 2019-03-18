@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autofac;
 using ESFA.DC.Auditing.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Config.Interface;
+using ESFA.DC.ILR.ServiceFabric.Common.Config.Interface;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager;
 using ESFA.DC.JobContextManager.Interface;
@@ -18,7 +18,7 @@ using ESFA.DC.Queueing;
 using ESFA.DC.Queueing.Interface;
 using ESFA.DC.Queueing.Interface.Configuration;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Stateless.ServiceFabric.Modules
+namespace ESFA.DC.ILR.ServiceFabric.Common.Modules
 {
     public class StatelessServiceModule : Module
     {
