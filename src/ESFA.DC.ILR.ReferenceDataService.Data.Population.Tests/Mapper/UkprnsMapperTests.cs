@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message;
 using ESFA.DC.ILR.Tests.Model;
-using ESFA.DC.ILR.ValidationService.Data.Population.Mapper.Message;
 using FluentAssertions;
 using Xunit;
 
