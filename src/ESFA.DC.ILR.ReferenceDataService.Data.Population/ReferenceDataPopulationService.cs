@@ -16,7 +16,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
-    public class ReferenceDataPopulationService
+    public class ReferenceDataPopulationService : IReferenceDataPopulationService
     {
         private readonly IReferenceMetaDataService _metaDataReferenceService;
 

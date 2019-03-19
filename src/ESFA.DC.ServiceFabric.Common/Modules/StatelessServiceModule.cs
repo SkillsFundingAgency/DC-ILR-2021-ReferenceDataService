@@ -68,12 +68,14 @@ namespace ESFA.DC.ILR.ServiceFabric.Common.Modules
 
         private ITopicConfiguration BuildTopicConfiguration(IStatelessServiceConfiguration statelessServiceConfiguration)
         {
+            var t = TimeSpan.FromMinutes(int.Parse(statelessServiceConfiguration.TopicMaxCallbackTimeSpanMinutes));
+
             return new TopicConfiguration(
                 statelessServiceConfiguration.ServiceBusConnectionString,
                 statelessServiceConfiguration.TopicName,
                 statelessServiceConfiguration.SubscriptionName,
                 int.Parse(statelessServiceConfiguration.TopicMaxConcurrentCalls),
-                maximumCallbackTimeSpan: TimeSpan.FromMinutes(int.Parse(statelessServiceConfiguration.TopicMaxCallbackTimeSpanMinutes)));
+                maximumCallbackTimeSpan: t);
         }
 
         private IQueueConfiguration BuildJobStatusQueueConfiguration(IStatelessServiceConfiguration statelessServiceConfiguration)
