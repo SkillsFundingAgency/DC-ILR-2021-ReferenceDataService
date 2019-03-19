@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model">
-      <HintPath>..\..\..\..\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+      <HintPath>..\ESFA.DC.ILR.ReferenceDataService.Model\bin\Debug\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
     </Reference>
   </ItemGroup>
 

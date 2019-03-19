@@ -7,17 +7,15 @@ using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
-    public class ReferenceDataOutputService
+    public class ReferenceDataOutputService : IReferenceDataOutputService
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IFileService _fileService;
-        private readonly IStronglyTypedKeyValuePersistenceService _stronglyTypedKeyValuePersistenceService;
 
-        public ReferenceDataOutputService(IJsonSerializationService jsonSerializationService, IFileService fileService, IStronglyTypedKeyValuePersistenceService stronglyTypedKeyValuePersistenceService)
+        public ReferenceDataOutputService(IJsonSerializationService jsonSerializationService, IFileService fileService)
         {
             _jsonSerializationService = jsonSerializationService;
             _fileService = fileService;
-            _stronglyTypedKeyValuePersistenceService = stronglyTypedKeyValuePersistenceService;
         }
 
         public async Task OutputAsync(IReferenceDataContext referenceDataContext, ReferenceDataRoot referenceDataRoot, CancellationToken cancellationToken)

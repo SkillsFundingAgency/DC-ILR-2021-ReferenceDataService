@@ -1,7 +1,6 @@
-﻿using ESFA.DC.ILR.ReferenceDataService.Model;
-using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
