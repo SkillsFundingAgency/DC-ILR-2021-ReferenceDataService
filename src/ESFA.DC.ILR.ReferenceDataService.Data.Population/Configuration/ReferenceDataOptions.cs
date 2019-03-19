@@ -1,6 +1,6 @@
 ﻿using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 
-namespace ESFA.DC.ILR.ValidationService.Data.Population.Configuration
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration
 {
     public class ReferenceDataOptions : IReferenceDataOptions
     {

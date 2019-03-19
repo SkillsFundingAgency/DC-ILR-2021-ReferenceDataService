@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ValidationService.Data.Population.Configuration;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.EPA.Model;
