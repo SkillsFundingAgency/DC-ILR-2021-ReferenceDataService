@@ -83,9 +83,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             epaOganisations["EpaOrg3"].Select(e => e.Standard).Should().Contain("1", "2");
         }
 
-        private EpaOrganisationsService NewService(IEpaContext epaContext = null)
+        private EpaOrganisationsRepositoryService NewService(IEpaContext epaContext = null)
         {
-            return new EpaOrganisationsService(epaContext);
+            return new EpaOrganisationsRepositoryService(epaContext);
         }
     }
 }

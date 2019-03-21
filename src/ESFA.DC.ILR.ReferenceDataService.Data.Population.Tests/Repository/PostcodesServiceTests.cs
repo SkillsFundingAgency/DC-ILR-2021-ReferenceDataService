@@ -367,9 +367,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
         }
 
-        private PostcodesService NewService(IPostcodesContext postcodesContext = null)
+        private PostcodesRepositoryService NewService(IPostcodesContext postcodesContext = null)
         {
-            return new PostcodesService(postcodesContext);
+            return new PostcodesRepositoryService(postcodesContext);
         }
     }
 }

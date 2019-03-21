@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var message = TestMessage();
 
-            var mapper = NewMapper().MapFromMessage(message);
+            var mapper = NewMapper().MapLearnAimRefsFromMessage(message);
 
             mapper.Count().Should().Be(3);
             mapper.Should().Contain(new List<string> { "LearnAimRef1", "LearnAimRef2", "LearnAimRef3" });
@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapFromMessage(null).Should().BeNullOrEmpty();
+            NewMapper().MapLearnAimRefsFromMessage(null).Should().BeNullOrEmpty();
         }
 
         private TestMessage TestMessage()

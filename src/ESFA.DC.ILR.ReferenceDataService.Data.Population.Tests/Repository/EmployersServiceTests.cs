@@ -78,9 +78,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult[8].LargeEmployerEffectiveDates.Should().HaveCount(2);
         }
 
-        private EmployersService NewService(IEmployersContext employers = null)
+        private EmployersRepositoryService NewService(IEmployersContext employers = null)
         {
-            return new EmployersService(employers);
+            return new EmployersRepositoryService(employers);
         }
     }
 }

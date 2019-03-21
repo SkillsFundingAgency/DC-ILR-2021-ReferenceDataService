@@ -80,13 +80,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ReferenceDataVersions.Where(r => r.Name == "Potcodes Version").Select(r => r.Version).Should().BeEquivalentTo(postcodesVersion);
         }
 
-        private MetaDataService NewService(
+        private MetaDataRetrievalService NewService(
             IEmployersContext employers = null,
             ILARSContext larsContext = null,
             IOrganisationsContext organisationsContext = null,
             IPostcodesContext postcodesContext = null)
         {
-            return new MetaDataService(employers, larsContext, organisationsContext, postcodesContext);
+            return new MetaDataRetrievalService(employers, larsContext, organisationsContext, postcodesContext);
         }
     }
 }

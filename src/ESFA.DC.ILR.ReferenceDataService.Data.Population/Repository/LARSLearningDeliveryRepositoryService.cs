@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class LarsLearningDeliveryService : IRetrievalService<IReadOnlyDictionary<string, LARSLearningDelivery>, IReadOnlyCollection<string>>
+    public class LarsLearningDeliveryRepositoryService : ILarsLearningDeliveryRepositoryService
     {
         private readonly ILARSContext _larsContext;
 
-        public LarsLearningDeliveryService()
+        public LarsLearningDeliveryRepositoryService()
         {
         }
 
-        public LarsLearningDeliveryService(ILARSContext larsContext)
+        public LarsLearningDeliveryRepositoryService(ILARSContext larsContext)
         {
             _larsContext = larsContext;
         }
@@ -59,12 +59,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         RegulatedCreditValue = ld.RegulatedCreditValue,
                         SectorSubjectAreaTier1 = ld.SectorSubjectAreaTier1,
                         SectorSubjectAreaTier2 = ld.SectorSubjectAreaTier2,
-                        LARSAnnualValues = ld.LarsAnnualValues.Select(LARSAnnualValueFromEntity).ToList(),
-                        LARSCareerLearningPilots = ld.LarsCareerLearningPilots.Select(LARSCareerLearningPilotsFromEntity).ToList(),
-                        LARSLearningDeliveryCategories = ld.LarsLearningDeliveryCategories.Select(LARSLearningDeliveryCategoriesFromEntity).ToList(),
-                        LARSFrameworkAims = ld.LarsFrameworkAims.Select(LARSFrameworkAimFromEntity).ToList(),
-                        LARSFundings = ld.LarsFundings.Select(LARSFundingsFromEntity).ToList(),
-                        LARSValidities = ld.LarsValidities.Select(LARSValiditiesFromEntity).ToList()
+                        LARSAnnualValues = ld.LarsAnnualValues.Select(la => LARSAnnualValueFromEntity(la)).ToList(),
+                        LARSCareerLearningPilots = ld.LarsCareerLearningPilots.Select(lc => LARSCareerLearningPilotsFromEntity(lc)).ToList(),
+                        LARSLearningDeliveryCategories = ld.LarsLearningDeliveryCategories.Select(ldc => LARSLearningDeliveryCategoriesFromEntity(ldc)).ToList(),
+                        LARSFrameworkAims = ld.LarsFrameworkAims.Select(lfa => LARSFrameworkAimFromEntity(lfa)).ToList(),
+                        LARSFundings = ld.LarsFundings.Select(lf => LARSFundingsFromEntity(lf)).ToList(),
+                        LARSValidities = ld.LarsValidities.Select(lv => LARSValiditiesFromEntity(lv)).ToList()
                     }).ToListAsync(cancellationToken);
 
             return larsLearningDeliveries

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class LarsStandardService : IRetrievalService<IReadOnlyDictionary<int, LARSStandard>, IReadOnlyCollection<int>>
+    public class LarsStandardRepositoryService : ILarsStandardRepositoryService
     {
         private readonly ILARSContext _larsContext;
 
-        public LarsStandardService()
+        public LarsStandardRepositoryService()
         {
         }
 
-        public LarsStandardService(ILARSContext larsContext)
+        public LarsStandardRepositoryService(ILARSContext larsContext)
         {
             _larsContext = larsContext;
         }
@@ -41,10 +41,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         NotionalEndLevel = ls.NotionalEndLevel,
                         EffectiveFrom = ls.EffectiveFrom.Value,
                         EffectiveTo = ls.EffectiveTo,
-                        LARSStandardApprenticeshipFundings = ls.LarsApprenticeshipStdFundings.Select(LARSStandardAppFundingFromEntity).ToList(),
-                        LARSStandardCommonComponents = ls.LarsStandardCommonComponents.Select(LARSStandardComCmpFromEntity).ToList(),
-                        LARSStandardFundings = ls.LarsStandardFundings.Select(LARSStandardFundingFromEntity).ToList(),
-                        LARSStandardValidities = ls.LarsStandardValidities.Select(LARSStandardValidityFromEntity).ToList()
+                        LARSStandardApprenticeshipFundings = ls.LarsApprenticeshipStdFundings.Select(lsa => LARSStandardAppFundingFromEntity(lsa)).ToList(),
+                        LARSStandardCommonComponents = ls.LarsStandardCommonComponents.Select(lsc => LARSStandardComCmpFromEntity(lsc)).ToList(),
+                        LARSStandardFundings = ls.LarsStandardFundings.Select(lsf => LARSStandardFundingFromEntity(lsf)).ToList(),
+                        LARSStandardValidities = ls.LarsStandardValidities.Select(lsv => LARSStandardValidityFromEntity(lsv)).ToList()
                     }).ToListAsync(cancellationToken);
 
             return larsStandards

@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var message = TestMessage();
 
-            var mapper = NewMapper().MapFromMessage(message);
+            var mapper = NewMapper().MapPostcodesFromMessage(message);
 
             mapper.Count().Should().Be(6);
             mapper.Should().Contain(new List<string> { "Postcode1", "Postcode2", "PostcodePrior1", "PostcodePrior2", "DelLocPostCode1", "DelLocPostCode2" });
@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapFromMessage(null).Should().BeNullOrEmpty();
+            NewMapper().MapPostcodesFromMessage(null).Should().BeNullOrEmpty();
         }
 
         private TestMessage TestMessage()

@@ -10,9 +10,9 @@ using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
-    public class MetaDataService : IMetaDataRetrievalService
+    public class MetaDataRetrievalService : IMetaDataRetrievalService
     {
         private const string EmployersVersionName = "Employers Version";
         private const string LarsVersionName = "LARS Version";
@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         private readonly IOrganisationsContext _organisationsContext;
         private readonly IPostcodesContext _postcodesContext;
 
-        public MetaDataService(
+        public MetaDataRetrievalService(
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,

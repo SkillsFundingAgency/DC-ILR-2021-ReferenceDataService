@@ -56,9 +56,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.Select(u => u.UniqueLearnerNumber).ToList().Should().BeEquivalentTo(ulnList.Select(u => u.Uln).ToList());
         }
 
-        private UlnService NewService(IUlnContext uln = null)
+        private UlnRepositoryService NewService(IUlnContext uln = null)
         {
-            return new UlnService(uln);
+            return new UlnRepositoryService(uln);
         }
     }
 }

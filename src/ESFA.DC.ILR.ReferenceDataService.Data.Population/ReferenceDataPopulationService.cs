@@ -1,46 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
-using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
-using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
-using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
-using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
-using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
-using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
-using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
     public class ReferenceDataPopulationService : IReferenceDataPopulationService
     {
-        private readonly IReferenceMetaDataService _metaDataReferenceService;
-
-        private readonly IReferenceDataService<IReadOnlyDictionary<int, Employer>, IReadOnlyCollection<int>> _employersReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<string, List<EPAOrganisation>>, IReadOnlyCollection<string>> _epaOrgReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<string, FcsContractAllocation>, int> _fcsReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<string, LARSLearningDelivery>, IReadOnlyCollection<string>> _larsLearningDeliveryReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<int, LARSStandard>, IReadOnlyCollection<int>> _larsStandardReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<int, Organisation>, IReadOnlyCollection<int>> _orgReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyDictionary<string, Postcode>, IReadOnlyCollection<string>> _postcodeReferenceDataService;
-        private readonly IReferenceDataService<IReadOnlyCollection<ULN>, IReadOnlyCollection<long>> _ulnReferenceDataService;
+        private readonly IMessageMapperService _messageMapperService;
+        private readonly IMetaDataRetrievalService _metaDataRetrievalService;
+        private readonly IEmployersRepositoryService _employersReferenceDataService;
+        private readonly IEpaOrganisationsRepositoryService _epaOrgReferenceDataService;
+        private readonly IFcsRepositoryService _fcsReferenceDataService;
+        private readonly ILarsLearningDeliveryRepositoryService _larsLearningDeliveryReferenceDataService;
+        private readonly ILarsStandardRepositoryService _larsStandardReferenceDataService;
+        private readonly IOrganisationsRepositoryService _orgReferenceDataService;
+        private readonly IPostcodesRepositoryService _postcodeReferenceDataService;
+        private readonly IUlnRepositoryService _ulnReferenceDataService;
 
         public ReferenceDataPopulationService(
-            IReferenceMetaDataService metaDataReferenceService,
-            IReferenceDataService<IReadOnlyDictionary<int, Employer>, IReadOnlyCollection<int>> employersReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<string, List<EPAOrganisation>>, IReadOnlyCollection<string>> epaOrgReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<string, FcsContractAllocation>, int> fcsReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<string, LARSLearningDelivery>, IReadOnlyCollection<string>> larsLearningDeliveryReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<int, LARSStandard>, IReadOnlyCollection<int>> larsStandardReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<int, Organisation>, IReadOnlyCollection<int>> orgReferenceDataService,
-            IReferenceDataService<IReadOnlyDictionary<string, Postcode>, IReadOnlyCollection<string>> postcodeReferenceDataService,
-            IReferenceDataService<IReadOnlyCollection<ULN>, IReadOnlyCollection<long>> ulnReferenceDataService)
+            IMessageMapperService messageMapperService,
+            IMetaDataRetrievalService metaDataRetrievalService,
+            IEmployersRepositoryService employersReferenceDataService,
+            IEpaOrganisationsRepositoryService epaOrgReferenceDataService,
+            IFcsRepositoryService fcsReferenceDataService,
+            ILarsLearningDeliveryRepositoryService larsLearningDeliveryReferenceDataService,
+            ILarsStandardRepositoryService larsStandardReferenceDataService,
+            IOrganisationsRepositoryService orgReferenceDataService,
+            IPostcodesRepositoryService postcodeReferenceDataService,
+            IUlnRepositoryService ulnReferenceDataService)
         {
-            _metaDataReferenceService = metaDataReferenceService;
+            _messageMapperService = messageMapperService;
+            _metaDataRetrievalService = metaDataRetrievalService;
             _employersReferenceDataService = employersReferenceDataService;
             _epaOrgReferenceDataService = epaOrgReferenceDataService;
             _fcsReferenceDataService = fcsReferenceDataService;
@@ -53,17 +46,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
         public async Task<ReferenceDataRoot> PopulateAsync(IMessage message, CancellationToken cancellationToken)
         {
+            var messageData = _messageMapperService.MapFromMessage(message);
+
             return new ReferenceDataRoot
             {
-                MetaDatas = await _metaDataReferenceService.Retrieve(cancellationToken),
-                Employers = await _employersReferenceDataService.Retrieve(message, cancellationToken),
-                EPAOrganisations = await _epaOrgReferenceDataService.Retrieve(message, cancellationToken),
-                FCSContractAllocations = await _fcsReferenceDataService.Retrieve(message, cancellationToken),
-                LARSLearningDeliveries = await _larsLearningDeliveryReferenceDataService.Retrieve(message, cancellationToken),
-                LARSStandards = await _larsStandardReferenceDataService.Retrieve(message, cancellationToken),
-                Organisations = await _orgReferenceDataService.Retrieve(message, cancellationToken),
-                Postcodes = await _postcodeReferenceDataService.Retrieve(message, cancellationToken),
-                ULNs = await _ulnReferenceDataService.Retrieve(message, cancellationToken)
+                MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
+                Employers = await _employersReferenceDataService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
+                EPAOrganisations = await _epaOrgReferenceDataService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
+                FCSContractAllocations = await _fcsReferenceDataService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                //LARSLearningDeliveries = await _larsLearningDeliveryReferenceDataService.RetrieveAsync(messageData.LearnAimRefs, cancellationToken),
+                //LARSStandards = await _larsStandardReferenceDataService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
+                Organisations = await _orgReferenceDataService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
+                Postcodes = await _postcodeReferenceDataService.RetrieveAsync(messageData.Postcodes, cancellationToken),
+                ULNs = await _ulnReferenceDataService.RetrieveAsync(messageData.ULNs, cancellationToken)
             };
         }
     }

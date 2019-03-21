@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class OrganisationsService : IRetrievalService<IReadOnlyDictionary<int, Organisation>, IReadOnlyCollection<int>>
+    public class OrganisationsRepositoryService : IOrganisationsRepositoryService
     {
         private readonly IOrganisationsContext _organisations;
 
-        public OrganisationsService()
+        public OrganisationsRepositoryService()
         {
         }
 
-        public OrganisationsService(IOrganisationsContext organisations)
+        public OrganisationsRepositoryService(IOrganisationsContext organisations)
         {
             _organisations = organisations;
         }
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
                           CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),
-                          OrganisationFundings = o.OrgFundings.Select(OrgFundingFromEntity).ToList(),
+                          OrganisationFundings = o.OrgFundings.Select(of => OrgFundingFromEntity(of)).ToList(),
                       })
                       .ToListAsync(cancellationToken);
 

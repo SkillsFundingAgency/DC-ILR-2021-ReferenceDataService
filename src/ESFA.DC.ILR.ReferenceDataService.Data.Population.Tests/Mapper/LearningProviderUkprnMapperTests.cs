@@ -12,13 +12,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var message = TestMessage();
 
-            NewMapper().MapFromMessage(message).Should().Be(99);
+            NewMapper().MapLearningProviderUKPRNFromMessage(message).Should().Be(99);
         }
 
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapFromMessage(null).Should().Be(0);
+            NewMapper().MapLearningProviderUKPRNFromMessage(null).Should().Be(0);
         }
 
         private TestMessage TestMessage()

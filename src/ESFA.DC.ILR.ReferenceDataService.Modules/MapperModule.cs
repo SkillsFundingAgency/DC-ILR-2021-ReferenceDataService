@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Autofac;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+﻿using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Modules
@@ -9,14 +8,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<EmpIdMapper>().As<IMessageMapper<IReadOnlyCollection<int>>>();
-            containerBuilder.RegisterType<EpaOrgIdMapper>().As<IMessageMapper<IReadOnlyCollection<string>>>();
-            containerBuilder.RegisterType<LearnAimRefMapper>().As<IMessageMapper<IReadOnlyCollection<string>>>();
-            containerBuilder.RegisterType<LearningProviderUkprnMapper>().As<IMessageMapper<int>>();
-            containerBuilder.RegisterType<PostcodesMapper>().As<IMessageMapper<IReadOnlyCollection<string>>>();
-            containerBuilder.RegisterType<StdCodeMapper>().As<IMessageMapper<IReadOnlyCollection<int>>>();
-            containerBuilder.RegisterType<UkprnsMapper>().As<IMessageMapper<IReadOnlyCollection<int>>>();
-            containerBuilder.RegisterType<UlnMapper>().As<IMessageMapper<IReadOnlyCollection<long>>>();
+            containerBuilder.RegisterType<EmpIdMapper>().As<IEmpIdMapper>();
+            containerBuilder.RegisterType<EpaOrgIdMapper>().As<IEpaOrgIdMapper>();
+            containerBuilder.RegisterType<LearnAimRefMapper>().As<ILearnAimRefMapper>();
+            containerBuilder.RegisterType<LearningProviderUkprnMapper>().As<ILearningProviderUkprnMapper>();
+            containerBuilder.RegisterType<PostcodesMapper>().As<IPostcodesMapper>();
+            containerBuilder.RegisterType<StandardCodesMapper>().As<IStandardCodesMapper>();
+            containerBuilder.RegisterType<UkprnsMapper>().As<IUkprnsMapper>();
+            containerBuilder.RegisterType<UlnMapper>().As<IUlnMapper>();
         }
     }
 }

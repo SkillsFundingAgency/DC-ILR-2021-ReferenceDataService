@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -15,6 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<ReferenceDataOutputService>().As<IReferenceDataOutputService>();
             containerBuilder.RegisterType<MessageProvider>().As<IMessageProvider>();
             containerBuilder.RegisterType<ReferenceDataPopulationService>().As<IReferenceDataPopulationService>();
+            containerBuilder.RegisterType<MessageMapperService>().As<IMessageMapperService>();
         }
     }
 }

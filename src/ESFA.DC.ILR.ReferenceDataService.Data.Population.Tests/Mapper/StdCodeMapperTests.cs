@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var message = TestMessage();
 
-            var mapper = NewMapper().MapFromMessage(message);
+            var mapper = NewMapper().MapStandardCodesFromMessage(message);
 
             mapper.Count().Should().Be(3);
             mapper.Should().Contain(1);
@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapFromMessage(null).Should().BeNullOrEmpty();
+            NewMapper().MapStandardCodesFromMessage(null).Should().BeNullOrEmpty();
         }
 
         private TestMessage TestMessage()
@@ -66,9 +66,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             };
         }
 
-        private StdCodeMapper NewMapper()
+        private StandardCodesMapper NewMapper()
         {
-            return new StdCodeMapper();
+            return new StandardCodesMapper();
         }
     }
 }

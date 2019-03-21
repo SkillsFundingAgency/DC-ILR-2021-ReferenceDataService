@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             containerBuilder.RegisterModule<ReferenceDataOrchestrationServicesModule>();
             containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
             containerBuilder.RegisterModule<RepositoryModule>();
-            containerBuilder.RegisterModule<ReferenceDataPopulationModule>();
+            containerBuilder.RegisterModule<ReferenceDataRepositoryServicesModule>();
             containerBuilder.RegisterModule<MapperModule>();
 
             containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>();
