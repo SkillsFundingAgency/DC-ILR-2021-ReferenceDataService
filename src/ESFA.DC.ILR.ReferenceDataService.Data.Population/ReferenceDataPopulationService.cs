@@ -11,37 +11,37 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
     {
         private readonly IMessageMapperService _messageMapperService;
         private readonly IMetaDataRetrievalService _metaDataRetrievalService;
-        private readonly IEmployersRepositoryService _employersReferenceDataService;
-        private readonly IEpaOrganisationsRepositoryService _epaOrgReferenceDataService;
-        private readonly IFcsRepositoryService _fcsReferenceDataService;
-        private readonly ILarsLearningDeliveryRepositoryService _larsLearningDeliveryReferenceDataService;
-        private readonly ILarsStandardRepositoryService _larsStandardReferenceDataService;
-        private readonly IOrganisationsRepositoryService _orgReferenceDataService;
-        private readonly IPostcodesRepositoryService _postcodeReferenceDataService;
-        private readonly IUlnRepositoryService _ulnReferenceDataService;
+        private readonly IEmployersRepositoryService _employersRepositoryService;
+        private readonly IEpaOrganisationsRepositoryService _epaOrganisationsRepositoryService;
+        private readonly IFcsRepositoryService _fcsRepositoryService;
+        private readonly ILarsLearningDeliveryRepositoryService _larsLearningDeliveryRepositoryService;
+        private readonly ILarsStandardRepositoryService _larsStandardRepositoryService;
+        private readonly IOrganisationsRepositoryService _organisationsRepositoryService;
+        private readonly IPostcodesRepositoryService _postcodesRepositoryService;
+        private readonly IUlnRepositoryService _ulnRepositoryService;
 
         public ReferenceDataPopulationService(
             IMessageMapperService messageMapperService,
             IMetaDataRetrievalService metaDataRetrievalService,
-            IEmployersRepositoryService employersReferenceDataService,
-            IEpaOrganisationsRepositoryService epaOrgReferenceDataService,
-            IFcsRepositoryService fcsReferenceDataService,
-            ILarsLearningDeliveryRepositoryService larsLearningDeliveryReferenceDataService,
-            ILarsStandardRepositoryService larsStandardReferenceDataService,
-            IOrganisationsRepositoryService orgReferenceDataService,
-            IPostcodesRepositoryService postcodeReferenceDataService,
-            IUlnRepositoryService ulnReferenceDataService)
+            IEmployersRepositoryService employersRepositoryService,
+            IEpaOrganisationsRepositoryService epaOrganisationsRepositoryService,
+            IFcsRepositoryService fcsRepositoryService,
+            ILarsLearningDeliveryRepositoryService larsLearningDeliveryRepositoryService,
+            ILarsStandardRepositoryService larsStandardRepositoryService,
+            IOrganisationsRepositoryService organisationsRepositoryService,
+            IPostcodesRepositoryService postcodesRepositoryService,
+            IUlnRepositoryService ulnRepositoryService)
         {
             _messageMapperService = messageMapperService;
             _metaDataRetrievalService = metaDataRetrievalService;
-            _employersReferenceDataService = employersReferenceDataService;
-            _epaOrgReferenceDataService = epaOrgReferenceDataService;
-            _fcsReferenceDataService = fcsReferenceDataService;
-            _larsLearningDeliveryReferenceDataService = larsLearningDeliveryReferenceDataService;
-            _larsStandardReferenceDataService = larsStandardReferenceDataService;
-            _orgReferenceDataService = orgReferenceDataService;
-            _postcodeReferenceDataService = postcodeReferenceDataService;
-            _ulnReferenceDataService = ulnReferenceDataService;
+            _employersRepositoryService = employersRepositoryService;
+            _epaOrganisationsRepositoryService = epaOrganisationsRepositoryService;
+            _fcsRepositoryService = fcsRepositoryService;
+            _larsLearningDeliveryRepositoryService = larsLearningDeliveryRepositoryService;
+            _larsStandardRepositoryService = larsStandardRepositoryService;
+            _organisationsRepositoryService = organisationsRepositoryService;
+            _postcodesRepositoryService = postcodesRepositoryService;
+            _ulnRepositoryService = ulnRepositoryService;
         }
 
         public async Task<ReferenceDataRoot> PopulateAsync(IMessage message, CancellationToken cancellationToken)
@@ -51,14 +51,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             return new ReferenceDataRoot
             {
                 MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
-                Employers = await _employersReferenceDataService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
-                EPAOrganisations = await _epaOrgReferenceDataService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
-                FCSContractAllocations = await _fcsReferenceDataService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
-                LARSLearningDeliveries = await _larsLearningDeliveryReferenceDataService.RetrieveAsync(messageData.LearnAimRefs, cancellationToken),
-                LARSStandards = await _larsStandardReferenceDataService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
-                Organisations = await _orgReferenceDataService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
-                Postcodes = await _postcodeReferenceDataService.RetrieveAsync(messageData.Postcodes, cancellationToken),
-                ULNs = await _ulnReferenceDataService.RetrieveAsync(messageData.ULNs, cancellationToken)
+                Employers = await _employersRepositoryService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
+                EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
+                FCSContractAllocations = await _fcsRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                LARSLearningDeliveries = await _larsLearningDeliveryRepositoryService.RetrieveAsync(messageData.LearnAimRefs, cancellationToken),
+                LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
+                Organisations = await _organisationsRepositoryService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
+                Postcodes = await _postcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
+                ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken)
             };
         }
     }
