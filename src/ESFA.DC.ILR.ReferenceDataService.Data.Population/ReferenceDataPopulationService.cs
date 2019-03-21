@@ -54,8 +54,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 Employers = await _employersReferenceDataService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
                 EPAOrganisations = await _epaOrgReferenceDataService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
                 FCSContractAllocations = await _fcsReferenceDataService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
-                //LARSLearningDeliveries = await _larsLearningDeliveryReferenceDataService.RetrieveAsync(messageData.LearnAimRefs, cancellationToken),
-                //LARSStandards = await _larsStandardReferenceDataService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
+                LARSLearningDeliveries = await _larsLearningDeliveryReferenceDataService.RetrieveAsync(messageData.LearnAimRefs, cancellationToken),
+                LARSStandards = await _larsStandardReferenceDataService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
                 Organisations = await _orgReferenceDataService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
                 Postcodes = await _postcodeReferenceDataService.RetrieveAsync(messageData.Postcodes, cancellationToken),
                 ULNs = await _ulnReferenceDataService.RetrieveAsync(messageData.ULNs, cancellationToken)

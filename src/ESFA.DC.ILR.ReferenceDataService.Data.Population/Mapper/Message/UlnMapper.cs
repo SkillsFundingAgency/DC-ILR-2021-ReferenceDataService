@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
 {
     public class UlnMapper : IUlnMapper
     {
-        public IReadOnlyCollection<long> MapPostcodesFromMessage(IMessage input)
+        public IReadOnlyCollection<long> MapUlnsFromMessage(IMessage input)
         {
             var ulns = new List<long>();
 

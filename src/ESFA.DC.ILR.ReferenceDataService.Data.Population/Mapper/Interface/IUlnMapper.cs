@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface
 {
     public interface IUlnMapper
     {
-        IReadOnlyCollection<long> MapPostcodesFromMessage(IMessage input);
+        IReadOnlyCollection<long> MapUlnsFromMessage(IMessage input);
     }
 }

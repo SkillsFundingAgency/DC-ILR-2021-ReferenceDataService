@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 Postcodes = _postcodesMapper.MapPostcodesFromMessage(message),
                 StandardCodes = _standardCodesMapper.MapStandardCodesFromMessage(message),
                 UKPRNs = _ukprnsMapper.MapUKPRNsFromMessage(message),
-                ULNs = _ulnMapper.MapPostcodesFromMessage(message),
+                ULNs = _ulnMapper.MapUlnsFromMessage(message),
             };
         }
     }
