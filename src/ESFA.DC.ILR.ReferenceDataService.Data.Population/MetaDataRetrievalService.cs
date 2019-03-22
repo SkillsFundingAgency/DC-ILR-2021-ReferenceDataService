@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
@@ -38,35 +39,27 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
         {
-            var larsVersion =
-                await _larsContext.LARS_Versions
-                .OrderByDescending(v => v.MainDataSchemaName)
-                .Select(v => new ReferenceDataVersion(LarsVersionName, v.MainDataSchemaName))
-                .FirstOrDefaultAsync();
-
-            var orgVersion = await _organisationsContext.OrgVersions
-                .OrderByDescending(v => v.MainDataSchemaName)
-                .Select(v => new ReferenceDataVersion(OrganisationsVersionName, v.MainDataSchemaName))
-                .FirstOrDefaultAsync();
-
-            var postcodesVersion = await _postcodesContext.VersionInfos
-                .OrderByDescending(v => v.VersionNumber)
-                .Select(v => new ReferenceDataVersion(PostcodesVersionName, v.VersionNumber))
-                .FirstOrDefaultAsync();
-
-            var employersVersion = await _employersContext.LargeEmployerSourceFiles
-                .OrderByDescending(v => v.Id)
-                .Select(v => new ReferenceDataVersion(EmployersVersionName, v.Id.ToString()))
-                .FirstOrDefaultAsync();
-
             return new MetaData
             {
-                ReferenceDataVersions = new List<ReferenceDataVersion>
+                ReferenceDataVersions = new ReferenceDataVersion
                 {
-                    larsVersion,
-                    orgVersion,
-                    postcodesVersion,
-                    employersVersion
+                    Employers =
+                        await _employersContext.LargeEmployerSourceFiles
+                        .OrderByDescending(v => v.Id)
+                        .Select(v => new EmployersVersion(v.Id.ToString()))
+                        .FirstOrDefaultAsync(),
+                    LarsVersion = await _larsContext.LARS_Versions
+                        .OrderByDescending(v => v.MainDataSchemaName)
+                        .Select(v => new LarsVersion(v.MainDataSchemaName))
+                        .FirstOrDefaultAsync(),
+                    OrganisationsVersion = await _organisationsContext.OrgVersions
+                        .OrderByDescending(v => v.MainDataSchemaName)
+                        .Select(v => new OrganisationsVersion(v.MainDataSchemaName))
+                        .FirstOrDefaultAsync(),
+                    PostcodesVersion = await _postcodesContext.VersionInfos
+                        .OrderByDescending(v => v.VersionNumber)
+                        .Select(v => new PostcodesVersion(v.VersionNumber))
+                        .FirstOrDefaultAsync()
                 }
             };
         }

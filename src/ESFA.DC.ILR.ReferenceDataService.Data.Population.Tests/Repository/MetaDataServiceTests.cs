@@ -73,11 +73,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var serviceResult = await NewService(employersMock.Object, larsMock.Object, orgMock.Object, postcodesMock.Object).RetrieveAsync(CancellationToken.None);
 
-            serviceResult.ReferenceDataVersions.Should().HaveCount(4);
-            serviceResult.ReferenceDataVersions.Where(r => r.Name == "LARS Version").Select(r => r.Version).Should().BeEquivalentTo(larsVersion);
-            serviceResult.ReferenceDataVersions.Where(r => r.Name == "Employers Version").Select(r => r.Version).Should().BeEquivalentTo(employersVersion);
-            serviceResult.ReferenceDataVersions.Where(r => r.Name == "Organisations Version").Select(r => r.Version).Should().BeEquivalentTo(orgVersion);
-            serviceResult.ReferenceDataVersions.Where(r => r.Name == "Potcodes Version").Select(r => r.Version).Should().BeEquivalentTo(postcodesVersion);
+            serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
+            serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
+            serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
+            serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
         }
 
         private MetaDataRetrievalService NewService(

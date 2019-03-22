@@ -12,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
@@ -79,7 +80,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 ulnRDSMock.Object).PopulateAsync(message, CancellationToken.None);
 
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
-            root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
 
             root.Employers.Keys.Should().HaveCount(3);
             root.Employers.Keys.Should().Contain(employers.Keys);
@@ -128,14 +128,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             root.ULNs.Should().BeEquivalentTo(ulns);
         }
 
-        private List<ReferenceDataVersion> TestReferenceDataVersions()
+        private ReferenceDataVersion TestReferenceDataVersions()
         {
-            return new List<ReferenceDataVersion>
+            return new ReferenceDataVersion
             {
-                new ReferenceDataVersion("Employers", "Version 1"),
-                new ReferenceDataVersion("LARS", "Version 2"),
-                new ReferenceDataVersion("Organisations", "Version 3"),
-                new ReferenceDataVersion("Postcodes", "Version 4")
+                Employers = new EmployersVersion("Version 1"),
+                LarsVersion = new LarsVersion("Version 2"),
+                OrganisationsVersion = new OrganisationsVersion("Version 3"),
+                PostcodesVersion = new PostcodesVersion("Version 4")
             };
         }
 
