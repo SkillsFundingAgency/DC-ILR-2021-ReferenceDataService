@@ -274,15 +274,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private IReadOnlyCollection<ULN> TestUlnCollection()
+        private IReadOnlyCollection<long> TestUlnCollection()
         {
-            return new List<ULN>
+            return new List<long>
             {
-                new ULN { UniqueLearnerNumber = 1 },
-                new ULN { UniqueLearnerNumber = 2 },
-                new ULN { UniqueLearnerNumber = 3 },
-                new ULN { UniqueLearnerNumber = 4 },
-                new ULN { UniqueLearnerNumber = 5 }
+                1, 2, 3, 4, 5
             };
         }
 

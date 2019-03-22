@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Lep1 = "Lep1",
                     Lep2 = "Lep2",
                     Nuts = "Nuts",
-                    Termination = new DateTime(2020, 8, 1),
+                    Termination = new DateTime(2020, 8, 31),
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 }
             };
@@ -214,7 +214,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Lep1 = "Lep1",
                             Lep2 = "Lep2",
                             Nuts = "Nuts",
-                            Termination = "01-08-2020",
+                            Termination = "202008",
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
@@ -350,7 +350,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep1 = "Lep1",
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
-                Termination = "01-08-2020",
+                Termination = "202008",
                 EffectiveFrom = new DateTime(2018, 8, 1)
             };
 
@@ -360,7 +360,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep1 = "Lep1",
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
-                Termination = new DateTime(2020, 8, 1),
+                Termination = new DateTime(2020, 8, 31),
                 EffectiveFrom = new DateTime(2018, 8, 1)
             };
 

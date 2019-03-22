@@ -22,9 +22,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _uln = uln;
         }
 
-        public async Task<IReadOnlyCollection<ULN>> RetrieveAsync(IReadOnlyCollection<long> ulns, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<long>> RetrieveAsync(IReadOnlyCollection<long> ulns, CancellationToken cancellationToken)
         {
-            var result = new List<ULN>();
+            var result = new List<long>();
 
             var batches = ulns.Batch(BatchSize);
 
@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 result.AddRange(
                     await _uln.UniqueLearnerNumbers
                      .Where(u => batch.Contains(u.Uln))
-                     .Select(uln => new ULN { UniqueLearnerNumber = uln.Uln })
+                     .Select(u => u.Uln)
                      .ToListAsync(cancellationToken));
             }
 

@@ -108,8 +108,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 Lep2 = onsPostcode.Lep2,
                 LocalAuthority = onsPostcode.LocalAuthority,
                 Nuts = onsPostcode.Nuts,
-                Termination = onsPostcode.Termination == null ? _terminationDateNull : DateTime.Parse(onsPostcode.Termination)
+                Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination)
             };
+        }
+
+        private DateTime? GetEndOfMonthDateFromYearMonthString(string yearMonth)
+        {
+            if (yearMonth == null || string.IsNullOrEmpty(yearMonth.Trim()) || yearMonth.Length != 6)
+            {
+                return null;
+            }
+
+            var yearParsed = int.TryParse(yearMonth.Substring(0, 4), out var year);
+            var monthParsed = int.TryParse(yearMonth.Substring(4), out var month);
+
+            if (!yearParsed || !monthParsed)
+            {
+                return null;
+            }
+
+            return new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
         }
     }
 }
