@@ -27,6 +27,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
 
         public IReadOnlyDictionary<string, Postcode> Postcodes { get; set; }
 
-        public IReadOnlyCollection<ULN> ULNs { get; set; }
+        public IReadOnlyCollection<long> ULNs { get; set; }
     }
 }

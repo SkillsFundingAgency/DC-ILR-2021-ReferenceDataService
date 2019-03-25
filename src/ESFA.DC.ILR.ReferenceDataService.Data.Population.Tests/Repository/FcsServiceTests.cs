@@ -300,9 +300,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service["102"].EsfEligibilityRule.Should().BeNull();
         }
 
-        private FcsService NewService(IFcsContext fcs = null)
+        private FcsRepositoryService NewService(IFcsContext fcs = null)
         {
-            return new FcsService(fcs);
+            return new FcsRepositoryService(fcs);
         }
     }
 }

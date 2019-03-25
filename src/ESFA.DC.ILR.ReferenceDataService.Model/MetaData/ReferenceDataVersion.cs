@@ -1,15 +1,15 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 {
-    public struct ReferenceDataVersion
+    public class ReferenceDataVersion
     {
-        public ReferenceDataVersion(string name, string version)
-        {
-            Name = name;
-            Version = version;
-        }
+        public EmployersVersion Employers { get; set; }
 
-        public string Name { get; set; }
+        public LarsVersion LarsVersion { get; set; }
 
-        public string Version { get; set; }
+        public OrganisationsVersion OrganisationsVersion { get; set; }
+
+        public PostcodesVersion PostcodesVersion { get; set; }
     }
 }

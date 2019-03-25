@@ -29,7 +29,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<AzureStorageFileService>().As<IFileService>();
             containerBuilder.RegisterType<DecompressionService>().As<IDecompressionService>();
             containerBuilder.RegisterType<AzureStorageKeyValuePersistenceService>().As<IKeyValuePersistenceService>();
-            containerBuilder.RegisterType<StronglyTypedKeyValuePersistenceService>().As<IStronglyTypedKeyValuePersistenceService>();
         }
     }
 }

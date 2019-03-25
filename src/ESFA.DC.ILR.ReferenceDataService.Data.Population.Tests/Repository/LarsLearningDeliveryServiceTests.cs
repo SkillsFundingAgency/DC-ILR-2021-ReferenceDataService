@@ -470,9 +470,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().LARSFrameworkAppFundingFromEntity(null).Should().BeEquivalentTo(new LARSFrameworkApprenticeshipFunding());
         }
 
-        private LarsLearningDeliveryService NewService(ILARSContext larsContext = null)
+        private LarsLearningDeliveryRepositoryService NewService(ILARSContext larsContext = null)
         {
-            return new LarsLearningDeliveryService(larsContext);
+            return new LarsLearningDeliveryRepositoryService(larsContext);
         }
     }
 }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
 {
-    public class EpaOrgIdMapper : IMessageMapper<IReadOnlyCollection<string>>
+    public class EpaOrgIdMapper : IEpaOrgIdMapper
     {
-        public IReadOnlyCollection<string> MapFromMessage(IMessage input)
+        public IReadOnlyCollection<string> MapEpaOrgIdsFromMessage(IMessage input)
         {
             var epaOrgIds =
                 input?

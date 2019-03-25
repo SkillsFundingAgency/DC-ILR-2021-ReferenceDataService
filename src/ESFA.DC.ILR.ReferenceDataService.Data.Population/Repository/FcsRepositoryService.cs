@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class FcsService : IRetrievalService<IReadOnlyDictionary<string, FcsContractAllocation>, int>
+    public class FcsRepositoryService : IFcsRepositoryService
     {
         private readonly IFcsContext _fcs;
 
-        public FcsService()
+        public FcsRepositoryService()
         {
         }
 
-        public FcsService(IFcsContext fcs)
+        public FcsRepositoryService(IFcsContext fcs)
         {
             _fcs = fcs;
         }

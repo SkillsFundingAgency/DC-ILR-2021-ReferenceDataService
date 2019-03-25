@@ -209,7 +209,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void LARSStandardFundingFromEntity_NullEntity()
         {
-             NewService().LARSStandardFundingFromEntity(null).Should().BeEquivalentTo(new LARSStandardFunding());
+            NewService().LARSStandardFundingFromEntity(null).Should().BeEquivalentTo(new LARSStandardFunding());
         }
 
         [Fact]
@@ -326,9 +326,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().LARSStandardValidityFromEntity(null).Should().BeEquivalentTo(new LARSStandardValidity());
         }
 
-        private LarsStandardService NewService(ILARSContext larsContext = null)
+        private LarsStandardRepositoryService NewService(ILARSContext larsContext = null)
         {
-            return new LarsStandardService(larsContext);
+            return new LarsStandardRepositoryService(larsContext);
         }
     }
 }

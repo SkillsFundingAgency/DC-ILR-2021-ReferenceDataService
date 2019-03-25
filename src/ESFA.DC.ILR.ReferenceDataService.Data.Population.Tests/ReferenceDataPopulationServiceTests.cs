@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
@@ -28,6 +31,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var message = new TestMessage();
             var cancellationToken = CancellationToken.None;
 
+            var mapperData = new MapperData
+            {
+            };
+
             var referenceDataVersions = TestReferenceDataVersions();
             var employers = TestEmployerDictionary();
             var epaOrgs = TestEpaOrgDictionary();
@@ -38,27 +45,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var postcodes = TestPostcodeDictionary();
             var ulns = TestUlnCollection();
 
-            var metaDataServiceMock = new Mock<IReferenceMetaDataService>();
-            var employersRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<int, Employer>, IReadOnlyCollection<int>>>();
-            var epaOrgRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<string, List<EPAOrganisation>>, IReadOnlyCollection<string>>>();
-            var fcsRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<string, FcsContractAllocation>, int>>();
-            var larsLearningDeliveryRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<string, LARSLearningDelivery>, IReadOnlyCollection<string>>>();
-            var larsStandardRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<int, LARSStandard>, IReadOnlyCollection<int>>>();
-            var orgRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<int, Organisation>, IReadOnlyCollection<int>>>();
-            var postcodesRDSMock = new Mock<IReferenceDataService<IReadOnlyDictionary<string, Postcode>, IReadOnlyCollection<string>>>();
-            var ulnRDSMock = new Mock<IReferenceDataService<IReadOnlyCollection<ULN>, IReadOnlyCollection<long>>>();
+            var messageMapperServiceMock = new Mock<IMessageMapperService>();
+            var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
+            var employersRDSMock = new Mock<IEmployersRepositoryService>();
+            var epaOrgRDSMock = new Mock<IEpaOrganisationsRepositoryService>();
+            var fcsRDSMock = new Mock<IFcsRepositoryService>();
+            var larsLearningDeliveryRDSMock = new Mock<ILarsLearningDeliveryRepositoryService>();
+            var larsStandardRDSMock = new Mock<ILarsStandardRepositoryService>();
+            var orgRDSMock = new Mock<IOrganisationsRepositoryService>();
+            var postcodesRDSMock = new Mock<IPostcodesRepositoryService>();
+            var ulnRDSMock = new Mock<IUlnRepositoryService>();
 
-            metaDataServiceMock.Setup(s => s.Retrieve(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
-            employersRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(employers));
-            epaOrgRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(epaOrgs));
-            fcsRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
-            larsLearningDeliveryRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
-            larsStandardRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(larsStandards));
-            orgRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(organisations));
-            postcodesRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(postcodes));
-            ulnRDSMock.Setup(s => s.Retrieve(message, cancellationToken)).Returns(Task.FromResult(ulns));
+            messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
+            metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
+            employersRDSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
+            epaOrgRDSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
+            fcsRDSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
+            larsLearningDeliveryRDSMock.Setup(s => s.RetrieveAsync(mapperData.LearnAimRefs, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
+            larsStandardRDSMock.Setup(s => s.RetrieveAsync(mapperData.StandardCodes, cancellationToken)).Returns(Task.FromResult(larsStandards));
+            orgRDSMock.Setup(s => s.RetrieveAsync(mapperData.UKPRNs, cancellationToken)).Returns(Task.FromResult(organisations));
+            postcodesRDSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(postcodes));
+            ulnRDSMock.Setup(s => s.RetrieveAsync(mapperData.ULNs, cancellationToken)).Returns(Task.FromResult(ulns));
 
             var root = await NewService(
+                messageMapperServiceMock.Object,
                 metaDataServiceMock.Object,
                 employersRDSMock.Object,
                 epaOrgRDSMock.Object,
@@ -69,7 +79,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 postcodesRDSMock.Object,
                 ulnRDSMock.Object).PopulateAsync(message, CancellationToken.None);
 
-            root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
 
             root.Employers.Keys.Should().HaveCount(3);
@@ -119,14 +128,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             root.ULNs.Should().BeEquivalentTo(ulns);
         }
 
-        private List<ReferenceDataVersion> TestReferenceDataVersions()
+        private ReferenceDataVersion TestReferenceDataVersions()
         {
-            return new List<ReferenceDataVersion>
+            return new ReferenceDataVersion
             {
-                new ReferenceDataVersion("Employers", "Version 1"),
-                new ReferenceDataVersion("LARS", "Version 2"),
-                new ReferenceDataVersion("Organisations", "Version 3"),
-                new ReferenceDataVersion("Postcodes", "Version 4")
+                Employers = new EmployersVersion("Version 1"),
+                LarsVersion = new LarsVersion("Version 2"),
+                OrganisationsVersion = new OrganisationsVersion("Version 3"),
+                PostcodesVersion = new PostcodesVersion("Version 4")
             };
         }
 
@@ -265,30 +274,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private IReadOnlyCollection<ULN> TestUlnCollection()
+        private IReadOnlyCollection<long> TestUlnCollection()
         {
-            return new List<ULN>
+            return new List<long>
             {
-                new ULN { UniqueLearnerNumber = 1 },
-                new ULN { UniqueLearnerNumber = 2 },
-                new ULN { UniqueLearnerNumber = 3 },
-                new ULN { UniqueLearnerNumber = 4 },
-                new ULN { UniqueLearnerNumber = 5 }
+                1, 2, 3, 4, 5
             };
         }
 
         private ReferenceDataPopulationService NewService(
-            IReferenceMetaDataService metaDataReferenceService = null,
-            IReferenceDataService<IReadOnlyDictionary<int, Employer>, IReadOnlyCollection<int>> employersReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<string, List<EPAOrganisation>>, IReadOnlyCollection<string>> epaOrgReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<string, FcsContractAllocation>, int> fcsReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<string, LARSLearningDelivery>, IReadOnlyCollection<string>> larsLearningDeliveryReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<int, LARSStandard>, IReadOnlyCollection<int>> larsStandardReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<int, Organisation>, IReadOnlyCollection<int>> orgReferenceDataService = null,
-            IReferenceDataService<IReadOnlyDictionary<string, Postcode>, IReadOnlyCollection<string>> postcodeReferenceDataService = null,
-            IReferenceDataService<IReadOnlyCollection<ULN>, IReadOnlyCollection<long>> ulnReferenceDataService = null)
+            IMessageMapperService messageMapperService = null,
+            IMetaDataRetrievalService metaDataReferenceService = null,
+            IEmployersRepositoryService employersReferenceDataService = null,
+            IEpaOrganisationsRepositoryService epaOrgReferenceDataService = null,
+            IFcsRepositoryService fcsReferenceDataService = null,
+            ILarsLearningDeliveryRepositoryService larsLearningDeliveryReferenceDataService = null,
+            ILarsStandardRepositoryService larsStandardReferenceDataService = null,
+            IOrganisationsRepositoryService orgReferenceDataService = null,
+            IPostcodesRepositoryService postcodeReferenceDataService = null,
+            IUlnRepositoryService ulnReferenceDataService = null)
         {
             return new ReferenceDataPopulationService(
+                messageMapperService,
                 metaDataReferenceService,
                 employersReferenceDataService,
                 epaOrgReferenceDataService,

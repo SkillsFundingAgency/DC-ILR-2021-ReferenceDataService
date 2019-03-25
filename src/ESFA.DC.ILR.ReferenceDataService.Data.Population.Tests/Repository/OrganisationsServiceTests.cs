@@ -185,9 +185,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().OrgFundingFromEntity(null).Should().BeEquivalentTo(new OrganisationFunding());
         }
 
-        private OrganisationsService NewService(IOrganisationsContext organisations = null)
+        private OrganisationsRepositoryService NewService(IOrganisationsContext organisations = null)
         {
-            return new OrganisationsService(organisations);
+            return new OrganisationsRepositoryService(organisations);
         }
     }
 }

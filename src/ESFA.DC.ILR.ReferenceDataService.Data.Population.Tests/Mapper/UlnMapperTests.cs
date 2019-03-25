@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var message = TestMessage();
 
-            var mapper = NewMapper().MapFromMessage(message);
+            var mapper = NewMapper().MapUlnsFromMessage(message);
 
             mapper.Count().Should().Be(4);
             mapper.Should().Contain(new List<long> { 1, 2, 3, 4 });
@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapFromMessage(null).Should().BeNullOrEmpty();
+            NewMapper().MapUlnsFromMessage(null).Should().BeNullOrEmpty();
         }
 
         private TestMessage TestMessage()

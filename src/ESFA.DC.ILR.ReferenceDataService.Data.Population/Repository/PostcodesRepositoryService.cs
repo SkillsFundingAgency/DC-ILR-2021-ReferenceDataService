@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
@@ -12,12 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class PostcodesService : IRetrievalService<IReadOnlyDictionary<string, Postcode>, IReadOnlyCollection<string>>
+    public class PostcodesRepositoryService : IPostcodesRepositoryService
     {
         private const int BatchSize = 5000;
+        private readonly DateTime? _terminationDateNull;
         private readonly IPostcodesContext _postcodesContext;
 
-        public PostcodesService(IPostcodesContext postcodesContext)
+        public PostcodesRepositoryService(IPostcodesContext postcodesContext)
         {
             _postcodesContext = postcodesContext;
         }
@@ -35,12 +36,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             new Postcode()
                             {
                                 PostCode = p.Postcode,
-                                SfaDisadvantages = p.SfaPostcodeDisadvantages.Select(SfaPostcodeDisadvantagesToEntity).ToList(),
-                                SfaAreaCosts = p.SfaPostcodeAreaCosts.Select(SfaAreaCostsToEntity).ToList(),
-                                DasDisadvantages = p.DasPostcodeDisadvantages.Select(DasPostcodeDisadvantagesToEntity).ToList(),
-                                EfaDisadvantages = p.EfaPostcodeDisadvantages.Select(EfaPostcodeDisadvantagesToEntity).ToList(),
-                                CareerLearningPilots = p.CareerLearningPilotPostcodes.Select(CareerLearningPilotsToEntity).ToList(),
-                                ONSData = p.OnsPostcodes.Select(ONSDataToEntity).ToList()
+                                SfaDisadvantages = p.SfaPostcodeDisadvantages.Select(spd => SfaPostcodeDisadvantagesToEntity(spd)).ToList(),
+                                SfaAreaCosts = p.SfaPostcodeAreaCosts.Select(spa => SfaAreaCostsToEntity(spa)).ToList(),
+                                DasDisadvantages = p.DasPostcodeDisadvantages.Select(dpd => DasPostcodeDisadvantagesToEntity(dpd)).ToList(),
+                                EfaDisadvantages = p.EfaPostcodeDisadvantages.Select(epd => EfaPostcodeDisadvantagesToEntity(epd)).ToList(),
+                                CareerLearningPilots = p.CareerLearningPilotPostcodes.Select(cp => CareerLearningPilotsToEntity(cp)).ToList(),
+                                ONSData = p.OnsPostcodes.Select(ons => ONSDataToEntity(ons)).ToList()
                             }).ToListAsync(cancellationToken));
             }
 
@@ -107,8 +108,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 Lep2 = onsPostcode.Lep2,
                 LocalAuthority = onsPostcode.LocalAuthority,
                 Nuts = onsPostcode.Nuts,
-                Termination = DateTime.Parse(onsPostcode.Termination)
+                Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination)
             };
+        }
+
+        private DateTime? GetEndOfMonthDateFromYearMonthString(string yearMonth)
+        {
+            if (yearMonth == null || string.IsNullOrEmpty(yearMonth.Trim()) || yearMonth.Length != 6)
+            {
+                return null;
+            }
+
+            var yearParsed = int.TryParse(yearMonth.Substring(0, 4), out var year);
+            var monthParsed = int.TryParse(yearMonth.Substring(4), out var month);
+
+            if (!yearParsed || !monthParsed)
+            {
+                return null;
+            }
+
+            return new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
         }
     }
 }

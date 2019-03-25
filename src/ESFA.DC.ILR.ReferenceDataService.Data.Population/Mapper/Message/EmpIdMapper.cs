@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
 {
-    public class EmpIdMapper : IMessageMapper<IReadOnlyCollection<int>>
+    public class EmpIdMapper : IEmpIdMapper
     {
-        public IReadOnlyCollection<int> MapFromMessage(IMessage input)
+        public IReadOnlyCollection<int> MapEmpIdsFromMessage(IMessage input)
         {
             var empIds =
                 GetLearnerEmpIdsFromFile(input)
