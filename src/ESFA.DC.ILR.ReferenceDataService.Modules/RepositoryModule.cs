@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using ESFA.DC.Data.AppsEarningsHistory.Model;
+using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ReferenceData.Employers.Model;
@@ -28,6 +30,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
 
             var referenceDataOptions = configHelper.GetSectionValues<ReferenceDataOptions>("ReferenceDataSection");
             containerBuilder.RegisterInstance(referenceDataOptions).As<IReferenceDataOptions>().SingleInstance();
+
+            containerBuilder.Register(c =>
+            {
+                DbContextOptions<AppEarnHistoryContext> options = new DbContextOptionsBuilder<AppEarnHistoryContext>()
+                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().AppsEarningsHistoryConnectionString).Options;
+
+                return new AppEarnHistoryContext(options);
+            }).As<IAppEarnHistoryContext>().InstancePerLifetimeScope();
 
             containerBuilder.Register(c =>
             {

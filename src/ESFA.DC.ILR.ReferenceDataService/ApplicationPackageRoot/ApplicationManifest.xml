@@ -22,6 +22,7 @@
     <Parameter Name="EPAConnectionString" DefaultValue="" />
     <Parameter Name="EmployersConnectionString" DefaultValue="" />
     <Parameter Name="OrganisationsConnectionString" DefaultValue="" />
+    <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -58,6 +59,7 @@
             <Parameter Name="FCSConnectionString" Value="[FCSConnectionString]" />
             <Parameter Name="EPAConnectionString" Value="[EPAConnectionString]" />
             <Parameter Name="EmployersConnectionString" Value="[EmployersConnectionString]" />
+            <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>

@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory
 {
-    public class AppEarningsHistory
+    public class ApprenticeshipEarningsHistory
     {
         public string AppIdentifier { get; set; }
 

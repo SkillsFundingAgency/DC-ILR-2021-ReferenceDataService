@@ -27,5 +27,6 @@
     <Parameter Name="FCSConnectionString" Value="" />
     <Parameter Name="EPAConnectionString" Value="" />
     <Parameter Name="EmployersConnectionString" Value=""/>
+    <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
   </Section>
 </Settings>
