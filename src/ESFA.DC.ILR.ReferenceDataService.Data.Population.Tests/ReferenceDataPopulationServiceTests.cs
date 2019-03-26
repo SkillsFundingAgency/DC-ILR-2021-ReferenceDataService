@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
@@ -15,7 +16,6 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
-using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -36,6 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
 
             var referenceDataVersions = TestReferenceDataVersions();
+            var appsEarningHistories = TestAppsEarningHistories();
             var employers = TestEmployerDictionary();
             var epaOrgs = TestEpaOrgDictionary();
             var fcsContractAllocations = TestFcsDictionary();
@@ -47,39 +48,48 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
-            var employersRDSMock = new Mock<IEmployersRepositoryService>();
-            var epaOrgRDSMock = new Mock<IEpaOrganisationsRepositoryService>();
-            var fcsRDSMock = new Mock<IFcsRepositoryService>();
-            var larsLearningDeliveryRDSMock = new Mock<ILarsLearningDeliveryRepositoryService>();
-            var larsStandardRDSMock = new Mock<ILarsStandardRepositoryService>();
-            var orgRDSMock = new Mock<IOrganisationsRepositoryService>();
-            var postcodesRDSMock = new Mock<IPostcodesRepositoryService>();
-            var ulnRDSMock = new Mock<IUlnRepositoryService>();
+            var appsHistoryRSMock = new Mock<IAppEarningsHistoryRepositoryService>();
+            var employersRSMock = new Mock<IEmployersRepositoryService>();
+            var epaOrgRSMock = new Mock<IEpaOrganisationsRepositoryService>();
+            var fcsRSMock = new Mock<IFcsRepositoryService>();
+            var larsLearningDeliveryRSMock = new Mock<ILarsLearningDeliveryRepositoryService>();
+            var larsStandardRSMock = new Mock<ILarsStandardRepositoryService>();
+            var orgRSMock = new Mock<IOrganisationsRepositoryService>();
+            var postcodesRSMock = new Mock<IPostcodesRepositoryService>();
+            var ulnRSMock = new Mock<IUlnRepositoryService>();
 
             messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
-            employersRDSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
-            epaOrgRDSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
-            fcsRDSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
-            larsLearningDeliveryRDSMock.Setup(s => s.RetrieveAsync(mapperData.LearnAimRefs, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
-            larsStandardRDSMock.Setup(s => s.RetrieveAsync(mapperData.StandardCodes, cancellationToken)).Returns(Task.FromResult(larsStandards));
-            orgRDSMock.Setup(s => s.RetrieveAsync(mapperData.UKPRNs, cancellationToken)).Returns(Task.FromResult(organisations));
-            postcodesRDSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(postcodes));
-            ulnRDSMock.Setup(s => s.RetrieveAsync(mapperData.ULNs, cancellationToken)).Returns(Task.FromResult(ulns));
+            appsHistoryRSMock.Setup(s => s.RetrieveAsync(mapperData.FM36Ulns, cancellationToken)).Returns(Task.FromResult(appsEarningHistories));
+            employersRSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
+            epaOrgRSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
+            fcsRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
+            larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(mapperData.LearnAimRefs, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
+            larsStandardRSMock.Setup(s => s.RetrieveAsync(mapperData.StandardCodes, cancellationToken)).Returns(Task.FromResult(larsStandards));
+            orgRSMock.Setup(s => s.RetrieveAsync(mapperData.UKPRNs, cancellationToken)).Returns(Task.FromResult(organisations));
+            postcodesRSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(postcodes));
+            ulnRSMock.Setup(s => s.RetrieveAsync(mapperData.ULNs, cancellationToken)).Returns(Task.FromResult(ulns));
 
             var root = await NewService(
                 messageMapperServiceMock.Object,
                 metaDataServiceMock.Object,
-                employersRDSMock.Object,
-                epaOrgRDSMock.Object,
-                fcsRDSMock.Object,
-                larsLearningDeliveryRDSMock.Object,
-                larsStandardRDSMock.Object,
-                orgRDSMock.Object,
-                postcodesRDSMock.Object,
-                ulnRDSMock.Object).PopulateAsync(message, CancellationToken.None);
+                appsHistoryRSMock.Object,
+                employersRSMock.Object,
+                epaOrgRSMock.Object,
+                fcsRSMock.Object,
+                larsLearningDeliveryRSMock.Object,
+                larsStandardRSMock.Object,
+                orgRSMock.Object,
+                postcodesRSMock.Object,
+                ulnRSMock.Object).PopulateAsync(message, CancellationToken.None);
 
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
+
+            root.AppsEarningsHistories.Keys.Should().HaveCount(2);
+            root.AppsEarningsHistories.Keys.Should().Contain(appsEarningHistories.Keys);
+            root.AppsEarningsHistories.Keys.Should().NotContain(3);
+            root.AppsEarningsHistories[1].Should().HaveCount(2);
+            root.AppsEarningsHistories[2].Should().HaveCount(1);
 
             root.Employers.Keys.Should().HaveCount(3);
             root.Employers.Keys.Should().Contain(employers.Keys);
@@ -136,6 +146,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 LarsVersion = new LarsVersion("Version 2"),
                 OrganisationsVersion = new OrganisationsVersion("Version 3"),
                 PostcodesVersion = new PostcodesVersion("Version 4")
+            };
+        }
+
+        private IReadOnlyDictionary<long, List<ApprenticeshipEarningsHistory>> TestAppsEarningHistories()
+        {
+            return new Dictionary<long, List<ApprenticeshipEarningsHistory>>
+            {
+                {
+                    1,
+                    new List<ApprenticeshipEarningsHistory>
+                    {
+                        new ApprenticeshipEarningsHistory(),
+                        new ApprenticeshipEarningsHistory()
+                    }
+                },
+                {
+                    2,
+                    new List<ApprenticeshipEarningsHistory>
+                    {
+                        new ApprenticeshipEarningsHistory()
+                    }
+                }
             };
         }
 
@@ -285,6 +317,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         private ReferenceDataPopulationService NewService(
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
+            IAppEarningsHistoryRepositoryService appEarningsHistoryRepositoryService = null,
             IEmployersRepositoryService employersReferenceDataService = null,
             IEpaOrganisationsRepositoryService epaOrgReferenceDataService = null,
             IFcsRepositoryService fcsReferenceDataService = null,
@@ -297,6 +330,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new ReferenceDataPopulationService(
                 messageMapperService,
                 metaDataReferenceService,
+                appEarningsHistoryRepositoryService,
                 employersReferenceDataService,
                 epaOrgReferenceDataService,
                 fcsReferenceDataService,

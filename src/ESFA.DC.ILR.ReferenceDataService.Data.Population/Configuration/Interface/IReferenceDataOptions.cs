@@ -15,5 +15,7 @@
         string EPAConnectionString { get; }
 
         string EmployersConnectionString { get; }
+
+        string AppsEarningsHistoryConnectionString { get; }
     }
 }

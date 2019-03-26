@@ -9,6 +9,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
     {
         private readonly IEmpIdMapper _empIdMapper;
         private readonly IEpaOrgIdMapper _epaOrgIdMapper;
+        private readonly IFM36UlnMapper _fM36UlnMapper;
         private readonly ILearnAimRefMapper _learnAimRefMapper;
         private readonly ILearningProviderUkprnMapper _learningProviderUkprnMapper;
         private readonly IPostcodesMapper _postcodesMapper;
@@ -19,6 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         public MessageMapperService(
             IEmpIdMapper empIdMapper,
             IEpaOrgIdMapper epaOrgIdMapper,
+            IFM36UlnMapper fM36UlnMapper,
             ILearnAimRefMapper learnAimRefMapper,
             ILearningProviderUkprnMapper learningProviderUkprnMapper,
             IPostcodesMapper postcodesMapper,
@@ -28,6 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         {
             _empIdMapper = empIdMapper;
             _epaOrgIdMapper = epaOrgIdMapper;
+            _fM36UlnMapper = fM36UlnMapper;
             _learnAimRefMapper = learnAimRefMapper;
             _learningProviderUkprnMapper = learningProviderUkprnMapper;
             _postcodesMapper = postcodesMapper;
@@ -42,6 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 EmployerIds = _empIdMapper.MapEmpIdsFromMessage(message),
                 EpaOrgIds = _epaOrgIdMapper.MapEpaOrgIdsFromMessage(message),
+                FM36Ulns = _fM36UlnMapper.MapFM36UlnsFromMessage(message),
                 LearnAimRefs = _learnAimRefMapper.MapLearnAimRefsFromMessage(message),
                 LearningProviderUKPRN = _learningProviderUkprnMapper.MapLearningProviderUKPRNFromMessage(message),
                 Postcodes = _postcodesMapper.MapPostcodesFromMessage(message),

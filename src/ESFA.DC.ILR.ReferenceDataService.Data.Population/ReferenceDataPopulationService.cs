@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
     {
         private readonly IMessageMapperService _messageMapperService;
         private readonly IMetaDataRetrievalService _metaDataRetrievalService;
+        private readonly IAppEarningsHistoryRepositoryService _appEarningsHistoryRepositoryService;
         private readonly IEmployersRepositoryService _employersRepositoryService;
         private readonly IEpaOrganisationsRepositoryService _epaOrganisationsRepositoryService;
         private readonly IFcsRepositoryService _fcsRepositoryService;
@@ -23,6 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         public ReferenceDataPopulationService(
             IMessageMapperService messageMapperService,
             IMetaDataRetrievalService metaDataRetrievalService,
+            IAppEarningsHistoryRepositoryService appEarningsHistoryRepositoryService,
             IEmployersRepositoryService employersRepositoryService,
             IEpaOrganisationsRepositoryService epaOrganisationsRepositoryService,
             IFcsRepositoryService fcsRepositoryService,
@@ -34,6 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         {
             _messageMapperService = messageMapperService;
             _metaDataRetrievalService = metaDataRetrievalService;
+            _appEarningsHistoryRepositoryService = appEarningsHistoryRepositoryService;
             _employersRepositoryService = employersRepositoryService;
             _epaOrganisationsRepositoryService = epaOrganisationsRepositoryService;
             _fcsRepositoryService = fcsRepositoryService;
@@ -51,6 +54,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             return new ReferenceDataRoot
             {
                 MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
+                AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
                 Employers = await _employersRepositoryService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
                 EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
                 FCSContractAllocations = await _fcsRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),

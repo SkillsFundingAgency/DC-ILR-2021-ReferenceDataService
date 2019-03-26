@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model
 
         public IReadOnlyCollection<string> EpaOrgIds { get; set; }
 
+        public IReadOnlyCollection<long> FM36Ulns { get; set; }
+
         public IReadOnlyCollection<string> LearnAimRefs { get; set; }
 
         public int LearningProviderUKPRN { get; set; }

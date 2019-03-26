@@ -26,6 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var empIMapperdMock = new Mock<IEmpIdMapper>();
             var epaMapperMock = new Mock<IEpaOrgIdMapper>();
+            var fm36UlnMapperMock = new Mock<IFM36UlnMapper>();
             var learnAimRefMapperMock = new Mock<ILearnAimRefMapper>();
             var learningProvUkprnMapperMock = new Mock<ILearningProviderUkprnMapper>();
             var postcodesMapperMock = new Mock<IPostcodesMapper>();
@@ -35,6 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             empIMapperdMock.Setup(mm => mm.MapEmpIdsFromMessage(message)).Returns(empIds);
             epaMapperMock.Setup(mm => mm.MapEpaOrgIdsFromMessage(message)).Returns(epaOrgIds);
+            fm36UlnMapperMock.Setup(mm => mm.MapFM36UlnsFromMessage(message)).Returns(ulns);
             learnAimRefMapperMock.Setup(mm => mm.MapLearnAimRefsFromMessage(message)).Returns(learnAimRefs);
             learningProvUkprnMapperMock.Setup(mm => mm.MapLearningProviderUKPRNFromMessage(message)).Returns(ukprn);
             postcodesMapperMock.Setup(mm => mm.MapPostcodesFromMessage(message)).Returns(postcodes);
@@ -45,6 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var mapperData = NewService(
                 empIMapperdMock.Object,
                 epaMapperMock.Object,
+                fm36UlnMapperMock.Object,
                 learnAimRefMapperMock.Object,
                 learningProvUkprnMapperMock.Object,
                 postcodesMapperMock.Object,
@@ -54,6 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             mapperData.EmployerIds.Should().BeEquivalentTo(empIds);
             mapperData.EpaOrgIds.Should().BeEquivalentTo(epaOrgIds);
+            mapperData.FM36Ulns.Should().BeEquivalentTo(ulns);
             mapperData.LearnAimRefs.Should().BeEquivalentTo(learnAimRefs);
             mapperData.LearningProviderUKPRN.Should().Be(ukprn);
             mapperData.Postcodes.Should().BeEquivalentTo(postcodes);
@@ -65,6 +69,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         private MessageMapperService NewService(
             IEmpIdMapper empIdMapper = null,
             IEpaOrgIdMapper epaOrgIdMapper = null,
+            IFM36UlnMapper fM36UlnMapper = null,
             ILearnAimRefMapper learnAimRefMapper = null,
             ILearningProviderUkprnMapper learningProviderUkprnMapper = null,
             IPostcodesMapper postcodesMapper = null,
@@ -75,6 +80,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new MessageMapperService(
             empIdMapper,
             epaOrgIdMapper,
+            fM36UlnMapper,
             learnAimRefMapper,
             learningProviderUkprnMapper,
             postcodesMapper,

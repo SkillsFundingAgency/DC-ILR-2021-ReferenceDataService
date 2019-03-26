@@ -10,6 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<AppEarningsHistoryRepositoryService>().As<IAppEarningsHistoryRepositoryService>();
             containerBuilder.RegisterType<EmployersRepositoryService>().As<IEmployersRepositoryService>();
             containerBuilder.RegisterType<EpaOrganisationsRepositoryService>().As<IEpaOrganisationsRepositoryService>();
             containerBuilder.RegisterType<FcsRepositoryService>().As<IFcsRepositoryService>();

@@ -114,7 +114,7 @@
       <Version>0.1.15-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.JobContext">
-      <Version>0.1.11-beta0001</Version>
+      <Version>0.1.16-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.JobContext.Interface">
       <Version>0.2.6-beta0001</Version>
