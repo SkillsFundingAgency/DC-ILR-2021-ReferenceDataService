@@ -14,7 +14,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
-    public class LarsStandardServiceTests
+    public class LarsStandardRepositoryServiceTests
     {
         [Fact]
         public async Task RetrieveAsync()

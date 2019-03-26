@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.2.0-alpha0009" />
+    <PackageReference Include="ESFA.DC.Data.ILR.ValidationErrors.Model" Version="0.2.0-unstable0016" />
     <PackageReference Include="ESFA.DC.Data.Organisations.Model" Version="0.2.0-alpha0014" />
     <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
