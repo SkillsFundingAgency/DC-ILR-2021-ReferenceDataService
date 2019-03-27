@@ -52,26 +52,26 @@
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Tests.Model.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ReferenceData.EPA.Model, Version=0.1.184.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.EPA.Model.0.1.184\lib\netstandard2.0\ESFA.DC.ReferenceData.EPA.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.LARS.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.LARS.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.LARS.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.LARS.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.LARS.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.LARS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Organisations.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Organisations.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.Organisations.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.Organisations.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Organisations.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.Organisations.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Postcodes.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Postcodes.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.Postcodes.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.Postcodes.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Postcodes.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.Postcodes.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.ULN.Model, Version=0.2.38.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.ULN.Model.0.2.38\lib\netstandard2.0\ESFA.DC.ReferenceData.ULN.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.ULN.Model, Version=0.2.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.ULN.Model.0.2.42\lib\netstandard2.0\ESFA.DC.ReferenceData.ULN.Model.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=5.6.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.6.0\lib\net45\FluentAssertions.dll</HintPath>
