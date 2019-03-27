@@ -18,6 +18,6 @@
 
         string AppsEarningsHistoryConnectionString { get; }
 
-        string ValidationErrorsConnectionString { get; }
+        string IlrReferenceDataConnectionString { get; }
     }
 }

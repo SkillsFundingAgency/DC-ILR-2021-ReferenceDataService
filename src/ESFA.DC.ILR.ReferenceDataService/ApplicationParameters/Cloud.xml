@@ -23,6 +23,6 @@
     <Parameter Name="EPAConnectionString" Value="__EpaDbConnectionString_EFCore_RO____" />
     <Parameter Name="EmployersConnectionString" Value="__EmployersDbConnectionString_EFCore_RO__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryConnectionString_EFCore_RO__" />
-    <Parameter Name="ValidationErrorsConnectionString" Value="__ValidationErrorsConnectionString_EFCore_RO__" />
+    <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RO__" />
   </Parameters>
 </Application>

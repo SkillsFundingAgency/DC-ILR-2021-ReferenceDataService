@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS", "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS.dtproj", "{A1860F2A-2542-46C5-9A49-9758FE5FCE78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1860F2A-2542-46C5-9A49-9758FE5FCE78}.Development|Default.ActiveCfg = Development
+		{A1860F2A-2542-46C5-9A49-9758FE5FCE78}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14772F6B-4A93-496B-BA3B-9E87ED00897F}
+	EndGlobalSection
+EndGlobal

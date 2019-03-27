@@ -28,6 +28,6 @@
     <Parameter Name="EPAConnectionString" Value="" />
     <Parameter Name="EmployersConnectionString" Value=""/>
     <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
-    <Parameter Name="ValidationErrorsConnectionString" Value=""/>
+    <Parameter Name="IlrReferenceDataConnectionString" Value=""/>
   </Section>
 </Settings>

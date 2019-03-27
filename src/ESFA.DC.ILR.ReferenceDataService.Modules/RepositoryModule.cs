@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
-using ESFA.DC.Data.ILR.ValidationErrors.Model;
-using ESFA.DC.Data.ILR.ValidationErrors.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
+using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.EPA.Model;
@@ -99,11 +99,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
 
             containerBuilder.Register(c =>
             {
-                DbContextOptions<ValidationErrorsContext> options = new DbContextOptionsBuilder<ValidationErrorsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().ValidationErrorsConnectionString).Options;
+                DbContextOptions<IlrReferenceDataContext> options = new DbContextOptionsBuilder<IlrReferenceDataContext>()
+                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().IlrReferenceDataConnectionString).Options;
 
-                return new ValidationErrorsContext(options);
-            }).As<IValidationErrorsContext>().InstancePerLifetimeScope();
+                return new IlrReferenceDataContext(options);
+            }).As<IIlrReferenceDataContext>().InstancePerLifetimeScope();
         }
     }
 }

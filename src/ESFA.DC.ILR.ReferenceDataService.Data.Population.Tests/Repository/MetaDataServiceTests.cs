@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsMock = new Mock<ILARSContext>();
             var orgMock = new Mock<IOrganisationsContext>();
             var postcodesMock = new Mock<IPostcodesContext>();
-            var validationErrorsRepositoryServiceMock = new Mock<IValidationErrorsRepositoryService>();
+            var validationErrorsRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -108,7 +108,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             ILARSContext larsContext = null,
             IOrganisationsContext organisationsContext = null,
             IPostcodesContext postcodesContext = null,
-            IValidationErrorsRepositoryService validationErrorsRepositoryService = null)
+            IIlrReferenceDataRepositoryService validationErrorsRepositoryService = null)
         {
             return new MetaDataRetrievalService(employers, larsContext, organisationsContext, postcodesContext, validationErrorsRepositoryService);
         }

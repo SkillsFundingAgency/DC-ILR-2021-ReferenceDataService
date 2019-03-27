@@ -25,14 +25,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly ILARSContext _larsContext;
         private readonly IOrganisationsContext _organisationsContext;
         private readonly IPostcodesContext _postcodesContext;
-        private readonly IValidationErrorsRepositoryService _validationErrorsRepositoryService;
+        private readonly IIlrReferenceDataRepositoryService _validationErrorsRepositoryService;
 
         public MetaDataRetrievalService(
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,
             IPostcodesContext postcodesContext,
-            IValidationErrorsRepositoryService validationErrorsRepositoryService)
+            IIlrReferenceDataRepositoryService validationErrorsRepositoryService)
         {
             _employersContext = employersContext;
             _larsContext = larsContext;
