@@ -20,6 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<OrganisationsRepositoryService>().As<IOrganisationsRepositoryService>();
             containerBuilder.RegisterType<PostcodesRepositoryService>().As<IPostcodesRepositoryService>();
             containerBuilder.RegisterType<UlnRepositoryService>().As<IUlnRepositoryService>();
+            containerBuilder.RegisterType<ValidationErrorsRepositoryService>().As<IValidationErrorsRepositoryService>();
         }
     }
 }

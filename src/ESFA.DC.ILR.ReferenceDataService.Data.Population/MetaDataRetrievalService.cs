@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
@@ -24,17 +25,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly ILARSContext _larsContext;
         private readonly IOrganisationsContext _organisationsContext;
         private readonly IPostcodesContext _postcodesContext;
+        private readonly IValidationErrorsRepositoryService _validationErrorsRepositoryService;
 
         public MetaDataRetrievalService(
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,
-            IPostcodesContext postcodesContext)
+            IPostcodesContext postcodesContext,
+            IValidationErrorsRepositoryService validationErrorsRepositoryService)
         {
             _employersContext = employersContext;
             _larsContext = larsContext;
             _organisationsContext = organisationsContext;
             _postcodesContext = postcodesContext;
+            _validationErrorsRepositoryService = validationErrorsRepositoryService;
         }
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
@@ -47,20 +51,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                         await _employersContext.LargeEmployerSourceFiles
                         .OrderByDescending(v => v.Id)
                         .Select(v => new EmployersVersion(v.Id.ToString()))
-                        .FirstOrDefaultAsync(),
+                        .FirstOrDefaultAsync(cancellationToken),
                     LarsVersion = await _larsContext.LARS_Versions
                         .OrderByDescending(v => v.MainDataSchemaName)
                         .Select(v => new LarsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(),
+                        .FirstOrDefaultAsync(cancellationToken),
                     OrganisationsVersion = await _organisationsContext.OrgVersions
                         .OrderByDescending(v => v.MainDataSchemaName)
                         .Select(v => new OrganisationsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(),
+                        .FirstOrDefaultAsync(cancellationToken),
                     PostcodesVersion = await _postcodesContext.VersionInfos
                         .OrderByDescending(v => v.VersionNumber)
                         .Select(v => new PostcodesVersion(v.VersionNumber))
-                        .FirstOrDefaultAsync()
-                }
+                        .FirstOrDefaultAsync(cancellationToken)
+                },
+                ValidationErrors = await _validationErrorsRepositoryService.RetrieveAsync(cancellationToken)
             };
         }
     }

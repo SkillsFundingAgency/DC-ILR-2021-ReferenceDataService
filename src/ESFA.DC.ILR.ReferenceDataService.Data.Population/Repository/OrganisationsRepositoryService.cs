@@ -15,10 +15,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     {
         private readonly IOrganisationsContext _organisations;
 
-        public OrganisationsRepositoryService()
-        {
-        }
-
         public OrganisationsRepositoryService(IOrganisationsContext organisations)
         {
             _organisations = organisations;
@@ -34,8 +30,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .GroupBy(mu => mu.MasterUkprn)
                 .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken) ?? new Dictionary<long, List<string>>();
 
-            var organisations = await _organisations
-                  .MasterOrganisations
+            var masters = await _organisations
+              .MasterOrganisations
+                .Where(mo => ukprns.Contains(mo.Ukprn)).ToListAsync(cancellationToken);
+
+          var organisations = await _organisations
+                .MasterOrganisations
                   .Include(mo => mo.OrgDetail)
                   .Include(mo => mo.OrgPartnerUkprns)
                   .Include(mo => mo.OrgFundings)

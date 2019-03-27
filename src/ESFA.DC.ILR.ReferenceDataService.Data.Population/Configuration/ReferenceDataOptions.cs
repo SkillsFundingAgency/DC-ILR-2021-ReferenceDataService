@@ -19,5 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration
         public string EmployersConnectionString { get; set; }
 
         public string AppsEarningsHistoryConnectionString { get; set; }
+
+        public string ValidationErrorsConnectionString { get; set; }
     }
 }

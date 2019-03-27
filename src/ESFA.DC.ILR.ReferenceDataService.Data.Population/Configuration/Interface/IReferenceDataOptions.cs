@@ -17,5 +17,7 @@
         string EmployersConnectionString { get; }
 
         string AppsEarningsHistoryConnectionString { get; }
+
+        string ValidationErrorsConnectionString { get; }
     }
 }

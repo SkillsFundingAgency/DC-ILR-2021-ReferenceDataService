@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.ValidationErrors
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 {
     public class ValidationError
     {

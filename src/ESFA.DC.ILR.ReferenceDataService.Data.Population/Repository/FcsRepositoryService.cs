@@ -14,10 +14,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     {
         private readonly IFcsContext _fcs;
 
-        public FcsRepositoryService()
-        {
-        }
-
         public FcsRepositoryService(IFcsContext fcs)
         {
             _fcs = fcs;

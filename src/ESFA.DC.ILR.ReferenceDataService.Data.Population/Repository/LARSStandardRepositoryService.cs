@@ -15,10 +15,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     {
         private readonly ILARSContext _larsContext;
 
-        public LarsStandardRepositoryService()
-        {
-        }
-
         public LarsStandardRepositoryService(ILARSContext larsContext)
         {
             _larsContext = larsContext;

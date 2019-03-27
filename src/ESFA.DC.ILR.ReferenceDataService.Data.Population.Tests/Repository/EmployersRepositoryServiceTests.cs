@@ -13,7 +13,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
-    public class EmployersServiceTests
+    public class EmployersRepositoryServiceTests
     {
         [Fact]
         public async Task RetrieveAsync()
