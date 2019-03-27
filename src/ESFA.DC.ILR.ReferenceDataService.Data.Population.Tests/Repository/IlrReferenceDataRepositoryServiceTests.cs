@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.Data.ILR.ValidationErrors.Model;
-using ESFA.DC.Data.ILR.ValidationErrors.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
+using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using FluentAssertions;
 using MockQueryable.Moq;
@@ -14,7 +14,7 @@ using static ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
-    public class ValidationErrorsRepositoryServiceTests
+    public class IlrReferenceDataRepositoryServiceTests
     {
         [Fact]
         public async Task RetrieveAsync()
@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ValidationError { RuleName = "Rule10", Severity = SeverityLevel.Error, Message = "Message10" },
             };
 
-            var validationErrorsMock = new Mock<IValidationErrorsContext>();
+            var validationErrorsMock = new Mock<IIlrReferenceDataContext>();
 
             IEnumerable<Rule> errorsList = new List<Rule>
             {
@@ -59,9 +59,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ToList().Should().BeEquivalentTo(validationErrors);
         }
 
-        private ValidationErrorsRepositoryService NewService(IValidationErrorsContext validationErrorsContext = null)
+        private IlrReferenceDataRepositoryService NewService(IIlrReferenceDataContext ilrReferenceDataContext = null)
         {
-            return new ValidationErrorsRepositoryService(validationErrorsContext);
+            return new IlrReferenceDataRepositoryService(ilrReferenceDataContext);
         }
     }
 }

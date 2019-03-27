@@ -43,9 +43,6 @@
     <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.2.0-alpha0009\lib\netstandard2.0\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Data.ILR.ValidationErrors.Model, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Data.ILR.ValidationErrors.Model.0.2.0-unstable0016\lib\netstandard2.0\ESFA.DC.Data.ILR.ValidationErrors.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1819.Model.Interface.0.1.5-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
@@ -211,7 +208,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EmployersRepositoryServiceTests.cs" />
     <Compile Include="Repository\PostcodesRepositoryServiceTests.cs" />
-    <Compile Include="Repository\ValidationErrorsRepositoryServiceTests.cs" />
+    <Compile Include="Repository\IlrReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\UlnRepositoryServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +231,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj">
       <Project>{B4E84ADC-C04F-4EF8-98A2-5ADDBF1FEEF1}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.csproj">
+      <Project>{5a3df297-5d1e-4ab6-a5d0-38064dcf3283}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

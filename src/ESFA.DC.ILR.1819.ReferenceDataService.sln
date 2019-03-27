@@ -23,9 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Constants", "ESFA.DC.ILR.Constants\ESFA.DC.ILR.Constants.csproj", "{4E0E618E-D059-4815-9256-85B1369E6707}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ServiceFabric.Common", "ESFA.DC.ServiceFabric.Common\ESFA.DC.ServiceFabric.Common.csproj", "{58E3DEEF-4019-4B36-8C10-2ACA009E7D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ServiceFabric.Common", "ESFA.DC.ServiceFabric.Common\ESFA.DC.ServiceFabric.Common.csproj", "{58E3DEEF-4019-4B36-8C10-2ACA009E7D14}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Service.Tests", "ESFA.DC.ILR.ReferenceDataService.Service.Tests\ESFA.DC.ILR.ReferenceDataService.Service.Tests.csproj", "{318047DE-08BC-41B4-A6FC-50322474E967}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IlrReferenceData", "IlrReferenceData", "{6BBCFDDE-15F3-445E-A280-784319CA7BF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model", "IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.csproj", "{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.EF.Console", "IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.EF.Console\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.EF.Console.csproj", "{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Database", "IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Database\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Database.sqlproj", "{E439F666-C670-4EF5-A2FC-EC171CF56230}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,9 +140,42 @@ Global
 		{318047DE-08BC-41B4-A6FC-50322474E967}.Release|Any CPU.Build.0 = Release|Any CPU
 		{318047DE-08BC-41B4-A6FC-50322474E967}.Release|x64.ActiveCfg = Release|Any CPU
 		{318047DE-08BC-41B4-A6FC-50322474E967}.Release|x64.Build.0 = Release|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283}.Release|x64.Build.0 = Release|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE}.Release|x64.Build.0 = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|x64.Build.0 = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.ActiveCfg = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.Build.0 = Release|Any CPU
+		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5A3DF297-5D1E-4AB6-A5D0-38064DCF3283} = {6BBCFDDE-15F3-445E-A280-784319CA7BF4}
+		{BB10E2A7-6D45-47D6-BA23-48F1369AFDAE} = {6BBCFDDE-15F3-445E-A280-784319CA7BF4}
+		{E439F666-C670-4EF5-A2FC-EC171CF56230} = {6BBCFDDE-15F3-445E-A280-784319CA7BF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CD047A-0B85-407C-932F-301F676B2182}

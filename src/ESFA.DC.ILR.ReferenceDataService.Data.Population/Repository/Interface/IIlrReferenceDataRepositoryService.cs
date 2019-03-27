@@ -5,7 +5,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
-    public interface IValidationErrorsRepositoryService
+    public interface IIlrReferenceDataRepositoryService
     {
         Task<IReadOnlyCollection<ValidationError>> RetrieveAsync(CancellationToken cancellationToken);
     }
