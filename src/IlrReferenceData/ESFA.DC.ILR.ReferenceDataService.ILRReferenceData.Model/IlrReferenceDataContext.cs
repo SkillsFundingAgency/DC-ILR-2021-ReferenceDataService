@@ -15,6 +15,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
         {
         }
 
+        public virtual DbSet<Lookup> Lookups { get; set; }
+        public virtual DbSet<LookupSubCategory> LookupSubCategories { get; set; }
         public virtual DbSet<Rule> Rules { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +31,47 @@ namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
+
+            modelBuilder.Entity<Lookup>(entity =>
+            {
+                entity.HasKey(e => new { e.Name, e.Code });
+
+                entity.ToTable("Lookup");
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Code).HasMaxLength(50);
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("date");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<LookupSubCategory>(entity =>
+            {
+                entity.HasKey(e => new { e.ParentName, e.Name, e.Code });
+
+                entity.ToTable("LookupSubCategory");
+
+                entity.Property(e => e.ParentName).HasMaxLength(50);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Code).HasMaxLength(50);
+
+                entity.Property(e => e.Description).HasMaxLength(400);
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("date");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("date");
+
+                entity.HasOne(d => d.Lookup)
+                    .WithMany(p => p.LookupSubCategories)
+                    .HasForeignKey(d => new { d.ParentName, d.Name })
+                    .HasConstraintName("FK_LookupSubCategory_ToLookup");
+            });
 
             modelBuilder.Entity<Rule>(entity =>
             {
