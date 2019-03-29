@@ -7,6 +7,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface IIlrReferenceDataRepositoryService
     {
-        Task<IReadOnlyCollection<ValidationError>> RetrieveAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<ValidationError>> RetrieveValidationErrorsAsync(CancellationToken cancellationToken);
+
+        Task<List<Lookup>> RetrieveLookupsAsync(CancellationToken cancellationToken);
     }
 }

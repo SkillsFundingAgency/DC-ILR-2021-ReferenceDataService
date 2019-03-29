@@ -25,20 +25,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly ILARSContext _larsContext;
         private readonly IOrganisationsContext _organisationsContext;
         private readonly IPostcodesContext _postcodesContext;
-        private readonly IIlrReferenceDataRepositoryService _validationErrorsRepositoryService;
+        private readonly IIlrReferenceDataRepositoryService _ilReferenceDataRepositoryService;
 
         public MetaDataRetrievalService(
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,
             IPostcodesContext postcodesContext,
-            IIlrReferenceDataRepositoryService validationErrorsRepositoryService)
+            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService)
         {
             _employersContext = employersContext;
             _larsContext = larsContext;
             _organisationsContext = organisationsContext;
             _postcodesContext = postcodesContext;
-            _validationErrorsRepositoryService = validationErrorsRepositoryService;
+            _ilReferenceDataRepositoryService = ilReferenceDataRepositoryService;
         }
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
@@ -65,7 +65,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                         .Select(v => new PostcodesVersion(v.VersionNumber))
                         .FirstOrDefaultAsync(cancellationToken)
                 },
-                ValidationErrors = await _validationErrorsRepositoryService.RetrieveAsync(cancellationToken)
+                ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
+                Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken)
             };
         }
     }

@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _ilrReferenceDataContext = ilrReferenceDataContext;
         }
 
-        public async Task<IReadOnlyCollection<ValidationError>> RetrieveAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ValidationError>> RetrieveValidationErrorsAsync(CancellationToken cancellationToken)
         {
             return await _ilrReferenceDataContext.Rules
                 .Select(r => new ValidationError
@@ -33,6 +33,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     Message = r.Message
                 })
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<Lookup>> RetrieveLookupsAsync(CancellationToken cancellationToken)
+        {
+            return await _ilrReferenceDataContext.Lookups
+                .Include(l => l.LookupSubCategories)
+                .Select(
+                l => new Lookup
+                {
+                    Name = l.Name,
+                    Code = l.Code,
+                    EffectiveFrom = l.EffectiveFrom,
+                    EffectiveTo = l.EffectiveTo,
+                    SubCategories = l.LookupSubCategories
+                    .Select(
+                        sc => new LookupSubCategory
+                        {
+                            Code = sc.Code,
+                            EffectiveFrom = sc.EffectiveFrom,
+                            EffectiveTo = sc.EffectiveTo
+                        }).ToList()
+                }).ToListAsync(cancellationToken);
         }
 
         private SeverityLevel GetSeverity(string sev)

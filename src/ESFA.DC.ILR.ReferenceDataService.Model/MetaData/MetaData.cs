@@ -7,5 +7,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
         public ReferenceDataVersion ReferenceDataVersions { get; set; }
 
         public IReadOnlyCollection<ValidationError> ValidationErrors { get; set; }
+
+        public IReadOnlyCollection<Lookup> Lookups { get; set; }
     }
 }

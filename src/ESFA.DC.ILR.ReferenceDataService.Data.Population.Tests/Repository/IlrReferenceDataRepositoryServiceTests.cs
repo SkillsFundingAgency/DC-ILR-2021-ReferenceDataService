@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             validationErrorsMock.Setup(v => v.Rules).Returns(errorsListDbMock.Object);
 
-            var serviceResult = await NewService(validationErrorsMock.Object).RetrieveAsync(CancellationToken.None);
+            var serviceResult = await NewService(validationErrorsMock.Object).RetrieveValidationErrorsAsync(CancellationToken.None);
 
             serviceResult.Count().Should().Be(10);
             serviceResult.ToList().Should().BeEquivalentTo(validationErrors);
