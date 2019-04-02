@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface IFcsRepositoryService
     {
-        Task<IReadOnlyDictionary<string, FcsContractAllocation>> RetrieveAsync(int input, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<FcsContractAllocation>> RetrieveAsync(int input, CancellationToken cancellationToken);
     }
 }

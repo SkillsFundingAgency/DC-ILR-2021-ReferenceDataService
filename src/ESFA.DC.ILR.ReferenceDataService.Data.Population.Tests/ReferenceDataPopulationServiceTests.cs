@@ -37,13 +37,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var referenceDataVersions = TestReferenceDataVersions();
             var appsEarningHistories = TestAppsEarningHistories();
-            var employers = TestEmployerDictionary();
-            var epaOrgs = TestEpaOrgDictionary();
-            var fcsContractAllocations = TestFcsDictionary();
-            var larsLearningDeliveries = TestLarsLearningDeliveryDictionary();
-            var larsStandards = TestLarsStandardDictionary();
-            var organisations = TestOrganisationDictionary();
-            var postcodes = TestPostcodeDictionary();
+            var employers = TestEmployers();
+            var epaOrgs = TestEpaOrgs();
+            var fcsContractAllocations = TestFcs();
+            var larsLearningDeliveries = TestLarsLearningDeliveries();
+            var larsStandards = TestLarsStandards();
+            var organisations = TestOrganisations();
+            var postcodes = TestPostcodes();
             var ulns = TestUlnCollection();
 
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
@@ -84,58 +84,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 ulnRSMock.Object).PopulateAsync(message, CancellationToken.None);
 
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
-
-            root.AppsEarningsHistories.Keys.Should().HaveCount(2);
-            root.AppsEarningsHistories.Keys.Should().Contain(appsEarningHistories.Keys);
-            root.AppsEarningsHistories.Keys.Should().NotContain(3);
-            root.AppsEarningsHistories[1].Should().HaveCount(2);
-            root.AppsEarningsHistories[2].Should().HaveCount(1);
-
-            root.Employers.Keys.Should().HaveCount(3);
-            root.Employers.Keys.Should().Contain(employers.Keys);
-            root.Employers.Keys.Should().NotContain(4);
-            root.Employers[1].LargeEmployerEffectiveDates.Should().HaveCount(2);
-            root.Employers[2].LargeEmployerEffectiveDates.Should().HaveCount(1);
-            root.Employers[3].LargeEmployerEffectiveDates.Should().HaveCount(0);
-
-            root.EPAOrganisations.Keys.Should().HaveCount(2);
-            root.EPAOrganisations.Keys.Should().Contain(epaOrgs.Keys);
-            root.EPAOrganisations.Keys.Should().NotContain("Org3");
-            root.EPAOrganisations["Org1"].Should().HaveCount(2);
-            root.EPAOrganisations["Org2"].Should().HaveCount(1);
-
-            root.FCSContractAllocations.Keys.Should().HaveCount(2);
-            root.FCSContractAllocations.Keys.Should().Contain(fcsContractAllocations.Keys);
-            root.FCSContractAllocations.Keys.Should().NotContain("Org3");
-            root.FCSContractAllocations["ConRef1"].Should().BeEquivalentTo(fcsContractAllocations["ConRef1"]);
-            root.FCSContractAllocations["ConRef2"].Should().BeEquivalentTo(fcsContractAllocations["ConRef2"]);
-
-            root.LARSLearningDeliveries.Keys.Should().HaveCount(2);
-            root.LARSLearningDeliveries.Keys.Should().Contain(larsLearningDeliveries.Keys);
-            root.LARSLearningDeliveries.Keys.Should().NotContain("LearnAimRef3");
-            root.LARSLearningDeliveries["LearnAimRef1"].Should().BeEquivalentTo(larsLearningDeliveries["LearnAimRef1"]);
-            root.LARSLearningDeliveries["LearnAimRef2"].Should().BeEquivalentTo(larsLearningDeliveries["LearnAimRef2"]);
-
-            root.LARSStandards.Keys.Should().HaveCount(2);
-            root.LARSStandards.Keys.Should().Contain(larsStandards.Keys);
-            root.LARSStandards.Keys.Should().NotContain(3);
-            root.LARSStandards[1].Should().BeEquivalentTo(larsStandards[1]);
-            root.LARSStandards[2].Should().BeEquivalentTo(larsStandards[2]);
-
-            root.Organisations.Keys.Should().HaveCount(2);
-            root.Organisations.Keys.Should().Contain(organisations.Keys);
-            root.Organisations.Keys.Should().NotContain(3);
-            root.Organisations[1].Should().BeEquivalentTo(organisations[1]);
-            root.Organisations[2].Should().BeEquivalentTo(organisations[2]);
-
-            root.Postcodes.Keys.Should().HaveCount(2);
-            root.Postcodes.Keys.Should().Contain(postcodes.Keys);
-            root.Postcodes.Keys.Should().NotContain("Postcode3");
-            root.Postcodes["Postcode1"].Should().BeEquivalentTo(postcodes["Postcode1"]);
-            root.Postcodes["Postcode2"].Should().BeEquivalentTo(postcodes["Postcode2"]);
-
+            root.AppsEarningsHistories.Should().HaveCount(2);
+            root.Employers.Should().HaveCount(3);
+            root.EPAOrganisations.Should().HaveCount(3);
+            root.FCSContractAllocations.Should().HaveCount(2);
+            root.LARSLearningDeliveries.Should().HaveCount(2);
+            root.LARSStandards.Should().HaveCount(2);
+            root.Organisations.Should().HaveCount(2);
+            root.Postcodes.Should().HaveCount(2);
             root.ULNs.Should().HaveCount(5);
-            root.ULNs.Should().BeEquivalentTo(ulns);
         }
 
         private ReferenceDataVersion TestReferenceDataVersions()
@@ -149,160 +106,96 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private IReadOnlyDictionary<long, List<ApprenticeshipEarningsHistory>> TestAppsEarningHistories()
+        private IReadOnlyCollection<ApprenticeshipEarningsHistory> TestAppsEarningHistories()
         {
-            return new Dictionary<long, List<ApprenticeshipEarningsHistory>>
+            return new List<ApprenticeshipEarningsHistory>
             {
+                new ApprenticeshipEarningsHistory(),
+                new ApprenticeshipEarningsHistory()
+            };
+        }
+
+        private IReadOnlyCollection<Employer> TestEmployers()
+        {
+            return new List<Employer>
+            {
+                new Employer
                 {
-                    1,
-                    new List<ApprenticeshipEarningsHistory>
+                    ERN = 1,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        new ApprenticeshipEarningsHistory(),
-                        new ApprenticeshipEarningsHistory()
+                        new LargeEmployerEffectiveDates(),
+                        new LargeEmployerEffectiveDates()
                     }
                 },
+                new Employer
                 {
-                    2,
-                    new List<ApprenticeshipEarningsHistory>
+                    ERN = 2,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        new ApprenticeshipEarningsHistory()
+                        new LargeEmployerEffectiveDates()
                     }
+                },
+                new Employer
+                {
+                    ERN = 3,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>()
                 }
             };
         }
 
-        private IReadOnlyDictionary<int, Employer> TestEmployerDictionary()
+        private IReadOnlyCollection<EPAOrganisation> TestEpaOrgs()
         {
-            return new Dictionary<int, Employer>
+            return new List<EPAOrganisation>
             {
-                {
-                    1,
-                    new Employer
-                    {
-                        ERN = 1,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates(),
-                            new LargeEmployerEffectiveDates()
-                        }
-                    }
-                },
-                {
-                    2,
-                    new Employer
-                    {
-                        ERN = 2,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates()
-                        }
-                    }
-                },
-                 {
-                    3,
-                    new Employer
-                    {
-                        ERN = 3,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>()
-                    }
-                }
+                new EPAOrganisation(),
+                new EPAOrganisation(),
+                new EPAOrganisation()
             };
         }
 
-        private IReadOnlyDictionary<string, List<EPAOrganisation>> TestEpaOrgDictionary()
+        private IReadOnlyCollection<FcsContractAllocation> TestFcs()
         {
-            return new Dictionary<string, List<EPAOrganisation>>
+            return new List<FcsContractAllocation>
             {
-                {
-                    "Org1",
-                    new List<EPAOrganisation>
-                    {
-                        new EPAOrganisation(),
-                        new EPAOrganisation()
-                    }
-                },
-                {
-                    "Org2",
-                    new List<EPAOrganisation>
-                    {
-                        new EPAOrganisation()
-                    }
-                }
+                new FcsContractAllocation(),
+                new FcsContractAllocation()
             };
         }
 
-        private IReadOnlyDictionary<string, FcsContractAllocation> TestFcsDictionary()
+        private IReadOnlyCollection<LARSLearningDelivery> TestLarsLearningDeliveries()
         {
-            return new Dictionary<string, FcsContractAllocation>
+            return new List<LARSLearningDelivery>
             {
-                {
-                    "ConRef1",
-                    new FcsContractAllocation()
-                },
-                {
-                    "ConRef2",
-                    new FcsContractAllocation()
-                }
+                new LARSLearningDelivery(),
+                new LARSLearningDelivery()
             };
         }
 
-        private IReadOnlyDictionary<string, LARSLearningDelivery> TestLarsLearningDeliveryDictionary()
+        private IReadOnlyCollection<LARSStandard> TestLarsStandards()
         {
-            return new Dictionary<string, LARSLearningDelivery>
+            return new List<LARSStandard>
             {
-                {
-                    "LearnAimRef1",
-                    new LARSLearningDelivery()
-                },
-                {
-                    "LearnAimRef2",
-                    new LARSLearningDelivery()
-                }
+                new LARSStandard(),
+                new LARSStandard()
             };
         }
 
-        private IReadOnlyDictionary<int, LARSStandard> TestLarsStandardDictionary()
+        private IReadOnlyCollection<Organisation> TestOrganisations()
         {
-            return new Dictionary<int, LARSStandard>
+            return new List<Organisation>
             {
-                {
-                    1,
-                    new LARSStandard()
-                },
-                {
-                    2,
-                    new LARSStandard()
-                }
+                new Organisation(),
+                new Organisation()
             };
         }
 
-        private IReadOnlyDictionary<int, Organisation> TestOrganisationDictionary()
+        private IReadOnlyCollection<Postcode> TestPostcodes()
         {
-            return new Dictionary<int, Organisation>
+            return new List<Postcode>
             {
-                {
-                    1,
-                    new Organisation()
-                },
-                {
-                    2,
-                    new Organisation()
-                }
-            };
-        }
-
-        private IReadOnlyDictionary<string, Postcode> TestPostcodeDictionary()
-        {
-            return new Dictionary<string, Postcode>
-            {
-                {
-                    "Postcode1",
-                    new Postcode()
-                },
-                {
-                    "Postcode2",
-                    new Postcode()
-                }
+                new Postcode(),
+                new Postcode()
             };
         }
 

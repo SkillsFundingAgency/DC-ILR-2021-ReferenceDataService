@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _organisations = organisations;
         }
 
-        public async Task<IReadOnlyDictionary<int, Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
         {
             var ukprns = ukprnsInput.Select(u => (long)u).ToList();
 
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
               .MasterOrganisations
                 .Where(mo => ukprns.Contains(mo.Ukprn)).ToListAsync(cancellationToken);
 
-          var organisations = await _organisations
+            return await _organisations
                 .MasterOrganisations
                   .Include(mo => mo.OrgDetail)
                   .Include(mo => mo.OrgPartnerUkprns)
@@ -50,17 +50,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                           OrganisationFundings = o.OrgFundings.Select(of => OrgFundingFromEntity(of)).ToList(),
                       })
                       .ToListAsync(cancellationToken);
-
-            return organisations.
-                GroupBy(o => o.UKPRN)
-                .ToDictionary(key => key.Key, value => value.FirstOrDefault());
         }
 
         public List<string> GetCampusIdentifiers(long ukprn, Dictionary<long, List<string>> campusIdentifiers)
         {
             campusIdentifiers.TryGetValue(ukprn, out var campusIds);
 
-            return campusIds;
+            return campusIds ?? new List<string>();
         }
 
         public OrganisationFunding OrgFundingFromEntity(OrgFunding entity)

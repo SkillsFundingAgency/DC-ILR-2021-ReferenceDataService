@@ -154,22 +154,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var lars = await NewService(larsMock.Object).RetrieveAsync(stdCodes, CancellationToken.None);
 
-            lars.Select(k => k.Key).Should().HaveCount(2);
-            lars.Select(k => k.Key).Should().Contain(1);
-            lars.Select(k => k.Key).Should().Contain(2);
-            lars.Select(k => k.Key).Should().NotContain(3);
+            lars.Should().HaveCount(2);
+            lars.Select(l => l.StandardCode).Should().Contain(1);
+            lars.Select(l => l.StandardCode).Should().Contain(2);
+            lars.Select(l => l.StandardCode).Should().NotContain(3);
 
-            lars[1].StandardSectorCode.Should().Be("SSC1");
-            lars[1].LARSStandardApprenticeshipFundings.Should().HaveCount(2);
-            lars[1].LARSStandardCommonComponents.Should().HaveCount(2);
-            lars[1].LARSStandardFundings.Should().HaveCount(2);
-            lars[1].LARSStandardValidities.Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 1).Select(l => l.StandardSectorCode).Should().BeEquivalentTo("SSC1");
+            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardApprenticeshipFundings).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardCommonComponents).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardFundings).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardValidities).Should().HaveCount(2);
 
-            lars[2].StandardSectorCode.Should().Be("SSC2");
-            lars[2].LARSStandardApprenticeshipFundings.Should().HaveCount(2);
-            lars[2].LARSStandardCommonComponents.Should().HaveCount(2);
-            lars[2].LARSStandardFundings.Should().HaveCount(2);
-            lars[2].LARSStandardValidities.Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 2).Select(l => l.StandardSectorCode).Should().BeEquivalentTo("SSC2");
+            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardApprenticeshipFundings).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardCommonComponents).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardFundings).Should().HaveCount(2);
+            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardValidities).Should().HaveCount(2);
         }
 
         [Fact]

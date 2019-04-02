@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface IPostcodesRepositoryService
     {
-        Task<IReadOnlyDictionary<string, Postcode>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<Postcode>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken);
     }
 }

@@ -131,16 +131,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var appHistoryResult = await NewService(appHistoryMock.Object).RetrieveAsync(ulns, CancellationToken.None);
 
-            appHistoryResult.Select(k => k.Key).Should().HaveCount(2);
-            appHistoryResult.Select(k => k.Key).Should().Contain(10000000);
-            appHistoryResult.Select(k => k.Key).Should().Contain(20000000);
-            appHistoryResult.Select(k => k.Key).Should().NotContain(30000000);
+            appHistoryResult.Should().HaveCount(3);
+            appHistoryResult.Select(u => u.ULN).Should().Contain(10000000);
+            appHistoryResult.Select(u => u.ULN).Should().Contain(20000000);
+            appHistoryResult.Select(u => u.ULN).Should().NotContain(30000000);
 
-            appHistoryResult[10000000].Should().HaveCount(2);
-            appHistoryResult[20000000].Should().HaveCount(1);
+            appHistoryResult.Where(u => u.ULN == 10000000).Should().HaveCount(2);
+            appHistoryResult.Where(u => u.ULN == 20000000).Should().HaveCount(1);
 
-            appHistoryResult[10000000].Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_10000000", "AppIdentifier_2_10000000");
-            appHistoryResult[20000000].Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_20000000");
+            appHistoryResult.Where(u => u.ULN == 10000000).Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_10000000", "AppIdentifier_2_10000000");
+            appHistoryResult.Where(u => u.ULN == 20000000).Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_20000000");
         }
 
         private AppEarningsHistoryRepositoryService NewService(IAppEarnHistoryContext appHistoryContext = null)

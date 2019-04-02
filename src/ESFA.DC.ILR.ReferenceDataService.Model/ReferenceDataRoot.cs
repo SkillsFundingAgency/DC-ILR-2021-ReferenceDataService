@@ -14,21 +14,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
     {
         public MetaData.MetaData MetaDatas { get; set; }
 
-        public IReadOnlyDictionary<long, List<ApprenticeshipEarningsHistory>> AppsEarningsHistories { get; set; }
+        public IReadOnlyCollection<ApprenticeshipEarningsHistory> AppsEarningsHistories { get; set; }
 
-        public IReadOnlyDictionary<int, Employer> Employers { get; set; }
+        public IReadOnlyCollection<Employer> Employers { get; set; }
 
-        public IReadOnlyDictionary<string, List<EPAOrganisation>> EPAOrganisations { get; set; }
+        public IReadOnlyCollection<EPAOrganisation> EPAOrganisations { get; set; }
 
-        public IReadOnlyDictionary<string, FcsContractAllocation> FCSContractAllocations { get; set; }
+        public IReadOnlyCollection<FcsContractAllocation> FCSContractAllocations { get; set; }
 
-        public IReadOnlyDictionary<string, LARSLearningDelivery> LARSLearningDeliveries { get; set; }
+        public IReadOnlyCollection<LARSLearningDelivery> LARSLearningDeliveries { get; set; }
 
-        public IReadOnlyDictionary<int, LARSStandard> LARSStandards { get; set; }
+        public IReadOnlyCollection<LARSStandard> LARSStandards { get; set; }
 
-        public IReadOnlyDictionary<int, Organisation> Organisations { get; set; }
+        public IReadOnlyCollection<Organisation> Organisations { get; set; }
 
-        public IReadOnlyDictionary<string, Postcode> Postcodes { get; set; }
+        public IReadOnlyCollection<Postcode> Postcodes { get; set; }
 
         public IReadOnlyCollection<long> ULNs { get; set; }
     }

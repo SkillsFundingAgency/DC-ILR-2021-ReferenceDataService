@@ -287,17 +287,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var service = await NewService(fcsMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(4);
-            service.Keys.Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
+            service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
 
-            service["100"].FCSContractDeliverables.Should().NotBeNullOrEmpty();
-            service["101"].FCSContractDeliverables.Should().NotBeNullOrEmpty();
-            service["102"].FCSContractDeliverables.Should().BeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "100").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "101").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "102").SelectMany(f => f.FCSContractDeliverables).Should().HaveCount(0);
 
-            service["100"].EsfEligibilityRule.Should().NotBeNull();
-            service["100"].EsfEligibilityRule.TenderSpecReference.Should().Be("TenderSpec1");
-            service["101"].EsfEligibilityRule.Should().NotBeNull();
-            service["101"].EsfEligibilityRule.TenderSpecReference.Should().Be("TenderSpec2");
-            service["102"].EsfEligibilityRule.Should().BeNull();
+            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec1");
+            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
+            service.Where(f => f.ContractAllocationNumber == "102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
         }
 
         private FcsRepositoryService NewService(IFcsContext fcs = null)

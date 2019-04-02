@@ -141,20 +141,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var lars = await NewService(larsMock.Object).RetrieveAsync(learnAimRefs, CancellationToken.None);
 
-            lars.Select(k => k.Key).Should().HaveCount(2);
-            lars.Select(k => k.Key).Should().Contain("LearnAimRef1");
-            lars.Select(k => k.Key).Should().Contain("LearnAimRef2");
-            lars.Select(k => k.Key).Should().NotContain("LearnAimRef3");
+            lars.Should().HaveCount(2);
+            lars.Select(l => l.LearnAimRef).Should().Contain("LearnAimRef1");
+            lars.Select(l => l.LearnAimRef).Should().Contain("LearnAimRef2");
+            lars.Select(l => l.LearnAimRef).Should().NotContain("LearnAimRef3");
 
-            lars["LearnAimRef1"].LearnAimRefTitle.Should().Be("AimRefTitle1");
-            lars["LearnAimRef1"].LARSFrameworkAims.Should().HaveCount(2);
-            lars["LearnAimRef1"].LARSFundings.Should().HaveCount(3);
-            lars["LearnAimRef1"].LARSValidities.Should().HaveCount(2);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef1").Select(l => l.LearnAimRefTitle).Should().BeEquivalentTo("AimRefTitle1");
+            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFrameworkAims).Should().HaveCount(2);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFundings).Should().HaveCount(3);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSValidities).Should().HaveCount(2);
 
-            lars["LearnAimRef2"].LearnAimRefTitle.Should().Be("AimRefTitle2");
-            lars["LearnAimRef2"].LARSLearningDeliveryCategories.Should().HaveCount(2);
-            lars["LearnAimRef2"].LARSAnnualValues.Should().HaveCount(1);
-            lars["LearnAimRef2"].LARSCareerLearningPilots.Should().HaveCount(2);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef2").Select(l => l.LearnAimRefTitle).Should().BeEquivalentTo("AimRefTitle2");
+            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSCareerLearningPilots).Should().HaveCount(2);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSLearningDeliveryCategories).Should().HaveCount(2);
+            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSAnnualValues).Should().HaveCount(1);
         }
 
         [Fact]

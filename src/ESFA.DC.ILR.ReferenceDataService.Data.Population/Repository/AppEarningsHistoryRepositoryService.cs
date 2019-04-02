@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _appEarnHistoryContext = appEarnHistoryContext;
         }
 
-        public async Task<IReadOnlyDictionary<long, List<ApprenticeshipEarningsHistory>>> RetrieveAsync(IReadOnlyCollection<long> input, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ApprenticeshipEarningsHistory>> RetrieveAsync(IReadOnlyCollection<long> input, CancellationToken cancellationToken)
         {
             var appsHistory = new List<ApprenticeshipEarningsHistory>();
 
@@ -69,10 +69,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     }).ToListAsync(cancellationToken));
             }
 
-          return
-               appsHistory
-                .GroupBy(a => a.ULN)
-                .ToDictionary(k => k.Key, v => v.ToList());
+            return appsHistory;
         }
     }
 }

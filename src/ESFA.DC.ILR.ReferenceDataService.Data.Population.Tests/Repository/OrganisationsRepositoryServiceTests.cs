@@ -87,22 +87,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var organisations = await NewService(organisationsMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
 
-            organisations.Select(k => k.Key).Should().HaveCount(2);
-            organisations.Select(k => k.Key).Should().Contain(1);
-            organisations.Select(k => k.Key).Should().Contain(2);
-            organisations.Select(k => k.Key).Should().NotContain(3);
+            organisations.Should().HaveCount(2);
+            organisations.Select(o => o.UKPRN).Should().Contain(1);
+            organisations.Select(o => o.UKPRN).Should().Contain(2);
+            organisations.Select(o => o.UKPRN).Should().NotContain(3);
 
-            organisations[1].UKPRN.Should().Be(1);
-            organisations[1].LegalOrgType.Should().Be("LegalType1");
-            organisations[1].CampusIdentifers.Single().Should().Be("CampId_01");
-            organisations[1].PartnerUKPRN.Should().BeTrue();
-            organisations[1].OrganisationFundings.Should().HaveCount(2);
+            organisations.Where(o => o.UKPRN == 1).Select(o => o.UKPRN).Should().BeEquivalentTo(1);
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType1");
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().Should().BeEquivalentTo("CampId_01");
+            organisations.Where(o => o.UKPRN == 1).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(true);
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.OrganisationFundings).Should().HaveCount(2);
 
-            organisations[2].UKPRN.Should().Be(2);
-            organisations[2].LegalOrgType.Should().Be("LegalType2");
-            organisations[2].CampusIdentifers.Should().BeNullOrEmpty();
-            organisations[2].PartnerUKPRN.Should().BeFalse();
-            organisations[2].OrganisationFundings.Should().BeNullOrEmpty();
+            organisations.Where(o => o.UKPRN == 2).Select(o => o.UKPRN).Should().BeEquivalentTo(2);
+            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType2");
+            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.CampusIdentifers).Should().BeNullOrEmpty();
+            organisations.Where(o => o.UKPRN == 2).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(false);
+            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.OrganisationFundings).Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 { 3, campusListThree }
             };
 
-            NewService().GetCampusIdentifiers(4, dictionary).Should().BeNull();
+            NewService().GetCampusIdentifiers(4, dictionary).Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 { 3, campusListThree }
             };
 
-            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNull();
+            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNullOrEmpty();
         }
 
         [Fact]

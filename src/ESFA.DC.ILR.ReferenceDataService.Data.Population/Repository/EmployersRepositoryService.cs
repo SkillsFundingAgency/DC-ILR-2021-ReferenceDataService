@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _employersContext = employersContext;
         }
 
-        public async Task<IReadOnlyDictionary<int, Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken)
         {
             var edrsEmpIds = new List<int>();
             var largeEmployers = new List<ReferenceData.Employers.Model.LargeEmployer>();
@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
           return
                 edrsEmpIds
-                .ToDictionary(e => e, empId => new Employer
+                .Select(empId => new Employer
                 {
                     ERN = empId,
                     LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         EffectiveFrom = le.EffectiveFrom,
                         EffectiveTo = le.EffectiveTo
                     }).ToList()
-                });
+                }).ToList();
         }
     }
 }

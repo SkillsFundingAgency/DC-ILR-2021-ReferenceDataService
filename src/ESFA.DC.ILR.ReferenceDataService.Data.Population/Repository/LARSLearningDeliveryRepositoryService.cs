@@ -20,9 +20,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _larsContext = larsContext;
         }
 
-        public async Task<IReadOnlyDictionary<string, LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> learnAimRefs, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> learnAimRefs, CancellationToken cancellationToken)
         {
-            var larsLearningDeliveries = await _larsContext.LARS_LearningDeliveries
+            return await _larsContext.LARS_LearningDeliveries
                 .Include(ld => ld.LarsAnnualValues)
                 .Include(ld => ld.LarsCareerLearningPilots)
                 .Include(ld => ld.LarsLearningDeliveryCategories)
@@ -64,10 +64,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         LARSFundings = ld.LarsFundings.Select(lf => LARSFundingsFromEntity(lf)).ToList(),
                         LARSValidities = ld.LarsValidities.Select(lv => LARSValiditiesFromEntity(lv)).ToList()
                     }).ToListAsync(cancellationToken);
-
-            return larsLearningDeliveries
-                .GroupBy(ld => ld.LearnAimRef)
-                .ToDictionary(key => key.Key, value => value.FirstOrDefault());
         }
 
         public LARSAnnualValue LARSAnnualValueFromEntity(LarsAnnualValue larsAnnualValue)

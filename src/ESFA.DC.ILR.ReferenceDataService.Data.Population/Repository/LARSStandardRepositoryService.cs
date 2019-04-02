@@ -20,9 +20,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _larsContext = larsContext;
         }
 
-        public async Task<IReadOnlyDictionary<int, LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
         {
-            var larsStandards = await _larsContext.LARS_Standards
+            return await _larsContext.LARS_Standards
                 .Include(ls => ls.LarsStandardAims)
                 .Include(ls => ls.LarsApprenticeshipStdFundings)
                 .Include(ls => ls.LarsStandardCommonComponents)
@@ -42,10 +42,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         LARSStandardFundings = ls.LarsStandardFundings.Select(lsf => LARSStandardFundingFromEntity(lsf)).ToList(),
                         LARSStandardValidities = ls.LarsStandardValidities.Select(lsv => LARSStandardValidityFromEntity(lsv)).ToList()
                     }).ToListAsync(cancellationToken);
-
-            return larsStandards
-                .GroupBy(ls => ls.StandardCode)
-                .ToDictionary(key => key.Key, value => value.FirstOrDefault());
         }
 
         public LARSStandardFunding LARSStandardFundingFromEntity(LarsStandardFunding larsStandardFunding)

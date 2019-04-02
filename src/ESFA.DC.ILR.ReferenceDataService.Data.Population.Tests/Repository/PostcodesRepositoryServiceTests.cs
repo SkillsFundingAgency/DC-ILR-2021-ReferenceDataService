@@ -34,7 +34,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new SfaDisadvantage
                 {
                     Uplift = 1.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1)
+                    EffectiveFrom = new DateTime(2018, 9, 1),
+                    EffectiveTo = null
                 }
             };
 
@@ -232,13 +233,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var serviceResult = await NewService(postcodesMock.Object).RetrieveAsync(postcodes, CancellationToken.None);
 
             serviceResult.Count().Should().Be(6);
-            serviceResult.Keys.ToList().Should().BeEquivalentTo(postcodes);
-            serviceResult["Postcode1"].SfaDisadvantages.Should().BeEquivalentTo(sfaDisad);
-            serviceResult["Postcode2"].EfaDisadvantages.Should().BeEquivalentTo(efaDisad);
-            serviceResult["Postcode3"].DasDisadvantages.Should().BeEquivalentTo(dasDisad);
-            serviceResult["Postcode4"].SfaAreaCosts.Should().BeEquivalentTo(sfaAreaCost);
-            serviceResult["Postcode5"].CareerLearningPilots.Should().BeEquivalentTo(careerLearningPilot);
-            serviceResult["Postcode6"].ONSData.Should().BeEquivalentTo(onsData);
+            serviceResult.Select(p => p.PostCode).Should().BeEquivalentTo(postcodes);
+            serviceResult.Where(p => p.PostCode == "Postcode1").SelectMany(p => p.SfaDisadvantages).Should().BeEquivalentTo(sfaDisad);
+            serviceResult.Where(p => p.PostCode == "Postcode2").SelectMany(p => p.EfaDisadvantages).Should().BeEquivalentTo(efaDisad);
+            serviceResult.Where(p => p.PostCode == "Postcode3").SelectMany(p => p.DasDisadvantages).Should().BeEquivalentTo(dasDisad);
+            serviceResult.Where(p => p.PostCode == "Postcode4").SelectMany(p => p.SfaAreaCosts).Should().BeEquivalentTo(sfaAreaCost);
+            serviceResult.Where(p => p.PostCode == "Postcode5").SelectMany(p => p.CareerLearningPilots).Should().BeEquivalentTo(careerLearningPilot);
+            serviceResult.Where(p => p.PostCode == "Postcode6").SelectMany(p => p.ONSData).Should().BeEquivalentTo(onsData);
         }
 
         [Fact]
