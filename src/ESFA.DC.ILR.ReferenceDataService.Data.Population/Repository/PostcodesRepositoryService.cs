@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _postcodesContext = postcodesContext;
         }
 
-        public async Task<IReadOnlyDictionary<string, Postcode>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken)
         {
             var postcodes = new List<Postcode>();
 
@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             }).ToListAsync(cancellationToken));
             }
 
-             return postcodes.ToDictionary(k => k.PostCode, v => v, StringComparer.OrdinalIgnoreCase);
+             return postcodes;
         }
 
         public SfaDisadvantage SfaPostcodeDisadvantagesToEntity(SfaPostcodeDisadvantage sfaPostcodeDisadvantage)

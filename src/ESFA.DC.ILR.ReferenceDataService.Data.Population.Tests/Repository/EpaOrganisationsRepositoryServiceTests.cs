@@ -68,19 +68,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var epaOganisations = await NewService(epaMock.Object).RetrieveAsync(epaOrgIds, CancellationToken.None);
 
-            epaOganisations.Select(k => k.Key).Should().HaveCount(3);
-            epaOganisations.Select(k => k.Key).Should().Contain("EpaOrg1");
-            epaOganisations.Select(k => k.Key).Should().Contain("EpaOrg2");
-            epaOganisations.Select(k => k.Key).Should().Contain("EpaOrg3");
-            epaOganisations.Select(k => k.Key).Should().NotContain("EpaOrg4");
+            epaOganisations.Should().HaveCount(5);
+            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg1");
+            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg2");
+            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg3");
+            epaOganisations.Select(e => e.ID).Should().NotContain("EpaOrg4");
 
-            epaOganisations["EpaOrg1"].Should().HaveCount(2);
-            epaOganisations["EpaOrg2"].Should().HaveCount(1);
-            epaOganisations["EpaOrg3"].Should().HaveCount(2);
+            epaOganisations.Where(e => e.ID == "EpaOrg1").Should().HaveCount(2);
+            epaOganisations.Where(e => e.ID == "EpaOrg2").Should().HaveCount(1);
+            epaOganisations.Where(e => e.ID == "EpaOrg3").Should().HaveCount(2);
 
-            epaOganisations["EpaOrg1"].Select(e => e.Standard).Should().Contain("1", "2");
-            epaOganisations["EpaOrg2"].Select(e => e.Standard).Should().Contain("1");
-            epaOganisations["EpaOrg3"].Select(e => e.Standard).Should().Contain("1", "2");
+            epaOganisations.Where(e => e.ID == "EpaOrg1").Select(e => e.Standard).Should().Contain("1", "2");
+            epaOganisations.Where(e => e.ID == "EpaOrg2").Select(e => e.Standard).Should().Contain("1");
+            epaOganisations.Where(e => e.ID == "EpaOrg3").Select(e => e.Standard).Should().Contain("1", "2");
         }
 
         private EpaOrganisationsRepositoryService NewService(IEpaContext epaContext = null)

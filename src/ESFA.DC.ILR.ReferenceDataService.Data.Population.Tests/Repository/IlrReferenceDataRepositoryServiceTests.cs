@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
     public class IlrReferenceDataRepositoryServiceTests
     {
         [Fact]
-        public async Task RetrieveAsync()
+        public async Task RetrieveValErrorsAsync()
         {
             var validationErrors = new List<ValidationError>
             {
@@ -53,10 +54,92 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             validationErrorsMock.Setup(v => v.Rules).Returns(errorsListDbMock.Object);
 
-            var serviceResult = await NewService(validationErrorsMock.Object).RetrieveAsync(CancellationToken.None);
+            var serviceResult = await NewService(validationErrorsMock.Object).RetrieveValidationErrorsAsync(CancellationToken.None);
 
             serviceResult.Count().Should().Be(10);
             serviceResult.ToList().Should().BeEquivalentTo(validationErrors);
+        }
+
+        [Fact]
+        public async Task RetrieveLookupsAsync()
+        {
+            var lookups = new List<Model.MetaData.Lookup>
+            {
+                new Model.MetaData.Lookup { Name = "Lookup1", Code = "Code1", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1), SubCategories = new List<Model.MetaData.LookupSubCategory>() },
+                new Model.MetaData.Lookup { Name = "Lookup1", Code = "Code2", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1), SubCategories = new List<Model.MetaData.LookupSubCategory>() },
+                new Model.MetaData.Lookup { Name = "Lookup2", Code = "Code1",  SubCategories = new List<Model.MetaData.LookupSubCategory>() },
+                new Model.MetaData.Lookup
+                {
+                    Name = "Lookup3",
+                    Code = "Code1",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                    SubCategories = new List<Model.MetaData.LookupSubCategory>
+                    {
+                        new Model.MetaData.LookupSubCategory
+                        {
+                            Code = "Code3_1",
+                            EffectiveFrom = new DateTime(1900, 1, 1),
+                            EffectiveTo = new DateTime(2099, 1, 1),
+                        },
+                        new Model.MetaData.LookupSubCategory
+                        {
+                            Code = "Code3_2",
+                            EffectiveFrom = new DateTime(1900, 1, 1),
+                            EffectiveTo = new DateTime(2099, 1, 1),
+                        }
+                    }
+                }
+            };
+
+            var lookupsMock = new Mock<IIlrReferenceDataContext>();
+
+            var lookupSubCategoriesList = new List<ILRReferenceData.Model.LookupSubCategory>
+            {
+                new ILRReferenceData.Model.LookupSubCategory
+                {
+                    ParentName = "Code3",
+                    Name = "Code3SC",
+                    Code = "Code3_1",
+                    Description = "Description",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                },
+                new ILRReferenceData.Model.LookupSubCategory
+                {
+                    ParentName = "Code3",
+                    Name = "Code3SC",
+                    Code = "Code3_2",
+                    Description = "Description",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                }
+            };
+
+            IEnumerable<ILRReferenceData.Model.Lookup> lookupsList = new List<ILRReferenceData.Model.Lookup>
+            {
+                new ILRReferenceData.Model.Lookup { Name = "Lookup1", Description = "Description", Code = "Code1", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1) },
+                new ILRReferenceData.Model.Lookup { Name = "Lookup1", Description = "Description", Code = "Code2", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1) },
+                new ILRReferenceData.Model.Lookup { Name = "Lookup2", Description = "Description", Code = "Code1" },
+                new ILRReferenceData.Model.Lookup
+                {
+                    Name = "Lookup3",
+                    Description = "Description",
+                    Code = "Code1",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                    LookupSubCategories = lookupSubCategoriesList
+                }
+            };
+
+            var lookupListDbMock = lookupsList.AsQueryable().BuildMockDbSet();
+
+            lookupsMock.Setup(v => v.Lookups).Returns(lookupListDbMock.Object);
+
+            var serviceResult = await NewService(lookupsMock.Object).RetrieveLookupsAsync(CancellationToken.None);
+
+            serviceResult.Count().Should().Be(4);
+            serviceResult.ToList().Should().BeEquivalentTo(lookups);
         }
 
         private IlrReferenceDataRepositoryService NewService(IIlrReferenceDataContext ilrReferenceDataContext = null)

@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _fcs = fcs;
         }
 
-        public async Task<IReadOnlyDictionary<string, FcsContractAllocation>> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<FcsContractAllocation>> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
         {
             var contractAllocations = await _fcs.ContractAllocations
                 .Include(ca => ca.ContractDeliverables)
@@ -97,13 +97,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             foreach (var contractAllocation in contractAllocations)
             {
                 contractAllocation.EsfEligibilityRule = eligibilityRules
-                    .SingleOrDefault(
+                    .FirstOrDefault(
                         r => r.LotReference.Equals(contractAllocation.LotReference, StringComparison.OrdinalIgnoreCase)
                         && r.TenderSpecReference.Equals(contractAllocation.TenderSpecReference, StringComparison.OrdinalIgnoreCase));
             }
 
-           return contractAllocations
-                .ToDictionary(ca => ca.ContractAllocationNumber, ca => ca, StringComparer.OrdinalIgnoreCase);
+            return contractAllocations;
         }
     }
 }

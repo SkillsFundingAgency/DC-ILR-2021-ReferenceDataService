@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface IEmployersRepositoryService
     {
-        Task<IReadOnlyDictionary<int, Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken);
     }
 }

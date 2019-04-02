@@ -85,6 +85,8 @@
     <Build Include="Staging\Stored Procedures\usp_Process_Rules.sql" />
     <None Include="zReferenceData\Validation.File.Rules.sql" />
     <None Include="zReferenceData\Validation.Modified.Rules.sql" />
+    <Build Include="dbo\Tables\Lookup.sql" />
+    <Build Include="dbo\Tables\LookupSubCategory.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />

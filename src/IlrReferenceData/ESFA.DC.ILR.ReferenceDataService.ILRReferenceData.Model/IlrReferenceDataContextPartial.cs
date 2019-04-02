@@ -6,5 +6,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
     public partial class IlrReferenceDataContext : IIlrReferenceDataContext
     {
         IQueryable<Rule> IIlrReferenceDataContext.Rules => Rules;
+
+        IQueryable<Lookup> IIlrReferenceDataContext.Lookups => Lookups;
     }
 }

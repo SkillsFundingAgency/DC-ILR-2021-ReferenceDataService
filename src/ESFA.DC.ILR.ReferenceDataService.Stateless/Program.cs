@@ -6,10 +6,10 @@ using Autofac.Integration.ServiceFabric;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
-using ESFA.DC.ILR.ServiceFabric.Common.Config;
-using ESFA.DC.ILR.ServiceFabric.Common.Modules;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
+using ESFA.DC.ServiceFabric.Common.Config;
+using ESFA.DC.ServiceFabric.Common.Modules;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 {

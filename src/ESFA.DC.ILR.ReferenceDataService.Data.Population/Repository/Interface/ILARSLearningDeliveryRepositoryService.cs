@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface ILarsLearningDeliveryRepositoryService
     {
-        Task<IReadOnlyDictionary<string, LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken);
     }
 }

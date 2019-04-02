@@ -87,7 +87,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
-            validationErrorsRepositoryServiceMock.Setup(v => v.RetrieveAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
+            validationErrorsRepositoryServiceMock.Setup(v => v.RetrieveValidationErrorsAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
 
             var serviceResult = await NewService(
                 employersMock.Object,

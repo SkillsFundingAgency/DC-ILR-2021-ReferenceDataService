@@ -72,10 +72,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var serviceResult = await NewService(employersMock.Object).RetrieveAsync(empIds, CancellationToken.None);
 
-            serviceResult.Keys.Should().HaveCount(21);
-            serviceResult.Keys.Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
-            serviceResult.SelectMany(e => e.Value.LargeEmployerEffectiveDates).Should().HaveCount(10);
-            serviceResult[8].LargeEmployerEffectiveDates.Should().HaveCount(2);
+            serviceResult.Should().HaveCount(21);
+            serviceResult.Select(e => e.ERN).Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
+            serviceResult.SelectMany(e => e.LargeEmployerEffectiveDates).Should().HaveCount(10);
+            serviceResult.Where(e => e.ERN == 8).SelectMany(e => e.LargeEmployerEffectiveDates).Should().HaveCount(2);
         }
 
         private EmployersRepositoryService NewService(IEmployersContext employers = null)
