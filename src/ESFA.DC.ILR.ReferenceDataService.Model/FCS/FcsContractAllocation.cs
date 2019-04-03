@@ -9,6 +9,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FCS
 
         public int DeliveryUKPRN { get; set; }
 
+        public decimal? LearningRatePremiumFactor { get; set; }
+
         public string TenderSpecReference { get; set; }
 
         public string LotReference { get; set; }
