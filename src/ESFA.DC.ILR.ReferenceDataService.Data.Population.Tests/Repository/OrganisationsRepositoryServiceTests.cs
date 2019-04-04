@@ -45,17 +45,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                    {
                        new OrgFunding
                        {
-                            FundingFactor = "FACTOR1",
-                            FundingFactorType = "FACTOR TYPE1",
-                            FundingFactorValue = "1.5",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
+                           FundingFactor = "FACTOR1",
+                           FundingFactorType = "FACTOR TYPE1",
+                           FundingFactorValue = "1.5",
+                           EffectiveFrom = new DateTime(2018, 8, 1)
                        },
                        new OrgFunding
                        {
-                            FundingFactor = "FACTOR2",
-                            FundingFactorType = "FACTOR TYPE1",
-                            FundingFactorValue = "1.5",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
+                           FundingFactor = "FACTOR2",
+                           FundingFactorType = "FACTOR TYPE1",
+                           FundingFactorValue = "1.5",
+                           EffectiveFrom = new DateTime(2018, 8, 1)
                        }
                    }
                 },
@@ -154,35 +154,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
 
             NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNullOrEmpty();
-        }
-
-        [Fact]
-        public void OrgFundingFromEntity()
-        {
-            var orgFunding = new OrgFunding
-            {
-                FundingFactor = "FACTOR1",
-                FundingFactorType = "FACTOR TYPE1",
-                FundingFactorValue = "1.5",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var expectedOrgFunding = new OrganisationFunding()
-            {
-                OrgFundFactor = "FACTOR1",
-                OrgFundFactType = "FACTOR TYPE1",
-                OrgFundFactValue = "1.5",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = null
-            };
-
-            NewService().OrgFundingFromEntity(orgFunding).Should().BeEquivalentTo(expectedOrgFunding);
-        }
-
-        [Fact]
-        public void OrgFundingFromEntity_Null()
-        {
-            NewService().OrgFundingFromEntity(null).Should().BeEquivalentTo(new OrganisationFunding());
         }
 
         private OrganisationsRepositoryService NewService(IOrganisationsContext organisations = null)

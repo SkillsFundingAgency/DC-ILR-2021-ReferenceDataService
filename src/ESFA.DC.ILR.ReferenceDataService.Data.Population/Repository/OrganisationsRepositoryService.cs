@@ -30,10 +30,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .GroupBy(mu => mu.MasterUkprn)
                 .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken) ?? new Dictionary<long, List<string>>();
 
-            var masters = await _organisations
-              .MasterOrganisations
-                .Where(mo => ukprns.Contains(mo.Ukprn)).ToListAsync(cancellationToken);
-
             return await _organisations
                 .MasterOrganisations
                   .Include(mo => mo.OrgDetail)
@@ -47,7 +43,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
                           CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),
-                          OrganisationFundings = o.OrgFundings.Select(of => OrgFundingFromEntity(of)).ToList(),
+                          OrganisationFundings = o.OrgFundings.Select(of =>
+                          new OrganisationFunding()
+                          {
+                              OrgFundFactor = of.FundingFactor,
+                              OrgFundFactType = of.FundingFactorType,
+                              OrgFundFactValue = of.FundingFactorValue,
+                              EffectiveFrom = of.EffectiveFrom,
+                              EffectiveTo = of.EffectiveTo,
+                          }).ToList(),
                       })
                       .ToListAsync(cancellationToken);
         }
@@ -57,23 +61,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             campusIdentifiers.TryGetValue(ukprn, out var campusIds);
 
             return campusIds ?? new List<string>();
-        }
-
-        public OrganisationFunding OrgFundingFromEntity(OrgFunding entity)
-        {
-            if (entity == null)
-            {
-                return new OrganisationFunding();
-            }
-
-            return new OrganisationFunding()
-            {
-                OrgFundFactor = entity.FundingFactor,
-                OrgFundFactType = entity.FundingFactorType,
-                OrgFundFactValue = entity.FundingFactorValue,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
         }
     }
 }
