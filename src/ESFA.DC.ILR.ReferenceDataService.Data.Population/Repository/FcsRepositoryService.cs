@@ -28,6 +28,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 {
                     ContractAllocationNumber = ca.ContractAllocationNumber,
                     FundingStreamPeriodCode = ca.FundingStreamPeriodCode,
+                    LearningRatePremiumFactor = ca.LearningRatePremiumFactor,
                     LotReference = ca.LotReference,
                     TenderSpecReference = ca.TenderSpecReference,
                     StartDate = ca.StartDate,
@@ -42,8 +43,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         UnitCost = cd.UnitCost,
                         ExternalDeliverableCode = _fcs.ContractDeliverableCodeMappings
                         .Where(dc =>
-                            dc.FundingStreamPeriodCode == ca.FundingStreamPeriodCode
-                            && dc.FcsdeliverableCode == cd.DeliverableCode.ToString())
+                            dc.FundingStreamPeriodCode.Equals(ca.FundingStreamPeriodCode, StringComparison.OrdinalIgnoreCase)
+                            && dc.FcsdeliverableCode.Equals(cd.DeliverableCode.ToString(), StringComparison.OrdinalIgnoreCase))
                         .Select(e => e.ExternalDeliverableCode).FirstOrDefault()
                     }).ToList()
                 })
