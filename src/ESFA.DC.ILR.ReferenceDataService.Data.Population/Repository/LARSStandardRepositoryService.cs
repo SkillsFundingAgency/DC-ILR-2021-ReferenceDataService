@@ -23,11 +23,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
         {
             return await _larsContext.LARS_Standards
-                .Include(ls => ls.LarsStandardAims)
-                .Include(ls => ls.LarsApprenticeshipStdFundings)
-                .Include(ls => ls.LarsStandardCommonComponents)
-                .Include(ls => ls.LarsStandardFundings)
-                .Include(ls => ls.LarsStandardValidities)
                 .Where(l => stdCodes.Contains(l.StandardCode))
                 .Select(
                     ls => new LARSStandard
