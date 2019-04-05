@@ -19,6 +19,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
+            var expectedLARSStandards = ExpectedLARSStandards();
+
             var stdCodes = new List<int> { 1, 2, 3 };
 
             var larsMock = new Mock<ILARSContext>();
@@ -52,7 +54,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618frameworkUplift = 11.0m,
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsApprenticeshipStdFunding
@@ -74,7 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618frameworkUplift = 11.0m,
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -86,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             MinLevel = "2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardCommonComponent
@@ -95,7 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             MinLevel = "2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -112,7 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardFunding
@@ -126,7 +128,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -137,7 +139,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat1",
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardValidity
@@ -145,7 +147,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat2",
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
-                            StandardCode = 8,
+                            StandardCode = 1,
                             CreatedBy = "CreatedBy"
                         },
                     },
@@ -177,7 +179,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618frameworkUplift = 11.0m,
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsApprenticeshipStdFunding
@@ -199,7 +201,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618frameworkUplift = 11.0m,
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -211,7 +213,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             MinLevel = "2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardCommonComponent
@@ -220,7 +222,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             MinLevel = "2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -237,7 +239,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardFunding
@@ -251,7 +253,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         }
                     },
@@ -262,7 +264,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat3",
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         },
                         new LarsStandardValidity
@@ -270,7 +272,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat4",
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
-                            StandardCode = 8,
+                            StandardCode = 2,
                             CreatedBy = "CreatedBy"
                         }
                     }
@@ -281,24 +283,230 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             larsMock.Setup(l => l.LARS_Standards).Returns(larsStandardMock.Object);
 
-            var lars = await NewService(larsMock.Object).RetrieveAsync(stdCodes, CancellationToken.None);
+            var larsStandards = await NewService(larsMock.Object).RetrieveAsync(stdCodes, CancellationToken.None);
 
-            lars.Should().HaveCount(2);
-            lars.Select(l => l.StandardCode).Should().Contain(1);
-            lars.Select(l => l.StandardCode).Should().Contain(2);
-            lars.Select(l => l.StandardCode).Should().NotContain(3);
+            expectedLARSStandards.Should().BeEquivalentTo(larsStandards);
+        }
 
-            lars.Where(l => l.StandardCode == 1).Select(l => l.StandardSectorCode).Should().BeEquivalentTo("SSC1");
-            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardApprenticeshipFundings).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardCommonComponents).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardFundings).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 1).SelectMany(l => l.LARSStandardValidities).Should().HaveCount(2);
-
-            lars.Where(l => l.StandardCode == 2).Select(l => l.StandardSectorCode).Should().BeEquivalentTo("SSC2");
-            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardApprenticeshipFundings).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardCommonComponents).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardFundings).Should().HaveCount(2);
-            lars.Where(l => l.StandardCode == 2).SelectMany(l => l.LARSStandardValidities).Should().HaveCount(2);
+        private IReadOnlyCollection<LARSStandard> ExpectedLARSStandards()
+        {
+            return new List<LARSStandard>
+            {
+                new LARSStandard
+                {
+                    StandardCode = 1,
+                    StandardSectorCode = "SSC1",
+                    NotionalEndLevel = "NEL1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    LARSStandardApprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>
+                    {
+                        new LARSStandardApprenticeshipFunding
+                        {
+                            BandNumber = 1,
+                            CareLeaverAdditionalPayment = 2.0m,
+                            CoreGovContributionCap = 3.0m,
+                            Duration = 4,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "5",
+                            FundingCategory = "6",
+                            MaxEmployerLevyCap = 7.0m,
+                            ProgType = 25,
+                            PwayCode = 0,
+                            ReservedValue2 = 8.0m,
+                            ReservedValue3 = 9.0m,
+                            SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                            SixteenToEighteenFrameworkUplift = 11.0m,
+                            SixteenToEighteenIncentive = 12.0m,
+                            SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                        },
+                        new LARSStandardApprenticeshipFunding
+                        {
+                            BandNumber = 2,
+                            CareLeaverAdditionalPayment = 2.0m,
+                            CoreGovContributionCap = 3.0m,
+                            Duration = 4,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "5",
+                            FundingCategory = "6",
+                            MaxEmployerLevyCap = 7.0m,
+                            ProgType = 25,
+                            PwayCode = 0,
+                            ReservedValue2 = 8.0m,
+                            ReservedValue3 = 9.0m,
+                            SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                            SixteenToEighteenFrameworkUplift = 11.0m,
+                            SixteenToEighteenIncentive = 12.0m,
+                            SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                        }
+                    },
+                    LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
+                    {
+                        new LARSStandardCommonComponent
+                        {
+                            CommonComponent = 1,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                        },
+                        new LARSStandardCommonComponent
+                        {
+                            CommonComponent = 2,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                        }
+                    },
+                    LARSStandardFundings = new List<LARSStandardFunding>
+                    {
+                        new LARSStandardFunding
+                        {
+                            AchievementIncentive = 1.0m,
+                            BandNumber = 2,
+                            CoreGovContributionCap = 3.0m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "4",
+                            FundingCategory = "5",
+                            SixteenToEighteenIncentive = 6.0m,
+                            SmallBusinessIncentive = 7.0m,
+                        },
+                        new LARSStandardFunding
+                        {
+                            AchievementIncentive = 2.0m,
+                            BandNumber = 2,
+                            CoreGovContributionCap = 3.0m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "4",
+                            FundingCategory = "5",
+                            SixteenToEighteenIncentive = 6.0m,
+                            SmallBusinessIncentive = 7.0m,
+                        }
+                    },
+                    LARSStandardValidities = new List<LARSStandardValidity>
+                    {
+                        new LARSStandardValidity
+                        {
+                            ValidityCategory = "Cat1",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            LastNewStartDate = new DateTime(2018, 9, 1),
+                        },
+                        new LARSStandardValidity
+                        {
+                            ValidityCategory = "Cat2",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            LastNewStartDate = new DateTime(2018, 9, 1),
+                        },
+                    },
+                },
+                new LARSStandard
+                {
+                    StandardCode = 2,
+                    StandardSectorCode = "SSC2",
+                    NotionalEndLevel = "NEL2",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    LARSStandardApprenticeshipFundings = new List<LARSStandardApprenticeshipFunding>
+                    {
+                        new LARSStandardApprenticeshipFunding
+                        {
+                            BandNumber = 3,
+                            CareLeaverAdditionalPayment = 2.0m,
+                            CoreGovContributionCap = 3.0m,
+                            Duration = 4,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "5",
+                            FundingCategory = "6",
+                            MaxEmployerLevyCap = 7.0m,
+                            ProgType = 25,
+                            PwayCode = 0,
+                            ReservedValue2 = 8.0m,
+                            ReservedValue3 = 9.0m,
+                            SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                            SixteenToEighteenFrameworkUplift = 11.0m,
+                            SixteenToEighteenIncentive = 12.0m,
+                            SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                        },
+                        new LARSStandardApprenticeshipFunding
+                        {
+                            BandNumber = 4,
+                            CareLeaverAdditionalPayment = 2.0m,
+                            CoreGovContributionCap = 3.0m,
+                            Duration = 4,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "5",
+                            FundingCategory = "6",
+                            MaxEmployerLevyCap = 7.0m,
+                            ProgType = 25,
+                            PwayCode = 0,
+                            ReservedValue2 = 8.0m,
+                            ReservedValue3 = 9.0m,
+                            SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                            SixteenToEighteenFrameworkUplift = 11.0m,
+                            SixteenToEighteenIncentive = 12.0m,
+                            SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                        }
+                    },
+                    LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
+                    {
+                        new LARSStandardCommonComponent
+                        {
+                            CommonComponent = 3,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                        },
+                        new LARSStandardCommonComponent
+                        {
+                            CommonComponent = 4,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                        }
+                    },
+                    LARSStandardFundings = new List<LARSStandardFunding>
+                    {
+                        new LARSStandardFunding
+                        {
+                            AchievementIncentive = 3.0m,
+                            BandNumber = 2,
+                            CoreGovContributionCap = 3.0m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "4",
+                            FundingCategory = "5",
+                            SixteenToEighteenIncentive = 6.0m,
+                            SmallBusinessIncentive = 7.0m,
+                        },
+                        new LARSStandardFunding
+                        {
+                            AchievementIncentive = 4.0m,
+                            BandNumber = 2,
+                            CoreGovContributionCap = 3.0m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundableWithoutEmployer = "4",
+                            FundingCategory = "5",
+                            SixteenToEighteenIncentive = 6.0m,
+                            SmallBusinessIncentive = 7.0m,
+                        }
+                    },
+                    LARSStandardValidities = new List<LARSStandardValidity>
+                    {
+                        new LARSStandardValidity
+                        {
+                            ValidityCategory = "Cat3",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            LastNewStartDate = new DateTime(2018, 9, 1),
+                        },
+                        new LARSStandardValidity
+                        {
+                            ValidityCategory = "Cat4",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            LastNewStartDate = new DateTime(2018, 9, 1),
+                        }
+                    }
+                }
+            };
         }
 
         private LarsStandardRepositoryService NewService(ILARSContext larsContext = null)

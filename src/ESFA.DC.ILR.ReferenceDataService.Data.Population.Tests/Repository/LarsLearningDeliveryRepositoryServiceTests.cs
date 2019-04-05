@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using FluentAssertions;
@@ -18,6 +19,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
+            var expectedLearningDeliveries = ExpectedLARSLearningDeliveries();
+
             var learnAimRefs = new List<string> { "LearnAimRef1", "LearnAimRef2", "LearnAimRef3" };
 
             var larsMock = new Mock<ILARSContext>();
@@ -263,34 +266,211 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             larsMock.Setup(l => l.LARS_LearningDeliveries).Returns(larsLearningDeliveryMock.Object);
 
-            var lars = await NewService(larsMock.Object).RetrieveAsync(learnAimRefs, CancellationToken.None);
+            var larsLearningDeliveries = await NewService(larsMock.Object).RetrieveAsync(learnAimRefs, CancellationToken.None);
 
-            lars.Should().HaveCount(2);
-            lars.Select(l => l.LearnAimRef).Should().Contain("LearnAimRef1");
-            lars.Select(l => l.LearnAimRef).Should().Contain("LearnAimRef2");
-            lars.Select(l => l.LearnAimRef).Should().NotContain("LearnAimRef3");
+            expectedLearningDeliveries.Should().BeEquivalentTo(larsLearningDeliveries);
+        }
 
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").Select(l => l.LearnAimRefTitle).Should().BeEquivalentTo("AimRefTitle1");
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFrameworkAims).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFundings).Should().HaveCount(3);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSValidities).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework)).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework.LARSFrameworkApprenticeshipFundings)).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework.LARSFrameworkCommonComponents)).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSCareerLearningPilots).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSLearningDeliveryCategories).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef1").SelectMany(l => l.LARSAnnualValues).Should().HaveCount(0);
-
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").Select(l => l.LearnAimRefTitle).Should().BeEquivalentTo("AimRefTitle2");
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSCareerLearningPilots).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSLearningDeliveryCategories).Should().HaveCount(2);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSAnnualValues).Should().HaveCount(1);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSFrameworkAims).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSFundings).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSValidities).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework)).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework.LARSFrameworkApprenticeshipFundings)).Should().HaveCount(0);
-            lars.Where(l => l.LearnAimRef == "LearnAimRef2").SelectMany(l => l.LARSFrameworkAims.Select(lfa => lfa.LARSFramework.LARSFrameworkCommonComponents)).Should().HaveCount(0);
+        private IReadOnlyCollection<LARSLearningDelivery> ExpectedLARSLearningDeliveries()
+        {
+            return new List<LARSLearningDelivery>
+            {
+                new LARSLearningDelivery
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    LearnAimRefTitle = "AimRefTitle1",
+                    LARSFrameworkAims = new List<LARSFrameworkAim>
+                    {
+                        new LARSFrameworkAim
+                        {
+                            FworkCode = 1,
+                            ProgType = 2,
+                            PwayCode = 3,
+                            FrameworkComponentType = 1,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            LARSFramework = new LARSFramework
+                            {
+                                EffectiveFromNullable = new DateTime(2018, 8, 1),
+                                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                                {
+                                    new LARSFrameworkCommonComponent
+                                    {
+                                        CommonComponent = 4,
+                                        EffectiveFrom = new DateTime(2018, 8, 1)
+                                    }
+                                },
+                                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                                {
+                                    new LARSFrameworkApprenticeshipFunding
+                                    {
+                                        BandNumber = 1,
+                                        CareLeaverAdditionalPayment = 2.0m,
+                                        CoreGovContributionCap = 3.0m,
+                                        Duration = 4,
+                                        EffectiveFrom = new DateTime(2018, 8, 1),
+                                        EffectiveTo = null,
+                                        FundableWithoutEmployer = "5",
+                                        FundingCategory = "6",
+                                        MaxEmployerLevyCap = 7.0m,
+                                        ReservedValue2 = 8.0m,
+                                        ReservedValue3 = 9.0m,
+                                        SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                        SixteenToEighteenFrameworkUplift = 11.0m,
+                                        SixteenToEighteenIncentive = 12.0m,
+                                        SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                    }
+                                }
+                            }
+                        },
+                        new LARSFrameworkAim
+                        {
+                            FworkCode = 2,
+                            ProgType = 2,
+                            PwayCode = 3,
+                            FrameworkComponentType = 1,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            LARSFramework = new LARSFramework
+                            {
+                                EffectiveFromNullable = new DateTime(2018, 8, 1),
+                                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                                {
+                                    new LARSFrameworkCommonComponent
+                                    {
+                                        CommonComponent = 4,
+                                        EffectiveFrom = new DateTime(2018, 8, 1)
+                                    }
+                                },
+                                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                                {
+                                    new LARSFrameworkApprenticeshipFunding
+                                    {
+                                        BandNumber = 1,
+                                        CareLeaverAdditionalPayment = 2.0m,
+                                        CoreGovContributionCap = 3.0m,
+                                        Duration = 4,
+                                        EffectiveFrom = new DateTime(2018, 8, 1),
+                                        EffectiveTo = null,
+                                        FundableWithoutEmployer = "5",
+                                        FundingCategory = "6",
+                                        MaxEmployerLevyCap = 7.0m,
+                                        ReservedValue2 = 8.0m,
+                                        ReservedValue3 = 9.0m,
+                                        SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                        SixteenToEighteenFrameworkUplift = 11.0m,
+                                        SixteenToEighteenIncentive = 12.0m,
+                                        SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    LARSFundings = new List<LARSFunding>
+                    {
+                        new LARSFunding
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundingCategory = "Cat1",
+                            RateUnWeighted = 1.0m,
+                            RateWeighted = 2.0m,
+                            WeightingFactor = "Factor"
+                        },
+                        new LARSFunding
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundingCategory = "Cat2",
+                            RateUnWeighted = 1.0m,
+                            RateWeighted = 2.0m,
+                            WeightingFactor = "Factor"
+                        },
+                        new LARSFunding
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FundingCategory = "Cat3",
+                            RateUnWeighted = 1.0m,
+                            RateWeighted = 2.0m,
+                            WeightingFactor = "Factor"
+                        }
+                    },
+                    LARSValidities = new List<LARSValidity>
+                    {
+                        new LARSValidity
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            LastNewStartDate = new DateTime(2018, 8, 1),
+                            ValidityCategory = "Cat1"
+                        },
+                        new LARSValidity
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            LastNewStartDate = new DateTime(2018, 8, 1),
+                            ValidityCategory = "Cat2"
+                        }
+                    },
+                    LARSCareerLearningPilots = new List<LARSCareerLearningPilot>(),
+                    LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>(),
+                    LARSAnnualValues = new List<LARSAnnualValue>()
+                },
+                new LARSLearningDelivery
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    LearnAimRefTitle = "AimRefTitle2",
+                    LARSFrameworkAims = new List<LARSFrameworkAim>(),
+                    LARSFundings = new List<LARSFunding>(),
+                    LARSValidities = new List<LARSValidity>(),
+                    LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>
+                    {
+                        new LARSLearningDeliveryCategory
+                        {
+                            CategoryRef = 1,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null
+                        },
+                        new LARSLearningDeliveryCategory
+                        {
+                            CategoryRef = 2,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null
+                        }
+                    },
+                    LARSAnnualValues = new List<LARSAnnualValue>
+                    {
+                        new LARSAnnualValue
+                        {
+                            BasicSkills = 1,
+                            BasicSkillsType = 2,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            FullLevel2EntitlementCategory = 3,
+                            FullLevel3EntitlementCategory = 4,
+                            FullLevel3Percent = 5
+                        }
+                    },
+                    LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
+                    {
+                        new LARSCareerLearningPilot
+                        {
+                            AreaCode = "1",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            SubsidyRate = 2
+                        },
+                        new LARSCareerLearningPilot
+                        {
+                            AreaCode = "1.2",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = null,
+                            SubsidyRate = 2
+                        }
+                    }
+                },
+            };
         }
 
         private LarsLearningDeliveryRepositoryService NewService(ILARSContext larsContext = null)
