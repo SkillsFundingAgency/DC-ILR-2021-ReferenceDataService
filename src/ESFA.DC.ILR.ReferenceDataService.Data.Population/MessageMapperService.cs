@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IEmpIdMapper _empIdMapper;
         private readonly IEpaOrgIdMapper _epaOrgIdMapper;
         private readonly IFM36UlnMapper _fM36UlnMapper;
-        private readonly ILearnAimRefMapper _learnAimRefMapper;
+        private readonly ILARSLearningDeliveryKeyMapper _learnAimRefMapper;
         private readonly ILearningProviderUkprnMapper _learningProviderUkprnMapper;
         private readonly IPostcodesMapper _postcodesMapper;
         private readonly IStandardCodesMapper _standardCodesMapper;
@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             IEmpIdMapper empIdMapper,
             IEpaOrgIdMapper epaOrgIdMapper,
             IFM36UlnMapper fM36UlnMapper,
-            ILearnAimRefMapper learnAimRefMapper,
+            ILARSLearningDeliveryKeyMapper learnAimRefMapper,
             ILearningProviderUkprnMapper learningProviderUkprnMapper,
             IPostcodesMapper postcodesMapper,
             IStandardCodesMapper standardCodesMapper,
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 EmployerIds = _empIdMapper.MapEmpIdsFromMessage(message),
                 EpaOrgIds = _epaOrgIdMapper.MapEpaOrgIdsFromMessage(message),
                 FM36Ulns = _fM36UlnMapper.MapFM36UlnsFromMessage(message),
-                LearnAimRefs = _learnAimRefMapper.MapLearnAimRefsFromMessage(message),
+                LARSLearningDeliveryKeys = _learnAimRefMapper.MapLARSLearningDeliveryKeysFromMessage(message),
                 LearningProviderUKPRN = _learningProviderUkprnMapper.MapLearningProviderUKPRNFromMessage(message),
                 Postcodes = _postcodesMapper.MapPostcodesFromMessage(message),
                 StandardCodes = _standardCodesMapper.MapStandardCodesFromMessage(message),

@@ -1,29 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
 {
-    public class LearnAimRefMapperTests
+    public class LARSLearningDeliveryKeyMapperTests
     {
         [Fact]
         public void MapFromMessage()
         {
+            var expectedLARSLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
+            {
+                new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
+                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 4)
+            };
+
             var message = TestMessage();
 
-            var mapper = NewMapper().MapLearnAimRefsFromMessage(message);
+            var mapper = NewMapper().MapLARSLearningDeliveryKeysFromMessage(message);
 
-            mapper.Count().Should().Be(3);
-            mapper.Should().Contain(new List<string> { "LearnAimRef1", "LearnAimRef2", "LearnAimRef3" });
+            mapper.Count().Should().Be(2);
+            mapper.Should().BeEquivalentTo(expectedLARSLearningDeliveryKeys);
         }
 
         [Fact]
         public void MapFromMessage_NullMessage()
         {
-            NewMapper().MapLearnAimRefsFromMessage(null).Should().BeNullOrEmpty();
+            NewMapper().MapLARSLearningDeliveryKeysFromMessage(null).Should().BeNullOrEmpty();
         }
 
         private TestMessage TestMessage()
@@ -38,11 +45,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                LearnAimRef = "LearnAimRef1"
+                                LearnAimRef = "LearnAimRef1",
+                                FworkCodeNullable = 1,
+                                ProgTypeNullable = 2,
+                                PwayCodeNullable = 3
                             },
                             new TestLearningDelivery
                             {
-                                LearnAimRef = "LearnAimRef2"
+                                LearnAimRef = "LearnAimRef2",
+                                FworkCodeNullable = 1,
+                                ProgTypeNullable = 2,
+                                PwayCodeNullable = 4
                             }
                         }
                     },
@@ -52,7 +65,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                LearnAimRef = "LearnAimRef3"
+                                LearnAimRef = "LearnAimRef3",
+                                FworkCodeNullable = 1,
+                                PwayCodeNullable = 3
                             }
                         }
                     },
@@ -67,9 +82,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             };
         }
 
-        private LearnAimRefMapper NewMapper()
+        private LARSLearningDeliveryKeyMapper NewMapper()
         {
-            return new LearnAimRefMapper();
+            return new LARSLearningDeliveryKeyMapper();
         }
     }
 }

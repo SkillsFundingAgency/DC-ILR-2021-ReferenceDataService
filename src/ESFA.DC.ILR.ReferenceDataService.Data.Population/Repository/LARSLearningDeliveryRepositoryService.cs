@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
@@ -20,10 +21,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             _larsContext = larsContext;
         }
 
-        public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<string> learnAimRefs, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
         {
-            return await _larsContext.LARS_LearningDeliveries
-                .Where(l => learnAimRefs.Contains(l.LearnAimRef))
+            var larsFrameworks = new Dictionary<string, LARSFramework>();
+
+            var learningDeliveries = await _larsContext.LARS_LearningDeliveries
+                .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef))
                 .Select(
                     ld => new LARSLearningDelivery
                     {
@@ -72,47 +75,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             EffectiveFrom = ldc.EffectiveFrom,
                             EffectiveTo = ldc.EffectiveTo,
                         }).ToList(),
-                        LARSFrameworkAims = ld.LarsFrameworkAims.Select(lfa =>
-                        new LARSFrameworkAim
-                        {
-                            FworkCode = lfa.FworkCode,
-                            ProgType = lfa.ProgType,
-                            PwayCode = lfa.PwayCode,
-                            FrameworkComponentType = lfa.FrameworkComponentType,
-                            EffectiveFrom = lfa.EffectiveFrom,
-                            EffectiveTo = lfa.EffectiveTo,
-                            LARSFramework = new LARSFramework
-                            {
-                                EffectiveFromNullable = lfa.LarsFramework.EffectiveFrom,
-                                EffectiveTo = lfa.LarsFramework.EffectiveTo,
-                                LARSFrameworkApprenticeshipFundings = lfa.LarsFramework.LarsApprenticeshipFworkFundings.Select(laf =>
-                                new LARSFrameworkApprenticeshipFunding
-                                {
-                                    BandNumber = laf.BandNumber,
-                                    CareLeaverAdditionalPayment = laf.CareLeaverAdditionalPayment,
-                                    CoreGovContributionCap = laf.CoreGovContributionCap,
-                                    Duration = laf.Duration,
-                                    EffectiveFrom = laf.EffectiveFrom,
-                                    EffectiveTo = laf.EffectiveTo,
-                                    FundableWithoutEmployer = laf.FundableWithoutEmployer,
-                                    FundingCategory = laf.FundingCategory,
-                                    MaxEmployerLevyCap = laf.MaxEmployerLevyCap,
-                                    ReservedValue2 = laf.ReservedValue2,
-                                    ReservedValue3 = laf.ReservedValue3,
-                                    SixteenToEighteenEmployerAdditionalPayment = laf._1618employerAdditionalPayment,
-                                    SixteenToEighteenFrameworkUplift = laf._1618frameworkUplift,
-                                    SixteenToEighteenIncentive = laf._1618incentive,
-                                    SixteenToEighteenProviderAdditionalPayment = laf._1618providerAdditionalPayment,
-                                }).ToList(),
-                                LARSFrameworkCommonComponents = lfa.LarsFramework.LarsFrameworkCmnComps.Select(lcc =>
-                                new LARSFrameworkCommonComponent
-                                {
-                                    CommonComponent = lcc.CommonComponent,
-                                    EffectiveFrom = lcc.EffectiveFrom,
-                                    EffectiveTo = lcc.EffectiveTo
-                                }).ToList()
-                            }
-                        }).ToList(),
                         LARSFundings = ld.LarsFundings.Select(lf =>
                         new LARSFunding
                         {
@@ -132,6 +94,68 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             ValidityCategory = lv.ValidityCategory
                         }).ToList()
                     }).ToListAsync(cancellationToken);
+
+            foreach (var key in inputKeys)
+            {
+                var framework = await _larsContext.LARS_Frameworks
+                    .Where(lf =>
+                        lf.FworkCode == key.FworkCode
+                    && lf.ProgType == key.ProgType
+                    && lf.PwayCode == key.PwayCode)
+                    .Select(lf => new LARSFramework
+                    {
+                        FworkCode = lf.FworkCode,
+                        ProgType = lf.ProgType,
+                        PwayCode = lf.PwayCode,
+                        EffectiveFromNullable = lf.EffectiveFrom,
+                        EffectiveTo = lf.EffectiveTo,
+                        LARSFrameworkAim = lf.LarsFrameworkAims.Where(lfa => lfa.LearnAimRef == key.LearnAimRef)
+                        .Select(lfa => new LARSFrameworkAim
+                        {
+                            EffectiveFrom = lfa.EffectiveFrom,
+                            EffectiveTo = lfa.EffectiveTo,
+                            FrameworkComponentType = lfa.FrameworkComponentType
+                        }).FirstOrDefault(),
+                        LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
+                        new LARSFrameworkApprenticeshipFunding
+                        {
+                            BandNumber = laf.BandNumber,
+                            CareLeaverAdditionalPayment = laf.CareLeaverAdditionalPayment,
+                            CoreGovContributionCap = laf.CoreGovContributionCap,
+                            Duration = laf.Duration,
+                            EffectiveFrom = laf.EffectiveFrom,
+                            EffectiveTo = laf.EffectiveTo,
+                            FundableWithoutEmployer = laf.FundableWithoutEmployer,
+                            FundingCategory = laf.FundingCategory,
+                            MaxEmployerLevyCap = laf.MaxEmployerLevyCap,
+                            ReservedValue2 = laf.ReservedValue2,
+                            ReservedValue3 = laf.ReservedValue3,
+                            SixteenToEighteenEmployerAdditionalPayment = laf._1618employerAdditionalPayment,
+                            SixteenToEighteenFrameworkUplift = laf._1618frameworkUplift,
+                            SixteenToEighteenIncentive = laf._1618incentive,
+                            SixteenToEighteenProviderAdditionalPayment = laf._1618providerAdditionalPayment,
+                        }).ToList(),
+                        LARSFrameworkCommonComponents = lf.LarsFrameworkCmnComps.Select(lcc =>
+                        new LARSFrameworkCommonComponent
+                        {
+                            CommonComponent = lcc.CommonComponent,
+                            EffectiveFrom = lcc.EffectiveFrom,
+                            EffectiveTo = lcc.EffectiveTo
+                        }).ToList()
+                    })
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                larsFrameworks.Add(key.LearnAimRef, framework);
+            }
+
+            foreach (var learningDelivery in learningDeliveries)
+            {
+                larsFrameworks.TryGetValue(learningDelivery.LearnAimRef, out var framework);
+
+                learningDelivery.LARSFramework = framework;
+            }
+
+            return learningDeliveries;
         }
     }
 }

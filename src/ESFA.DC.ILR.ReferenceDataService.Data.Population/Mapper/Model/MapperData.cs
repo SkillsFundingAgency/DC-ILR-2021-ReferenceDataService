@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model
 
         public IReadOnlyCollection<long> FM36Ulns { get; set; }
 
-        public IReadOnlyCollection<string> LearnAimRefs { get; set; }
+        public IReadOnlyCollection<LARSLearningDeliveryKey> LARSLearningDeliveryKeys { get; set; }
 
         public int LearningProviderUKPRN { get; set; }
 

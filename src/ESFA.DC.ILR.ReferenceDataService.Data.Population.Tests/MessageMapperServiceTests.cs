@@ -17,7 +17,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var empIds = new List<int> { 1, 2, 3 };
             var epaOrgIds = new List<string> { "1", "2", "3" };
-            var learnAimRefs = new List<string> { "1", "2", "3" };
+            var larsLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
+            {
+                new LARSLearningDeliveryKey("1", 1, 2, 3),
+                new LARSLearningDeliveryKey("2", 1, 2, 3),
+                new LARSLearningDeliveryKey("3", 1, 2, 3)
+            };
+
             var ukprn = 1;
             var postcodes = new List<string> { "1", "2", "3" };
             var standardCodes = new List<int> { 1, 2, 3 };
@@ -27,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var empIMapperdMock = new Mock<IEmpIdMapper>();
             var epaMapperMock = new Mock<IEpaOrgIdMapper>();
             var fm36UlnMapperMock = new Mock<IFM36UlnMapper>();
-            var learnAimRefMapperMock = new Mock<ILearnAimRefMapper>();
+            var learnAimRefMapperMock = new Mock<ILARSLearningDeliveryKeyMapper>();
             var learningProvUkprnMapperMock = new Mock<ILearningProviderUkprnMapper>();
             var postcodesMapperMock = new Mock<IPostcodesMapper>();
             var organisationsMapperMock = new Mock<IStandardCodesMapper>();
@@ -37,7 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             empIMapperdMock.Setup(mm => mm.MapEmpIdsFromMessage(message)).Returns(empIds);
             epaMapperMock.Setup(mm => mm.MapEpaOrgIdsFromMessage(message)).Returns(epaOrgIds);
             fm36UlnMapperMock.Setup(mm => mm.MapFM36UlnsFromMessage(message)).Returns(ulns);
-            learnAimRefMapperMock.Setup(mm => mm.MapLearnAimRefsFromMessage(message)).Returns(learnAimRefs);
+            learnAimRefMapperMock.Setup(mm => mm.MapLARSLearningDeliveryKeysFromMessage(message)).Returns(larsLearningDeliveryKeys);
             learningProvUkprnMapperMock.Setup(mm => mm.MapLearningProviderUKPRNFromMessage(message)).Returns(ukprn);
             postcodesMapperMock.Setup(mm => mm.MapPostcodesFromMessage(message)).Returns(postcodes);
             organisationsMapperMock.Setup(mm => mm.MapStandardCodesFromMessage(message)).Returns(standardCodes);
@@ -58,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             mapperData.EmployerIds.Should().BeEquivalentTo(empIds);
             mapperData.EpaOrgIds.Should().BeEquivalentTo(epaOrgIds);
             mapperData.FM36Ulns.Should().BeEquivalentTo(ulns);
-            mapperData.LearnAimRefs.Should().BeEquivalentTo(learnAimRefs);
+            mapperData.LARSLearningDeliveryKeys.Should().BeEquivalentTo(larsLearningDeliveryKeys);
             mapperData.LearningProviderUKPRN.Should().Be(ukprn);
             mapperData.Postcodes.Should().BeEquivalentTo(postcodes);
             mapperData.StandardCodes.Should().BeEquivalentTo(standardCodes);
@@ -70,7 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IEmpIdMapper empIdMapper = null,
             IEpaOrgIdMapper epaOrgIdMapper = null,
             IFM36UlnMapper fM36UlnMapper = null,
-            ILearnAimRefMapper learnAimRefMapper = null,
+            ILARSLearningDeliveryKeyMapper learnAimRefMapper = null,
             ILearningProviderUkprnMapper learningProviderUkprnMapper = null,
             IPostcodesMapper postcodesMapper = null,
             IStandardCodesMapper standardCodesMapper = null,

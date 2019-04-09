@@ -31,9 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var message = new TestMessage();
             var cancellationToken = CancellationToken.None;
 
-            var mapperData = new MapperData
-            {
-            };
+            var mapperData = new MapperData();
 
             var referenceDataVersions = TestReferenceDataVersions();
             var appsEarningHistories = TestAppsEarningHistories();
@@ -64,7 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             employersRSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
             epaOrgRSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
             fcsRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
-            larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(mapperData.LearnAimRefs, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
+            larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(mapperData.LARSLearningDeliveryKeys, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
             larsStandardRSMock.Setup(s => s.RetrieveAsync(mapperData.StandardCodes, cancellationToken)).Returns(Task.FromResult(larsStandards));
             orgRSMock.Setup(s => s.RetrieveAsync(mapperData.UKPRNs, cancellationToken)).Returns(Task.FromResult(organisations));
             postcodesRSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(postcodes));
