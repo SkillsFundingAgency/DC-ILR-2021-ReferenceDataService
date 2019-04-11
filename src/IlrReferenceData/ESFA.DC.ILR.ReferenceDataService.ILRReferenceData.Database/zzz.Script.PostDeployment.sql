@@ -12,43 +12,12 @@ Post-Deployment Script Template
 
 RAISERROR('		   Ref Data',10,1) WITH NOWAIT;
 	:r .\zReferenceData\Validation.File.Rules.sql
-	:r .\zReferenceData\Validation.Modified.Rules.sql
+	:r .\zReferenceData\Validation.Modified.Messages.sql
+	:r .\zReferenceData\Validation.Modified.Serverity.sql
 
-GO
-RAISERROR('		   Extended Property',10,1) WITH NOWAIT;
-GO
+-- Set ExtendedProperties fro DB.
+	:r .\z.ExtendedProperties.sql
 
-RAISERROR('		         %s - %s',10,1,'BuildNumber','$(BUILD_BUILDNUMBER)') WITH NOWAIT;
-IF NOT EXISTS (SELECT name, value FROM fn_listextendedproperty('BuildNumber', default, default, default, default, default, default))
-	EXEC sp_addextendedproperty @name = N'BuildNumber', @value = '$(BUILD_BUILDNUMBER)';  
-ELSE
-	EXEC sp_updateextendedproperty @name = N'BuildNumber', @value = '$(BUILD_BUILDNUMBER)';  
-	
-GO
-RAISERROR('		         %s - %s',10,1,'BuildBranch','$(BUILD_BRANCHNAME)') WITH NOWAIT;
-IF NOT EXISTS (SELECT name, value FROM fn_listextendedproperty('BuildBranch', default, default, default, default, default, default))
-	EXEC sp_addextendedproperty @name = N'BuildBranch', @value = '$(BUILD_BRANCHNAME)';  
-ELSE
-	EXEC sp_updateextendedproperty @name = N'BuildBranch', @value = '$(BUILD_BRANCHNAME)';  
-
-GO
-DECLARE @DeploymentTime VARCHAR(35) = CONVERT(VARCHAR(35),GETUTCDATE(),113);
-RAISERROR('		         %s - %s',10,1,'DeploymentDatetime',@DeploymentTime) WITH NOWAIT;
-IF NOT EXISTS (SELECT name, value FROM fn_listextendedproperty('DeploymentDatetime', default, default, default, default, default, default))
-	EXEC sp_addextendedproperty @name = N'DeploymentDatetime', @value = @DeploymentTime;  
-ELSE
-	EXEC sp_updateextendedproperty @name = N'DeploymentDatetime', @value = @DeploymentTime;  
-GO
-
-RAISERROR('		         %s - %s',10,1,'ReleaseName','$(RELEASE_RELEASENAME)') WITH NOWAIT;
-IF NOT EXISTS (SELECT name, value FROM fn_listextendedproperty('ReleaseName', default, default, default, default, default, default))
-	EXEC sp_addextendedproperty @name = N'ReleaseName', @value = '$(RELEASE_RELEASENAME)';  
-ELSE
-	EXEC sp_updateextendedproperty @name = N'ReleaseName', @value = '$(BUILD_BRANCHNAME)';  
-GO
-
-DROP VIEW IF EXISTS [dbo].[DisplayDeploymentProperties_VW];
-GO
 
 RAISERROR('		   Update User Account Passwords',10,1) WITH NOWAIT;
 GO
@@ -60,16 +29,29 @@ GO
 ALTER ROLE [db_datareader] DROP MEMBER [ILRReferenceData_RO_User];
 GO
 
-
 RAISERROR('		       RO User',10,1) WITH NOWAIT;
 ALTER USER [ILRReferenceData_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
+GO
 RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
 ALTER USER [ILRReferenceData_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
-
+GO
+RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
+ALTER USER [User_DSCI] WITH PASSWORD = N'$(DsciUserPassword)';
 GO
 
+REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataProcessor];
+REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataViewer];
+GO
+
+
+
+---- This is ONLY to be turned on after at least 1 round of deployments to PRODUCTION
+---- DROP TABEL IF EXISTS [Staging].[ModifiedMessages];
+----
+
+
 RAISERROR('		Process Records',10,1) WITH NOWAIT;
-EXEC [Staging].[usp_Process]
+--EXEC [Staging].[usp_Process]
 GO
 RAISERROR('Completed',10,1) WITH NOWAIT;
 GO

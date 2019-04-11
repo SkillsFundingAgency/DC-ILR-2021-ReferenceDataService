@@ -1,0 +1,167 @@
+
+name: $(VersionNumberMajor).$(VersionNumberMinor)$(Rev:.rrrr)
+
+resources:
+- repo: self
+  fetchDepth: 15
+
+variables:
+  VersionNumberMajor: '0'
+  VersionNumberMinor: '2'
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
+
+pool:
+  name: DCT
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+  - IsBuildServer
+
+steps:
+- task: DotNetCoreInstaller@0
+  displayName: 'Use .NET Core sdk 2.2.202'
+  inputs:
+    version: 2.2.202
+
+- task: VisualStudioTestPlatformInstaller@1
+  displayName: 'Visual Studio Test Platform Installer'
+  inputs:
+    versionSelector: latestStable
+
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet < 4.8.0'
+  inputs:
+    versionSpec: '< 4.8.0'
+    checkLatest: true
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: '**\*.csproj'
+    vstsFeed: 'dct-pkg'
+#    includeNuGetOrg: false
+#    noCache: true
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '**/*.sln'
+    vstsFeed: 'dct-pkg'
+    noCache: true
+
+- task: MSBuild@1
+  enabled: true
+  displayName: 'Build solution **/*.sln'
+  inputs:
+    msbuildVersion: 16.0
+    msbuildArchitecture: x64
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
+    clean: true
+    maximumCpuCount: true
+    restoreNugetPackages: true
+    logProjectEvents: true
+    createLogFile: true
+
+- task: MSBuild@1
+  enabled: true
+  displayName: 'Build and Package - Service Fabric Config'
+  inputs:
+    solution: '**\*.sfproj'
+    msbuildArchitecture: x64
+    platform: '$(BuildPlatformX64)'
+    configuration: '$(BuildConfiguration)'
+    msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\applicationpackage /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+    clean: false
+    maximumCpuCount: true
+    logProjectEvents: true
+    createLogFile: true
+    
+- task: VSTest@2
+  displayName: 'VsTest - testAssemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\ESFA.DC.ESF.R2.*tests.dll
+     !**\*Database.Tests*\**
+     !**\packages\**
+     !**\obj\**
+    configuration: '$(BuildConfiguration)'
+        
+- task: DeleteFiles@1
+  displayName: 'Delete Symbols files from $(build.artifactstagingdirectory)\ApplicationPackage'
+  inputs:
+    SourceFolder: '$(build.artifactstagingdirectory)\ApplicationPackage'
+    Contents: '**\*.pdb'
+
+- task: CopyFiles@2
+  displayName: 'Copy Database Files - Artifact NugetPackages Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\*$(BuildConfiguration)*\*.$(NugetFilter).*.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\NugetPackages'
+    CleanTargetFolder: true
+    flattenFolders: true
+        
+- task: CopyFiles@2
+  displayName: 'Copy Database Files - Artifact Databases Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '**\*.dacpac'
+    TargetFolder: '$(build.artifactstagingdirectory)\Databases'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files - $(build.artifactstagingdirectory)\PublishProfiles'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src\$(ServiceFabricProjectFolderName)'
+    Contents: '**\PublishProfiles\*.xml'
+    TargetFolder: '$(build.artifactstagingdirectory)\PublishProfiles '
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files - $(build.artifactstagingdirectory)\ApplicationParameters'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src\$(ServiceFabricProjectFolderName)'
+    Contents: '**\ApplicationParameters\*.xml'
+    TargetFolder: '$(build.artifactstagingdirectory)\ApplicationParameters'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: ServiceFabricUpdateManifests@2
+  displayName: 'Update Service Fabric Manifests (Manifest versions)'
+  inputs:
+    applicationPackagePath: '$(build.artifactstagingdirectory)\ApplicationPackage'
+    versionBehavior: Replace
+  enabled: true
+
+- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+  displayName: 'Tokenization: Transform file *Tests.dll.config'
+  inputs:
+    SourcePath: '$(build.sourcesdirectory)\src'
+    TargetFileNames: '*Tests.dll.config'
+    RequireVariable: true
+  enabled: false
+
+
+#- task: PublishSymbols@2
+#  displayName: 'Publish symbols path'
+#  inputs:
+#    SearchPattern: '**\bin\**\*.pdb'
+#    PublishSymbols: false
+#  continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
