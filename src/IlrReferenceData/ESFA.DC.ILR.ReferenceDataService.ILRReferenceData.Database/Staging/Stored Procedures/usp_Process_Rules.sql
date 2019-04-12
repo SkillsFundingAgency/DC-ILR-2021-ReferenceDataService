@@ -1,75 +1,75 @@
 ﻿CREATE PROCEDURE [Staging].[usp_Process_Rules]
+(	
+	@Debug INT = 0
+)
 AS
 BEGIN
 	SET NOCOUNT ON;
+	
+	DECLARE @SummaryOfChanges TABLE ([Rulename]  NVARCHAR(50) NOT NULL, [Action] VARCHAR(100) NOT NULL);
 
 	BEGIN TRY
 		
-		--MERGE INTO [dbo].[Rules] AS Target
-		--USING (
+		MERGE INTO [dbo].[Rules] AS Target
+		USING (
+				SELECT [Rulename]
+					  ,[Severity]
+					  ,[Message]
+				FROM 
+				(
+				--	     -- New File Rules
+					SELECT [Rulename]
+						  ,[Severity]
+						  ,[Message]
+					FROM [Staging].[FileRules]
+				 UNION 
+					SELECT R.[Rulename]
+						  ,ISNULL(S.[Severity],R.[Severity]) as [Severity]
+						  ,ISNULL(M.[Message],R.[Message]) as [Message]	  
+					FROM [Staging].[Rules] R
+					LEFT JOIN [Staging].[ModifiedMessages] M 
+						ON M.[Rulename] = R.[Rulename]
+					LEFT JOIN [Staging].[ModifiedServerity] S
+						ON S.[Rulename] = R.[Rulename]
+				  ) as RecordSetToProcess
+			)
+			  AS Source ([Rulename],[Severity],[Message])
+		    ON Target.[Rulename] = Source.[Rulename]
+			WHEN MATCHED 
+				AND EXISTS 
+					(	SELECT 
+							 Target.[Severity]
+							,Target.[Message]
+					EXCEPT 
+						SELECT 
+							 Source.[Severity]
+							,Source.[Message]
+					)
+		  THEN
+			UPDATE SET   [Severity] = Source.[Severity]
+						,[Message] = Source.[Message]
+		WHEN NOT MATCHED BY TARGET THEN
+		INSERT (     [Rulename]
+					,[Severity]
+					,[Message]
+					)
+			VALUES ( Source.[Rulename]
+					,Source.[Severity]
+					,Source.[Message]
+				  )
+		WHEN NOT MATCHED BY SOURCE THEN DELETE		
+		OUTPUT ISNULL(Deleted.[Rulename],Inserted.[Rulename]),$action INTO @SummaryOfChanges([Rulename],[Action])
+		;
 
-----;WITH ModList
-----AS
-----  (
-----	  SELECT DISTINCT [Rulename]
-----	  FROM 
-----	  (      SELECT [Rulename] FROM  [Staging].[FileRules] 
-----	   UNION SELECT [Rulename] FROM  [Staging].[ModifiedServerity] 
-----	   UNION SELECT [Rulename] FROM  [Staging].[ModifiedMessages] 
-----	  ) ModList
-----) 
+		IF (@Debug>0)
+		BEGIN			
+			DECLARE @AddCount INT, @UpdateCount INT, @DeleteCount INT;
+			SET @AddCount = ISNULL((SELECT Count(*) FROM @SummaryOfChanges WHERE [Action] = 'Insert' GROUP BY Action),0);
+			SET @UpdateCount = ISNULL((SELECT Count(*) FROM @SummaryOfChanges WHERE [Action] = 'Update' GROUP BY Action),0);
+			SET @DeleteCount = ISNULL((SELECT Count(*) FROM @SummaryOfChanges WHERE [Action] = 'Delete' GROUP BY Action),0);
 
---SELECT [Rulename]
---	  ,[Severity]
---	  ,[Message]
---FROM 
---(
-----	     -- New File Rules
---	SELECT [Rulename]
---		  ,[Severity]
---		  ,[Message]
---	FROM [Staging].[FileRules]
--- UNION 
---	SELECT R.[Rulename]
---		  ,ISNULL(S.[Severity],R.[Severity]) as [Severity]
---		  ,ISNULL(M.[Message],R.[Message]) as [Message]	  
---	FROM [Staging].[Rules] R
---	LEFT JOIN [Staging].[ModifiedMessages] M 
---		ON M.[Rulename] = R.[Rulename]
---	LEFT JOIN [Staging].[ModifiedServerity] S
---		ON M.[Rulename] = R.[Rulename]
---  ) as RecordSetToProcess
-----WHERE [Rulename] IN (SELECT [Rulename] FROM ModList)
-
-
-		--	)
-		--	  AS Source ([Rulename],[Severity],[Message])
-		--    ON Target.[Rulename] = Source.[Rulename]
-		--	WHEN MATCHED 
-		--		AND EXISTS 
-		--			(	SELECT 
-		--					 Target.[Severity]
-		--					,Target.[Message]
-		--			EXCEPT 
-		--				SELECT 
-		--					 Source.[Severity]
-		--					,Source.[Message]
-		--			)
-		--  THEN
-		--	UPDATE SET   [Severity] = Source.[Severity]
-		--				,[Message] = Source.[Message]
-		--WHEN NOT MATCHED BY TARGET THEN
-		--INSERT (     [Rulename]
-		--			,[Severity]
-		--			,[Message]
-		--			)
-		--	VALUES ( Source.[Rulename]
-		--			,Source.[Severity]
-		--			,Source.[Message]
-		--		  )
-		--WHEN NOT MATCHED BY SOURCE THEN DELETE
-		--;
-
+			RAISERROR('	%s - Added %i - Update %i - Delete %i',10,1,'    Rules Processed', @AddCount, @UpdateCount, @DeleteCount) WITH NOWAIT;
+		END
 		
 		RETURN 0;
 
@@ -106,3 +106,6 @@ BEGIN
 -------------------------------------------------------------------------------------- 
 -- 
 END
+GO
+GRANT EXECUTE ON [Staging].[usp_Process_Rules] TO [ILR1819ReferenceDataD_RW_User]
+GO

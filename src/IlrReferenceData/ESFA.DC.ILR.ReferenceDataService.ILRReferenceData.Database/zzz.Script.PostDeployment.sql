@@ -10,30 +10,48 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+-- Set ExtendedProperties fro DB.
+	:r .\z.ExtendedProperties.sql
+
+GO
+SET NOCOUNT ON;
+
+RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
+RAISERROR('		   Populate Staging [ModifiedServerity] with values from Rule table that are Diffrent from the BAU data. This should be the environment specific changes to serverity.',10,1) WITH NOWAIT;
+
+		-- Load Current Serverity Records form ENV into Staging Tables
+	INSERT INTO [Staging].[ModifiedServerity]([Rulename],[Severity])
+	SELECT [Rulename],[Severity]
+	FROM
+	(
+		SELECT TOP 100 PERCENT 
+			'UNION SELECT ''' + MR.[Rulename] + ''' as [Rulename],''' + R.[Severity] + ''' as [Severity]' as [Value], MR.[Rulename], R.[Severity]
+		FROM [Staging].[Rules] MR
+		INNER JOIN [dbo].[Rules] R
+		ON R.[Rulename] = MR.[Rulename]
+		WHERE MR.[Severity] <> R.[Severity]
+		ORDER BY  MR.[Rulename]
+	) as CurrentAmendments
+	WHERE [Rulename] NOT IN (SELECT [Rulename] FROM [Staging].[ModifiedServerity])
+
+GO
+RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
+
+GO
+
 RAISERROR('		   Ref Data',10,1) WITH NOWAIT;
 	:r .\zReferenceData\Validation.File.Rules.sql
 	:r .\zReferenceData\Validation.Modified.Messages.sql
 	:r .\zReferenceData\Validation.Modified.Serverity.sql
 
--- Set ExtendedProperties fro DB.
-	:r .\z.ExtendedProperties.sql
-
-
 RAISERROR('		   Update User Account Passwords',10,1) WITH NOWAIT;
 GO
 
-ALTER ROLE [db_datawriter] DROP MEMBER [ILRReferenceData_RW_User];
-GO
-ALTER ROLE [db_datareader] DROP MEMBER [ILRReferenceData_RW_User];
-GO
-ALTER ROLE [db_datareader] DROP MEMBER [ILRReferenceData_RO_User];
-GO
-
 RAISERROR('		       RO User',10,1) WITH NOWAIT;
-ALTER USER [ILRReferenceData_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
+ALTER USER [ILR1819ReferenceDataD_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
 GO
 RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
-ALTER USER [ILRReferenceData_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
+ALTER USER [ILR1819ReferenceDataD_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
 GO
 RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
 ALTER USER [User_DSCI] WITH PASSWORD = N'$(DsciUserPassword)';
@@ -43,13 +61,10 @@ REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataProcessor];
 REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataViewer];
 GO
 
-
-
 ---- This is ONLY to be turned on after at least 1 round of deployments to PRODUCTION
 ---- DROP TABEL IF EXISTS [Staging].[ModifiedMessages];
 ----
-
-
+GO
 RAISERROR('		Process Records',10,1) WITH NOWAIT;
 --EXEC [Staging].[usp_Process]
 GO
