@@ -79,14 +79,17 @@
     <Build Include="Security\Staging.sql" />
     <Build Include="Security\User_DsciUser.sql" />
     <Build Include="Staging\Tables\FileRules.sql" />
-    <Build Include="Staging\Tables\ModifiedRules.sql" />
+    <Build Include="Staging\Tables\ModifiedMessages.sql" />
     <Build Include="Staging\Tables\Rules.sql" />
     <Build Include="Staging\Stored Procedures\usp_Process.sql" />
     <Build Include="Staging\Stored Procedures\usp_Process_Rules.sql" />
     <None Include="zReferenceData\Validation.File.Rules.sql" />
-    <None Include="zReferenceData\Validation.Modified.Rules.sql" />
+    <None Include="zReferenceData\Validation.Modified.Serverity.sql" />
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\LookupSubCategory.sql" />
+    <Build Include="Staging\Tables\ModifiedServerity.sql" />
+    <None Include="zReferenceData\Validation.Modified.Messages.sql" />
+    <None Include="z.ExtendedProperties.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />

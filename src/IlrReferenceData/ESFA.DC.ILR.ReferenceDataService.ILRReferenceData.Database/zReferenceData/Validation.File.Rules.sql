@@ -52,6 +52,6 @@ BEGIN
 		SET @UpdateCount_FR = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_FileRules WHERE [Action] = 'Update' GROUP BY Action),0);
 		SET @DeleteCount_FR = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_FileRules WHERE [Action] = 'Delete' GROUP BY Action),0);
 
-		RAISERROR('		      %s - Added %i - Update %i - Delete %i',10,1,'        File Rules', @AddCount_FR, @UpdateCount_FR, @DeleteCount_FR) WITH NOWAIT;
+		RAISERROR('		      %s     - Added %i - Update %i - Delete %i',10,1,'        File Rules', @AddCount_FR, @UpdateCount_FR, @DeleteCount_FR) WITH NOWAIT;
 		
 END

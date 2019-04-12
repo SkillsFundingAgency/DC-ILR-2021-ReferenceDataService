@@ -1,11 +1,14 @@
 ﻿CREATE PROCEDURE [Staging].[usp_Process]
+(	
+	@Debug INT = 0
+)
 AS
 BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
 				
-			EXEC [Staging].[usp_Process_Rules];
+			EXEC [Staging].[usp_Process_Rules] @Debug=@Debug;
 
 		RETURN 0;
 
@@ -44,5 +47,5 @@ BEGIN
 END
 
 GO
-GRANT EXECUTE ON [Staging].[usp_Process] TO [ILRReferenceData_RW_User]
+GRANT EXECUTE ON [Staging].[usp_Process] TO [ILR1819ReferenceDataD_RW_User]
 GO
