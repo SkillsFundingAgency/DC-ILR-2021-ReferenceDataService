@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
@@ -21,7 +22,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         {
             var expectedLearningDeliveries = ExpectedLARSLearningDeliveries();
 
-            var learnAimRefs = new List<string> { "LearnAimRef1", "LearnAimRef2", "LearnAimRef3" };
+            var larsLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
+            {
+                new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
+                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 3)
+            };
 
             var larsMock = new Mock<ILARSContext>();
 
@@ -31,117 +36,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
-                    LarsFrameworkAims = new List<LarsFrameworkAim>
-                    {
-                        new LarsFrameworkAim
-                        {
-                            FworkCode = 1,
-                            ProgType = 2,
-                            PwayCode = 3,
-                            LearnAimRef = "LearnAimRef1",
-                            FrameworkComponentType = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            CreatedBy = "CreatedBy",
-                            LarsFramework = new LarsFramework
-                            {
-                                FworkCode = 1,
-                                ProgType = 2,
-                                PwayCode = 3,
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                                LarsFrameworkCmnComps = new List<LarsFrameworkCmnComp>
-                                {
-                                    new LarsFrameworkCmnComp
-                                    {
-                                        FworkCode = 1,
-                                        ProgType = 2,
-                                        PwayCode = 3,
-                                        CommonComponent = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1)
-                                    }
-                                },
-                                LarsApprenticeshipFworkFundings = new List<LarsApprenticeshipFworkFunding>
-                                {
-                                    new LarsApprenticeshipFworkFunding
-                                    {
-                                        FworkCode = 1,
-                                        ProgType = 2,
-                                        PwayCode = 3,
-                                        BandNumber = 1,
-                                        CareLeaverAdditionalPayment = 2.0m,
-                                        CoreGovContributionCap = 3.0m,
-                                        Duration = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1),
-                                        EffectiveTo = null,
-                                        FundableWithoutEmployer = "5",
-                                        FundingCategory = "6",
-                                        MaxEmployerLevyCap = 7.0m,
-                                        ReservedValue2 = 8.0m,
-                                        ReservedValue3 = 9.0m,
-                                        _1618employerAdditionalPayment = 10.0m,
-                                        _1618frameworkUplift = 11.0m,
-                                        _1618incentive = 12.0m,
-                                        _1618providerAdditionalPayment = 13.0m,
-                                        CreatedBy = "CreatedBy"
-                                    }
-                                }
-                            }
-                        },
-                        new LarsFrameworkAim
-                        {
-                            FworkCode = 2,
-                            ProgType = 2,
-                            PwayCode = 3,
-                            LearnAimRef = "LearnAimRef1",
-                            FrameworkComponentType = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            CreatedBy = "CreatedBy",
-                            LarsFramework = new LarsFramework
-                            {
-                                FworkCode = 2,
-                                ProgType = 2,
-                                PwayCode = 3,
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                                LarsFrameworkCmnComps = new List<LarsFrameworkCmnComp>
-                                {
-                                    new LarsFrameworkCmnComp
-                                    {
-                                        FworkCode = 2,
-                                        ProgType = 2,
-                                        PwayCode = 3,
-                                        CommonComponent = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1)
-                                    }
-                                },
-                                LarsApprenticeshipFworkFundings = new List<LarsApprenticeshipFworkFunding>
-                                {
-                                    new LarsApprenticeshipFworkFunding
-                                    {
-                                        FworkCode = 2,
-                                        ProgType = 2,
-                                        PwayCode = 3,
-                                        BandNumber = 1,
-                                        CareLeaverAdditionalPayment = 2.0m,
-                                        CoreGovContributionCap = 3.0m,
-                                        Duration = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1),
-                                        EffectiveTo = null,
-                                        FundableWithoutEmployer = "5",
-                                        FundingCategory = "6",
-                                        MaxEmployerLevyCap = 7.0m,
-                                        ReservedValue2 = 8.0m,
-                                        ReservedValue3 = 9.0m,
-                                        _1618employerAdditionalPayment = 10.0m,
-                                        _1618frameworkUplift = 11.0m,
-                                        _1618incentive = 12.0m,
-                                        _1618providerAdditionalPayment = 13.0m,
-                                        CreatedBy = "CreatedBy"
-                                    }
-                                }
-                            }
-                        },
-                    },
                     LarsFundings = new List<LarsFunding>
                     {
                         new LarsFunding
@@ -262,11 +156,69 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
+            IEnumerable<LarsFramework> larsFrameworkList = new List<LarsFramework>
+            {
+                new LarsFramework
+                {
+                   FworkCode = 1,
+                   ProgType = 2,
+                   PwayCode = 3,
+                   EffectiveFrom = new DateTime(2018, 8, 1),
+                   LarsFrameworkAims = new List<LarsFrameworkAim>
+                   {
+                       new LarsFrameworkAim
+                       {
+                           EffectiveFrom = new DateTime(2018, 8, 1),
+                           FrameworkComponentType = 1,
+                           LearnAimRef = "LearnAimRef1"
+                       },
+                   },
+                   LarsFrameworkCmnComps = new List<LarsFrameworkCmnComp>
+                   {
+                       new LarsFrameworkCmnComp
+                       {
+                           FworkCode = 1,
+                           ProgType = 2,
+                           PwayCode = 3,
+                           CommonComponent = 4,
+                           EffectiveFrom = new DateTime(2018, 8, 1)
+                       }
+                   },
+                   LarsApprenticeshipFworkFundings = new List<LarsApprenticeshipFworkFunding>
+                   {
+                       new LarsApprenticeshipFworkFunding
+                       {
+                           FworkCode = 1,
+                           ProgType = 2,
+                           PwayCode = 3,
+                           BandNumber = 1,
+                           CareLeaverAdditionalPayment = 2.0m,
+                           CoreGovContributionCap = 3.0m,
+                           Duration = 4,
+                           EffectiveFrom = new DateTime(2018, 8, 1),
+                           EffectiveTo = null,
+                           FundableWithoutEmployer = "5",
+                           FundingCategory = "6",
+                           MaxEmployerLevyCap = 7.0m,
+                           ReservedValue2 = 8.0m,
+                           ReservedValue3 = 9.0m,
+                           _1618employerAdditionalPayment = 10.0m,
+                           _1618frameworkUplift = 11.0m,
+                           _1618incentive = 12.0m,
+                           _1618providerAdditionalPayment = 13.0m,
+                           CreatedBy = "CreatedBy"
+                       }
+                   }
+                }
+            };
+
             var larsLearningDeliveryMock = larsLearningDeliveryList.AsQueryable().BuildMockDbSet();
+            var larsFrameworkMock = larsFrameworkList.AsQueryable().BuildMockDbSet();
 
             larsMock.Setup(l => l.LARS_LearningDeliveries).Returns(larsLearningDeliveryMock.Object);
+            larsMock.Setup(l => l.LARS_Frameworks).Returns(larsFrameworkMock.Object);
 
-            var larsLearningDeliveries = await NewService(larsMock.Object).RetrieveAsync(learnAimRefs, CancellationToken.None);
+            var larsLearningDeliveries = await NewService(larsMock.Object).RetrieveAsync(larsLearningDeliveryKeys, CancellationToken.None);
 
             expectedLearningDeliveries.Should().BeEquivalentTo(larsLearningDeliveries);
         }
@@ -279,92 +231,50 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
-                    LARSFrameworkAims = new List<LARSFrameworkAim>
+                    LARSFrameworks = new List<LARSFramework>
                     {
-                        new LARSFrameworkAim
+                        new LARSFramework
                         {
                             FworkCode = 1,
                             ProgType = 2,
                             PwayCode = 3,
-                            FrameworkComponentType = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            LARSFramework = new LARSFramework
+                            EffectiveFromNullable = new DateTime(2018, 8, 1),
+                            LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
                             {
-                                EffectiveFromNullable = new DateTime(2018, 8, 1),
-                                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                                new LARSFrameworkCommonComponent
                                 {
-                                    new LARSFrameworkCommonComponent
-                                    {
-                                        CommonComponent = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1)
-                                    }
-                                },
-                                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
-                                {
-                                    new LARSFrameworkApprenticeshipFunding
-                                    {
-                                        BandNumber = 1,
-                                        CareLeaverAdditionalPayment = 2.0m,
-                                        CoreGovContributionCap = 3.0m,
-                                        Duration = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1),
-                                        EffectiveTo = null,
-                                        FundableWithoutEmployer = "5",
-                                        FundingCategory = "6",
-                                        MaxEmployerLevyCap = 7.0m,
-                                        ReservedValue2 = 8.0m,
-                                        ReservedValue3 = 9.0m,
-                                        SixteenToEighteenEmployerAdditionalPayment = 10.0m,
-                                        SixteenToEighteenFrameworkUplift = 11.0m,
-                                        SixteenToEighteenIncentive = 12.0m,
-                                        SixteenToEighteenProviderAdditionalPayment = 13.0m
-                                    }
+                                    CommonComponent = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1)
                                 }
-                            }
-                        },
-                        new LARSFrameworkAim
-                        {
-                            FworkCode = 2,
-                            ProgType = 2,
-                            PwayCode = 3,
-                            FrameworkComponentType = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            LARSFramework = new LARSFramework
+                            },
+                            LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                             {
-                                EffectiveFromNullable = new DateTime(2018, 8, 1),
-                                LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                                new LARSFrameworkApprenticeshipFunding
                                 {
-                                    new LARSFrameworkCommonComponent
-                                    {
-                                        CommonComponent = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1)
-                                    }
-                                },
-                                LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
-                                {
-                                    new LARSFrameworkApprenticeshipFunding
-                                    {
-                                        BandNumber = 1,
-                                        CareLeaverAdditionalPayment = 2.0m,
-                                        CoreGovContributionCap = 3.0m,
-                                        Duration = 4,
-                                        EffectiveFrom = new DateTime(2018, 8, 1),
-                                        EffectiveTo = null,
-                                        FundableWithoutEmployer = "5",
-                                        FundingCategory = "6",
-                                        MaxEmployerLevyCap = 7.0m,
-                                        ReservedValue2 = 8.0m,
-                                        ReservedValue3 = 9.0m,
-                                        SixteenToEighteenEmployerAdditionalPayment = 10.0m,
-                                        SixteenToEighteenFrameworkUplift = 11.0m,
-                                        SixteenToEighteenIncentive = 12.0m,
-                                        SixteenToEighteenProviderAdditionalPayment = 13.0m
-                                    }
+                                    BandNumber = 1,
+                                    CareLeaverAdditionalPayment = 2.0m,
+                                    CoreGovContributionCap = 3.0m,
+                                    Duration = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                    EffectiveTo = null,
+                                    FundableWithoutEmployer = "5",
+                                    FundingCategory = "6",
+                                    MaxEmployerLevyCap = 7.0m,
+                                    ReservedValue2 = 8.0m,
+                                    ReservedValue3 = 9.0m,
+                                    SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                    SixteenToEighteenFrameworkUplift = 11.0m,
+                                    SixteenToEighteenIncentive = 12.0m,
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
                                 }
+                            },
+                            LARSFrameworkAim = new LARSFrameworkAim
+                            {
+                                FrameworkComponentType = 1,
+                                EffectiveFrom = new DateTime(2018, 8, 1),
+                                EffectiveTo = null
                             }
-                        },
+                        }
                     },
                     LARSFundings = new List<LARSFunding>
                     {
@@ -421,7 +331,46 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
-                    LARSFrameworkAims = new List<LARSFrameworkAim>(),
+                    LARSFrameworks = new List<LARSFramework>
+                    {
+                        new LARSFramework
+                        {
+                            FworkCode = 1,
+                            ProgType = 2,
+                            PwayCode = 3,
+
+                            EffectiveFromNullable = new DateTime(2018, 8, 1),
+                            LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                            {
+                                new LARSFrameworkCommonComponent
+                                {
+                                    CommonComponent = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1)
+                                }
+                            },
+                            LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
+                            {
+                                new LARSFrameworkApprenticeshipFunding
+                                {
+                                    BandNumber = 1,
+                                    CareLeaverAdditionalPayment = 2.0m,
+                                    CoreGovContributionCap = 3.0m,
+                                    Duration = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                    EffectiveTo = null,
+                                    FundableWithoutEmployer = "5",
+                                    FundingCategory = "6",
+                                    MaxEmployerLevyCap = 7.0m,
+                                    ReservedValue2 = 8.0m,
+                                    ReservedValue3 = 9.0m,
+                                    SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                    SixteenToEighteenFrameworkUplift = 11.0m,
+                                    SixteenToEighteenIncentive = 12.0m,
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                }
+                            }
+                        }
+                    },
                     LARSFundings = new List<LARSFunding>(),
                     LARSValidities = new List<LARSValidity>(),
                     LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>

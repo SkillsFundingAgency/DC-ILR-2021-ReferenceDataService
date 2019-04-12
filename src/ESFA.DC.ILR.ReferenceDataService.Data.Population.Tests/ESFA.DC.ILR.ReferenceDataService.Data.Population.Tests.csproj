@@ -195,7 +195,7 @@
     <Compile Include="Repository\FcsRepositoryServiceTests.cs" />
     <Compile Include="Repository\EpaOrganisationsRepositoryServiceTests.cs" />
     <Compile Include="Mapper\PostcodesMapperTests.cs" />
-    <Compile Include="Mapper\LearnAimRefMapperTests.cs" />
+    <Compile Include="Mapper\LARSLearningDeliveryKeyMapperTests.cs" />
     <Compile Include="Mapper\StdCodeMapperTests.cs" />
     <Compile Include="Mapper\LearningProviderUkprnMapperTests.cs" />
     <Compile Include="Mapper\UlnMapperTests.cs" />
