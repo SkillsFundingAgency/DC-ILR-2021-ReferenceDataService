@@ -2,7 +2,7 @@
 {
     public struct LARSLearningDeliveryKey
     {
-        public LARSLearningDeliveryKey(string learnAimRef, int fworkCode, int progType, int pwayCode)
+        public LARSLearningDeliveryKey(string learnAimRef, int? fworkCode, int? progType, int? pwayCode)
         {
             LearnAimRef = learnAimRef;
             FworkCode = fworkCode;
@@ -12,10 +12,10 @@
 
         public string LearnAimRef { get; }
 
-        public int FworkCode { get; }
+        public int? FworkCode { get; }
 
-        public int ProgType { get; }
+        public int? ProgType { get; }
 
-        public int PwayCode { get; }
+        public int? PwayCode { get; }
     }
 }

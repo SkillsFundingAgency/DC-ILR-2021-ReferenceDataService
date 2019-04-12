@@ -16,14 +16,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             var expectedLARSLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
             {
                 new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
-                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 4)
+                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 4),
+                new LARSLearningDeliveryKey("LearnAimRef3", 1, null, 3)
             };
 
             var message = TestMessage();
 
             var mapper = NewMapper().MapLARSLearningDeliveryKeysFromMessage(message);
 
-            mapper.Count().Should().Be(2);
+            mapper.Count().Should().Be(3);
             mapper.Should().BeEquivalentTo(expectedLARSLearningDeliveryKeys);
         }
 
