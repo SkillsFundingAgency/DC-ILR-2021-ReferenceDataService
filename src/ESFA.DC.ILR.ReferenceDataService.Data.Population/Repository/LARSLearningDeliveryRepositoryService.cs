@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
         {
-            var larsFrameworks = new Dictionary<string, LARSFramework>();
+            var larsFrameworks = new List<LARSFrameworkKey>();
 
             var learningDeliveries = await _larsContext.LARS_LearningDeliveries
                 .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef))
@@ -145,14 +145,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     })
                     .FirstOrDefaultAsync(cancellationToken);
 
-                larsFrameworks.Add(key.LearnAimRef, framework);
+                larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
             }
+
+            var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList());
 
             foreach (var learningDelivery in learningDeliveries)
             {
-                larsFrameworks.TryGetValue(learningDelivery.LearnAimRef, out var framework);
+                frameworkDictionary.TryGetValue(learningDelivery.LearnAimRef, out var frameworks);
 
-                learningDelivery.LARSFramework = framework;
+                learningDelivery.LARSFrameworks = frameworks;
             }
 
             return learningDeliveries;

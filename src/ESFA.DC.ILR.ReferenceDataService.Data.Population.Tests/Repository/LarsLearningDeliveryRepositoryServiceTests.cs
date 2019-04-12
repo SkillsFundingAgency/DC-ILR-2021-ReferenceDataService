@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
@@ -231,46 +231,49 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
-                    LARSFramework = new LARSFramework
+                    LARSFrameworks = new List<LARSFramework>
                     {
-                        FworkCode = 1,
-                        ProgType = 2,
-                        PwayCode = 3,
-                        EffectiveFromNullable = new DateTime(2018, 8, 1),
-                        LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                        new LARSFramework
                         {
-                            new LARSFrameworkCommonComponent
+                            FworkCode = 1,
+                            ProgType = 2,
+                            PwayCode = 3,
+                            EffectiveFromNullable = new DateTime(2018, 8, 1),
+                            LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
                             {
-                                CommonComponent = 4,
-                                EffectiveFrom = new DateTime(2018, 8, 1)
-                            }
-                        },
-                        LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
-                        {
-                            new LARSFrameworkApprenticeshipFunding
+                                new LARSFrameworkCommonComponent
+                                {
+                                    CommonComponent = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1)
+                                }
+                            },
+                            LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                             {
-                                BandNumber = 1,
-                                CareLeaverAdditionalPayment = 2.0m,
-                                CoreGovContributionCap = 3.0m,
-                                Duration = 4,
+                                new LARSFrameworkApprenticeshipFunding
+                                {
+                                    BandNumber = 1,
+                                    CareLeaverAdditionalPayment = 2.0m,
+                                    CoreGovContributionCap = 3.0m,
+                                    Duration = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                    EffectiveTo = null,
+                                    FundableWithoutEmployer = "5",
+                                    FundingCategory = "6",
+                                    MaxEmployerLevyCap = 7.0m,
+                                    ReservedValue2 = 8.0m,
+                                    ReservedValue3 = 9.0m,
+                                    SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                    SixteenToEighteenFrameworkUplift = 11.0m,
+                                    SixteenToEighteenIncentive = 12.0m,
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                }
+                            },
+                            LARSFrameworkAim = new LARSFrameworkAim
+                            {
+                                FrameworkComponentType = 1,
                                 EffectiveFrom = new DateTime(2018, 8, 1),
-                                EffectiveTo = null,
-                                FundableWithoutEmployer = "5",
-                                FundingCategory = "6",
-                                MaxEmployerLevyCap = 7.0m,
-                                ReservedValue2 = 8.0m,
-                                ReservedValue3 = 9.0m,
-                                SixteenToEighteenEmployerAdditionalPayment = 10.0m,
-                                SixteenToEighteenFrameworkUplift = 11.0m,
-                                SixteenToEighteenIncentive = 12.0m,
-                                SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                EffectiveTo = null
                             }
-                        },
-                        LARSFrameworkAim = new LARSFrameworkAim
-                        {
-                            FrameworkComponentType = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null
                         }
                     },
                     LARSFundings = new List<LARSFunding>
@@ -328,39 +331,43 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
-                    LARSFramework = new LARSFramework
+                    LARSFrameworks = new List<LARSFramework>
                     {
-                        FworkCode = 1,
-                        ProgType = 2,
-                        PwayCode = 3,
-                        EffectiveFromNullable = new DateTime(2018, 8, 1),
-                        LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
+                        new LARSFramework
                         {
-                            new LARSFrameworkCommonComponent
+                            FworkCode = 1,
+                            ProgType = 2,
+                            PwayCode = 3,
+
+                            EffectiveFromNullable = new DateTime(2018, 8, 1),
+                            LARSFrameworkCommonComponents = new List<LARSFrameworkCommonComponent>
                             {
-                                CommonComponent = 4,
-                                EffectiveFrom = new DateTime(2018, 8, 1)
-                            }
-                        },
-                        LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
-                        {
-                            new LARSFrameworkApprenticeshipFunding
+                                new LARSFrameworkCommonComponent
+                                {
+                                    CommonComponent = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1)
+                                }
+                            },
+                            LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                             {
-                                BandNumber = 1,
-                                CareLeaverAdditionalPayment = 2.0m,
-                                CoreGovContributionCap = 3.0m,
-                                Duration = 4,
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                                EffectiveTo = null,
-                                FundableWithoutEmployer = "5",
-                                FundingCategory = "6",
-                                MaxEmployerLevyCap = 7.0m,
-                                ReservedValue2 = 8.0m,
-                                ReservedValue3 = 9.0m,
-                                SixteenToEighteenEmployerAdditionalPayment = 10.0m,
-                                SixteenToEighteenFrameworkUplift = 11.0m,
-                                SixteenToEighteenIncentive = 12.0m,
-                                SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                new LARSFrameworkApprenticeshipFunding
+                                {
+                                    BandNumber = 1,
+                                    CareLeaverAdditionalPayment = 2.0m,
+                                    CoreGovContributionCap = 3.0m,
+                                    Duration = 4,
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                    EffectiveTo = null,
+                                    FundableWithoutEmployer = "5",
+                                    FundingCategory = "6",
+                                    MaxEmployerLevyCap = 7.0m,
+                                    ReservedValue2 = 8.0m,
+                                    ReservedValue3 = 9.0m,
+                                    SixteenToEighteenEmployerAdditionalPayment = 10.0m,
+                                    SixteenToEighteenFrameworkUplift = 11.0m,
+                                    SixteenToEighteenIncentive = 12.0m,
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
+                                }
                             }
                         }
                     },

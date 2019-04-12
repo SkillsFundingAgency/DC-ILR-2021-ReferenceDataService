@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys
 {
     public struct LARSLearningDeliveryKey
     {

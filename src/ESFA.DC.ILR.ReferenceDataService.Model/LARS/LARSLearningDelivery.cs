@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public List<LARSCareerLearningPilot> LARSCareerLearningPilots { get; set; }
 
-        public LARSFramework LARSFramework { get; set; }
+        public List<LARSFramework> LARSFrameworks { get; set; }
 
         public List<LARSFunding> LARSFundings { get; set; }
 
