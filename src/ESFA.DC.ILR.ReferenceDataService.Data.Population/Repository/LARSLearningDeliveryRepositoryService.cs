@@ -144,7 +144,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     })
                     .FirstOrDefaultAsync(cancellationToken);
 
-                larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
+                if (framework != null)
+                {
+                    larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
+                }
             }
 
             var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList());
