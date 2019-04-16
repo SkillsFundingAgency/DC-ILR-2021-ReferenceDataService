@@ -70,10 +70,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.Constants\ESFA.DC.ILR.Constants.csproj">
-      <Project>{4E0E618E-D059-4815-9256-85B1369E6707}</Project>
-      <Name>ESFA.DC.ILR.Constants</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj">
       <Project>{6991FF63-4C2C-41E1-9909-53CF6BE74CE1}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Interfaces</Name>
@@ -113,7 +109,7 @@
       <Version>0.1.16-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.JobContext.Interface">
-      <Version>0.2.6-beta0001</Version>
+      <Version>0.2.8-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.JobContextManager">
       <Version>0.2.6-beta0001</Version>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,9 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model">
-      <HintPath>..\ESFA.DC.ILR.ReferenceDataService.Model\bin\Debug\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj" />
   </ItemGroup>
 
 </Project>
