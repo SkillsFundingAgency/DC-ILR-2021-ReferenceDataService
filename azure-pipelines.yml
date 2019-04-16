@@ -7,9 +7,10 @@ resources:
 
 variables:
   VersionNumberMajor: '0'
-  VersionNumberMinor: '2'
+  VersionNumberMinor: '1'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
+  BuildPlatformX64: 'x64'
 
 pool:
   name: DCT
@@ -21,9 +22,9 @@ pool:
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core sdk 2.2.202'
+  displayName: 'Use .NET Core sdk 2.2.203'
   inputs:
-    version: 2.2.202
+    version: 2.2.203
 
 - task: VisualStudioTestPlatformInstaller@1
   displayName: 'Visual Studio Test Platform Installer'
@@ -74,7 +75,7 @@ steps:
   inputs:
     solution: '**\*.sfproj'
     msbuildArchitecture: x64
-    platform: '$(BuildPlatform)'
+    platform: '$(BuildPlatformX64)'
     configuration: '$(BuildConfiguration)'
     msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\applicationpackage /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
     clean: false
