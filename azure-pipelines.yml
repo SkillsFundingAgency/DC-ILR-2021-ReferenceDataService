@@ -95,7 +95,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
-     **\*$(BuildConfiguration)*\*.$(NugetFilter).*.nupkg
+     **\*$(BuildConfiguration)*\*.nupkg
      !**\packages\**
      !**\bin\x64\**
     TargetFolder: '$(build.artifactstagingdirectory)\NugetPackages'
