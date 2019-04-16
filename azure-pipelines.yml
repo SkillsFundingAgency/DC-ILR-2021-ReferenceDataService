@@ -10,7 +10,8 @@ variables:
   VersionNumberMinor: '1'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
-  BuildPlatformX64: 'x64'
+  BuildPlatformX64: 'x64'  
+  ServiceFabricProjectFolderName: 'ESFA.DC.ILR.ReferenceDataService'
 
 pool:
   name: DCT
@@ -77,7 +78,7 @@ steps:
     msbuildArchitecture: x64
     platform: '$(BuildPlatformX64)'
     configuration: '$(BuildConfiguration)'
-    msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\applicationpackage /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+    msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\ApplicationPackage /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
     clean: false
     maximumCpuCount: true
     logProjectEvents: true
@@ -125,7 +126,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src\$(ServiceFabricProjectFolderName)'
     Contents: '**\PublishProfiles\*.xml'
-    TargetFolder: '$(build.artifactstagingdirectory)\PublishProfiles '
+    TargetFolder: '$(build.artifactstagingdirectory)\PublishProfiles'
     CleanTargetFolder: true
     flattenFolders: true
 
@@ -144,16 +145,7 @@ steps:
     applicationPackagePath: '$(build.artifactstagingdirectory)\ApplicationPackage'
     versionBehavior: Replace
   enabled: true
-
-- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
-  displayName: 'Tokenization: Transform file *Tests.dll.config'
-  inputs:
-    SourcePath: '$(build.sourcesdirectory)\src'
-    TargetFileNames: '*Tests.dll.config'
-    RequireVariable: true
-  enabled: false
-
-
+   
 #- task: PublishSymbols@2
 #  displayName: 'Publish symbols path'
 #  inputs:
