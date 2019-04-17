@@ -115,7 +115,7 @@ steps:
   displayName: 'Copy Files - $(build.artifactstagingdirectory)\ServiceFabric\PublishProfiles'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src\$(ServiceFabricProjectFolderName)'
-    Contents: '**\PublishProfiles\*.xml'
+    Contents: '**\PublishProfiles\Cloud.xml'
     TargetFolder: '$(build.artifactstagingdirectory)\ServiceFabric\PublishProfiles'
     CleanTargetFolder: true
     flattenFolders: true
