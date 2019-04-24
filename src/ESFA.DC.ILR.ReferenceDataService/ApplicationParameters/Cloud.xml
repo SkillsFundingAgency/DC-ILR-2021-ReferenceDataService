@@ -15,12 +15,12 @@
     <Parameter Name="LoggerConnectionString" Value="__LoggerConnectionString__" />
     <Parameter Name="AzureStorageConnectionString" Value="__AzureStorageConnectionString__" />
     <Parameter Name="AzureStorageContainerName" Value="__AzureStorageContainerName__" />
-    <Parameter Name="LARSConnectionString" Value="__LARSConnectionString_EFCore_RO____" />
+    <Parameter Name="LARSConnectionString" Value="__LARSConnectionString_EFCore_RO__" />
     <Parameter Name="OrganisationsConnectionString" Value="__OrganisationsConnectionString_EFCore_RO__" />
-    <Parameter Name="PostcodesConnectionString" Value="__PostcodesConnectionString_EFCore_RO____" />
-    <Parameter Name="ULNConnectionstring" Value="__ULNConnectionstring_EFCore_RO____" />
-    <Parameter Name="FCSConnectionString" Value="__FCSDbConnectionString_EFCore_RO____" />
-    <Parameter Name="EPAConnectionString" Value="__EpaDbConnectionString_EFCore_RO____" />
+    <Parameter Name="PostcodesConnectionString" Value="__PostcodesConnectionString_EFCore_RO__" />
+    <Parameter Name="ULNConnectionstring" Value="__ULNConnectionstring_EFCore_RO__" />
+    <Parameter Name="FCSConnectionString" Value="__FCSDbConnectionString_EFCore_RO__" />
+    <Parameter Name="EPAConnectionString" Value="__EpaDbConnectionString_EFCore_RO__" />
     <Parameter Name="EmployersConnectionString" Value="__EmployersDbConnectionString_EFCore_RO__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryConnectionString_EFCore_RO__" />
     <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RO__" />
