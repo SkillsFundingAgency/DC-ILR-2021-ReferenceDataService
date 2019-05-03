@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataSe
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ESFA.DC.ILR.ReferenceDataService", "ESFA.DC.ILR.ReferenceDataService\ESFA.DC.ILR.ReferenceDataService.sfproj", "{F18178FE-91E1-4021-8E41-B9A8A289A476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Stateless", "ESFA.DC.ILR.ReferenceDataService.Stateless\ESFA.DC.ILR.ReferenceDataService.Stateless.csproj", "{A1DC077B-4242-4015-8FFB-236E4EFD317C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.Service", "ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj", "{522D563B-9412-4748-B7CE-21CAD291331E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Service.Tests", "ESFA.DC.ILR.ReferenceDataService.Service.Tests\ESFA.DC.ILR.ReferenceDataService.Service.Tests.csproj", "{318047DE-08BC-41B4-A6FC-50322474E967}"
@@ -33,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Stateless", "ESFA.DC.ILR.ReferenceDataService.Stateless\ESFA.DC.ILR.ReferenceDataService.Stateless.csproj", "{F826ACA7-B907-4F21-8495-C781E01BA0D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,14 +93,6 @@ Global
 		{F18178FE-91E1-4021-8E41-B9A8A289A476}.Release|x64.ActiveCfg = Release|x64
 		{F18178FE-91E1-4021-8E41-B9A8A289A476}.Release|x64.Build.0 = Release|x64
 		{F18178FE-91E1-4021-8E41-B9A8A289A476}.Release|x64.Deploy.0 = Release|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Debug|Any CPU.Build.0 = Debug|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Debug|x64.ActiveCfg = Debug|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Debug|x64.Build.0 = Debug|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Release|Any CPU.ActiveCfg = Release|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Release|Any CPU.Build.0 = Release|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Release|x64.ActiveCfg = Release|x64
-		{A1DC077B-4242-4015-8FFB-236E4EFD317C}.Release|x64.Build.0 = Release|x64
 		{522D563B-9412-4748-B7CE-21CAD291331E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{522D563B-9412-4748-B7CE-21CAD291331E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{522D563B-9412-4748-B7CE-21CAD291331E}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -144,6 +136,14 @@ Global
 		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.ActiveCfg = Release|Any CPU
 		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.Build.0 = Release|Any CPU
 		{E439F666-C670-4EF5-A2FC-EC171CF56230}.Release|x64.Deploy.0 = Release|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{F826ACA7-B907-4F21-8495-C781E01BA0D7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
