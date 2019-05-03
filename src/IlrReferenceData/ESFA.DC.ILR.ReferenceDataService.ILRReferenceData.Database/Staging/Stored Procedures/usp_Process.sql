@@ -47,5 +47,5 @@ BEGIN
 END
 
 GO
-GRANT EXECUTE ON [Staging].[usp_Process] TO [ILR1819ReferenceDataD_RW_User]
+GRANT EXECUTE ON [Staging].[usp_Process] TO [ILR1819ReferenceData_RW_User]
 GO
