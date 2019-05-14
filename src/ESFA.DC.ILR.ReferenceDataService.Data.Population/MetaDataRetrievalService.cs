@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
         {
-            return new MetaData
+            var metaData = new MetaData
             {
                 ReferenceDataVersions = new ReferenceDataVersion
                 {
@@ -68,6 +68,25 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
                 Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken)
             };
+
+            return Validate(metaData);
+        }
+
+        private MetaData Validate(MetaData metaData)
+        {
+            if (
+                metaData.ReferenceDataVersions.Employers.Version != null
+               && metaData.ReferenceDataVersions.LarsVersion.Version != null
+               && metaData.ReferenceDataVersions.OrganisationsVersion.Version != null
+               && metaData.ValidationErrors.Any()
+               && metaData.Lookups.Any())
+            {
+                return metaData;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("MetaData Retrieval Error - Reference Dataset incomplete");
+            }
         }
     }
 }
