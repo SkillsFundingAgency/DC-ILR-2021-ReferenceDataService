@@ -115,11 +115,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync_ThrowsException()
         {
-            var larsVersion = "Version1";
-            var employersVersion = "2";
-            var orgVersion = "Version3";
-            var postcodesVersion = "Version4";
-
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
             var orgMock = new Mock<IOrganisationsContext>();
@@ -193,7 +188,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                          ilrReferenceDataRepositoryServiceMock.Object).RetrieveAsync(CancellationToken.None);
             };
 
-            serviceResult.Should().Throw<Exception>().WithMessage("MetaData Retrieval Error - Reference Dataset incomplete");
+            serviceResult.Should().Throw<ArgumentOutOfRangeException>().WithMessage("Specified argument was out of the range of valid values." +
+                "Parameter name: MetaData Retrieval Error - Reference Dataset incomplete");
         }
 
         private MetaDataRetrievalService NewService(
