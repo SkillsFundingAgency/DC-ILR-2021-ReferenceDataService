@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ESFA.DC.ILR1920.ReferenceDataService.Model</PackageId>
+    <Authors>DC</Authors>
+    <Company>ESFA</Company>
+    <Product>ESFA.DC.ILR1920.ReferenceDataService.Model</Product>
+    <Description>ILR1920 Reference Data Service Model</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -14,7 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

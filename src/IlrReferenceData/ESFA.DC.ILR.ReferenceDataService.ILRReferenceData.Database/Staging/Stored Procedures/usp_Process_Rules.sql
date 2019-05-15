@@ -107,5 +107,5 @@ BEGIN
 -- 
 END
 GO
-GRANT EXECUTE ON [Staging].[usp_Process_Rules] TO [ILR1819ReferenceData_RW_User]
+GRANT EXECUTE ON [Staging].[usp_Process_Rules] TO [ILR1920ReferenceData_RW_User]
 GO

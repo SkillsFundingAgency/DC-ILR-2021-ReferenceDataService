@@ -6,7 +6,6 @@ using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
-using ESFA.DC.ILR.ReferenceDataService.Model.ULNs;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model
 {

@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 builder.RegisterServiceFabricSupport();
 
-                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR1819.ReferenceDataService.StatelessType");
+                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR1920.ReferenceDataService.StatelessType");
 
                 using (var container = builder.Build())
                 {
