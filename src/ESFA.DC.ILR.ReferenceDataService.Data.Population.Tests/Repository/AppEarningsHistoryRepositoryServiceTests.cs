@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_1_10000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1819",
+                     CollectionYear = "1920",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
@@ -61,7 +61,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_2_10000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1819",
+                     CollectionYear = "1920",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
@@ -94,7 +94,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_1_20000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1819",
+                     CollectionYear = "1920",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
