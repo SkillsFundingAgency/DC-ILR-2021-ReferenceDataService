@@ -22,7 +22,7 @@
     <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.53" />
     <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.53" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

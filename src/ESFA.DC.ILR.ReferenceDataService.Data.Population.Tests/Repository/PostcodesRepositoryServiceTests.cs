@@ -29,14 +29,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     Uplift = 1.0m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31)
+                    EffectiveTo = new DateTime(2018, 8, 31),
                 },
                 new SfaDisadvantage
                 {
                     Uplift = 1.0m,
                     EffectiveFrom = new DateTime(2018, 9, 1),
-                    EffectiveTo = null
-                }
+                    EffectiveTo = null,
+                },
             };
 
             var efaDisad = new List<EfaDisadvantage>
@@ -45,13 +45,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     Uplift = 2.0m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31)
+                    EffectiveTo = new DateTime(2018, 8, 31),
                 },
                 new EfaDisadvantage
                 {
                     Uplift = 2.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1)
-                }
+                    EffectiveFrom = new DateTime(2018, 9, 1),
+                },
             };
 
             var dasDisad = new List<DasDisadvantage>
@@ -60,13 +60,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     Uplift = 3.0m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31)
+                    EffectiveTo = new DateTime(2018, 8, 31),
                 },
                 new DasDisadvantage
                 {
                     Uplift = 3.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1)
-                }
+                    EffectiveFrom = new DateTime(2018, 9, 1),
+                },
             };
 
             var sfaAreaCost = new List<SfaAreaCost>
@@ -75,13 +75,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     AreaCostFactor = 4.0m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31)
+                    EffectiveTo = new DateTime(2018, 8, 31),
                 },
                 new SfaAreaCost
                 {
                     AreaCostFactor = 4.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1)
-                }
+                    EffectiveFrom = new DateTime(2018, 9, 1),
+                },
             };
 
             var careerLearningPilot = new List<CareerLearningPilot>
@@ -90,13 +90,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     AreaCode = "Area1",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31)
+                    EffectiveTo = new DateTime(2018, 8, 31),
                 },
                 new CareerLearningPilot
                 {
                     AreaCode = "Area1",
-                    EffectiveFrom = new DateTime(2018, 9, 1)
-                }
+                    EffectiveFrom = new DateTime(2018, 9, 1),
+                },
             };
 
             var onsData = new List<ONSData>
@@ -108,8 +108,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Lep2 = "Lep2",
                     Nuts = "Nuts",
                     Termination = new DateTime(2020, 8, 31),
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                }
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
             };
 
             IEnumerable<MasterPostcode> postcodesList = new List<MasterPostcode>
@@ -123,13 +123,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Uplift = 1.0m,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31)
+                            EffectiveTo = new DateTime(2018, 8, 31),
                         },
                         new SfaPostcodeDisadvantage
                         {
                             Uplift = 1.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 9, 1),
+                        },
                     },
                 },
                 new MasterPostcode
@@ -141,13 +141,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Uplift = 2.0m,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31)
+                            EffectiveTo = new DateTime(2018, 8, 31),
                         },
                         new EfaPostcodeDisadvantage
                         {
                             Uplift = 2.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 9, 1),
+                        },
                     },
                 },
                 new MasterPostcode
@@ -159,13 +159,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Uplift = 3.0m,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31)
+                            EffectiveTo = new DateTime(2018, 8, 31),
                         },
                         new DasPostcodeDisadvantage
                         {
                             Uplift = 3.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 9, 1),
+                        },
                     },
                 },
                 new MasterPostcode
@@ -177,13 +177,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AreaCostFactor = 4.0m,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31)
+                            EffectiveTo = new DateTime(2018, 8, 31),
                         },
                         new SfaPostcodeAreaCost
                         {
                             AreaCostFactor = 4.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 9, 1),
+                        },
                     },
                 },
                 new MasterPostcode
@@ -195,13 +195,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AreaCode = "Area1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31)
+                            EffectiveTo = new DateTime(2018, 8, 31),
                         },
                         new CareerLearningPilotPostcode
                         {
                             AreaCode = "Area1",
-                            EffectiveFrom = new DateTime(2018, 9, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 9, 1),
+                        },
                     },
                 },
                 new MasterPostcode
@@ -216,8 +216,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Lep2 = "Lep2",
                             Nuts = "Nuts",
                             Termination = "202008",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
                     },
                 },
                 new MasterPostcode { Postcode = "Postcode7" },
@@ -249,14 +249,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             var sfaDisdvantage = new SfaDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             NewService().SfaPostcodeDisadvantagesToEntity(sfaPostcodeDisadvantage).Should().BeEquivalentTo(sfaDisdvantage);
@@ -269,14 +269,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             var efaDisdvantage = new EfaDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             NewService().EfaPostcodeDisadvantagesToEntity(efaPostcodeDisadvantage).Should().BeEquivalentTo(efaDisdvantage);
@@ -289,14 +289,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             var dasDisdvantage = new DasDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             NewService().DasPostcodeDisadvantagesToEntity(dasPostcodeDisadvantage).Should().BeEquivalentTo(dasDisdvantage);
@@ -309,14 +309,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 AreaCostFactor = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             var sfaAreaCost = new SfaAreaCost
             {
                 AreaCostFactor = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
             NewService().SfaAreaCostsToEntity(sfaPostcodeAreaCost).Should().BeEquivalentTo(sfaAreaCost);
@@ -329,15 +329,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 AreaCode = "Area1",
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                EffectiveTo = new DateTime(2018, 8, 31),
             };
 
-          var careerLearningPilot = new CareerLearningPilot
-          {
-              AreaCode = "Area1",
-              EffectiveFrom = new DateTime(2018, 8, 1),
-              EffectiveTo = new DateTime(2018, 8, 31)
-          };
+            var careerLearningPilot = new CareerLearningPilot
+            {
+                AreaCode = "Area1",
+                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveTo = new DateTime(2018, 8, 31),
+            };
 
             NewService().CareerLearningPilotsToEntity(careerLearningPilotPostcode).Should().BeEquivalentTo(careerLearningPilot);
         }
@@ -352,7 +352,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
                 Termination = "202008",
-                EffectiveFrom = new DateTime(2018, 8, 1)
+                EffectiveFrom = new DateTime(2018, 8, 1),
             };
 
             var onsData = new ONSData
@@ -362,7 +362,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
                 Termination = new DateTime(2020, 8, 31),
-                EffectiveFrom = new DateTime(2018, 8, 1)
+                EffectiveFrom = new DateTime(2018, 8, 1),
             };
 
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);

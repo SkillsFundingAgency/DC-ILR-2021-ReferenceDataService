@@ -1,4 +1,6 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+﻿using System.Collections.Generic;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
     public interface IReferenceDataContext
     {
@@ -9,5 +11,7 @@
         string Container { get; }
 
         string OutputReferenceDataFileKey { get; }
+
+        IEnumerable<string> Tasks { get; }
     }
 }

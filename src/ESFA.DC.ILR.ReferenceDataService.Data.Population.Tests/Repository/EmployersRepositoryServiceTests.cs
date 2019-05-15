@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Employer { Urn = 18 },
                 new Employer { Urn = 19 },
                 new Employer { Urn = 20 },
-                new Employer { Urn = 35 }
+                new Employer { Urn = 35 },
             };
 
             IEnumerable<LargeEmployer> lempList = new List<LargeEmployer>

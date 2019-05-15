@@ -1,6 +1,8 @@
 ﻿using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 {
@@ -28,5 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
         public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
+
+        public IEnumerable<string> Tasks => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks);
     }
 }

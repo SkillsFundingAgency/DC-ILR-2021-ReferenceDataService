@@ -43,9 +43,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             PlannedValue = 1.0m,
                             PlannedVolume = 1,
                             UnitCost = 1.0m,
-                            UnitCode = 1.0m
-                        }
-                    }
+                            UnitCode = 1.0m,
+                        },
+                    },
                 },
                 new ContractAllocation
                 {
@@ -67,9 +67,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             PlannedValue = 2.0m,
                             PlannedVolume = 2,
                             UnitCost = 2.0m,
-                            UnitCode = 2.0m
-                        }
-                    }
+                            UnitCode = 2.0m,
+                        },
+                    },
                 },
                 new ContractAllocation
                 {
@@ -79,7 +79,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 1),
                     EndDate = new DateTime(2018, 8, 3),
-                    DeliveryUkprn = ukprn
+                    DeliveryUkprn = ukprn,
                 },
                 new ContractAllocation
                 {
@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 4),
-                    DeliveryUkprn = ukprn
+                    DeliveryUkprn = ukprn,
                 },
                 new ContractAllocation
                 {
@@ -98,8 +98,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 1),
                     EndDate = new DateTime(2018, 8, 3),
-                    DeliveryUkprn = 2
-                }
+                    DeliveryUkprn = 2,
+                },
             };
 
             var eligibilityRules = new List<EsfEligibilityRule>()
@@ -129,7 +129,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = 2,
                             LotReference = "Lot1",
                             TenderSpecReference = "TenderSpec1",
-                        }
+                        },
                     },
                     EsfEligibilityRuleLocalAuthorities = new List<EsfEligibilityRuleLocalAuthority>
                     {
@@ -144,7 +144,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = "2",
                             LotReference = "Lot1",
                             TenderSpecReference = "TenderSpec1",
-                        }
+                        },
                     },
                     EsfEligibilityRuleLocalEnterprisePartnerships = new List<EsfEligibilityRuleLocalEnterprisePartnership>
                     {
@@ -159,7 +159,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = "2",
                             LotReference = "Lot1",
                             TenderSpecReference = "TenderSpec1",
-                        }
+                        },
                     },
                     EsfEligibilityRuleSectorSubjectAreaLevels = new List<EsfEligibilityRuleSectorSubjectAreaLevel>
                     {
@@ -178,8 +178,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             SectorSubjectAreaCode = 2,
                             LotReference = "Lot1",
                             TenderSpecReference = "TenderSpec1",
-                        }
-                    }
+                        },
+                    },
                 },
                 new EsfEligibilityRule()
                 {
@@ -206,7 +206,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = 2,
                             LotReference = "Lot2",
                             TenderSpecReference = "TenderSpec2",
-                        }
+                        },
                     },
                     EsfEligibilityRuleLocalAuthorities = new List<EsfEligibilityRuleLocalAuthority>
                     {
@@ -221,7 +221,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = "2",
                             LotReference = "Lot2",
                             TenderSpecReference = "TenderSpec2",
-                        }
+                        },
                     },
                     EsfEligibilityRuleLocalEnterprisePartnerships = new List<EsfEligibilityRuleLocalEnterprisePartnership>
                     {
@@ -236,7 +236,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = "2",
                             LotReference = "Lot2",
                             TenderSpecReference = "TenderSpec2",
-                        }
+                        },
                     },
                     EsfEligibilityRuleSectorSubjectAreaLevels = new List<EsfEligibilityRuleSectorSubjectAreaLevel>
                     {
@@ -255,9 +255,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             SectorSubjectAreaCode = 2,
                             LotReference = "Lot2",
                             TenderSpecReference = "TenderSpec2",
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
 
             var contractDeliverableCodeMapping = new List<ContractDeliverableCodeMapping>()
@@ -266,14 +266,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     FundingStreamPeriodCode = "PeriodCode1",
                     FcsdeliverableCode = "1",
-                    ExternalDeliverableCode = "1"
+                    ExternalDeliverableCode = "1",
                 },
                 new ContractDeliverableCodeMapping()
                 {
                     FundingStreamPeriodCode = "PeriodCode1",
                     FcsdeliverableCode = "2",
-                    ExternalDeliverableCode = "2"
-                }
+                    ExternalDeliverableCode = "2",
+                },
             };
 
             var contractAllocationsMock = allocations.AsQueryable().BuildMockDbSet();

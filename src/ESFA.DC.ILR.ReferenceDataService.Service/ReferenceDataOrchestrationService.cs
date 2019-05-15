@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.Logging.Interfaces;
 
@@ -9,41 +8,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
     public class ReferenceDataOrchestrationService : IReferenceDataOrchestrationService
     {
-        private readonly IMessageProvider _messageProvider;
-        private readonly IReferenceDataPopulationService _referenceDataPopulationService;
-        private readonly IReferenceDataOutputService _referenceDataOutputService;
+        private readonly IIlrMessageTaskProvider _taskProvider;
         private readonly ILogger _logger;
 
         public ReferenceDataOrchestrationService(
-            IMessageProvider messageProvider,
-            IReferenceDataPopulationService referenceDataPopulationService,
-            IReferenceDataOutputService referenceDataOutputService,
+            IIlrMessageTaskProvider taskProvider,
             ILogger logger)
         {
-            _messageProvider = messageProvider;
-            _referenceDataPopulationService = referenceDataPopulationService;
-            _referenceDataOutputService = referenceDataOutputService;
+            _taskProvider = taskProvider;
             _logger = logger;
         }
 
-        public async Task Retrieve(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
+        public async Task Process(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
         {
             try
             {
-                // Retrieving ILR File
-                _logger.LogInfo("Starting ILR File Retrieval");
-                var message = await _messageProvider.ProvideAsync(referenceDataContext, cancellationToken);
-                _logger.LogInfo("Finished retirieving ILR File");
+                var tasks = _taskProvider.Provide(referenceDataContext, cancellationToken);
 
-                // get reference data and build model.
-                _logger.LogInfo("Starting Reference Data Population");
-                var referenceData = await _referenceDataPopulationService.PopulateAsync(message, cancellationToken);
-                _logger.LogInfo("Finished Reference Data Population");
-
-                // output model.
-                _logger.LogInfo("Starting Reference Data Output");
-                await _referenceDataOutputService.OutputAsync(referenceDataContext, referenceData, cancellationToken);
-                _logger.LogInfo("Finished Reference Data Output");
+                await Task.WhenAll(tasks).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

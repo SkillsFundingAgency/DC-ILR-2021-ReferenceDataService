@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 try
                 {
-                    await referenceDataOrchestrationService.Retrieve(referenceDataContext, cancellationToken);
+                    await referenceDataOrchestrationService.Process(referenceDataContext, cancellationToken);
                 }
                 catch (ReferenceDataServiceFailureException exception)
                 {

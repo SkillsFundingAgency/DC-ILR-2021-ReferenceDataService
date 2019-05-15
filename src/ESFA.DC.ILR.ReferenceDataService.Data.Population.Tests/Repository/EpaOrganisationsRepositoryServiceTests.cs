@@ -28,38 +28,38 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     OrganisationId = "EpaOrg1",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "1"
+                    StandardCode = "1",
                 },
                 new Period
                 {
                     OrganisationId = "EpaOrg1",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "2"
+                    StandardCode = "2",
                 },
                 new Period
                 {
                     OrganisationId = "EpaOrg2",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "1"
+                    StandardCode = "1",
                 },
                 new Period
                 {
                     OrganisationId = "EpaOrg3",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "1"
+                    StandardCode = "1",
                 },
                 new Period
                 {
                     OrganisationId = "EpaOrg3",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "2"
+                    StandardCode = "2",
                 },
                 new Period
                 {
                     OrganisationId = "EpaOrg4",
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    StandardCode = "1"
-                }
+                    StandardCode = "1",
+                },
             };
 
             var periodsMock = periodsList.AsQueryable().BuildMockDbSet();

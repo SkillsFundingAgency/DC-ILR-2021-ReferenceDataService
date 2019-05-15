@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             {
                 new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
                 new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 4),
-                new LARSLearningDeliveryKey("LearnAimRef3", 1, null, 3)
+                new LARSLearningDeliveryKey("LearnAimRef3", 1, null, 3),
             };
 
             var message = TestMessage();
@@ -49,16 +49,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                                 LearnAimRef = "LearnAimRef1",
                                 FworkCodeNullable = 1,
                                 ProgTypeNullable = 2,
-                                PwayCodeNullable = 3
+                                PwayCodeNullable = 3,
                             },
                             new TestLearningDelivery
                             {
                                 LearnAimRef = "LearnAimRef2",
                                 FworkCodeNullable = 1,
                                 ProgTypeNullable = 2,
-                                PwayCodeNullable = 4
-                            }
-                        }
+                                PwayCodeNullable = 4,
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -68,18 +68,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                             {
                                 LearnAimRef = "LearnAimRef3",
                                 FworkCodeNullable = 1,
-                                PwayCodeNullable = 3
-                            }
-                        }
+                                PwayCodeNullable = 3,
+                            },
+                        },
                     },
                     new TestLearner
                     {
                         LearningDeliveries = new List<TestLearningDelivery>
                         {
-                            new TestLearningDelivery()
-                        }
-                    }
-                }
+                            new TestLearningDelivery(),
+                        },
+                    },
+                },
             };
         }
 

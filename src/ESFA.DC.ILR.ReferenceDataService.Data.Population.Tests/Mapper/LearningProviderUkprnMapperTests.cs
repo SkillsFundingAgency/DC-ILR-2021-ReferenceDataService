@@ -27,8 +27,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             {
                 LearningProviderEntity = new TestLearningProvider
                 {
-                    UKPRN = 99
-                }
+                    UKPRN = 99,
+                },
             };
         }
 

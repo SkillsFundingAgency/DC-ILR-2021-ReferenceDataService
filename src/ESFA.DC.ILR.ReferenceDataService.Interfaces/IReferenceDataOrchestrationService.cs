@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
      public interface IReferenceDataOrchestrationService
      {
-         Task Retrieve(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken);
+         Task Process(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken);
      }
 }

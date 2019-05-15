@@ -39,13 +39,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                EPAOrgID = "EpaOrg1"
+                                EPAOrgID = "EpaOrg1",
                             },
                             new TestLearningDelivery
                             {
-                                EPAOrgID = "EpaOrg2"
-                            }
-                        }
+                                EPAOrgID = "EpaOrg2",
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -53,15 +53,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                EPAOrgID = "EpaOrg3"
-                            }
-                        }
+                                EPAOrgID = "EpaOrg3",
+                            },
+                        },
                     },
                     new TestLearner
                     {
-                        ULN = 3
-                    }
-                }
+                        ULN = 3,
+                    },
+                },
             };
         }
 

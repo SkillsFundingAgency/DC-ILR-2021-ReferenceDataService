@@ -39,12 +39,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearnerEmploymentStatus
                             {
-                                EmpIdNullable = 1
+                                EmpIdNullable = 1,
                             },
                             new TestLearnerEmploymentStatus
                             {
-                                EmpIdNullable = 2
-                            }
+                                EmpIdNullable = 2,
+                            },
                         },
                         LearningDeliveries = new List<TestLearningDelivery>
                         {
@@ -54,11 +54,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                                 {
                                     new TestLearningDeliveryWorkPlacement
                                     {
-                                        WorkPlaceEmpIdNullable = 3
-                                    }
-                                }
-                            }
-                        }
+                                        WorkPlaceEmpIdNullable = 3,
+                                    },
+                                },
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -66,8 +66,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearnerEmploymentStatus
                             {
-                                EmpIdNullable = 2
-                            }
+                                EmpIdNullable = 2,
+                            },
                         },
                         LearningDeliveries = new List<TestLearningDelivery>
                         {
@@ -77,17 +77,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                                 {
                                     new TestLearningDeliveryWorkPlacement
                                     {
-                                        WorkPlaceEmpIdNullable = 2
-                                    }
-                                }
-                            }
-                        }
+                                        WorkPlaceEmpIdNullable = 2,
+                                    },
+                                },
+                            },
+                        },
                     },
                     new TestLearner
                     {
-                        ULN = 3
-                    }
-                }
+                        ULN = 3,
+                    },
+                },
             };
         }
 

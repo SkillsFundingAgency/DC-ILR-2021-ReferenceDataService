@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                 {
                     new TestLearner
                     {
-                        ULN = 1
+                        ULN = 1,
                     },
                     new TestLearner
                     {
@@ -42,16 +42,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                     },
                     new TestLearner
                     {
-                        ULN = 3
+                        ULN = 3,
                     },
                 },
                 LearnerDestinationAndProgressions = new List<TestLearnerDestinationAndProgression>
                 {
                     new TestLearnerDestinationAndProgression
                     {
-                        ULN = 4
-                    }
-                }
+                        ULN = 4,
+                    },
+                },
             };
         }
 
