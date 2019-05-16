@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, referenceDataOutputServiceMock.Object, loggerMock.Object);
 
-            await service.Execute(referenceDataContextMock.Object, cancellationToken);
+            await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
             messageProviderMock.VerifyAll();
             referenceDataPopulationServiceMock.VerifyAll();

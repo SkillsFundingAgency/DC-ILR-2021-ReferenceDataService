@@ -382,6 +382,10 @@
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
+      <Project>{522d563b-9412-4748-b7ce-21cad291331e}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.Services.AppAuthentication.1.0.1\build\Microsoft.Azure.Services.AppAuthentication.targets" Condition="Exists('..\packages\Microsoft.Azure.Services.AppAuthentication.1.0.1\build\Microsoft.Azure.Services.AppAuthentication.targets')" />

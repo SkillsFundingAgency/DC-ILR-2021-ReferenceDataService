@@ -12,6 +12,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 
         string OutputReferenceDataFileKey { get; }
 
-        IEnumerable<string> Tasks { get; }
+        string Task { get; }
     }
 }
