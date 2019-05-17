@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Features.Indexed;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Exception;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
@@ -40,8 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 try
                 {
-                    var task = (TaskKeys)Enum.Parse(typeof(TaskKeys),
-                        message.Topics[message.TopicPointer].Tasks.SelectMany(x => x.Tasks).First());
+                    var task = GetTask(message);
 
                     await _taskIndex[task].ExecuteAsync(referenceDataContext, cancellationToken);
                 }
@@ -52,6 +50,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 return true;
             }
+        }
+
+        private TaskKeys GetTask(JobContextMessage message)
+        {
+            return (TaskKeys)Enum.Parse(typeof(TaskKeys),
+                message.Topics[message.TopicPointer].Tasks.SelectMany(x => x.Tasks).First());
         }
     }
 }
