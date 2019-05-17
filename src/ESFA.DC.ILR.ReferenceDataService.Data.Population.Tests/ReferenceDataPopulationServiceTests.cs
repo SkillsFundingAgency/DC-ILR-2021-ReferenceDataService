@@ -100,7 +100,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 Employers = new EmployersVersion("Version 1"),
                 LarsVersion = new LarsVersion("Version 2"),
                 OrganisationsVersion = new OrganisationsVersion("Version 3"),
-                PostcodesVersion = new PostcodesVersion("Version 4")
+                PostcodesVersion = new PostcodesVersion("Version 4"),
             };
         }
 
@@ -109,7 +109,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<ApprenticeshipEarningsHistory>
             {
                 new ApprenticeshipEarningsHistory(),
-                new ApprenticeshipEarningsHistory()
+                new ApprenticeshipEarningsHistory(),
             };
         }
 
@@ -123,22 +123,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                     LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
                         new LargeEmployerEffectiveDates(),
-                        new LargeEmployerEffectiveDates()
-                    }
+                        new LargeEmployerEffectiveDates(),
+                    },
                 },
                 new Employer
                 {
                     ERN = 2,
                     LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        new LargeEmployerEffectiveDates()
-                    }
+                        new LargeEmployerEffectiveDates(),
+                    },
                 },
                 new Employer
                 {
                     ERN = 3,
-                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>()
-                }
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>(),
+                },
             };
         }
 
@@ -148,7 +148,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             {
                 new EPAOrganisation(),
                 new EPAOrganisation(),
-                new EPAOrganisation()
+                new EPAOrganisation(),
             };
         }
 
@@ -157,7 +157,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<FcsContractAllocation>
             {
                 new FcsContractAllocation(),
-                new FcsContractAllocation()
+                new FcsContractAllocation(),
             };
         }
 
@@ -166,7 +166,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<LARSLearningDelivery>
             {
                 new LARSLearningDelivery(),
-                new LARSLearningDelivery()
+                new LARSLearningDelivery(),
             };
         }
 
@@ -175,7 +175,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<LARSStandard>
             {
                 new LARSStandard(),
-                new LARSStandard()
+                new LARSStandard(),
             };
         }
 
@@ -184,7 +184,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<Organisation>
             {
                 new Organisation(),
-                new Organisation()
+                new Organisation(),
             };
         }
 
@@ -193,7 +193,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             return new List<Postcode>
             {
                 new Postcode(),
-                new Postcode()
+                new Postcode(),
             };
         }
 
@@ -201,7 +201,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         {
             return new List<long>
             {
-                1, 2, 3, 4, 5
+                1, 2, 3, 4, 5,
             };
         }
 

@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsApprenticeshipStdFunding
                         {
@@ -77,8 +77,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardCommonComponents = new List<LarsStandardCommonComponent>
                     {
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardCommonComponent
                         {
@@ -98,8 +98,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardFundings = new List<LarsStandardFunding>
                     {
@@ -115,7 +115,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardFunding
                         {
@@ -129,8 +129,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardValidities = new List<LarsStandardValidity>
                     {
@@ -140,7 +140,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardValidity
                         {
@@ -148,7 +148,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
                             StandardCode = 1,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                     },
                 },
@@ -180,7 +180,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsApprenticeshipStdFunding
                         {
@@ -202,8 +202,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 12.0m,
                             _1618providerAdditionalPayment = 13.0m,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardCommonComponents = new List<LarsStandardCommonComponent>
                     {
@@ -214,7 +214,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardCommonComponent
                         {
@@ -223,8 +223,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardFundings = new List<LarsStandardFunding>
                     {
@@ -240,7 +240,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardFunding
                         {
@@ -254,8 +254,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             _1618incentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsStandardValidities = new List<LarsStandardValidity>
                     {
@@ -265,7 +265,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsStandardValidity
                         {
@@ -273,10 +273,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             StartDate = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
                             StandardCode = 2,
-                            CreatedBy = "CreatedBy"
-                        }
-                    }
-                }
+                            CreatedBy = "CreatedBy",
+                        },
+                    },
+                },
             };
 
             var larsStandardMock = larsStandardList.AsQueryable().BuildMockDbSet();
@@ -339,7 +339,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             SixteenToEighteenFrameworkUplift = 11.0m,
                             SixteenToEighteenIncentive = 12.0m,
                             SixteenToEighteenProviderAdditionalPayment = 13.0m,
-                        }
+                        },
                     },
                     LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
                     {
@@ -354,7 +354,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             CommonComponent = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                        }
+                        },
                     },
                     LARSStandardFundings = new List<LARSStandardFunding>
                     {
@@ -381,7 +381,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             SixteenToEighteenIncentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                        }
+                        },
                     },
                     LARSStandardValidities = new List<LARSStandardValidity>
                     {
@@ -446,7 +446,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             SixteenToEighteenFrameworkUplift = 11.0m,
                             SixteenToEighteenIncentive = 12.0m,
                             SixteenToEighteenProviderAdditionalPayment = 13.0m,
-                        }
+                        },
                     },
                     LARSStandardCommonComponents = new List<LARSStandardCommonComponent>
                     {
@@ -461,7 +461,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             CommonComponent = 4,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                        }
+                        },
                     },
                     LARSStandardFundings = new List<LARSStandardFunding>
                     {
@@ -488,7 +488,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "5",
                             SixteenToEighteenIncentive = 6.0m,
                             SmallBusinessIncentive = 7.0m,
-                        }
+                        },
                     },
                     LARSStandardValidities = new List<LARSStandardValidity>
                     {
@@ -503,9 +503,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat4",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             LastNewStartDate = new DateTime(2018, 9, 1),
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
         }
 

@@ -40,9 +40,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                DelLocPostCode = "DelLocPostCode1"
-                            }
-                        }
+                                DelLocPostCode = "DelLocPostCode1",
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -52,12 +52,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                DelLocPostCode = "DelLocPostCode2"
-                            }
-                        }
+                                DelLocPostCode = "DelLocPostCode2",
+                            },
+                        },
                     },
-                    new TestLearner()
-                }
+                    new TestLearner(),
+                },
             };
         }
 

@@ -3,18 +3,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
-    public class ReferenceDataOrchestrationService : IReferenceDataOrchestrationService
+    public class IlrMessageTask : ITask
     {
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IReferenceDataOutputService _referenceDataOutputService;
         private readonly ILogger _logger;
 
-        public ReferenceDataOrchestrationService(
+        public IlrMessageTask(
             IMessageProvider messageProvider,
             IReferenceDataPopulationService referenceDataPopulationService,
             IReferenceDataOutputService referenceDataOutputService,
@@ -26,7 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger = logger;
         }
 
-        public async Task Retrieve(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
         {
             try
             {

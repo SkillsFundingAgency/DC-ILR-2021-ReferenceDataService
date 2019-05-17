@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 {
-    public class ReferenceDataOrchestrationServiceTests
+    public class IlrMessageTaskTests
     {
         [Fact]
         public async Task Retrieve()
@@ -33,20 +33,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, referenceDataOutputServiceMock.Object, loggerMock.Object);
 
-            await service.Retrieve(referenceDataContextMock.Object, cancellationToken);
+            await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
             messageProviderMock.VerifyAll();
             referenceDataPopulationServiceMock.VerifyAll();
             referenceDataOutputServiceMock.VerifyAll();
         }
 
-        private ReferenceDataOrchestrationService NewService(
+        private IlrMessageTask NewService(
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
             IReferenceDataOutputService referenceDataOutputService = null,
             ILogger logger = null)
         {
-            return new ReferenceDataOrchestrationService(messageProvider, referenceDataPopulationService, referenceDataOutputService, logger);
+            return new IlrMessageTask(messageProvider, referenceDataPopulationService, referenceDataOutputService, logger);
         }
     }
 }

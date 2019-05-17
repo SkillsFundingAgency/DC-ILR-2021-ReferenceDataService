@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             {
                 new LARSLearningDeliveryKey("1", 1, 2, 3),
                 new LARSLearningDeliveryKey("2", 1, 2, 3),
-                new LARSLearningDeliveryKey("3", 1, 2, 3)
+                new LARSLearningDeliveryKey("3", 1, 2, 3),
             };
 
             var ukprn = 1;

@@ -40,13 +40,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                StdCodeNullable = 1
+                                StdCodeNullable = 1,
                             },
                             new TestLearningDelivery
                             {
-                                StdCodeNullable = 2
-                            }
-                        }
+                                StdCodeNullable = 2,
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -54,15 +54,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                StdCodeNullable = 3
-                            }
-                        }
+                                StdCodeNullable = 3,
+                            },
+                        },
                     },
                     new TestLearner
                     {
-                        ULN = 3
-                    }
-                }
+                        ULN = 3,
+                    },
+                },
             };
         }
 

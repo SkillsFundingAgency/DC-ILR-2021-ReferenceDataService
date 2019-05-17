@@ -31,33 +31,33 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     OrgDetail = new OrgDetail
                     {
                         Ukprn = 1,
-                        LegalOrgType = "LegalType1"
+                        LegalOrgType = "LegalType1",
                     },
-                   OrgPartnerUkprns = new List<OrgPartnerUkprn>
-                   {
-                       new OrgPartnerUkprn
-                       {
-                           Ukprn = 1,
-                           NameLegal = "NameLegal1"
-                       }
-                   },
-                   OrgFundings = new List<OrgFunding>
-                   {
-                       new OrgFunding
-                       {
-                           FundingFactor = "FACTOR1",
-                           FundingFactorType = "FACTOR TYPE1",
-                           FundingFactorValue = "1.5",
-                           EffectiveFrom = new DateTime(2018, 8, 1)
-                       },
-                       new OrgFunding
-                       {
-                           FundingFactor = "FACTOR2",
-                           FundingFactorType = "FACTOR TYPE1",
-                           FundingFactorValue = "1.5",
-                           EffectiveFrom = new DateTime(2018, 8, 1)
-                       }
-                   }
+                    OrgPartnerUkprns = new List<OrgPartnerUkprn>
+                    {
+                        new OrgPartnerUkprn
+                        {
+                            Ukprn = 1,
+                            NameLegal = "NameLegal1",
+                        },
+                    },
+                    OrgFundings = new List<OrgFunding>
+                    {
+                        new OrgFunding
+                        {
+                            FundingFactor = "FACTOR1",
+                            FundingFactorType = "FACTOR TYPE1",
+                            FundingFactorValue = "1.5",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
+                        new OrgFunding
+                        {
+                            FundingFactor = "FACTOR2",
+                            FundingFactorType = "FACTOR TYPE1",
+                            FundingFactorValue = "1.5",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
+                    },
                 },
                 new MasterOrganisation
                 {
@@ -65,8 +65,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     OrgDetail = new OrgDetail
                     {
                         Ukprn = 2,
-                        LegalOrgType = "LegalType2"
-                    }
+                        LegalOrgType = "LegalType2",
+                    },
                 },
             };
 
@@ -75,8 +75,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new CampusIdentifier
                 {
                     MasterUkprn = 1,
-                    CampusIdentifier1 = "CampId_01"
-                }
+                    CampusIdentifier1 = "CampId_01",
+                },
             };
 
             var masterOrgMock = masterOrgList.AsQueryable().BuildMockDbSet();
@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree }
+                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(1, dictionary).Should().BeEquivalentTo(campusListOne);
@@ -133,7 +133,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree }
+                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(4, dictionary).Should().BeNullOrEmpty();
@@ -150,7 +150,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree }
+                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNullOrEmpty();

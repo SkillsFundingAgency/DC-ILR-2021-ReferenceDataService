@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using Autofac.Features.Indexed;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Exception;
+using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Context;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
@@ -14,11 +17,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 {
     public class MessageHandler : IMessageHandler<JobContextMessage>
     {
+        private readonly IIndex<TaskKeys, ITask> _taskIndex;
         private readonly ILifetimeScope _lifetimeScope;
         private readonly ILogger _logger;
 
-        public MessageHandler(ILifetimeScope lifetimeScope, ILogger logger)
+        public MessageHandler(IIndex<TaskKeys, ITask> taskIndex, ILifetimeScope lifetimeScope, ILogger logger)
         {
+            _taskIndex = taskIndex;
             _lifetimeScope = lifetimeScope;
             _logger = logger;
         }
@@ -32,11 +37,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
                 var executionContext = (ExecutionContext)childLifetimeScope.Resolve<IExecutionContext>();
                 executionContext.JobId = message.JobId.ToString();
 
-                var referenceDataOrchestrationService = childLifetimeScope.Resolve<IReferenceDataOrchestrationService>();
-
                 try
                 {
-                    await referenceDataOrchestrationService.Retrieve(referenceDataContext, cancellationToken);
+                    var task = GetTask(message);
+
+                    await _taskIndex[task].ExecuteAsync(referenceDataContext, cancellationToken);
                 }
                 catch (ReferenceDataServiceFailureException exception)
                 {
@@ -45,6 +50,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 return true;
             }
+        }
+
+        private TaskKeys GetTask(JobContextMessage message)
+        {
+            return (TaskKeys)Enum.Parse(typeof(TaskKeys),
+                message.Topics[message.TopicPointer].Tasks.SelectMany(x => x.Tasks).First());
         }
     }
 }

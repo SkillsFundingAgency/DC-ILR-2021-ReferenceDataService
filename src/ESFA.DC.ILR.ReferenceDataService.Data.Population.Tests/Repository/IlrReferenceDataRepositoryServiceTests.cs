@@ -87,9 +87,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Code = "Code3_2",
                             EffectiveFrom = new DateTime(1900, 1, 1),
                             EffectiveTo = new DateTime(2099, 1, 1),
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
 
             var lookupsMock = new Mock<IIlrReferenceDataContext>();
@@ -113,7 +113,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Description = "Description",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
-                }
+                },
             };
 
             IEnumerable<ILRReferenceData.Model.Lookup> lookupsList = new List<ILRReferenceData.Model.Lookup>
@@ -128,8 +128,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Code = "Code1",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
-                    LookupSubCategories = lookupSubCategoriesList
-                }
+                    LookupSubCategories = lookupSubCategoriesList,
+                },
             };
 
             var lookupListDbMock = lookupsList.AsQueryable().BuildMockDbSet();

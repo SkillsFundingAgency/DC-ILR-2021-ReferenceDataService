@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new UniqueLearnerNumber { Uln = 18 },
                 new UniqueLearnerNumber { Uln = 19 },
                 new UniqueLearnerNumber { Uln = 20 },
-                new UniqueLearnerNumber { Uln = 35 }
+                new UniqueLearnerNumber { Uln = 35 },
             };
 
             var ulnDbMock = ulnList.AsQueryable().BuildMockDbSet();

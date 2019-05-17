@@ -40,20 +40,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
                 new LargeEmployerSourceFile { Id = 1 },
-                new LargeEmployerSourceFile { Id = 2 }
+                new LargeEmployerSourceFile { Id = 2 },
             };
 
             IEnumerable<LarsVersion> larsList = new List<LarsVersion>
             {
                 new LarsVersion { MainDataSchemaName = "Version0" },
-                new LarsVersion { MainDataSchemaName = "Version1" }
+                new LarsVersion { MainDataSchemaName = "Version1" },
             };
 
             IEnumerable<OrgVersion> orgList = new List<OrgVersion>
             {
                 new OrgVersion { MainDataSchemaName = "Version0" },
                 new OrgVersion { MainDataSchemaName = "Version1" },
-                new OrgVersion { MainDataSchemaName = "Version3" }
+                new OrgVersion { MainDataSchemaName = "Version3" },
             };
 
             IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
@@ -62,7 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new VersionInfo { VersionNumber = "Version1" },
                 new VersionInfo { VersionNumber = "Version2" },
                 new VersionInfo { VersionNumber = "Version3" },
-                new VersionInfo { VersionNumber = "Version4" }
+                new VersionInfo { VersionNumber = "Version4" },
             };
 
             IReadOnlyCollection<ValidationError> validationErrors = new List<ValidationError>
@@ -124,7 +124,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
                 new LargeEmployerSourceFile { Id = 1 },
-                new LargeEmployerSourceFile { Id = 2 }
+                new LargeEmployerSourceFile { Id = 2 },
             };
 
             IEnumerable<LarsVersion> larsList = new List<LarsVersion>();
@@ -133,7 +133,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new OrgVersion { MainDataSchemaName = "Version0" },
                 new OrgVersion { MainDataSchemaName = "Version1" },
-                new OrgVersion { MainDataSchemaName = "Version3" }
+                new OrgVersion { MainDataSchemaName = "Version3" },
             };
 
             IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
@@ -142,7 +142,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new VersionInfo { VersionNumber = "Version1" },
                 new VersionInfo { VersionNumber = "Version2" },
                 new VersionInfo { VersionNumber = "Version3" },
-                new VersionInfo { VersionNumber = "Version4" }
+                new VersionInfo { VersionNumber = "Version4" },
             };
 
             IReadOnlyCollection<ValidationError> validationErrors = new List<ValidationError>

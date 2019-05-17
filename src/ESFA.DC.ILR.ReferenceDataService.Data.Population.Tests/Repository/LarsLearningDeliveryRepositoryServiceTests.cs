@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
             {
                 new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
-                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 3)
+                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 3),
             };
 
             var larsMock = new Mock<ILARSContext>();
@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
                             WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsFunding
                         {
@@ -58,7 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
                             WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsFunding
                         {
@@ -69,8 +69,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
                             WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsValidities = new List<LarsValidity>
                     {
@@ -81,7 +81,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EndDate = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
                             ValidityCategory = "Cat1",
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsValidity
                         {
@@ -90,9 +90,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EndDate = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
                             ValidityCategory = "Cat2",
-                            CreatedBy = "CreatedBy"
-                        }
-                    }
+                            CreatedBy = "CreatedBy",
+                        },
+                    },
                 },
                 new LarsLearningDelivery
                 {
@@ -106,16 +106,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             CategoryRef = 1,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsLearningDeliveryCategory
                         {
-                           LearnAimRef = "LearnAimRef2",
+                            LearnAimRef = "LearnAimRef2",
                             CategoryRef = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsAnnualValues = new List<LarsAnnualValue>
                     {
@@ -129,8 +129,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FullLevel2EntitlementCategory = 3,
                             FullLevel3EntitlementCategory = 4,
                             FullLevel3Percent = 5,
-                            CreatedBy = "CreatedBy"
-                        }
+                            CreatedBy = "CreatedBy",
+                        },
                     },
                     LarsCareerLearningPilots = new List<LarsCareerLearningPilot>
                     {
@@ -141,7 +141,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             SubsidyRate = 2,
-                            CreatedBy = "CreatedBy"
+                            CreatedBy = "CreatedBy",
                         },
                         new LarsCareerLearningPilot
                         {
@@ -150,9 +150,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             SubsidyRate = 2,
-                            CreatedBy = "CreatedBy"
-                        }
-                    }
+                            CreatedBy = "CreatedBy",
+                        },
+                    },
                 },
             };
 
@@ -170,7 +170,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                        {
                            EffectiveFrom = new DateTime(2018, 8, 1),
                            FrameworkComponentType = 1,
-                           LearnAimRef = "LearnAimRef1"
+                           LearnAimRef = "LearnAimRef1",
                        },
                    },
                    LarsFrameworkCmnComps = new List<LarsFrameworkCmnComp>
@@ -181,8 +181,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                            ProgType = 2,
                            PwayCode = 3,
                            CommonComponent = 4,
-                           EffectiveFrom = new DateTime(2018, 8, 1)
-                       }
+                           EffectiveFrom = new DateTime(2018, 8, 1),
+                       },
                    },
                    LarsApprenticeshipFworkFundings = new List<LarsApprenticeshipFworkFunding>
                    {
@@ -206,10 +206,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                            _1618frameworkUplift = 11.0m,
                            _1618incentive = 12.0m,
                            _1618providerAdditionalPayment = 13.0m,
-                           CreatedBy = "CreatedBy"
-                       }
-                   }
-                }
+                           CreatedBy = "CreatedBy",
+                       },
+                   },
+                },
             };
 
             var larsLearningDeliveryMock = larsLearningDeliveryList.AsQueryable().BuildMockDbSet();
@@ -244,8 +244,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                 new LARSFrameworkCommonComponent
                                 {
                                     CommonComponent = 4,
-                                    EffectiveFrom = new DateTime(2018, 8, 1)
-                                }
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                },
                             },
                             LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                             {
@@ -265,16 +265,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                     SixteenToEighteenEmployerAdditionalPayment = 10.0m,
                                     SixteenToEighteenFrameworkUplift = 11.0m,
                                     SixteenToEighteenIncentive = 12.0m,
-                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
-                                }
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                                },
                             },
                             LARSFrameworkAim = new LARSFrameworkAim
                             {
                                 FrameworkComponentType = 1,
                                 EffectiveFrom = new DateTime(2018, 8, 1),
-                                EffectiveTo = null
-                            }
-                        }
+                                EffectiveTo = null,
+                            },
+                        },
                     },
                     LARSFundings = new List<LARSFunding>
                     {
@@ -285,7 +285,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "Cat1",
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
-                            WeightingFactor = "Factor"
+                            WeightingFactor = "Factor",
                         },
                         new LARSFunding
                         {
@@ -294,7 +294,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "Cat2",
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
-                            WeightingFactor = "Factor"
+                            WeightingFactor = "Factor",
                         },
                         new LARSFunding
                         {
@@ -303,8 +303,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FundingCategory = "Cat3",
                             RateUnWeighted = 1.0m,
                             RateWeighted = 2.0m,
-                            WeightingFactor = "Factor"
-                        }
+                            WeightingFactor = "Factor",
+                        },
                     },
                     LARSValidities = new List<LARSValidity>
                     {
@@ -313,19 +313,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
-                            ValidityCategory = "Cat1"
+                            ValidityCategory = "Cat1",
                         },
                         new LARSValidity
                         {
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
-                            ValidityCategory = "Cat2"
-                        }
+                            ValidityCategory = "Cat2",
+                        },
                     },
                     LARSCareerLearningPilots = new List<LARSCareerLearningPilot>(),
                     LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>(),
-                    LARSAnnualValues = new List<LARSAnnualValue>()
+                    LARSAnnualValues = new List<LARSAnnualValue>(),
                 },
                 new LARSLearningDelivery
                 {
@@ -345,8 +345,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                 new LARSFrameworkCommonComponent
                                 {
                                     CommonComponent = 4,
-                                    EffectiveFrom = new DateTime(2018, 8, 1)
-                                }
+                                    EffectiveFrom = new DateTime(2018, 8, 1),
+                                },
                             },
                             LARSFrameworkApprenticeshipFundings = new List<LARSFrameworkApprenticeshipFunding>
                             {
@@ -366,10 +366,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                     SixteenToEighteenEmployerAdditionalPayment = 10.0m,
                                     SixteenToEighteenFrameworkUplift = 11.0m,
                                     SixteenToEighteenIncentive = 12.0m,
-                                    SixteenToEighteenProviderAdditionalPayment = 13.0m
-                                }
-                            }
-                        }
+                                    SixteenToEighteenProviderAdditionalPayment = 13.0m,
+                                },
+                            },
+                        },
                     },
                     LARSFundings = new List<LARSFunding>(),
                     LARSValidities = new List<LARSValidity>(),
@@ -379,14 +379,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             CategoryRef = 1,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null
+                            EffectiveTo = null,
                         },
                         new LARSLearningDeliveryCategory
                         {
                             CategoryRef = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null
-                        }
+                            EffectiveTo = null,
+                        },
                     },
                     LARSAnnualValues = new List<LARSAnnualValue>
                     {
@@ -398,8 +398,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveTo = null,
                             FullLevel2EntitlementCategory = 3,
                             FullLevel3EntitlementCategory = 4,
-                            FullLevel3Percent = 5
-                        }
+                            FullLevel3Percent = 5,
+                        },
                     },
                     LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
                     {
@@ -408,16 +408,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             AreaCode = "1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            SubsidyRate = 2
+                            SubsidyRate = 2,
                         },
                         new LARSCareerLearningPilot
                         {
                             AreaCode = "1.2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
-                            SubsidyRate = 2
-                        }
-                    }
+                            SubsidyRate = 2,
+                        },
+                    },
                 },
             };
         }

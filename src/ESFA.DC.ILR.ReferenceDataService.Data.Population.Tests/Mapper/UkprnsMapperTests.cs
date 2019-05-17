@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             {
                 LearningProviderEntity = new TestLearningProvider
                 {
-                    UKPRN = 99
+                    UKPRN = 99,
                 },
                 Learners = new List<TestLearner>
                 {
@@ -48,9 +48,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                PartnerUKPRNNullable = 10
-                            }
-                        }
+                                PartnerUKPRNNullable = 10,
+                            },
+                        },
                     },
                     new TestLearner
                     {
@@ -61,21 +61,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                             new TestLearningDelivery
                             {
                                 PartnerUKPRNNullable = 20,
-                            }
-                        }
+                            },
+                        },
                     },
                     new TestLearner
                     {
-                        ULN = 3
+                        ULN = 3,
                     },
                 },
                 LearnerDestinationAndProgressions = new List<TestLearnerDestinationAndProgression>
                 {
                     new TestLearnerDestinationAndProgression
                     {
-                        ULN = 4
-                    }
-                }
+                        ULN = 4,
+                    },
+                },
             };
         }
 

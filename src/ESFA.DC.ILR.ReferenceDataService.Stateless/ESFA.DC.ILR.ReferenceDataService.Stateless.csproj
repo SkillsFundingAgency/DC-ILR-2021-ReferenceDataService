@@ -46,7 +46,7 @@
       <HintPath>..\packages\Autofac.ServiceFabric.2.2.0\lib\net452\Autofac.Integration.ServiceFabric.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Auditing.Interface, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Auditing.Interface.0.2.0-beta0001\lib\netstandard2.0\ESFA.DC.Auditing.Interface.dll</HintPath>
@@ -381,6 +381,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj">
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
+      <Project>{522d563b-9412-4748-b7ce-21cad291331e}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

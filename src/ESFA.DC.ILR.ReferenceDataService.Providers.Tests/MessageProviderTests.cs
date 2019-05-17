@@ -9,7 +9,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
+namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
 {
     public class MessageProviderTests
     {

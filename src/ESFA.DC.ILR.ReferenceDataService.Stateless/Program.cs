@@ -4,7 +4,9 @@ using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.FileService.Config;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
+using ESFA.DC.ILR.ReferenceDataService.Service;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
@@ -63,11 +65,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
             containerBuilder.RegisterModule<SerializationModule>();
 
-            containerBuilder.RegisterModule<ReferenceDataOrchestrationServicesModule>();
             containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
+
+            containerBuilder.RegisterModule<IlrMessageModule>();
             containerBuilder.RegisterModule<RepositoryModule>();
-            containerBuilder.RegisterModule<ReferenceDataRepositoryServicesModule>();
-            containerBuilder.RegisterModule<MapperModule>();
+            containerBuilder.RegisterType<ReferenceDataOutputService>().As<IReferenceDataOutputService>();
 
             containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>();
 

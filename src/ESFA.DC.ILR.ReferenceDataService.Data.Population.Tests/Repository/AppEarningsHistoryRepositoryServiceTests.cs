@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                      TotalProgAimPaymentsInTheYear = 15.0m,
                      UptoEndDate = new DateTime(2018, 8, 1),
                      Ukprn = 16,
-                     Uln = 10000000
+                     Uln = 10000000,
                 },
                 new AppsEarningsHistory
                 {
@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                      TotalProgAimPaymentsInTheYear = 15.0m,
                      UptoEndDate = new DateTime(2018, 8, 1),
                      Ukprn = 16,
-                     Uln = 10000000
+                     Uln = 10000000,
                 },
                 new AppsEarningsHistory
                 {
@@ -121,8 +121,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                      TotalProgAimPaymentsInTheYear = 15.0m,
                      UptoEndDate = new DateTime(2018, 8, 1),
                      Ukprn = 16,
-                     Uln = 20000000
-                }
+                     Uln = 20000000,
+                },
             };
 
             var appHistoriesMock = appHistoriesList.AsQueryable().BuildMockDbSet();

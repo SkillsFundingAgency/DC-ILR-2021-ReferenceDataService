@@ -5,7 +5,7 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Service
+namespace ESFA.DC.ILR.ReferenceDataService.Providers
 {
     public class MessageProvider : IMessageProvider
     {

@@ -62,7 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
                 Organisations = await _organisationsRepositoryService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
                 Postcodes = await _postcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
-                ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken)
+                ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken),
             };
         }
     }
