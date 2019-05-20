@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         TotalProgAimPaymentsInTheYear = aec.TotalProgAimPaymentsInTheYear,
                         UptoEndDate = aec.UptoEndDate,
                         UKPRN = aec.Ukprn,
-                        ULN = aec.Uln
+                        ULN = aec.Uln,
                     }).ToListAsync(cancellationToken));
             }
 

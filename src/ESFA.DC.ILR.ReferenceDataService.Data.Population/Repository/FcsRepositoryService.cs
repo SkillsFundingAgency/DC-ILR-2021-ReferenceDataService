@@ -45,8 +45,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         .Where(dc =>
                             dc.FundingStreamPeriodCode.Equals(ca.FundingStreamPeriodCode, StringComparison.OrdinalIgnoreCase)
                             && dc.FcsdeliverableCode.Equals(cd.DeliverableCode.ToString(), StringComparison.OrdinalIgnoreCase))
-                        .Select(e => e.ExternalDeliverableCode).FirstOrDefault()
-                    }).ToList()
+                        .Select(e => e.ExternalDeliverableCode).FirstOrDefault(),
+                    }).ToList(),
                 })
                 .ToListAsync(cancellationToken);
 
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                        MinLevelCode = l.MinLevelCode,
                        SectorSubjectAreaCode = l.SectorSubjectAreaCode,
                    })
-                   .ToList()
+                   .ToList(),
                }).ToListAsync(cancellationToken);
 
             foreach (var contractAllocation in contractAllocations)

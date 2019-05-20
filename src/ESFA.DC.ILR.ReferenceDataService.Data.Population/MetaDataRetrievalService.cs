@@ -63,10 +63,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                     PostcodesVersion = await _postcodesContext.VersionInfos
                         .OrderByDescending(v => v.VersionNumber)
                         .Select(v => new PostcodesVersion(v.VersionNumber))
-                        .FirstOrDefaultAsync(cancellationToken)
+                        .FirstOrDefaultAsync(cancellationToken),
                 },
                 ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
-                Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken)
+                Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken),
             };
 
             return Validate(metaData);

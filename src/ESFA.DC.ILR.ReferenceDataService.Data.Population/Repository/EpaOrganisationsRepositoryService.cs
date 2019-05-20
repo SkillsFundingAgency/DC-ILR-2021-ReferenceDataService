@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             ID = epa.OrganisationId,
                             Standard = epa.StandardCode,
                             EffectiveFrom = epa.EffectiveFrom,
-                            EffectiveTo = epa.EffectiveTo
+                            EffectiveTo = epa.EffectiveTo,
                         }).ToListAsync(cancellationToken);
         }
     }

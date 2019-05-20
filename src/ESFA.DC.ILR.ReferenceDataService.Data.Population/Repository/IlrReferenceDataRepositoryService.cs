@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 {
                     RuleName = r.Rulename,
                     Severity = GetSeverity(r.Severity),
-                    Message = r.Message
+                    Message = r.Message,
                 })
                 .ToListAsync(cancellationToken);
         }
@@ -52,8 +52,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         {
                             Code = sc.Code,
                             EffectiveFrom = sc.EffectiveFrom,
-                            EffectiveTo = sc.EffectiveTo
-                        }).ToList()
+                            EffectiveTo = sc.EffectiveTo,
+                        }).ToList(),
                 }).ToListAsync(cancellationToken);
         }
 

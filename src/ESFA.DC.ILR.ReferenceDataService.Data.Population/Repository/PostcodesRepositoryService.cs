@@ -15,7 +15,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     public class PostcodesRepositoryService : IPostcodesRepositoryService
     {
         private const int BatchSize = 5000;
-        private readonly DateTime? _terminationDateNull;
         private readonly IPostcodesContext _postcodesContext;
 
         public PostcodesRepositoryService(IPostcodesContext postcodesContext)
@@ -41,11 +40,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                                 DasDisadvantages = p.DasPostcodeDisadvantages.Select(dpd => DasPostcodeDisadvantagesToEntity(dpd)).ToList(),
                                 EfaDisadvantages = p.EfaPostcodeDisadvantages.Select(epd => EfaPostcodeDisadvantagesToEntity(epd)).ToList(),
                                 CareerLearningPilots = p.CareerLearningPilotPostcodes.Select(cp => CareerLearningPilotsToEntity(cp)).ToList(),
-                                ONSData = p.OnsPostcodes.Select(ons => ONSDataToEntity(ons)).ToList()
+                                ONSData = p.OnsPostcodes.Select(ons => ONSDataToEntity(ons)).ToList(),
                             }).ToListAsync(cancellationToken));
             }
 
-             return postcodes;
+            return postcodes;
         }
 
         public SfaDisadvantage SfaPostcodeDisadvantagesToEntity(SfaPostcodeDisadvantage sfaPostcodeDisadvantage)
@@ -54,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 Uplift = sfaPostcodeDisadvantage.Uplift,
                 EffectiveFrom = sfaPostcodeDisadvantage.EffectiveFrom,
-                EffectiveTo = sfaPostcodeDisadvantage.EffectiveTo
+                EffectiveTo = sfaPostcodeDisadvantage.EffectiveTo,
             };
         }
 
@@ -64,7 +63,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 AreaCostFactor = sfaPostcodeAreaCost.AreaCostFactor,
                 EffectiveFrom = sfaPostcodeAreaCost.EffectiveFrom,
-                EffectiveTo = sfaPostcodeAreaCost.EffectiveTo
+                EffectiveTo = sfaPostcodeAreaCost.EffectiveTo,
             };
         }
 
@@ -74,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 Uplift = dasPostcodeDisadvantage.Uplift,
                 EffectiveFrom = dasPostcodeDisadvantage.EffectiveFrom,
-                EffectiveTo = dasPostcodeDisadvantage.EffectiveTo
+                EffectiveTo = dasPostcodeDisadvantage.EffectiveTo,
             };
         }
 
@@ -84,7 +83,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 Uplift = efaPostcodeDisadvantage.Uplift,
                 EffectiveFrom = efaPostcodeDisadvantage.EffectiveFrom,
-                EffectiveTo = efaPostcodeDisadvantage.EffectiveTo
+                EffectiveTo = efaPostcodeDisadvantage.EffectiveTo,
             };
         }
 
@@ -94,7 +93,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 AreaCode = careerLearningPilot.AreaCode,
                 EffectiveFrom = careerLearningPilot.EffectiveFrom,
-                EffectiveTo = careerLearningPilot.EffectiveTo
+                EffectiveTo = careerLearningPilot.EffectiveTo,
             };
         }
 
@@ -108,7 +107,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 Lep2 = onsPostcode.Lep2,
                 LocalAuthority = onsPostcode.LocalAuthority,
                 Nuts = onsPostcode.Nuts,
-                Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination)
+                Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination),
             };
         }
 

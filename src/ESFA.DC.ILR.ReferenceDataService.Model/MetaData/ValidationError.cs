@@ -10,7 +10,7 @@
             /// <summary>
             /// File is determined to be unreadable, and not able to validated.
             /// </summary>
-            Fail
+            Fail,
         }
 
         public string RuleName { get; set; }

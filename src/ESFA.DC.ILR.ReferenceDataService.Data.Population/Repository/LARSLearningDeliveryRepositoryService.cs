@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             EffectiveTo = la.EffectiveTo,
                             FullLevel2EntitlementCategory = la.FullLevel2EntitlementCategory,
                             FullLevel3EntitlementCategory = la.FullLevel3EntitlementCategory,
-                            FullLevel3Percent = la.FullLevel3Percent
+                            FullLevel3Percent = la.FullLevel3Percent,
                         }).ToList(),
                         LARSCareerLearningPilots = ld.LarsCareerLearningPilots.Select(lc =>
                         new LARSCareerLearningPilot
@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             AreaCode = lc.AreaCode,
                             EffectiveFrom = lc.EffectiveFrom,
                             EffectiveTo = lc.EffectiveTo,
-                            SubsidyRate = lc.SubsidyRate
+                            SubsidyRate = lc.SubsidyRate,
                         }).ToList(),
                         LARSLearningDeliveryCategories = ld.LarsLearningDeliveryCategories.Select(ldc =>
                         new LARSLearningDeliveryCategory
@@ -90,8 +90,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             EffectiveFrom = lv.StartDate,
                             EffectiveTo = lv.EndDate,
                             LastNewStartDate = lv.LastNewStartDate,
-                            ValidityCategory = lv.ValidityCategory
-                        }).ToList()
+                            ValidityCategory = lv.ValidityCategory,
+                        }).ToList(),
                     }).ToListAsync(cancellationToken);
 
             foreach (var key in inputKeys)
@@ -113,7 +113,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         {
                             EffectiveFrom = lfa.EffectiveFrom,
                             EffectiveTo = lfa.EffectiveTo,
-                            FrameworkComponentType = lfa.FrameworkComponentType
+                            FrameworkComponentType = lfa.FrameworkComponentType,
                         }).FirstOrDefault(),
                         LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
                         new LARSFrameworkApprenticeshipFunding
@@ -139,8 +139,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         {
                             CommonComponent = lcc.CommonComponent,
                             EffectiveFrom = lcc.EffectiveFrom,
-                            EffectiveTo = lcc.EffectiveTo
-                        }).ToList()
+                            EffectiveTo = lcc.EffectiveTo,
+                        }).ToList(),
                     })
                     .FirstOrDefaultAsync(cancellationToken);
 

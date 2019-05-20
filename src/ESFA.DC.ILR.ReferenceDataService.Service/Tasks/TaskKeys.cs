@@ -2,6 +2,6 @@
 {
     public enum TaskKeys
     {
-        IlrMessage
+        IlrMessage,
     }
 }

@@ -42,7 +42,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                      .ToListAsync(cancellationToken));
             }
 
-          return
+            return
                 edrsEmpIds
                 .Select(empId => new Employer
                 {
@@ -51,8 +51,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .Select(le => new LargeEmployerEffectiveDates
                     {
                         EffectiveFrom = le.EffectiveFrom,
-                        EffectiveTo = le.EffectiveTo
-                    }).ToList()
+                        EffectiveTo = le.EffectiveTo,
+                    }).ToList(),
                 }).ToList();
         }
     }

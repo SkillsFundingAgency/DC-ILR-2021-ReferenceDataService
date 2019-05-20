@@ -51,14 +51,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             SixteenToEighteenEmployerAdditionalPayment = lsa._1618employerAdditionalPayment,
                             SixteenToEighteenFrameworkUplift = lsa._1618frameworkUplift,
                             SixteenToEighteenIncentive = lsa._1618incentive,
-                            SixteenToEighteenProviderAdditionalPayment = lsa._1618providerAdditionalPayment
+                            SixteenToEighteenProviderAdditionalPayment = lsa._1618providerAdditionalPayment,
                         }).ToList(),
                         LARSStandardCommonComponents = ls.LarsStandardCommonComponents.Select(lsc =>
                         new LARSStandardCommonComponent
                         {
                             CommonComponent = lsc.CommonComponent,
                             EffectiveFrom = lsc.EffectiveFrom,
-                            EffectiveTo = lsc.EffectiveTo
+                            EffectiveTo = lsc.EffectiveTo,
                         }).ToList(),
                         LARSStandardFundings = ls.LarsStandardFundings.Select(lsf =>
                         new LARSStandardFunding
@@ -71,7 +71,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             FundableWithoutEmployer = lsf.FundableWithoutEmployer,
                             FundingCategory = lsf.FundingCategory,
                             SixteenToEighteenIncentive = lsf._1618incentive,
-                            SmallBusinessIncentive = lsf.SmallBusinessIncentive
+                            SmallBusinessIncentive = lsf.SmallBusinessIncentive,
                         }).ToList(),
                         LARSStandardValidities = ls.LarsStandardValidities.Select(lsv =>
                         new LARSStandardValidity
@@ -79,8 +79,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             EffectiveFrom = lsv.StartDate,
                             EffectiveTo = lsv.EndDate,
                             LastNewStartDate = lsv.LastNewStartDate,
-                            ValidityCategory = lsv.ValidityCategory
-                        }).ToList()
+                            ValidityCategory = lsv.ValidityCategory,
+                        }).ToList(),
                     }).ToListAsync(cancellationToken);
         }
     }
