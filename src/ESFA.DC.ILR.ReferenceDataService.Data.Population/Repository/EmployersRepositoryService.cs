@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class EmployersRepositoryService : IEmployersRepositoryService
+    public class EmployersRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>
     {
         private const int BatchSize = 5000;
         private readonly IEmployersContext _employersContext;

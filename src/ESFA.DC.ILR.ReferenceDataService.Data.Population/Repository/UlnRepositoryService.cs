@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class UlnRepositoryService : IUlnRepositoryService
+    public class UlnRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>
     {
         private const int BatchSize = 5000;
 

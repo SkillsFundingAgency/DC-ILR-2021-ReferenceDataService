@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class LarsLearningDeliveryRepositoryService : ILarsLearningDeliveryRepositoryService
+    public class LarsLearningDeliveryRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>
     {
         private readonly ILARSContext _larsContext;
 

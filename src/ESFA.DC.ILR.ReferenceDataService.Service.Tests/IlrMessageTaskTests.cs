@@ -4,6 +4,8 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
 using ESFA.DC.Logging.Interfaces;
 using Moq;
 using Xunit;
@@ -21,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var messageProviderMock = new Mock<IMessageProvider>();
             var referenceDataPopulationServiceMock = new Mock<IReferenceDataPopulationService>();
-            var referenceDataOutputServiceMock = new Mock<IReferenceDataOutputService>();
+            var gZipFIleProviderMock = new Mock<IGzipFileProvider>();
             var loggerMock = new Mock<ILogger>();
 
             var message = new Message();
@@ -29,24 +31,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(referenceDataContextMock.Object, cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            referenceDataOutputServiceMock.Setup(s => s.OutputAsync(referenceDataContextMock.Object, referenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            gZipFIleProviderMock.Setup(s => s.CompressAndStoreAsync(referenceDataContextMock.Object, referenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, referenceDataOutputServiceMock.Object, loggerMock.Object);
+            var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, gZipFIleProviderMock.Object, loggerMock.Object);
 
             await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
             messageProviderMock.VerifyAll();
             referenceDataPopulationServiceMock.VerifyAll();
-            referenceDataOutputServiceMock.VerifyAll();
+            gZipFIleProviderMock.VerifyAll();
         }
 
         private IlrMessageTask NewService(
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
-            IReferenceDataOutputService referenceDataOutputService = null,
+            IGzipFileProvider gZipFileProvider = null,
             ILogger logger = null)
         {
-            return new IlrMessageTask(messageProvider, referenceDataPopulationService, referenceDataOutputService, logger);
+            return new IlrMessageTask(messageProvider, referenceDataPopulationService, gZipFileProvider, logger);
         }
     }
 }

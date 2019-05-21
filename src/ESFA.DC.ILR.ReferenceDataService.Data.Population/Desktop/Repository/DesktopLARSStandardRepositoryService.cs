@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Repository
 {
-    public class LarsStandardRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>
+    public class DesktopLarsStandardRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>
     {
         private readonly ILARSContext _larsContext;
 
-        public LarsStandardRepositoryService(ILARSContext larsContext)
+        public DesktopLarsStandardRepositoryService(ILARSContext larsContext)
         {
             _larsContext = larsContext;
         }
 
-        public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(CancellationToken cancellationToken)
         {
             return await _larsContext.LARS_Standards
-                .Where(l => stdCodes.Contains(l.StandardCode))
                 .Select(
                     ls => new LARSStandard
                     {

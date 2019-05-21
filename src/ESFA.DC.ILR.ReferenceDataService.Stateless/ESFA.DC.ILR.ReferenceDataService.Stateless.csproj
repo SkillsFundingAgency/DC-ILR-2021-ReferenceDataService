@@ -361,6 +361,7 @@
     <Compile Include="Config\IOConfiguration.cs" />
     <Compile Include="Context\ReferenceDataJobContextMessageContext.cs" />
     <Compile Include="MessageHandler.cs" />
+    <Compile Include="Modules\StatelessBaseModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceEventSource.cs" />
@@ -381,6 +382,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj">
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj">
+      <Project>{4127C037-0DE3-408C-9D62-F9FFB3FA0540}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Providers</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
       <Project>{522d563b-9412-4748-b7ce-21cad291331e}</Project>

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
@@ -12,39 +11,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class PostcodesRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>
+    public class DesktopPostcodesRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>
     {
         private const int BatchSize = 5000;
         private readonly IPostcodesContext _postcodesContext;
 
-        public PostcodesRepositoryService(IPostcodesContext postcodesContext)
+        public DesktopPostcodesRepositoryService(IPostcodesContext postcodesContext)
         {
             _postcodesContext = postcodesContext;
         }
 
-        public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            var postcodes = new List<Postcode>();
-
-            foreach (var batch in input.Batch(BatchSize))
-            {
-                postcodes.AddRange(
-                    await _postcodesContext.MasterPostcodes
-                        .Where(p => batch.Contains(p.Postcode))
-                        .Select(p =>
-                            new Postcode()
-                            {
-                                PostCode = p.Postcode,
-                                SfaDisadvantages = p.SfaPostcodeDisadvantages.Select(spd => SfaPostcodeDisadvantagesToEntity(spd)).ToList(),
-                                SfaAreaCosts = p.SfaPostcodeAreaCosts.Select(spa => SfaAreaCostsToEntity(spa)).ToList(),
-                                DasDisadvantages = p.DasPostcodeDisadvantages.Select(dpd => DasPostcodeDisadvantagesToEntity(dpd)).ToList(),
-                                EfaDisadvantages = p.EfaPostcodeDisadvantages.Select(epd => EfaPostcodeDisadvantagesToEntity(epd)).ToList(),
-                                CareerLearningPilots = p.CareerLearningPilotPostcodes.Select(cp => CareerLearningPilotsToEntity(cp)).ToList(),
-                                ONSData = p.OnsPostcodes.Select(ons => ONSDataToEntity(ons)).ToList(),
-                            }).ToListAsync(cancellationToken));
-            }
-
-            return postcodes;
+           return await _postcodesContext.MasterPostcodes
+                 .Include(mp => mp.CareerLearningPilotPostcodes)
+                 .Include(mp => mp.DasPostcodeDisadvantages)
+                 .Include(mp => mp.EfaPostcodeAreaCosts)
+                 .Include(mp => mp.EfaPostcodeDisadvantages)
+                 .Include(mp => mp.OnsPostcodes)
+                 .Include(mp => mp.SfaPostcodeAreaCosts)
+                 .Include(mp => mp.SfaPostcodeDisadvantages)
+                  .Select(p =>
+                        new Postcode()
+                        {
+                            PostCode = p.Postcode,
+                            SfaDisadvantages = p.SfaPostcodeDisadvantages.Select(spd => SfaPostcodeDisadvantagesToEntity(spd)).ToList(),
+                            SfaAreaCosts = p.SfaPostcodeAreaCosts.Select(spa => SfaAreaCostsToEntity(spa)).ToList(),
+                            DasDisadvantages = p.DasPostcodeDisadvantages.Select(dpd => DasPostcodeDisadvantagesToEntity(dpd)).ToList(),
+                            EfaDisadvantages = p.EfaPostcodeDisadvantages.Select(epd => EfaPostcodeDisadvantagesToEntity(epd)).ToList(),
+                            CareerLearningPilots = p.CareerLearningPilotPostcodes.Select(cp => CareerLearningPilotsToEntity(cp)).ToList(),
+                            ONSData = p.OnsPostcodes.Select(ons => ONSDataToEntity(ons)).ToList(),
+                        }).ToListAsync(cancellationToken);
         }
 
         public SfaDisadvantage SfaPostcodeDisadvantagesToEntity(SfaPostcodeDisadvantage sfaPostcodeDisadvantage)

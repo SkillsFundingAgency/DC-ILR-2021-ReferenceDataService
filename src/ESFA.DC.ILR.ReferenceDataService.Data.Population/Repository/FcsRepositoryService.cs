@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class FcsRepositoryService : IFcsRepositoryService
+    public class FcsRepositoryService : IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>>
     {
         private readonly IFcsContext _fcs;
 

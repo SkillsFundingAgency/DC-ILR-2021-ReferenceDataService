@@ -3,15 +3,10 @@ using System.Diagnostics;
 using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
-using ESFA.DC.FileService.Config;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
-using ESFA.DC.ILR.ReferenceDataService.Service;
-using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
+using ESFA.DC.ILR.ReferenceDataService.Modules.Desktop;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
-using ESFA.DC.ServiceFabric.Common.Config;
-using ESFA.DC.ServiceFabric.Common.Modules;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 {
@@ -56,22 +51,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
         {
             var containerBuilder = new ContainerBuilder();
 
-            var serviceFabricConfigurationService = new ServiceFabricConfigurationService();
-
-            var statelessServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAsStatelessServiceConfiguration();
-            var azureStorageFileServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<AzureStorageFileServiceConfiguration>("AzureStorageFileServiceConfiguration");
-            var ioConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<IOConfiguration>("IOConfiguration");
-
-            containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
-            containerBuilder.RegisterModule<SerializationModule>();
-
-            containerBuilder.RegisterModule(new IOModule(azureStorageFileServiceConfiguration, ioConfiguration));
-
+            containerBuilder.RegisterModule<StatelessBaseModule>();
             containerBuilder.RegisterModule<IlrMessageModule>();
-            containerBuilder.RegisterModule<RepositoryModule>();
-            containerBuilder.RegisterType<ReferenceDataOutputService>().As<IReferenceDataOutputService>();
-
-            containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>();
+            containerBuilder.RegisterModule<DesktopReferenceDataModule>();
 
             return containerBuilder;
         }
