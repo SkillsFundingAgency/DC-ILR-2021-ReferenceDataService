@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
@@ -46,15 +44,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
-            var appsHistoryRSMock = new Mock<IAppEarningsHistoryRepositoryService>();
-            var employersRSMock = new Mock<IEmployersRepositoryService>();
-            var epaOrgRSMock = new Mock<IEpaOrganisationsRepositoryService>();
-            var fcsRSMock = new Mock<IFcsRepositoryService>();
-            var larsLearningDeliveryRSMock = new Mock<ILarsLearningDeliveryRepositoryService>();
-            var larsStandardRSMock = new Mock<ILarsStandardRepositoryService>();
-            var orgRSMock = new Mock<IOrganisationsRepositoryService>();
-            var postcodesRSMock = new Mock<IPostcodesRepositoryService>();
-            var ulnRSMock = new Mock<IUlnRepositoryService>();
+            var appsHistoryRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
+            var employersRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
+            var epaOrgRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
+            var fcsRSMock = new Mock<IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>>>();
+            var larsLearningDeliveryRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
+            var larsStandardRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
+            var orgRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
+            var postcodesRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
+            var ulnRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
 
             messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
@@ -208,28 +206,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         private ReferenceDataPopulationService NewService(
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
-            IAppEarningsHistoryRepositoryService appEarningsHistoryRepositoryService = null,
-            IEmployersRepositoryService employersReferenceDataService = null,
-            IEpaOrganisationsRepositoryService epaOrgReferenceDataService = null,
-            IFcsRepositoryService fcsReferenceDataService = null,
-            ILarsLearningDeliveryRepositoryService larsLearningDeliveryReferenceDataService = null,
-            ILarsStandardRepositoryService larsStandardReferenceDataService = null,
-            IOrganisationsRepositoryService orgReferenceDataService = null,
-            IPostcodesRepositoryService postcodeReferenceDataService = null,
-            IUlnRepositoryService ulnReferenceDataService = null)
+            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
+            IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService = null,
+            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService = null)
         {
             return new ReferenceDataPopulationService(
                 messageMapperService,
                 metaDataReferenceService,
                 appEarningsHistoryRepositoryService,
-                employersReferenceDataService,
-                epaOrgReferenceDataService,
-                fcsReferenceDataService,
-                larsLearningDeliveryReferenceDataService,
-                larsStandardReferenceDataService,
-                orgReferenceDataService,
-                postcodeReferenceDataService,
-                ulnReferenceDataService);
+                employersRepositoryService,
+                epaOrganisationsRepositoryService,
+                fcsRepositoryService,
+                larsLearningDeliveryRepositoryService,
+                larsStandardRepositoryService,
+                organisationsRepositoryService,
+                postcodesRepositoryService,
+                ulnRepositoryService);
         }
     }
 }

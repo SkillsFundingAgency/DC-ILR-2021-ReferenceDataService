@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class AppEarningsHistoryRepositoryService : IAppEarningsHistoryRepositoryService
+    public class AppEarningsHistoryRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>
     {
         private const int BatchSize = 2500;
         private readonly IAppEarnHistoryContext _appEarnHistoryContext;
@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         TotalProgAimPaymentsInTheYear = aec.TotalProgAimPaymentsInTheYear,
                         UptoEndDate = aec.UptoEndDate,
                         UKPRN = aec.Ukprn,
-                        ULN = aec.Uln
+                        ULN = aec.Uln,
                     }).ToListAsync(cancellationToken));
             }
 

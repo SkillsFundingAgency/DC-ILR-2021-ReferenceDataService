@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Repository
 {
-    public class EpaOrganisationsRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>
+    public class DesktopEpaOrganisationsRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>
     {
         private readonly IEpaContext _epaContext;
 
-        public EpaOrganisationsRepositoryService(IEpaContext epaContext)
+        public DesktopEpaOrganisationsRepositoryService(IEpaContext epaContext)
         {
             _epaContext = epaContext;
         }
 
-        public async Task<IReadOnlyCollection<EPAOrganisation>> RetrieveAsync(IReadOnlyCollection<string> epaOrgIds, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<EPAOrganisation>> RetrieveAsync(CancellationToken cancellationToken)
         {
             return await _epaContext?
-                        .Periods?.Where(o => epaOrgIds.Contains(o.OrganisationId))
+                        .Periods?
                         .Select(epa => new EPAOrganisation
                         {
                             ID = epa.OrganisationId,

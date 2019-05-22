@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Stateless", "ESFA.DC.ILR.ReferenceDataService.Stateless\ESFA.DC.ILR.ReferenceDataService.Stateless.csproj", "{F826ACA7-B907-4F21-8495-C781E01BA0D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Providers", "ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj", "{4127C037-0DE3-408C-9D62-F9FFB3FA0540}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.Providers", "ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj", "{4127C037-0DE3-408C-9D62-F9FFB3FA0540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.Providers.Tests", "ESFA.DC.ILR.ReferenceDataService.Providers.Tests\ESFA.DC.ILR.ReferenceDataService.Providers.Tests.csproj", "{A3B2785C-A70B-4230-BCAA-FD0D5785D68D}"
 EndProject

@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
             return
                 new List<int>
                 {
-                   input == null ? 0 : input.LearningProviderEntity.UKPRN
+                   input == null ? 0 : input.LearningProviderEntity.UKPRN,
                 };
         }
 

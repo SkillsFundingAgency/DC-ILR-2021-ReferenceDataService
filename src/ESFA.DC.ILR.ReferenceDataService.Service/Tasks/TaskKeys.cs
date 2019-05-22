@@ -2,6 +2,7 @@
 {
     public enum TaskKeys
     {
-        IlrMessage
+        IlrMessage,
+        DesktopReferenceData,
     }
 }

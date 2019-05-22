@@ -190,6 +190,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Desktop\DesktopReferenceDataPopulationServiceTests.cs" />
     <Compile Include="MessageMapperServiceTests.cs" />
     <Compile Include="ReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Repository\AppEarningsHistoryRepositoryServiceTests.cs" />

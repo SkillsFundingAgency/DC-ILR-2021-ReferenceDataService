@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
-using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 {
-    public class IlrMessageTask : ITask
+    public class DesktopReferenceDataTask : ITask
     {
-        private readonly IMessageProvider _messageProvider;
-        private readonly IReferenceDataPopulationService _referenceDataPopulationService;
+        private readonly IDesktopReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IGzipFileProvider _gZipFileProvider;
         private readonly ILogger _logger;
 
-        public IlrMessageTask(
-            IMessageProvider messageProvider,
-            IReferenceDataPopulationService referenceDataPopulationService,
+        public DesktopReferenceDataTask(
+            IDesktopReferenceDataPopulationService referenceDataPopulationService,
             IGzipFileProvider gZipFileProvider,
             ILogger logger)
         {
-            _messageProvider = messageProvider;
             _referenceDataPopulationService = referenceDataPopulationService;
             _gZipFileProvider = gZipFileProvider;
             _logger = logger;
@@ -33,14 +29,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
         {
             try
             {
-                // Retrieving ILR File
-                _logger.LogInfo("Starting ILR File Retrieval");
-                var message = await _messageProvider.ProvideAsync(referenceDataContext, cancellationToken);
-                _logger.LogInfo("Finished retirieving ILR File");
-
                 // get reference data and build model.
                 _logger.LogInfo("Starting Reference Data Population");
-                var referenceData = await _referenceDataPopulationService.PopulateAsync(message, cancellationToken);
+                var referenceData = await _referenceDataPopulationService.PopulateAsync(cancellationToken);
                 _logger.LogInfo("Finished Reference Data Population");
 
                 // output model.

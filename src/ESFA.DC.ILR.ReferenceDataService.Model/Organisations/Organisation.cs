@@ -13,5 +13,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
         public List<string> CampusIdentifers { get; set; }
 
         public List<OrganisationFunding> OrganisationFundings { get; set; }
+
+        public List<OrganisationCoFRemoval> OrganisationCoFRemovals { get; set; }
     }
 }
