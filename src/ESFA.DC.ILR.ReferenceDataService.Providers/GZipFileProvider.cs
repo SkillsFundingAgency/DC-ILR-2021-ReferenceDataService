@@ -29,16 +29,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers
                 }
             }
         }
-
-        public async Task RetrieveAndDecompressAsync<T>(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
-        {
-            using (var fileStream = await _fileService.OpenReadStreamAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
-            {
-                using (var gzipStream = new GZipStream(fileStream, CompressionLevel.Optimal))
-                {
-                    _jsonSerializationService.Deserialize<T>(gzipStream);
-                }
-            }
-        }
     }
 }

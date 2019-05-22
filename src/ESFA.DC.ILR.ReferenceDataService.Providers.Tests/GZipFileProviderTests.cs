@@ -43,34 +43,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
             jsonSerializationServiceeMock.VerifyAll();
         }
 
-        [Fact]
-        public async Task RetrieveAndDecompressAsync()
-        {
-            var cancellationToken = CancellationToken.None;
-
-            var outputReferenceDataFileKey = "FileReference";
-            var container = "Container";
-
-            ReferenceDataRoot referenceDataRoot = new ReferenceDataRoot();
-
-            Stream stream = new MemoryStream();
-
-            var referenceDataContextMock = new Mock<IReferenceDataContext>();
-            var fileServiceMock = new Mock<IFileService>();
-            var jsonSerializationServiceeMock = new Mock<IJsonSerializationService>();
-
-            referenceDataContextMock.SetupGet(c => c.OutputReferenceDataFileKey).Returns(outputReferenceDataFileKey);
-            referenceDataContextMock.SetupGet(c => c.Container).Returns(container);
-
-            fileServiceMock.Setup(s => s.OpenReadStreamAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, cancellationToken)).Returns(Task.FromResult(stream)).Verifiable();
-            jsonSerializationServiceeMock.Setup(s => s.Deserialize<ReferenceDataRoot>(It.IsAny<GZipStream>())).Verifiable();
-
-            await NewProvider(jsonSerializationServiceeMock.Object, fileServiceMock.Object).RetrieveAndDecompressAsync<ReferenceDataRoot>(referenceDataContextMock.Object, cancellationToken);
-
-            fileServiceMock.VerifyAll();
-            jsonSerializationServiceeMock.VerifyAll();
-        }
-
         private GZipFileProvider NewProvider(IJsonSerializationService jsonSerializationService, IFileService fileService = null)
         {
             return new GZipFileProvider(jsonSerializationService, fileService);

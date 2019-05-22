@@ -7,7 +7,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Interface
     public interface IGzipFileProvider
     {
         Task CompressAndStoreAsync<T>(IReferenceDataContext referenceDataContext, T referenceData, CancellationToken cancellationToken);
-
-        Task RetrieveAndDecompressAsync<T>(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken);
     }
 }
