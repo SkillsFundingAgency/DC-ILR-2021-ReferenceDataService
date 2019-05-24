@@ -4,7 +4,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Modules
+namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
     public class ReferenceDataRepositoryServicesModule : Module
     {

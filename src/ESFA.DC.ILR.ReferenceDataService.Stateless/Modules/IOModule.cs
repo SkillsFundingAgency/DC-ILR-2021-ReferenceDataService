@@ -2,13 +2,11 @@
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Config.Interface;
 using ESFA.DC.FileService.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
-using ESFA.DC.ILR.ReferenceDataService.Service;
 using ESFA.DC.IO.AzureStorage;
 using ESFA.DC.IO.AzureStorage.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Modules
+namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
     public class IOModule : Module
     {
@@ -27,7 +25,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterInstance(_azureStorageKeyValuePersistenceServiceConfig).As<IAzureStorageKeyValuePersistenceServiceConfig>();
 
             containerBuilder.RegisterType<AzureStorageFileService>().As<IFileService>();
-            containerBuilder.RegisterType<DecompressionService>().As<IDecompressionService>();
             containerBuilder.RegisterType<AzureStorageKeyValuePersistenceService>().As<IKeyValuePersistenceService>();
         }
     }

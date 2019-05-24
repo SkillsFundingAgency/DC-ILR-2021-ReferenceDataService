@@ -22,7 +22,7 @@ using ESFA.DC.ReferenceData.ULN.Model.Interface;
 using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Modules
+namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
     public class RepositoryModule : Module
     {

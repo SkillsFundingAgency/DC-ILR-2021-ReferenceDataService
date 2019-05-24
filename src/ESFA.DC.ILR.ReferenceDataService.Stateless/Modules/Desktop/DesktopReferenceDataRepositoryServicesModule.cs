@@ -9,7 +9,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Modules.Desktop
+namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.Desktop
 {
     public class DesktopReferenceDataRepositoryServicesModule : Module
     {
