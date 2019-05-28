@@ -5,7 +5,7 @@ using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Modules;
-using ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.Desktop;
+using ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceData;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 

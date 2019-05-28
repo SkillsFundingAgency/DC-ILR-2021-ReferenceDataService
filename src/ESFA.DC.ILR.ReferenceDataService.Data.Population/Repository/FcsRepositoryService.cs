@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class FcsRepositoryService : IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>>
+    public class FcsRepositoryService : IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>
     {
         private readonly IFcsContext _fcs;
 
