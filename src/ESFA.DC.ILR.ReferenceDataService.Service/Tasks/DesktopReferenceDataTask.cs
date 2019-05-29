@@ -11,13 +11,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 {
     public class DesktopReferenceDataTask : ITask
     {
+        private readonly bool compressOutput = true;
         private readonly IDesktopReferenceDataPopulationService _referenceDataPopulationService;
-        private readonly IGzipFileProvider _gZipFileProvider;
+        private readonly IFileProvider _gZipFileProvider;
         private readonly ILogger _logger;
 
         public DesktopReferenceDataTask(
             IDesktopReferenceDataPopulationService referenceDataPopulationService,
-            IGzipFileProvider gZipFileProvider,
+            IFileProvider gZipFileProvider,
             ILogger logger)
         {
             _referenceDataPopulationService = referenceDataPopulationService;
@@ -36,7 +37,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _gZipFileProvider.CompressAndStoreAsync(referenceDataContext, referenceData, cancellationToken);
+                await _gZipFileProvider.StoreAsync(referenceDataContext, referenceData, compressOutput, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
             }
             catch (Exception exception)
