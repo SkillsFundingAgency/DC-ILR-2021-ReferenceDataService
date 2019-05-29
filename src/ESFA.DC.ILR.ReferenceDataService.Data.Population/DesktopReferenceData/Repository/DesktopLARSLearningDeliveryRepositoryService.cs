@@ -52,6 +52,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                             EffectiveTo = la.EffectiveTo,
                             FullLevel2EntitlementCategory = la.FullLevel2EntitlementCategory,
                             FullLevel3EntitlementCategory = la.FullLevel3EntitlementCategory,
+                            FullLevel2Percent = la.FullLevel2Percent,
                             FullLevel3Percent = la.FullLevel3Percent,
                         }).ToList(),
                         LARSCareerLearningPilots = ld.LarsCareerLearningPilots.Select(lc =>

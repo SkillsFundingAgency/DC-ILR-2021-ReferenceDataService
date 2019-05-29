@@ -12,6 +12,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public int? FullLevel3EntitlementCategory { get; set; }
 
+        public decimal? FullLevel2Percent { get; set; }
+
         public decimal? FullLevel3Percent { get; set; }
     }
 }
