@@ -4,8 +4,8 @@ using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Providers.Interface
 {
-    public interface IGzipFileProvider
+    public interface IFileProvider
     {
-        Task CompressAndStoreAsync<T>(IReferenceDataContext context, T referenceData, CancellationToken cancellationToken);
+        Task StoreAsync<T>(IReferenceDataContext context, T referenceData, bool compress, CancellationToken cancellationToken);
     }
 }

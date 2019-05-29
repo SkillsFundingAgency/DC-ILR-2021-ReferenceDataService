@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             var messageProviderMock = new Mock<IMessageProvider>();
             var referenceDataPopulationServiceMock = new Mock<IReferenceDataPopulationService>();
-            var gZipFIleProviderMock = new Mock<IGzipFileProvider>();
+            var gZipFIleProviderMock = new Mock<IFileProvider>();
             var loggerMock = new Mock<ILogger>();
 
             IMessage message = new TestMessage();
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(It.IsAny<IReferenceDataContext>(), cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            gZipFIleProviderMock.Setup(s => s.CompressAndStoreAsync(It.IsAny<IReferenceDataContext>(), referenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            gZipFIleProviderMock.Setup(s => s.StoreAsync(It.IsAny<IReferenceDataContext>(), referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
             var task = NewTask(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, gZipFIleProviderMock.Object, loggerMock.Object);
 
@@ -48,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
         private ReferenceDataServiceDesktopTask NewTask(
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
-            IGzipFileProvider gZipFileProvider = null,
+            IFileProvider gZipFileProvider = null,
             ILogger logger = null)
         {
             return new ReferenceDataServiceDesktopTask(messageProvider, referenceDataPopulationService, gZipFileProvider, logger);

@@ -11,7 +11,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
 {
-    public class DesktopReferenceDataMapperModule : Module
+    internal class DesktopReferenceDataMapperModule : Module
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {

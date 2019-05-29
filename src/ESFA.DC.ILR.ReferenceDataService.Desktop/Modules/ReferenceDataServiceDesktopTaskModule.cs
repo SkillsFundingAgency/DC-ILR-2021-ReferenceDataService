@@ -12,6 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
         {
             containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule<MapperModule>();
+            containerBuilder.RegisterModule<DesktopReferenceDataMapperModule>();
             containerBuilder.RegisterType<DesktopReferenceDataFileRetrievalService>().As<IDesktopReferenceDataFileRetrievalService>();
             containerBuilder.RegisterType<DesktopReferenceDataMapperService>().As<IReferenceDataPopulationService>();
         }
