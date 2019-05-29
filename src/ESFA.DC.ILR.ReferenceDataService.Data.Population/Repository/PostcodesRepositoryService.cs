@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class PostcodesRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>
+    public class PostcodesRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>
     {
         private const int BatchSize = 5000;
         private readonly IPostcodesContext _postcodesContext;

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class EpaOrganisationsRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>
+    public class EpaOrganisationsRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>
     {
         private readonly IEpaContext _epaContext;
 

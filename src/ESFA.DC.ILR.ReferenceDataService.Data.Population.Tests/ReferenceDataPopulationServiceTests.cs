@@ -44,15 +44,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
-            var appsHistoryRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
-            var employersRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
-            var epaOrgRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
-            var fcsRSMock = new Mock<IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>>>();
-            var larsLearningDeliveryRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
-            var larsStandardRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
-            var orgRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
-            var postcodesRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
-            var ulnRSMock = new Mock<IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
+            var appsHistoryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
+            var employersRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
+            var epaOrgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
+            var fcsRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>>();
+            var larsLearningDeliveryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
+            var larsStandardRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
+            var orgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
+            var postcodesRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
+            var ulnRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
 
             messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
@@ -206,15 +206,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         private ReferenceDataPopulationService NewService(
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
-            IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService = null,
-            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService = null)
+            IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService = null)
         {
             return new ReferenceDataPopulationService(
                 messageMapperService,

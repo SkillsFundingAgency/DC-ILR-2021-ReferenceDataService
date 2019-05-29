@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class EmployersRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>
+    public class EmployersRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>
     {
         private const int BatchSize = 5000;
         private readonly IEmployersContext _employersContext;

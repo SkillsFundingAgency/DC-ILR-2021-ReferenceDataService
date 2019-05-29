@@ -4,7 +4,8 @@ using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
-using ESFA.DC.ILR.ReferenceDataService.Modules.Desktop;
+using ESFA.DC.ILR.ReferenceDataService.Stateless.Modules;
+using ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceData;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 
@@ -51,8 +52,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
         {
             var containerBuilder = new ContainerBuilder();
 
+            containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule<StatelessBaseModule>();
-            containerBuilder.RegisterModule<IlrMessageModule>();
+            
+            containerBuilder.RegisterModule<IlrMessageTaskModule>();
             containerBuilder.RegisterModule<DesktopReferenceDataModule>();
 
             return containerBuilder;

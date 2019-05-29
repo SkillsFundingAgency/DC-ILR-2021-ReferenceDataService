@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using ESFA.DC.FileService.Config;
+using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Providers;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Stateless;
@@ -9,9 +10,9 @@ using ESFA.DC.JobContextManager.Model;
 using ESFA.DC.ServiceFabric.Common.Config;
 using ESFA.DC.ServiceFabric.Common.Modules;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Modules
+namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
-    public class StatelessBaseModule : Module
+    public class StatelessBaseModule : BaseModule
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {

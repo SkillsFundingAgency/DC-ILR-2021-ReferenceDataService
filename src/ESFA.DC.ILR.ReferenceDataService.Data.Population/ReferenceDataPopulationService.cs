@@ -20,28 +20,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
     {
         private readonly IMessageMapperService _messageMapperService;
         private readonly IMetaDataRetrievalService _metaDataRetrievalService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> _appEarningsHistoryRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> _employersRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
-        private readonly IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>> _fcsRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> _larsStandardRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> _organisationsRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
-        private readonly IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> _ulnRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> _appEarningsHistoryRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> _employersRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
+        private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> _fcsRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> _larsStandardRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> _organisationsRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> _ulnRepositoryService;
 
         public ReferenceDataPopulationService(
             IMessageMapperService messageMapperService,
             IMetaDataRetrievalService metaDataRetrievalService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
-            IReferenceDataRepositoryService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService,
-            IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService)
+            IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService)
         {
             _messageMapperService = messageMapperService;
             _metaDataRetrievalService = metaDataRetrievalService;

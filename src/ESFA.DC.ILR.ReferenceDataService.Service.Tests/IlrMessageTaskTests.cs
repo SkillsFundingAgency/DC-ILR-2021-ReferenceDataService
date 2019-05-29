@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Model;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
+using ESFA.DC.ILR.Tests.Model;
 using ESFA.DC.Logging.Interfaces;
 using Moq;
 using Xunit;
@@ -26,7 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var gZipFIleProviderMock = new Mock<IGzipFileProvider>();
             var loggerMock = new Mock<ILogger>();
 
-            var message = new Message();
+            IMessage message = new TestMessage();
             var referenceDataRoot = new ReferenceDataRoot();
 
             messageProviderMock.Setup(p => p.ProvideAsync(referenceDataContextMock.Object, cancellationToken)).Returns(Task.FromResult(message)).Verifiable();

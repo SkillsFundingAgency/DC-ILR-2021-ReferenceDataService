@@ -5,13 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class AppEarningsHistoryRepositoryService : IReferenceDataRepositoryService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>
+    public class AppEarningsHistoryRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>
     {
         private const int BatchSize = 2500;
         private readonly IAppEarnHistoryContext _appEarnHistoryContext;
