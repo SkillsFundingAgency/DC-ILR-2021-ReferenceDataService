@@ -45,13 +45,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             gZipFIleProviderMock.VerifyAll();
         }
 
-        private DesktopTask NewTask(
+        private ReferenceDataServiceDesktopTask NewTask(
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
             IGzipFileProvider gZipFileProvider = null,
             ILogger logger = null)
         {
-            return new DesktopTask(messageProvider, referenceDataPopulationService, gZipFileProvider, logger);
+            return new ReferenceDataServiceDesktopTask(messageProvider, referenceDataPopulationService, gZipFileProvider, logger);
         }
     }
 }

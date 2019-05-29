@@ -8,14 +8,14 @@ using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop
 {
-    public class DesktopTask : IDesktopTask
+    public class ReferenceDataServiceDesktopTask : IDesktopTask
     {
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IGzipFileProvider _gZipFileProvider;
         private readonly ILogger _logger;
 
-        public DesktopTask(
+        public ReferenceDataServiceDesktopTask(
             IMessageProvider messageProvider,
             IReferenceDataPopulationService referenceDataPopulationService,
             IGzipFileProvider gZipFileProvider,

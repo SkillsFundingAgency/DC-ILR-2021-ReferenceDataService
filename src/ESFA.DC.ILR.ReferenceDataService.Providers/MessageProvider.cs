@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
@@ -25,7 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers
             {
                 stream.Position = 0;
 
-                return _xmlSerializationService.Deserialize<IMessage>(stream);
+                return _xmlSerializationService.Deserialize<Message>(stream);
             }
         }
     }

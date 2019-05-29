@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
+using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.Tests.Model;
@@ -24,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
 
             Stream stream = new MemoryStream();
 
-            IMessage message = new TestMessage();
+            var message = new Message();
 
             var referenceDataContextMock = new Mock<IReferenceDataContext>();
             var fileServiceMock = new Mock<IFileService>();
@@ -34,7 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
             referenceDataContextMock.SetupGet(c => c.Container).Returns(container);
 
             fileServiceMock.Setup(s => s.OpenReadStreamAsync(fileReference, container, cancellationToken)).Returns(Task.FromResult(stream)).Verifiable();
-            xmlSerializationServiceMock.Setup(s => s.Deserialize<IMessage>(stream)).Returns(message).Verifiable();
+            xmlSerializationServiceMock.Setup(s => s.Deserialize<Message>(stream)).Returns(message).Verifiable();
 
             var providedMessage = await NewProvider(fileServiceMock.Object, xmlSerializationServiceMock.Object).ProvideAsync(referenceDataContextMock.Object, cancellationToken);
 
