@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
-using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
+using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
-using MockQueryable.Moq;
 using Moq;
 using Xunit;
 
@@ -19,227 +18,817 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
-            var postcodes = new List<string> { "Postcode1", "Postcode2", "Postcode3", "Postcode4", "Postcode5", "Postcode6" };
+            var cancellationToken = CancellationToken.None;
+            IReadOnlyCollection<string> postcodes = new List<string> { "PostCode1", "PostCode2", "PostCode3", "PostCode4" };
+            var json = @"[""PostCode1"",""PostCode2"",""PostCode3"",""PostCode4""]";
 
-            var postcodesMock = new Mock<IPostcodesContext>();
+            var masterPostcodeTaskResult = new TaskCompletionSource<IEnumerable<MasterPostcode>>();
+            var sfaAreaCostTaskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeAreaCost>>();
+            var sfaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeDisadvantage>>();
+            var efaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
+            var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
+            var careerLearningPilotsTaskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
+            var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
 
-            var sfaDisad = new List<SfaDisadvantage>
+            var masterPostcodes = new List<MasterPostcode>
             {
-                new SfaDisadvantage
+                new MasterPostcode
                 {
-                    Uplift = 1.0m,
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31),
+                    Postcode = "PostCode1",
                 },
-                new SfaDisadvantage
+                new MasterPostcode
                 {
-                    Uplift = 1.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1),
-                    EffectiveTo = null,
+                    Postcode = "PostCode2",
                 },
+                new MasterPostcode
+                {
+                    Postcode = "PostCode3",
+                }
             };
 
-            var efaDisad = new List<EfaDisadvantage>
+            var sfaAreaCost = new List<SfaPostcodeAreaCost>
             {
-                new EfaDisadvantage
+                new SfaPostcodeAreaCost
                 {
-                    Uplift = 2.0m,
+                    Postcode = "PostCode1",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new SfaPostcodeAreaCost
+                {
+                    Postcode = "PostCode2",
+                    AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31),
+                    EffectiveTo = new DateTime(2018, 9, 1)
                 },
-                new EfaDisadvantage
+                new SfaPostcodeAreaCost
                 {
-                    Uplift = 2.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1),
-                },
+                    Postcode = "PostCode2",
+                    AreaCostFactor = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
             };
 
-            var dasDisad = new List<DasDisadvantage>
+            var sfaDisadvantage = new List<SfaPostcodeDisadvantage>
             {
-                new DasDisadvantage
+                new SfaPostcodeDisadvantage
                 {
-                    Uplift = 3.0m,
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new SfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31),
+                    EffectiveTo = new DateTime(2018, 9, 1)
                 },
-                new DasDisadvantage
+                new SfaPostcodeDisadvantage
                 {
-                    Uplift = 3.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1),
-                },
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
             };
 
-            var sfaAreaCost = new List<SfaAreaCost>
+            var efaDisadvantage = new List<EfaPostcodeDisadvantage>
             {
-                new SfaAreaCost
+                new EfaPostcodeDisadvantage
                 {
-                    AreaCostFactor = 4.0m,
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new EfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31),
+                    EffectiveTo = new DateTime(2018, 9, 1)
                 },
-                new SfaAreaCost
+                new EfaPostcodeDisadvantage
                 {
-                    AreaCostFactor = 4.0m,
-                    EffectiveFrom = new DateTime(2018, 9, 1),
-                },
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
             };
 
-            var careerLearningPilot = new List<CareerLearningPilot>
+            var dasDisadvantage = new List<DasPostcodeDisadvantage>
             {
-                new CareerLearningPilot
+                new DasPostcodeDisadvantage
                 {
-                    AreaCode = "Area1",
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new DasPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 8, 31),
+                    EffectiveTo = new DateTime(2018, 9, 1)
                 },
-                new CareerLearningPilot
+                new DasPostcodeDisadvantage
                 {
-                    AreaCode = "Area1",
-                    EffectiveFrom = new DateTime(2018, 9, 1),
-                },
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
             };
 
-            var onsData = new List<ONSData>
+            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
             {
-                new ONSData
+                new CareerLearningPilotPostcode
                 {
-                    LocalAuthority = "Authority",
+                    Postcode = "PostCode1",
+                    AreaCode = "Code1",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new CareerLearningPilotPostcode
+                {
+                    Postcode = "PostCode2",
+                    AreaCode = "Code1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new CareerLearningPilotPostcode
+                {
+                    Postcode = "PostCode2",
+                    AreaCode = "Code2",
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            var onsPostcodes = new List<OnsPostcode>
+            {
+                new OnsPostcode
+                {
+                    Postcode = "PostCode1",
                     Lep1 = "Lep1",
-                    Lep2 = "Lep2",
-                    Nuts = "Nuts",
-                    Termination = new DateTime(2020, 8, 31),
-                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
                 },
+                new OnsPostcode
+                {
+                    Postcode = "PostCode2",
+                    Lep1 = "Lep1",
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new OnsPostcode
+                {
+                    Postcode = "PostCode2",
+                    Lep1 = "Lep11",
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
             };
 
-            IEnumerable<MasterPostcode> postcodesList = new List<MasterPostcode>
+            masterPostcodeTaskResult.SetResult(masterPostcodes);
+            sfaAreaCostTaskResult.SetResult(sfaAreaCost);
+            sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
+            efaDisadvantageTaskResult.SetResult(efaDisadvantage);
+            dasDisadvantageTaskResult.SetResult(dasDisadvantage);
+            careerLearningPilotsTaskResult.SetResult(careerLearningPilotsPostcode);
+            onsDataTaskResult.SetResult(onsPostcodes);
+
+            var jsonSerializationMock = new Mock<IJsonSerializationService>();
+
+            jsonSerializationMock.Setup(sm => sm.Serialize(postcodes)).Returns(json);
+
+            var service = NewServiceMock(jsonSerializationService: jsonSerializationMock.Object);
+
+            service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(masterPostcodeTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaAreaCostTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<SfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaDisadvantageTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(careerLearningPilotsTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
+
+            var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
+
+            IReadOnlyCollection<Postcode> expectedResult = new List<Postcode>
+            {
+                new Postcode
+                {
+                    PostCode = "PostCode1",
+                    SfaAreaCosts = new List<SfaAreaCost>
+                    {
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    },
+                    SfaDisadvantages = new List<SfaDisadvantage>
+                    {
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    },
+                    EfaDisadvantages = new List<EfaDisadvantage>
+                    {
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    },
+                    DasDisadvantages = new List<DasDisadvantage>
+                    {
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    },
+                    CareerLearningPilots = new List<CareerLearningPilot>
+                    {
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code1",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    },
+                    ONSData = new List<ONSData>
+                    {
+                        new ONSData
+                        {
+                            Lep1 = "Lep1",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                new Postcode
+                {
+                    PostCode = "PostCode2",
+                    SfaAreaCosts = new List<SfaAreaCost>
+                    {
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    SfaDisadvantages = new List<SfaDisadvantage>
+                    {
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    EfaDisadvantages = new List<EfaDisadvantage>
+                    {
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    DasDisadvantages = new List<DasDisadvantage>
+                    {
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    CareerLearningPilots = new List<CareerLearningPilot>
+                    {
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code1",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code2",
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    ONSData = new List<ONSData>
+                    {
+                        new ONSData
+                        {
+                            Lep1 = "Lep1",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new ONSData
+                        {
+                            Lep1 = "Lep11",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                },
+                new Postcode
+                {
+                    PostCode = "PostCode3"
+                }
+            };
+
+            serviceResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void RetrieveMasterPostcodes()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<MasterPostcode>>();
+
+            var masterPostCodes = new List<MasterPostcode>
             {
                 new MasterPostcode
                 {
-                    Postcode = "Postcode1",
-                    SfaPostcodeDisadvantages = new List<SfaPostcodeDisadvantage>
-                    {
-                        new SfaPostcodeDisadvantage
-                        {
-                            Uplift = 1.0m,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31),
-                        },
-                        new SfaPostcodeDisadvantage
-                        {
-                            Uplift = 1.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1),
-                        },
-                    },
+                    Postcode = "PostCode1",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "Postcode2",
-                    EfaPostcodeDisadvantages = new List<EfaPostcodeDisadvantage>
-                    {
-                        new EfaPostcodeDisadvantage
-                        {
-                            Uplift = 2.0m,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31),
-                        },
-                        new EfaPostcodeDisadvantage
-                        {
-                            Uplift = 2.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1),
-                        },
-                    },
+                    Postcode = "PostCode2",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "Postcode3",
-                    DasPostcodeDisadvantages = new List<DasPostcodeDisadvantage>
-                    {
-                        new DasPostcodeDisadvantage
-                        {
-                            Uplift = 3.0m,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31),
-                        },
-                        new DasPostcodeDisadvantage
-                        {
-                            Uplift = 3.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1),
-                        },
-                    },
-                },
-                new MasterPostcode
-                {
-                    Postcode = "Postcode4",
-                    SfaPostcodeAreaCosts = new List<SfaPostcodeAreaCost>
-                    {
-                        new SfaPostcodeAreaCost
-                        {
-                            AreaCostFactor = 4.0m,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31),
-                        },
-                        new SfaPostcodeAreaCost
-                        {
-                            AreaCostFactor = 4.0m,
-                            EffectiveFrom = new DateTime(2018, 9, 1),
-                        },
-                    },
-                },
-                new MasterPostcode
-                {
-                    Postcode = "Postcode5",
-                    CareerLearningPilotPostcodes = new List<CareerLearningPilotPostcode>
-                    {
-                        new CareerLearningPilotPostcode
-                        {
-                            AreaCode = "Area1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 8, 31),
-                        },
-                        new CareerLearningPilotPostcode
-                        {
-                            AreaCode = "Area1",
-                            EffectiveFrom = new DateTime(2018, 9, 1),
-                        },
-                    },
-                },
-                new MasterPostcode
-                {
-                    Postcode = "Postcode6",
-                    OnsPostcodes = new List<OnsPostcode>
-                    {
-                        new OnsPostcode
-                        {
-                            LocalAuthority = "Authority",
-                            Lep1 = "Lep1",
-                            Lep2 = "Lep2",
-                            Nuts = "Nuts",
-                            Termination = "202008",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                        },
-                    },
-                },
-                new MasterPostcode { Postcode = "Postcode7" },
-                new MasterPostcode { Postcode = "Postcode8" },
-                new MasterPostcode { Postcode = "Postcode9" },
-                new MasterPostcode { Postcode = "Postcode10" },
+                    Postcode = "PostCode3",
+                }
             };
 
-            var postcodesDbMock = postcodesList.AsQueryable().BuildMockDbSet();
+            taskResult.SetResult(masterPostCodes);
 
-            postcodesMock.Setup(p => p.MasterPostcodes).Returns(postcodesDbMock.Object);
+            var masterPostCodeList = new List<string>
+            {
+                "PostCode1",
+                "PostCode2",
+                "PostCode3"
+            };
 
-            var serviceResult = await NewService(postcodesMock.Object).RetrieveAsync(postcodes, CancellationToken.None);
+            var service = NewServiceMock();
 
-            serviceResult.Count().Should().Be(6);
-            serviceResult.Select(p => p.PostCode).Should().BeEquivalentTo(postcodes);
-            serviceResult.Where(p => p.PostCode == "Postcode1").SelectMany(p => p.SfaDisadvantages).Should().BeEquivalentTo(sfaDisad);
-            serviceResult.Where(p => p.PostCode == "Postcode2").SelectMany(p => p.EfaDisadvantages).Should().BeEquivalentTo(efaDisad);
-            serviceResult.Where(p => p.PostCode == "Postcode3").SelectMany(p => p.DasDisadvantages).Should().BeEquivalentTo(dasDisad);
-            serviceResult.Where(p => p.PostCode == "Postcode4").SelectMany(p => p.SfaAreaCosts).Should().BeEquivalentTo(sfaAreaCost);
-            serviceResult.Where(p => p.PostCode == "Postcode5").SelectMany(p => p.CareerLearningPilots).Should().BeEquivalentTo(careerLearningPilot);
-            serviceResult.Where(p => p.PostCode == "Postcode6").SelectMany(p => p.ONSData).Should().BeEquivalentTo(onsData);
+            service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveMasterPostcodes(json, cancellationToken).Should().BeEquivalentTo(masterPostCodeList);
+        }
+
+        [Fact]
+        public void RetrieveSfaAreaCosts()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeAreaCost>>();
+
+            var sfaAreaCost = new List<SfaPostcodeAreaCost>
+            {
+                new SfaPostcodeAreaCost
+                {
+                    Postcode = "PostCode1",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new SfaPostcodeAreaCost
+                {
+                    Postcode = "PostCode2",
+                    AreaCostFactor = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new SfaPostcodeAreaCost
+                {
+                    Postcode = "PostCode2",
+                    AreaCostFactor = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(sfaAreaCost);
+
+            var sfaAreaCostDictionary = new Dictionary<string, List<SfaAreaCost>>
+            {
+                {
+                    "PostCode1", new List<SfaAreaCost>
+                    {
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<SfaAreaCost>
+                    {
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new SfaAreaCost
+                        {
+                            AreaCostFactor = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveSfaAreaCosts(json, cancellationToken).Should().BeEquivalentTo(sfaAreaCostDictionary);
+        }
+
+        [Fact]
+        public void RetrieveSfaPostcodeDisadvantages()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeDisadvantage>>();
+
+            var sfaDisadvantage = new List<SfaPostcodeDisadvantage>
+            {
+                new SfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new SfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new SfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(sfaDisadvantage);
+
+            var sfaDisadvantageDictionary = new Dictionary<string, List<SfaDisadvantage>>
+            {
+                {
+                    "PostCode1", new List<SfaDisadvantage>
+                    {
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<SfaDisadvantage>
+                    {
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new SfaDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<SfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveSfaPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(sfaDisadvantageDictionary);
+        }
+
+        [Fact]
+        public void RetrieveEfaPostcodeDisadvantages()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
+
+            var efaPostcodeDisadvantage = new List<EfaPostcodeDisadvantage>
+            {
+                new EfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new EfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new EfaPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(efaPostcodeDisadvantage);
+
+            var efaDisadvantageDictionary = new Dictionary<string, List<EfaDisadvantage>>
+            {
+                {
+                    "PostCode1", new List<EfaDisadvantage>
+                    {
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<EfaDisadvantage>
+                    {
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new EfaDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveEfaPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(efaDisadvantageDictionary);
+        }
+
+        [Fact]
+        public void RetrieveDasPostcodeDisadvantages()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
+
+            var dasPostcodeDisadvantage = new List<DasPostcodeDisadvantage>
+            {
+                new DasPostcodeDisadvantage
+                {
+                    Postcode = "PostCode1",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new DasPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.2m,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new DasPostcodeDisadvantage
+                {
+                    Postcode = "PostCode2",
+                    Uplift = 1.5m,
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(dasPostcodeDisadvantage);
+
+            var dasDisadvantageDictionary = new Dictionary<string, List<DasDisadvantage>>
+            {
+                {
+                    "PostCode1", new List<DasDisadvantage>
+                    {
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<DasDisadvantage>
+                    {
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.2m,
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new DasDisadvantage
+                        {
+                            Uplift = 1.5m,
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveDasPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(dasDisadvantageDictionary);
+        }
+
+        [Fact]
+        public void RetrieveCareerLearningPilots()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
+
+            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
+            {
+                new CareerLearningPilotPostcode
+                {
+                    Postcode = "PostCode1",
+                    AreaCode = "Code1",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new CareerLearningPilotPostcode
+                {
+                    Postcode = "PostCode2",
+                    AreaCode = "Code1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new CareerLearningPilotPostcode
+                {
+                    Postcode = "PostCode2",
+                    AreaCode = "Code2",
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(careerLearningPilotsPostcode);
+
+            var careerLearningPilotsDictionary = new Dictionary<string, List<CareerLearningPilot>>
+            {
+                {
+                    "PostCode1", new List<CareerLearningPilot>
+                    {
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code1",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<CareerLearningPilot>
+                    {
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code1",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new CareerLearningPilot
+                        {
+                            AreaCode = "Code2",
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveCareerLearningPilots(json, cancellationToken).Should().BeEquivalentTo(careerLearningPilotsDictionary);
+        }
+
+        [Fact]
+        public void RetrieveOnsData()
+        {
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
+
+            var onsPostcodes = new List<OnsPostcode>
+            {
+                new OnsPostcode
+                {
+                    Postcode = "PostCode1",
+                    Lep1 = "Lep1",
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new OnsPostcode
+                {
+                    Postcode = "PostCode2",
+                    Lep1 = "Lep1",
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new OnsPostcode
+                {
+                    Postcode = "PostCode2",
+                    Lep1 = "Lep11",
+                    LocalAuthority = "LocalAuthority",
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                }
+            };
+
+            taskResult.SetResult(onsPostcodes);
+
+            var onsDictionary = new Dictionary<string, List<ONSData>>
+            {
+                {
+                    "PostCode1", new List<ONSData>
+                    {
+                        new ONSData
+                        {
+                            Lep1 = "Lep1",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
+                },
+                {
+                    "PostCode2", new List<ONSData>
+                    {
+                        new ONSData
+                        {
+                            Lep1 = "Lep1",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new ONSData
+                        {
+                            Lep1 = "Lep11",
+                            LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    }
+                }
+            };
+
+            var service = NewServiceMock();
+
+            service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
+
+            service.Object.RetrieveOnsData(json, cancellationToken).Should().BeEquivalentTo(onsDictionary);
         }
 
         [Fact]
@@ -249,14 +838,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             var sfaDisdvantage = new SfaDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             NewService().SfaPostcodeDisadvantagesToEntity(sfaPostcodeDisadvantage).Should().BeEquivalentTo(sfaDisdvantage);
@@ -269,14 +858,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             var efaDisdvantage = new EfaDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             NewService().EfaPostcodeDisadvantagesToEntity(efaPostcodeDisadvantage).Should().BeEquivalentTo(efaDisdvantage);
@@ -289,14 +878,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             var dasDisdvantage = new DasDisadvantage
             {
                 Uplift = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             NewService().DasPostcodeDisadvantagesToEntity(dasPostcodeDisadvantage).Should().BeEquivalentTo(dasDisdvantage);
@@ -309,14 +898,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 AreaCostFactor = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             var sfaAreaCost = new SfaAreaCost
             {
                 AreaCostFactor = 1.0m,
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             NewService().SfaAreaCostsToEntity(sfaPostcodeAreaCost).Should().BeEquivalentTo(sfaAreaCost);
@@ -329,14 +918,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 AreaCode = "Area1",
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             var careerLearningPilot = new CareerLearningPilot
             {
                 AreaCode = "Area1",
                 EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31),
+                EffectiveTo = new DateTime(2018, 8, 31)
             };
 
             NewService().CareerLearningPilotsToEntity(careerLearningPilotPostcode).Should().BeEquivalentTo(careerLearningPilot);
@@ -352,7 +941,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
                 Termination = "202008",
-                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveFrom = new DateTime(2018, 8, 1)
             };
 
             var onsData = new ONSData
@@ -362,15 +951,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 Lep2 = "Lep2",
                 Nuts = "Nuts",
                 Termination = new DateTime(2020, 8, 31),
-                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveFrom = new DateTime(2018, 8, 1)
             };
 
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
         }
 
-        private PostcodesRepositoryService NewService(IPostcodesContext postcodesContext = null)
+        private PostcodesRepositoryService NewService(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
         {
-            return new PostcodesRepositoryService(postcodesContext);
+            return new PostcodesRepositoryService(referenceDataOptions, jsonSerializationService);
+        }
+
+        private Mock<PostcodesRepositoryService> NewServiceMock(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
+        {
+            return new Mock<PostcodesRepositoryService>(referenceDataOptions, jsonSerializationService);
         }
     }
 }
