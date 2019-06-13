@@ -9,9 +9,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
-using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
 {
@@ -36,90 +34,112 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             var careerLearningPilots = RetrieveCareerLearningPilots(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
 
-            return masterPostcodes
+            var taskList = new List<Task>
+            {
+                masterPostcodes,
+                sfaAreaCosts,
+                sfaPostcodeDisadvantages,
+                efaPostcodeDisadvantages,
+                dasPostcodeDisadvantages,
+                careerLearningPilots,
+                onsData
+            };
+
+            await Task.WhenAll(taskList);
+
+            return masterPostcodes.Result
                 .Select(postcode => new Postcode()
                 {
                     PostCode = postcode,
-                    SfaDisadvantages = sfaPostcodeDisadvantages.TryGetValue(postcode, out var sfaDisad) ? sfaPostcodeDisadvantages[postcode] : null,
-                    SfaAreaCosts = sfaAreaCosts.TryGetValue(postcode, out var sfaAreaCost) ? sfaAreaCosts[postcode] : null,
-                    DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
-                    EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
-                    CareerLearningPilots = careerLearningPilots.TryGetValue(postcode, out var pilot) ? careerLearningPilots[postcode] : null,
-                    ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null
+                    SfaDisadvantages = sfaPostcodeDisadvantages.Result.TryGetValue(postcode, out var sfaDisaValued) ? sfaDisaValued : null,
+                    SfaAreaCosts = sfaAreaCosts.Result.TryGetValue(postcode, out var sfaAreaCostValue) ? sfaAreaCostValue : null,
+                    DasDisadvantages = dasPostcodeDisadvantages.Result.TryGetValue(postcode, out var dasDisadValue) ? dasDisadValue : null,
+                    EfaDisadvantages = efaPostcodeDisadvantages.Result.TryGetValue(postcode, out var efaDisadValue) ? efaDisadValue : null,
+                    CareerLearningPilots = careerLearningPilots.Result.TryGetValue(postcode, out var careerPilotValue) ? careerPilotValue : null,
+                    ONSData = onsData.Result.TryGetValue(postcode, out var onsValue) ? onsValue : null
                 }).ToList();
         }
 
-        public List<string> RetrieveMasterPostcodes(CancellationToken cancellationToken)
+        public async Task<List<string>> RetrieveMasterPostcodes(CancellationToken cancellationToken)
         {
             var sqlSfaAreaCost = $@"SELECT [Postcode] FROM [dbo].[MasterPostcodes]";
 
-            return RetrieveAsync<MasterPostcode>(sqlSfaAreaCost, cancellationToken).Result
+            var postcodes = await RetrieveAsync<MasterPostcode>(sqlSfaAreaCost, cancellationToken);
+
+            return postcodes
                   .Select(p => p.Postcode)
                   .ToList();
         }
 
-        public IDictionary<string, List<SfaAreaCost>> RetrieveSfaAreaCosts(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<SfaAreaCost>>> RetrieveSfaAreaCosts(CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT [Postcode], [AreaCostFactor],[EffectiveFrom], [EffectiveTo] 
+            var sqlSfaAreaCost = $@"SELECT [Postcode], [AreaCostFactor], [EffectiveFrom], [EffectiveTo] 
                                                     FROM [dbo].[SFA_PostcodeAreaCost]";
 
-            return RetrieveAsync<SfaPostcodeAreaCost>(sqlSfaAreaCost, cancellationToken).Result
+            var sfaAReaCosts = await RetrieveAsync<SfaPostcodeAreaCost>(sqlSfaAreaCost, cancellationToken);
+
+            return sfaAReaCosts
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(SfaAreaCostsToEntity).ToList());
         }
 
-        public IDictionary<string, List<SfaDisadvantage>> RetrieveSfaPostcodeDisadvantages(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<SfaDisadvantage>>> RetrieveSfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlSfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[SFA_PostcodeDisadvantage]";
 
-            return
-                RetrieveAsync<SfaPostcodeDisadvantage>(sqlSfaPostcodeDisadvantage, cancellationToken).Result
+            var sfaDisadvantages = await RetrieveAsync<SfaPostcodeDisadvantage>(sqlSfaPostcodeDisadvantage, cancellationToken);
+
+            return sfaDisadvantages
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(SfaPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public IDictionary<string, List<EfaDisadvantage>> RetrieveEfaPostcodeDisadvantages(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<EfaDisadvantage>>> RetrieveEfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlEfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[EFA_PostcodeDisadvantage]";
 
-            return
-                RetrieveAsync<EfaPostcodeDisadvantage>(sqlEfaPostcodeDisadvantage, cancellationToken).Result
+            var efaDisadvantages = await RetrieveAsync<EfaPostcodeDisadvantage>(sqlEfaPostcodeDisadvantage, cancellationToken);
+
+            return efaDisadvantages
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(EfaPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public IDictionary<string, List<DasDisadvantage>> RetrieveDasPostcodeDisadvantages(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<DasDisadvantage>>> RetrieveDasPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlDasPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[DAS_PostcodeDisadvantage]";
 
-            return
-                RetrieveAsync<DasPostcodeDisadvantage>(sqlDasPostcodeDisadvantage, cancellationToken).Result
+            var dasDisadvantages = await RetrieveAsync<DasPostcodeDisadvantage>(sqlDasPostcodeDisadvantage, cancellationToken);
+
+            return dasDisadvantages
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(DasPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public IDictionary<string, List<CareerLearningPilot>> RetrieveCareerLearningPilots(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<CareerLearningPilot>>> RetrieveCareerLearningPilots(CancellationToken cancellationToken)
         {
             var sqlcareerLearningPilots = $@"SELECT [Postcode], [AreaCode], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[CareerLearningPilot_Postcode]";
 
-            return
-                 RetrieveAsync<CareerLearningPilotPostcode>(sqlcareerLearningPilots, cancellationToken).Result
+            var careerPilots = await RetrieveAsync<CareerLearningPilotPostcode>(sqlcareerLearningPilots, cancellationToken);
+
+            return careerPilots
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(CareerLearningPilotsToEntity).ToList());
         }
 
-        public IDictionary<string, List<ONSData>> RetrieveOnsData(CancellationToken cancellationToken)
+        public async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(CancellationToken cancellationToken)
         {
             var sqlOnsData = $@"SELECT [Postcode], [Introduction], [Termination], [LocalAuthority], [Lep1], [Lep2], 
                                                 [EffectiveFrom], [EffectiveTo], [Nuts]
                                                 FROM [dbo].[ONS_Postcodes]";
 
-            return
-                RetrieveAsync<OnsPostcode>(sqlOnsData, cancellationToken).Result
+            var onsData = await RetrieveAsync<OnsPostcode>(sqlOnsData, cancellationToken);
+
+            return onsData
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(ONSDataToEntity).ToList());
         }

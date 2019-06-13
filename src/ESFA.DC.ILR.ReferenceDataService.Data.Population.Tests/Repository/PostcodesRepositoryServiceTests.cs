@@ -366,7 +366,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public void RetrieveMasterPostcodes()
+        public async Task RetrieveMasterPostcodes()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -402,11 +402,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveMasterPostcodes(json, cancellationToken).Should().BeEquivalentTo(masterPostCodeList);
+            var result = await service.Object.RetrieveMasterPostcodes(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(masterPostCodeList);
         }
 
         [Fact]
-        public void RetrieveSfaAreaCosts()
+        public async Task RetrieveSfaAreaCosts()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -472,11 +474,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveSfaAreaCosts(json, cancellationToken).Should().BeEquivalentTo(sfaAreaCostDictionary);
+            var result = await service.Object.RetrieveSfaAreaCosts(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(sfaAreaCostDictionary);
         }
 
         [Fact]
-        public void RetrieveSfaPostcodeDisadvantages()
+        public async Task RetrieveSfaPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -542,11 +546,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<SfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveSfaPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(sfaDisadvantageDictionary);
+            var result = await service.Object.RetrieveSfaPostcodeDisadvantages(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(sfaDisadvantageDictionary);
         }
 
         [Fact]
-        public void RetrieveEfaPostcodeDisadvantages()
+        public async Task RetrieveEfaPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -612,11 +618,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveEfaPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(efaDisadvantageDictionary);
+            var result = await service.Object.RetrieveEfaPostcodeDisadvantages(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(efaDisadvantageDictionary);
         }
 
         [Fact]
-        public void RetrieveDasPostcodeDisadvantages()
+        public async Task RetrieveDasPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -682,11 +690,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveDasPostcodeDisadvantages(json, cancellationToken).Should().BeEquivalentTo(dasDisadvantageDictionary);
+            var result = await service.Object.RetrieveDasPostcodeDisadvantages(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(dasDisadvantageDictionary);
         }
 
         [Fact]
-        public void RetrieveCareerLearningPilots()
+        public async Task RetrieveCareerLearningPilots()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -752,11 +762,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveCareerLearningPilots(json, cancellationToken).Should().BeEquivalentTo(careerLearningPilotsDictionary);
+            var result = await service.Object.RetrieveCareerLearningPilots(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(careerLearningPilotsDictionary);
         }
 
         [Fact]
-        public void RetrieveOnsData()
+        public async Task RetrieveOnsData()
         {
             var cancellationToken = CancellationToken.None;
             var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
@@ -828,7 +840,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            service.Object.RetrieveOnsData(json, cancellationToken).Should().BeEquivalentTo(onsDictionary);
+            var result = await service.Object.RetrieveOnsData(json, cancellationToken);
+
+            result.Should().BeEquivalentTo(onsDictionary);
         }
 
         [Fact]
