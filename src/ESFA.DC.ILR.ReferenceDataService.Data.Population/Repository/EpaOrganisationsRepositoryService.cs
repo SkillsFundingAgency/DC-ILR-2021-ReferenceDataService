@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyCollection<EPAOrganisation>> RetrieveAsync(IReadOnlyCollection<string> epaOrgIds, CancellationToken cancellationToken)
         {
             return await _epaContext?
-                        .Periods?.Where(o => epaOrgIds.Contains(o.OrganisationId))
+                        .Periods?.Where(o => epaOrgIds.Contains(o.OrganisationId, StringComparer.OrdinalIgnoreCase))
                         .Select(epa => new EPAOrganisation
                         {
                             ID = epa.OrganisationId,

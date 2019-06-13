@@ -47,19 +47,42 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
         public async Task<DesktopReferenceDataRoot> PopulateAsync(CancellationToken cancellationToken)
         {
+            var metaDatas = _metaDataRetrievalService.RetrieveAsync(cancellationToken);
+            var employers = _employersRepositoryService.RetrieveAsync(cancellationToken);
+            var epaOrganisations = _epaOrganisationsRepositoryService.RetrieveAsync(cancellationToken);
+            var larsLearningDeliveries = _larsLearningDeliveryRepositoryService.RetrieveAsync(cancellationToken);
+            var larsStandards = _larsStandardRepositoryService.RetrieveAsync(cancellationToken);
+            var larsFrameworks = _larsFrameworkRepositoryService.RetrieveAsync(cancellationToken);
+            var organisations = _organisationsRepositoryService.RetrieveAsync(cancellationToken);
+            var postcodes = _postcodesRepositoryService.RetrieveAsync(cancellationToken);
+
+            var taskList = new List<Task>
+            {
+                metaDatas,
+                employers,
+                epaOrganisations,
+                larsLearningDeliveries,
+                larsStandards,
+                larsFrameworks,
+                organisations,
+                postcodes
+            };
+
+            await Task.WhenAll(taskList);
+
             return new DesktopReferenceDataRoot
             {
                 DateGenerated = System.DateTime.UtcNow,
-                MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
+                MetaDatas = metaDatas.Result,
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
-                Employers = await _employersRepositoryService.RetrieveAsync(cancellationToken),
-                EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(cancellationToken),
+                Employers = employers.Result,
+                EPAOrganisations = epaOrganisations.Result,
                 FCSContractAllocations = new List<FcsContractAllocation>(),
-                LARSLearningDeliveries = await _larsLearningDeliveryRepositoryService.RetrieveAsync(cancellationToken),
-                LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(cancellationToken),
-                LARSFrameworks = await _larsFrameworkRepositoryService.RetrieveAsync(cancellationToken),
-                Organisations = await _organisationsRepositoryService.RetrieveAsync(cancellationToken),
-                Postcodes = await _postcodesRepositoryService.RetrieveAsync(cancellationToken),
+                LARSLearningDeliveries = larsLearningDeliveries.Result,
+                LARSStandards = larsStandards.Result,
+                LARSFrameworks = larsFrameworks.Result,
+                Organisations = organisations.Result,
+                Postcodes = postcodes.Result,
                 ULNs = new List<long>(),
             };
         }

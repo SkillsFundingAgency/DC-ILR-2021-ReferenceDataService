@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             var larsFrameworks = new List<LARSFrameworkKey>();
 
             var learningDeliveries = await _larsContext.LARS_LearningDeliveries
-                .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef))
+                .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(
                     ld => new LARSLearningDelivery
                     {
@@ -109,7 +109,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         PwayCode = lf.PwayCode,
                         EffectiveFromNullable = lf.EffectiveFrom,
                         EffectiveTo = lf.EffectiveTo,
-                        LARSFrameworkAim = lf.LarsFrameworkAims.Where(lfa => lfa.LearnAimRef == key.LearnAimRef)
+                        LARSFrameworkAim = lf.LarsFrameworkAims.Where(lfa => lfa.LearnAimRef.Equals(key.LearnAimRef, StringComparison.OrdinalIgnoreCase))
                         .Select(lfa => new LARSFrameworkAim
                         {
                             EffectiveFrom = lfa.EffectiveFrom,
@@ -151,7 +151,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 }
             }
 
-            var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList());
+            var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList(), StringComparer.OrdinalIgnoreCase);
 
             foreach (var learningDelivery in learningDeliveries)
             {
