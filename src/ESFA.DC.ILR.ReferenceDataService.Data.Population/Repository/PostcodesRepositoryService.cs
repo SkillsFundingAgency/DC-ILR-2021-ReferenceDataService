@@ -121,7 +121,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public IDictionary<string, List<ONSData>> RetrieveOnsData(string jsonParams, CancellationToken cancellationToken)
         {
             var sqlOnsData = $@"SELECT P.[Postcode], J.[Introduction], J.[Termination], J.[LocalAuthority], J.[Lep1], J.[Lep2], 
-                                                J.[EffectiveFrom], J.[EffectiveTo], J.[Nuts], J.[Lsoa11]
+                                                J.[EffectiveFrom], J.[EffectiveTo], J.[Nuts]
                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                 INNER JOIN [dbo].[ONS_Postcodes] J ON J.[Postcode] = P.[Postcode]";
 
