@@ -33,6 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     TenderSpecReference = ca.TenderSpecReference,
                     StartDate = ca.StartDate,
                     EndDate = ca.EndDate,
+                    StopNewStartsFromDate = ca.StopNewStartsFromDate,
                     DeliveryUKPRN = ca.DeliveryUkprn.Value, // <= this will not be null on feed
                     FCSContractDeliverables = ca.ContractDeliverables.Select(cd => new FcsContractDeliverable
                     {
