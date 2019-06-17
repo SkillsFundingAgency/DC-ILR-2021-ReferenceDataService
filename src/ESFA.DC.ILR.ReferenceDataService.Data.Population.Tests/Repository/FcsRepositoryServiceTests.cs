@@ -31,6 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 1),
                     EndDate = new DateTime(2018, 8, 3),
+                    StopNewStartsFromDate = null,
                     DeliveryUkprn = 1,
                     LotReference = "Lot1",
                     TenderSpecReference = "TenderSpec1",
@@ -55,6 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     LearningRatePremiumFactor = 2.0m,
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 4),
+                    StopNewStartsFromDate = null,
                     DeliveryUkprn = ukprn,
                     LotReference = "Lot2",
                     TenderSpecReference = "TenderSpec2",
@@ -79,6 +81,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 1),
                     EndDate = new DateTime(2018, 8, 3),
+                    StopNewStartsFromDate = null,
                     DeliveryUkprn = ukprn,
                 },
                 new ContractAllocation
@@ -88,6 +91,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 4),
+                    StopNewStartsFromDate = null,
                     DeliveryUkprn = ukprn,
                 },
                 new ContractAllocation
@@ -98,6 +102,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     Period = "R01",
                     StartDate = new DateTime(2018, 8, 1),
                     EndDate = new DateTime(2018, 8, 3),
+                    StopNewStartsFromDate = null,
                     DeliveryUkprn = 2,
                 },
             };

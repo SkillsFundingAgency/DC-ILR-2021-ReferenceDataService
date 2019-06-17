@@ -21,6 +21,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FCS
 
         public DateTime? EndDate { get; set; }
 
+        public DateTime? StopNewStartsFromDate { get; set; }
+
         public List<FcsContractDeliverable> FCSContractDeliverables { get; set; }
 
         public EsfEligibilityRule EsfEligibilityRule { get; set; }
