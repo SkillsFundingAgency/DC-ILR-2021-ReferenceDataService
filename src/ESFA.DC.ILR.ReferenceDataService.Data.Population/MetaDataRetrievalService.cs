@@ -66,6 +66,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                         .FirstOrDefaultAsync(cancellationToken),
                 },
                 ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
+                ValidationRules = await _ilReferenceDataRepositoryService.RetrieveValdiationRulesAsync(cancellationToken),
                 Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken),
             };
 
@@ -79,6 +80,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                && metaData.ReferenceDataVersions.LarsVersion.Version != null
                && metaData.ReferenceDataVersions.OrganisationsVersion.Version != null
                && metaData.ValidationErrors.Any()
+               && metaData.ValidationRules.Any()
                && metaData.Lookups.Any())
             {
                 return metaData;

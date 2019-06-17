@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 
         public IReadOnlyCollection<ValidationError> ValidationErrors { get; set; }
 
+        public IReadOnlyCollection<ValidationRule> ValidationRules { get; set; }
+
         public IReadOnlyCollection<Lookup> Lookups { get; set; }
     }
 }

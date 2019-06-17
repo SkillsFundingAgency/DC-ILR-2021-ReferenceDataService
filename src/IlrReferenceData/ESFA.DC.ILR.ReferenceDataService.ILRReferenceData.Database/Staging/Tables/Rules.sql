@@ -2,7 +2,9 @@
 (
 	[Rulename] NVARCHAR(50) NOT NULL, 
     [Severity] NVARCHAR NULL, 
-    [Message] NVARCHAR(2000) NULL
+    [Message] NVARCHAR(2000) NULL,
+	[Online] BIT NOT NULL DEFAULT 1,
+	[Desktop] BIT NOT NULL DEFAULT 1,
 	CONSTRAINT [PK_Staging_Rules] PRIMARY KEY CLUSTERED ([Rulename]) WITH (FILLFACTOR = 90)
 )
 
