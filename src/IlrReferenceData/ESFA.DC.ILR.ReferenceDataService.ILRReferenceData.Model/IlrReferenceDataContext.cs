@@ -82,7 +82,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
                     .HasMaxLength(50)
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.Desktop)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Message).HasMaxLength(2000);
+
+                entity.Property(e => e.Online)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Severity).HasMaxLength(1);
             });

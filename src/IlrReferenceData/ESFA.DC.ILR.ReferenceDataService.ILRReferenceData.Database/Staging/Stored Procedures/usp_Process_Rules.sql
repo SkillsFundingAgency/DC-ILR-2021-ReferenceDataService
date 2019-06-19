@@ -15,17 +15,23 @@ BEGIN
 				SELECT [Rulename]
 					  ,[Severity]
 					  ,[Message]
+					  ,[Desktop]
+					  ,[Online]
 				FROM 
 				(
 				--	     -- New File Rules
 					SELECT [Rulename]
 						  ,[Severity]
 						  ,[Message]
+						  ,[Desktop]
+						  ,[Online]
 					FROM [Staging].[FileRules]
 				 UNION 
 					SELECT R.[Rulename]
 						  ,ISNULL(S.[Severity],R.[Severity]) as [Severity]
-						  ,ISNULL(M.[Message],R.[Message]) as [Message]	  
+						  ,ISNULL(M.[Message],R.[Message]) as [Message]	
+						  ,R.[Desktop]
+						  ,R.[Online]
 					FROM [Staging].[Rules] R
 					LEFT JOIN [Staging].[ModifiedMessages] M 
 						ON M.[Rulename] = R.[Rulename]
@@ -33,7 +39,7 @@ BEGIN
 						ON S.[Rulename] = R.[Rulename]
 				  ) as RecordSetToProcess
 			)
-			  AS Source ([Rulename],[Severity],[Message])
+			  AS Source ([Rulename],[Severity],[Message],[Desktop],[Online])
 		    ON Target.[Rulename] = Source.[Rulename]
 			WHEN MATCHED 
 				AND EXISTS 
@@ -52,10 +58,14 @@ BEGIN
 		INSERT (     [Rulename]
 					,[Severity]
 					,[Message]
+					,[Desktop]
+					,[Online]
 					)
 			VALUES ( Source.[Rulename]
 					,Source.[Severity]
 					,Source.[Message]
+					,Source.[Desktop]
+					,Source.[Online]
 				  )
 		WHEN NOT MATCHED BY SOURCE THEN DELETE		
 		OUTPUT ISNULL(Deleted.[Rulename],Inserted.[Rulename]),$action INTO @SummaryOfChanges([Rulename],[Action])

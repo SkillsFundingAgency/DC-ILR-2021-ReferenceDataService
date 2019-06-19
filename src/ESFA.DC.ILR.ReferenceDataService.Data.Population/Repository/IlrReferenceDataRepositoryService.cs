@@ -35,6 +35,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<IReadOnlyCollection<ValidationRule>> RetrieveValidationRulesAsync(CancellationToken cancellationToken)
+        {
+            return await _ilrReferenceDataContext.Rules
+                .Select(r => new ValidationRule
+                {
+                    RuleName = r.Rulename,
+                    Desktop = r.Desktop.Value,
+                    Online = r.Online.Value,
+                })
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<List<Lookup>> RetrieveLookupsAsync(CancellationToken cancellationToken)
         {
             return await _ilrReferenceDataContext.Lookups
