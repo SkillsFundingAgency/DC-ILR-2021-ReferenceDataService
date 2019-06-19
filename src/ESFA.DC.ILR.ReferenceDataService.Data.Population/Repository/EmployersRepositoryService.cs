@@ -32,13 +32,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 edrsEmpIds.AddRange(
                     await _employersContext.Employers
-                     .Where(e => input.Contains(e.Urn))
+                     .Where(e => batch.Contains(e.Urn))
                      .Select(e => e.Urn)
                      .ToListAsync(cancellationToken));
 
                 largeEmployers.AddRange(
                     await _employersContext.LargeEmployers
-                     .Where(e => input.Contains(e.Ern))
+                     .Where(e => batch.Contains(e.Ern))
                      .ToListAsync(cancellationToken));
             }
 
