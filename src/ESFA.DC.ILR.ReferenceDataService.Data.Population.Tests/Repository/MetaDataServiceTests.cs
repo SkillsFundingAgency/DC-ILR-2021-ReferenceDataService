@@ -111,7 +111,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
             ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationErrorsAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
             ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveLookupsAsync(CancellationToken.None)).Returns(Task.FromResult(lookups));
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValdiationRulesAsync(CancellationToken.None)).Returns(Task.FromResult(validationRules));
+            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationRulesAsync(CancellationToken.None)).Returns(Task.FromResult(validationRules));
 
             var serviceResult = await NewService(
                 employersMock.Object,

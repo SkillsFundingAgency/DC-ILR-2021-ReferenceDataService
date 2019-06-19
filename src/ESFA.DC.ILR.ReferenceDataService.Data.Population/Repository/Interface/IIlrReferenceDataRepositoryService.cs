@@ -9,7 +9,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
     {
         Task<IReadOnlyCollection<ValidationError>> RetrieveValidationErrorsAsync(CancellationToken cancellationToken);
 
-        Task<IReadOnlyCollection<ValidationRule>> RetrieveValdiationRulesAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<ValidationRule>> RetrieveValidationRulesAsync(CancellationToken cancellationToken);
 
         Task<List<Lookup>> RetrieveLookupsAsync(CancellationToken cancellationToken);
     }

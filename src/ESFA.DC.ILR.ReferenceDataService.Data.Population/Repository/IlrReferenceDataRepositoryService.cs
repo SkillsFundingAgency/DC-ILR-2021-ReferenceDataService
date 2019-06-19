@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<IReadOnlyCollection<ValidationRule>> RetrieveValdiationRulesAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ValidationRule>> RetrieveValidationRulesAsync(CancellationToken cancellationToken)
         {
             return await _ilrReferenceDataContext.Rules
                 .Select(r => new ValidationRule
