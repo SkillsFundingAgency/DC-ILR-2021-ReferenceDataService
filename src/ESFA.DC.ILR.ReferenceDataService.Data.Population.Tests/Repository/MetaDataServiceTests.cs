@@ -79,6 +79,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ValidationError { RuleName = "Rule10", Severity = SeverityLevel.Error, Message = "Message10" },
             };
 
+            IReadOnlyCollection<ValidationRule> validationRules = new List<ValidationRule>
+            {
+                new ValidationRule { RuleName = "Rule1", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule2", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule3", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule4", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule5", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule6", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule7", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule8", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule9", Desktop = true, Online = true },
+                new ValidationRule { RuleName = "Rule10", Desktop = true, Online = true },
+            };
+
             List<Lookup> lookups = new List<Lookup>
             {
                 new Lookup { Code = "Lookup1", Name = "Lookup" },
@@ -97,6 +111,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
             ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationErrorsAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
             ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveLookupsAsync(CancellationToken.None)).Returns(Task.FromResult(lookups));
+            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValdiationRulesAsync(CancellationToken.None)).Returns(Task.FromResult(validationRules));
 
             var serviceResult = await NewService(
                 employersMock.Object,
@@ -110,6 +125,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
             serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
+            serviceResult.ValidationRules.Should().BeEquivalentTo(validationRules);
         }
 
         [Fact]
