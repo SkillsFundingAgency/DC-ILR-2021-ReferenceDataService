@@ -2392,6 +2392,10 @@ INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [
 RAISERROR('Lookups Completed',10,1) WITH NOWAIT;
 GO
 
+
+DELETE FROM [dbo].[Rules]
+GO
+
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Accom_01', N'E', N'The Accommodation is not a valid code')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_02', N'W', N'The Achievement date should not be after the current teaching year end date')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_03', N'E', N'The Achievement date must not be before the Learning start date')
