@@ -52,10 +52,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToListAsync(cancellationToken);
 
             var eligibilityRules = await _fcs.EsfEligibilityRules
-                .Include(e => e.EsfEligibilityRuleEmploymentStatuses)
-                .Include(e => e.EsfEligibilityRuleLocalAuthorities)
-                .Include(e => e.EsfEligibilityRuleLocalEnterprisePartnerships)
-                .Include(e => e.EsfEligibilityRuleSectorSubjectAreaLevels)
                .Select(r => new EsfEligibilityRule
                {
                    LotReference = r.LotReference,
@@ -69,24 +65,36 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                    MinPriorAttainment = r.MinPriorAttainment,
                    MaxPriorAttainment = r.MaxPriorAttainment,
                    EmploymentStatuses = r.EsfEligibilityRuleEmploymentStatuses
+                   .Where(esf =>
+                           esf.TenderSpecReference.Equals(r.TenderSpecReference, StringComparison.OrdinalIgnoreCase)
+                           && esf.LotReference.Equals(r.LotReference, StringComparison.OrdinalIgnoreCase))
                    .Select(s => new EsfEligibilityRuleEmploymentStatus
                    {
                        Code = s.Code,
                    })
                    .ToList(),
                    LocalAuthorities = r.EsfEligibilityRuleLocalAuthorities
+                   .Where(esf =>
+                         esf.TenderSpecReference.Equals(r.TenderSpecReference, StringComparison.OrdinalIgnoreCase)
+                         && esf.LotReference.Equals(r.LotReference, StringComparison.OrdinalIgnoreCase))
                    .Select(a => new EsfEligibilityRuleLocalAuthority
                    {
                        Code = a.Code,
                    })
                    .ToList(),
                    LocalEnterprisePartnerships = r.EsfEligibilityRuleLocalEnterprisePartnerships
+                   .Where(esf =>
+                         esf.TenderSpecReference.Equals(r.TenderSpecReference, StringComparison.OrdinalIgnoreCase)
+                         && esf.LotReference.Equals(r.LotReference, StringComparison.OrdinalIgnoreCase))
                    .Select(p => new EsfEligibilityRuleLocalEnterprisePartnership
                    {
                        Code = p.Code,
                    })
                    .ToList(),
                    SectorSubjectAreaLevels = r.EsfEligibilityRuleSectorSubjectAreaLevels
+                   .Where(esf =>
+                         esf.TenderSpecReference.Equals(r.TenderSpecReference, StringComparison.OrdinalIgnoreCase)
+                         && esf.LotReference.Equals(r.LotReference, StringComparison.OrdinalIgnoreCase))
                    .Select(l => new EsfEligibilityRuleSectorSubjectAreaLevel
                    {
                        MaxLevelCode = l.MaxLevelCode,
