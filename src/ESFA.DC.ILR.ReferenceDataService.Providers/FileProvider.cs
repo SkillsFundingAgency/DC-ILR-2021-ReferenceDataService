@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
 using ESFA.DC.Serialization.Interfaces;
 
@@ -19,9 +18,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers
             _fileService = fileService;
         }
 
-        public async Task StoreAsync<T>(IReferenceDataContext referenceDataContext, T referenceDataRoot, bool compress, CancellationToken cancellationToken)
+        public async Task StoreAsync<T>(string outputKey, string container, T referenceDataRoot, bool compress, CancellationToken cancellationToken)
         {
-            using (var fileStream = await _fileService.OpenWriteStreamAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
+            using (var fileStream = await _fileService.OpenWriteStreamAsync(outputKey, container, cancellationToken))
             {
                 if (compress)
                 {

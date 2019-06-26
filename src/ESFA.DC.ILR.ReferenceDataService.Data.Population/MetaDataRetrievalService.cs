@@ -45,6 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         {
             var metaData = new MetaData
             {
+                DateGenerated = DateTime.UtcNow,
                 ReferenceDataVersions = new ReferenceDataVersion
                 {
                     Employers =

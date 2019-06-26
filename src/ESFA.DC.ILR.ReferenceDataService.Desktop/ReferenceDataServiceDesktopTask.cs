@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
 
             // output model.
             _logger.LogInfo("Starting Reference Data Output");
-            await _gZipFileProvider.StoreAsync(referenceDataContext, referenceData, compressOutput, cancellationToken);
+            await _gZipFileProvider.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceData, compressOutput, cancellationToken);
             _logger.LogInfo("Finished Reference Data Output");
 
             return desktopContext;
