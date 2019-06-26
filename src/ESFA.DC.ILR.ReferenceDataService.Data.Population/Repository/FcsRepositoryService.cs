@@ -58,7 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                    TenderSpecReference = r.TenderSpecReference,
                    MinAge = r.MinAge,
                    MaxAge = r.MaxAge,
-                   Benefits = r.Benefits ?? false,
+                   Benefits = r.Benefits,
                    CalcMethod = r.CalcMethod,
                    MinLengthOfUnemployment = r.MinLengthOfUnemployment,
                    MaxLengthOfUnemployment = r.MaxLengthOfUnemployment,
