@@ -190,7 +190,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LotReference = "Lot2",
                     TenderSpecReference = "TenderSpec2",
-                    Benefits = true,
+                    Benefits = null,
                     CalcMethod = 1,
                     MaxAge = 1,
                     MinAge = 1,
@@ -305,6 +305,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
             service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
             service.Where(f => f.ContractAllocationNumber == "102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
+
+            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Benefits.Should().BeNull();
         }
 
         [Fact]

@@ -4,7 +4,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FCS
 {
     public class EsfEligibilityRule
     {
-        public bool Benefits { get; set; }
+        public bool? Benefits { get; set; }
 
         public int? CalcMethod { get; set; }
 
