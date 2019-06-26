@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
             fileServiceMock.Setup(s => s.OpenWriteStreamAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, cancellationToken)).Returns(Task.FromResult(stream)).Verifiable();
             jsonSerializationServiceeMock.Setup(s => s.Serialize(referenceDataRoot, It.IsAny<Stream>())).Verifiable();
 
-            await NewProvider(jsonSerializationServiceeMock.Object, fileServiceMock.Object).StoreAsync(referenceDataContextMock.Object, referenceDataRoot, false, cancellationToken);
+            await NewProvider(jsonSerializationServiceeMock.Object, fileServiceMock.Object).StoreAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, referenceDataRoot, false, cancellationToken);
 
             fileServiceMock.VerifyAll();
             jsonSerializationServiceeMock.VerifyAll();
@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
             fileServiceMock.Setup(s => s.OpenWriteStreamAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, cancellationToken)).Returns(Task.FromResult(stream)).Verifiable();
             jsonSerializationServiceeMock.Setup(s => s.Serialize(referenceDataRoot, It.IsAny<GZipStream>())).Verifiable();
 
-            await NewProvider(jsonSerializationServiceeMock.Object, fileServiceMock.Object).StoreAsync(referenceDataContextMock.Object, referenceDataRoot, true, cancellationToken);
+            await NewProvider(jsonSerializationServiceeMock.Object, fileServiceMock.Object).StoreAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, referenceDataRoot, true, cancellationToken);
 
             fileServiceMock.VerifyAll();
             jsonSerializationServiceeMock.VerifyAll();

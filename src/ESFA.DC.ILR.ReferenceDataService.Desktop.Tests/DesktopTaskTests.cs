@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(It.IsAny<IReferenceDataContext>(), cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            gZipFIleProviderMock.Setup(s => s.StoreAsync(It.IsAny<IReferenceDataContext>(), referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            gZipFIleProviderMock.Setup(s => s.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
             var task = NewTask(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, gZipFIleProviderMock.Object, loggerMock.Object);
 
