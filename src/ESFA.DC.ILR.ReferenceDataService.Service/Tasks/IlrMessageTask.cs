@@ -5,7 +5,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
@@ -15,18 +15,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
         private readonly bool compressOutput = false;
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
-        private readonly IFileProvider _gZipFileProvider;
+        private readonly IFilePersister _filePersister;
         private readonly ILogger _logger;
 
         public IlrMessageTask(
             IMessageProvider messageProvider,
             IReferenceDataPopulationService referenceDataPopulationService,
-            IFileProvider gZipFileProvider,
+            IFilePersister filePersister,
             ILogger logger)
         {
             _messageProvider = messageProvider;
             _referenceDataPopulationService = referenceDataPopulationService;
-            _gZipFileProvider = gZipFileProvider;
+            _filePersister = filePersister;
             _logger = logger;
         }
 
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _gZipFileProvider.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceData, compressOutput, cancellationToken);
+                await _filePersister.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceData, compressOutput, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
             }
             catch (Exception exception)

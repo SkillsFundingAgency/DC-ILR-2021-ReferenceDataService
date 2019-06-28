@@ -7,12 +7,12 @@ using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Providers
 {
-    public class FileProvider : IFileProvider
+    public class FilePersister : IFilePersister
     {
         private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IFileService _fileService;
 
-        public FileProvider(IJsonSerializationService jsonSerializationService, IFileService fileService)
+        public FilePersister(IJsonSerializationService jsonSerializationService, IFileService fileService)
         {
             _jsonSerializationService = jsonSerializationService;
             _fileService = fileService;

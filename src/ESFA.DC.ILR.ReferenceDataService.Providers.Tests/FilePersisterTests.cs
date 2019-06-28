@@ -13,7 +13,7 @@ using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
 {
-    public class FileProviderTests
+    public class FilePersisterTests
     {
         [Fact]
         public async Task StoreAsync()
@@ -71,9 +71,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Providers.Tests
             jsonSerializationServiceeMock.VerifyAll();
         }
 
-        private FileProvider NewProvider(IJsonSerializationService jsonSerializationService, IFileService fileService = null)
+        private FilePersister NewProvider(IJsonSerializationService jsonSerializationService, IFileService fileService = null)
         {
-            return new FileProvider(jsonSerializationService, fileService);
+            return new FilePersister(jsonSerializationService, fileService);
         }
     }
 }

@@ -137,6 +137,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ZipFileServiceTests.cs" />
+    <Compile Include="DesktopReferenceDataFileServiceTests.cs" />
     <Compile Include="DesktopReferenceDataTaskTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IlrMessageTaskTests.cs" />
