@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             var messageProviderMock = new Mock<IMessageProvider>();
             var referenceDataPopulationServiceMock = new Mock<IReferenceDataPopulationService>();
-            var gZipFIleProviderMock = new Mock<IFileProvider>();
+            var filePersisterMock = new Mock<IFilePersister>();
             var loggerMock = new Mock<ILogger>();
 
             IMessage message = new TestMessage();
@@ -34,24 +34,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(It.IsAny<IReferenceDataContext>(), cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            gZipFIleProviderMock.Setup(s => s.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            filePersisterMock.Setup(s => s.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var task = NewTask(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, gZipFIleProviderMock.Object, loggerMock.Object);
+            var task = NewTask(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, filePersisterMock.Object, loggerMock.Object);
 
             await task.ExecuteAsync(desktopContext.Object, cancellationToken);
 
             messageProviderMock.VerifyAll();
             referenceDataPopulationServiceMock.VerifyAll();
-            gZipFIleProviderMock.VerifyAll();
+            filePersisterMock.VerifyAll();
         }
 
         private ReferenceDataServiceDesktopTask NewTask(
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
-            IFileProvider gZipFileProvider = null,
+            IFilePersister filePersister = null,
             ILogger logger = null)
         {
-            return new ReferenceDataServiceDesktopTask(messageProvider, referenceDataPopulationService, gZipFileProvider, logger);
+            return new ReferenceDataServiceDesktopTask(messageProvider, referenceDataPopulationService, filePersister, logger);
         }
     }
 }
