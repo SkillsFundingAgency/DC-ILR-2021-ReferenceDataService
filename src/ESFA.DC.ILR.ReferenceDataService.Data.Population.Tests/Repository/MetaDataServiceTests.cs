@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var employersVersion = "2";
             var orgVersion = "Version3";
             var postcodesVersion = "Version4";
-            var utcDateTime = DateTime.UtcNow;
+            var utcDateTime = new DateTime(2019, 8, 1);
 
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
