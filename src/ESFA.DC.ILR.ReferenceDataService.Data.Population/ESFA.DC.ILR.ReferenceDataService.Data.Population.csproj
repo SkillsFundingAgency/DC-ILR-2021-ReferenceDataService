@@ -15,13 +15,13 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.60.9" />
     <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.2.0-alpha0009" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.53" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.97" />
     <PackageReference Include="ESFA.DC.ReferenceData.EPA.Model" Version="0.1.184" />
-    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.2.53" />
-    <PackageReference Include="ESFA.DC.ReferenceData.LARS.Model" Version="0.2.53" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Organisations.Model" Version="0.2.53" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.53" />
-    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.53" />
+    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.2.97" />
+    <PackageReference Include="ESFA.DC.ReferenceData.LARS.Model" Version="0.2.97" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Organisations.Model" Version="0.2.97" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.97" />
+    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.97" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
