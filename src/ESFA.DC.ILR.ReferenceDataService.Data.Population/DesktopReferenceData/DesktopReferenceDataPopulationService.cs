@@ -72,7 +72,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
             return new DesktopReferenceDataRoot
             {
-                DateGenerated = System.DateTime.UtcNow,
                 MetaDatas = metaDatas.Result,
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
                 Employers = employers.Result,

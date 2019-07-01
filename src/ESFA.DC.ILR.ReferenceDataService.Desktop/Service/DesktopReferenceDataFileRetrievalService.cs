@@ -1,9 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
+using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
+using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
+using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
+using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Providers.Constants;
 using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
@@ -19,19 +31,40 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 
         public DesktopReferenceDataRoot Retrieve()
         {
-            DesktopReferenceDataRoot desktopReferenceData;
+            var referenceData = new DesktopReferenceDataRoot();
+            var zipFIlePath = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault();
 
-            var resourcePath = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault();
-
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath))
+            using (var zipFileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(zipFIlePath))
             {
-                using (var gzipStream = new GZipStream(stream, CompressionMode.Decompress))
+                using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {
-                    desktopReferenceData = _jsonSerializationService.Deserialize<DesktopReferenceDataRoot>(gzipStream);
+                    referenceData.MetaDatas = RetrieveModel<MetaData>(zip, DesktopReferenceDataConstants.MetaDataFile);
+                    referenceData.AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>();
+                    referenceData.Employers = RetrieveModel<List<Employer>>(zip, DesktopReferenceDataConstants.EmployersFile);
+                    referenceData.EPAOrganisations = RetrieveModel<List<EPAOrganisation>>(zip, DesktopReferenceDataConstants.EPAOrganisationsFile);
+                    referenceData.FCSContractAllocations = new List<FcsContractAllocation>();
+                    referenceData.LARSFrameworks = RetrieveModel<List<LARSFramework>>(zip, DesktopReferenceDataConstants.LARSFrameworksFile);
+                    referenceData.LARSLearningDeliveries = RetrieveModel<List<LARSLearningDelivery>>(zip, DesktopReferenceDataConstants.LARSLearningDeliveriesFile);
+                    referenceData.LARSStandards = RetrieveModel<List<LARSStandard>>(zip, DesktopReferenceDataConstants.LARSStandardsFile);
+                    referenceData.Organisations = RetrieveModel<List<Organisation>>(zip, DesktopReferenceDataConstants.OrganisationsFile);
+                    referenceData.Postcodes = RetrieveModel<List<Postcode>>(zip, DesktopReferenceDataConstants.PostcodesFile);
+                    referenceData.ULNs = new List<long>();
                 }
             }
 
-            return desktopReferenceData;
+            return referenceData;
+        }
+
+        public T RetrieveModel<T>(ZipArchive zipArchive, string fileName)
+        {
+            T model = (T)Activator.CreateInstance(typeof(T));
+
+            using (var stream = zipArchive.GetEntry(fileName).Open())
+            {
+                model = _jsonSerializationService.Deserialize<T>(stream);
+            }
+
+            return model;
         }
     }
 }

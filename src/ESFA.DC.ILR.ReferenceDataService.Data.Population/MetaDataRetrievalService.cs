@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
@@ -26,25 +27,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IOrganisationsContext _organisationsContext;
         private readonly IPostcodesContext _postcodesContext;
         private readonly IIlrReferenceDataRepositoryService _ilReferenceDataRepositoryService;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         public MetaDataRetrievalService(
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,
             IPostcodesContext postcodesContext,
-            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService)
+            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService,
+            IDateTimeProvider dateTimeProvider)
         {
             _employersContext = employersContext;
             _larsContext = larsContext;
             _organisationsContext = organisationsContext;
             _postcodesContext = postcodesContext;
             _ilReferenceDataRepositoryService = ilReferenceDataRepositoryService;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
         {
             var metaData = new MetaData
             {
+                DateGenerated = _dateTimeProvider.GetNowUtc(),
                 ReferenceDataVersions = new ReferenceDataVersion
                 {
                     Employers =

@@ -6,7 +6,7 @@ using Autofac;
 using Autofac.Features.Indexed;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Exception;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Context;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
