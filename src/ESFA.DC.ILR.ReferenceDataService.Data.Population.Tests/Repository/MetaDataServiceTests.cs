@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ReferenceData.Employers.Model;
@@ -30,12 +31,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var employersVersion = "2";
             var orgVersion = "Version3";
             var postcodesVersion = "Version4";
+            var expectedDateTime = DateTime.UtcNow;
 
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
             var orgMock = new Mock<IOrganisationsContext>();
             var postcodesMock = new Mock<IPostcodesContext>();
             var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -118,8 +123,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 larsMock.Object,
                 orgMock.Object,
                 postcodesMock.Object,
-                ilrReferenceDataRepositoryServiceMock.Object).RetrieveAsync(CancellationToken.None);
+                ilrReferenceDataRepositoryServiceMock.Object,
+                dateTimeProviderMock.Object).RetrieveAsync(CancellationToken.None);
 
+            serviceResult.DateGenerated.Should().BeCloseTo(expectedDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
@@ -136,6 +143,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var orgMock = new Mock<IOrganisationsContext>();
             var postcodesMock = new Mock<IPostcodesContext>();
             var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -201,7 +211,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                          larsMock.Object,
                          orgMock.Object,
                          postcodesMock.Object,
-                         ilrReferenceDataRepositoryServiceMock.Object).RetrieveAsync(CancellationToken.None);
+                         ilrReferenceDataRepositoryServiceMock.Object,
+                         dateTimeProviderMock.Object).RetrieveAsync(CancellationToken.None);
             };
 
             serviceResult.Should().Throw<ArgumentOutOfRangeException>().WithMessage("Specified argument was out of the range of valid values." +
@@ -213,9 +224,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             ILARSContext larsContext = null,
             IOrganisationsContext organisationsContext = null,
             IPostcodesContext postcodesContext = null,
-            IIlrReferenceDataRepositoryService ilrReferenceDataRepositoryService = null)
+            IIlrReferenceDataRepositoryService ilrReferenceDataRepositoryService = null,
+            IDateTimeProvider dateTimeProvider = null)
         {
-            return new MetaDataRetrievalService(employers, larsContext, organisationsContext, postcodesContext, ilrReferenceDataRepositoryService);
+            return new MetaDataRetrievalService(
+                employers,
+                larsContext,
+                organisationsContext,
+                postcodesContext,
+                ilrReferenceDataRepositoryService,
+                dateTimeProvider);
         }
     }
 }
