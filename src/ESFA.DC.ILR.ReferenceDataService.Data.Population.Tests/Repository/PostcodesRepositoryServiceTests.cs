@@ -188,7 +188,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var mcaglaSofPostCodes = new List<McaglaSof> //<McaglaSOFpostCode>
+            var mcaglaSofPostCodes = new List<McaglaSof>
             {
                 new McaglaSof
                 {
@@ -236,8 +236,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(mcaglaSOFTaskResult.Task);
 
             var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
-
-            var x = 3;
 
             IReadOnlyCollection<Postcode> expectedResult = new List<Postcode>
             {
