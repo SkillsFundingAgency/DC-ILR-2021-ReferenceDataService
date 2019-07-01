@@ -17,5 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
         public List<SfaAreaCost> SfaAreaCosts { get; set; }
 
         public List<SfaDisadvantage> SfaDisadvantages { get; set; }
+
+        public List<McaglaSOF> McaglaSOFs { get; set; }
     }
 }

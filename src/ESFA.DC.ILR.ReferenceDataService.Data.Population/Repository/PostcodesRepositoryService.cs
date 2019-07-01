@@ -35,6 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             var dasPostcodeDisadvantages = await RetrieveDasPostcodeDisadvantages(jsonParams, cancellationToken);
             var careerLearningPilots = await RetrieveCareerLearningPilots(jsonParams, cancellationToken);
             var onsData = await RetrieveOnsData(jsonParams, cancellationToken);
+            var mcaglaSOF = await RetrieveMcaglaSOFData(jsonParams, cancellationToken);
 
             return masterPostcodes
                 .Select(postcode => new Postcode()
@@ -45,7 +46,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
                     EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
                     CareerLearningPilots = careerLearningPilots.TryGetValue(postcode, out var pilot) ? careerLearningPilots[postcode] : null,
-                    ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null
+                    ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null,
+                    McaglaSOFs = mcaglaSOF.TryGetValue(postcode, out var sOFs) ? mcaglaSOF[postcode] : null
                 }).ToList();
         }
 
@@ -140,6 +142,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToDictionary(k => k.Key, p => p.Select(ONSDataToEntity).ToList());
         }
 
+        public async Task<IDictionary<string, List<McaglaSOF>>> RetrieveMcaglaSOFData(string jsonParams, CancellationToken cancellationToken)
+        {
+            var sqlMcaglaSOFData = $@" SELECT P.[Postcode], J.[McaglaShortCode], J.[SofCode], 
+                                                            J.[EffectiveFrom], J.[EffectiveTo]
+                                                            FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
+                                                            INNER JOIN [dbo].[MCAGLA_SOF] J ON J.[Postcode] = P.[Postcode]";
+
+            var mcaglaSof = await RetrieveAsync<McaglaSof>(jsonParams, sqlMcaglaSOFData, cancellationToken);
+
+            return mcaglaSof
+                .GroupBy(p => p.Postcode)
+                .ToDictionary(k => k.Key, p => p.Select(McaglaSofToEntity).ToList());
+        }
+
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string jsonParams, string sql, CancellationToken cancellationToken)
         {
             using (var sqlConnection = new SqlConnection(_referenceDataOptions.PostcodesConnectionString))
@@ -210,6 +226,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 LocalAuthority = onsPostcode.LocalAuthority,
                 Nuts = onsPostcode.Nuts,
                 Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination)
+            };
+        }
+
+        public McaglaSOF McaglaSofToEntity(McaglaSof mcaglaSof)
+        {
+            return new McaglaSOF
+            {
+                SofCode = mcaglaSof.SofCode,
+                EffectiveFrom = mcaglaSof.EffectiveFrom,
+                EffectiveTo = mcaglaSof.EffectiveTo
             };
         }
 
