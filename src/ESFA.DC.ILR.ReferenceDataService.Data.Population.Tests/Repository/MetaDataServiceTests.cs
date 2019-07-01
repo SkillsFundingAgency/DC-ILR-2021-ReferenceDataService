@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var employersVersion = "2";
             var orgVersion = "Version3";
             var postcodesVersion = "Version4";
-            var expectedDateTime = DateTime.UtcNow;
+            var utcDateTime = DateTime.UtcNow;
 
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
             var dateTimeProviderMock = new Mock<IDateTimeProvider>();
 
-            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
+            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(utcDateTime);
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -126,7 +126,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 ilrReferenceDataRepositoryServiceMock.Object,
                 dateTimeProviderMock.Object).RetrieveAsync(CancellationToken.None);
 
-            serviceResult.DateGenerated.Should().BeCloseTo(expectedDateTime);
+            serviceResult.DateGenerated.Should().Be(utcDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
