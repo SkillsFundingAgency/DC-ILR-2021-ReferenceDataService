@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Compression;
+using System.IO;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
 using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
+using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
@@ -26,23 +28,45 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var expectedReferenceData = TestReferenceData();
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
 
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<DesktopReferenceDataRoot>(It.IsAny<GZipStream>())).Returns(expectedReferenceData);
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<MetaData>(It.IsAny<Stream>())).Returns(TestNetaData());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Employer>>(It.IsAny<Stream>())).Returns(TestEmployers());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<EPAOrganisation>>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSLearningDelivery>>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSFramework>>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSStandard>>(It.IsAny<Stream>())).Returns(TestLarsStandards());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Organisation>>(It.IsAny<Stream>())).Returns(TestOrganisations());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Postcode>>(It.IsAny<Stream>())).Returns(TestPostcodes());
 
             NewService(jsonSerializationServiceMock.Object).Retrieve().Should().BeEquivalentTo(expectedReferenceData);
         }
-
 
         private DesktopReferenceDataRoot TestReferenceData()
         {
             return new DesktopReferenceDataRoot
             {
-                MetaDatas = new MetaData
+                MetaDatas = TestNetaData(),
+                Employers = TestEmployers(),
+                EPAOrganisations = TestEpaOrgs(),
+                LARSLearningDeliveries = TestLarsLearningDeliveries(),
+                LARSFrameworks = TestLarsFrameworks(),
+                LARSStandards = TestLarsStandards(),
+                Organisations = TestOrganisations(),
+                Postcodes = TestPostcodes(),
+                AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
+                FCSContractAllocations = new List<FcsContractAllocation>(),
+                ULNs = new List<long>(),
+            };
+        }
+
+        private MetaData TestNetaData()
+        {
+            return new MetaData
+            {
+                ReferenceDataVersions = new ReferenceDataVersion()
                 {
-                    ReferenceDataVersions = new ReferenceDataVersion()
-                    {
-                        LarsVersion = new LarsVersion("LARS"),
-                    },
-                    Lookups = new List<Lookup>
+                    LarsVersion = new LarsVersion("LARS"),
+                },
+                Lookups = new List<Lookup>
                     {
                         new Lookup
                         {
@@ -63,7 +87,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                             Name = "Name2",
                         }
                     },
-                    ValidationErrors = new List<ValidationError>
+                ValidationErrors = new List<ValidationError>
                     {
                         new ValidationError
                         {
@@ -72,204 +96,231 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                             Message = "Message",
                         }
                     },
-                },
-                Employers = new List<Employer>
+            };
+        }
+
+        private List<Employer> TestEmployers()
+        {
+            return new List<Employer>
+            {
+                new Employer
                 {
-                    new Employer
+                    ERN = 1,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        ERN = 1,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
+                        new LargeEmployerEffectiveDates
                         {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
-                        },
-                    },
-                    new Employer
-                    {
-                        ERN = 10,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
-                        },
-                    },
-                    new Employer
-                    {
-                        ERN = 2,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
-                        },
-                    },
-                    new Employer
-                    {
-                        ERN = 3,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
+                            EffectiveFrom = new DateTime(2018, 8, 1),
                         },
                     },
                 },
-                EPAOrganisations = new List<EPAOrganisation>
+                new Employer
                 {
-                    new EPAOrganisation
+                    ERN = 10,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        ID = "1",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "2",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "3",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "33",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "334",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
+                        new LargeEmployerEffectiveDates
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
                     },
                 },
-                LARSLearningDeliveries = new List<LARSLearningDelivery>
+                new Employer
                 {
-                    new LARSLearningDelivery
+                    ERN = 2,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        LearnAimRef = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSLearningDelivery
-                    {
-                        LearnAimRef = "2",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSLearningDelivery
-                    {
-                        LearnAimRef = "3",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
+                        new LargeEmployerEffectiveDates
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
                     },
                 },
-                LARSFrameworks = new List<LARSFramework>
+                new Employer
                 {
-                    new LARSFramework
+                    ERN = 3,
+                    LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                     {
-                        FworkCode = 1,
-                        ProgType = 2,
-                        PwayCode = 3,
-                    },
-                    new LARSFramework
-                    {
-                        FworkCode = 2,
-                        ProgType = 2,
-                        PwayCode = 3,
-                    },
-                    new LARSFramework
-                    {
-                        FworkCode = 2,
-                        ProgType = 2,
-                        PwayCode = 2,
+                        new LargeEmployerEffectiveDates
+                        {
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                        },
                     },
                 },
-                LARSStandards = new List<LARSStandard>
+            };
+        }
+
+        private List<EPAOrganisation> TestEpaOrgs()
+        {
+            return new List<EPAOrganisation>
+            {
+                new EPAOrganisation
                 {
-                    new LARSStandard
-                    {
-                        StandardCode = 1,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 2,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 3,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 33,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 34,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
+                    ID = "1",
+                    Standard = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
                 },
-                Organisations = new List<Organisation>
+                new EPAOrganisation
                 {
-                    new Organisation
-                    {
-                        UKPRN = 1,
-                        PartnerUKPRN = true,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 2,
-                        PartnerUKPRN = true,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 3,
-                        PartnerUKPRN = false,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 30,
-                        PartnerUKPRN = false,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 300,
-                        PartnerUKPRN = false,
-                    },
+                    ID = "2",
+                    Standard = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
                 },
-                Postcodes = new List<Postcode>
+                new EPAOrganisation
                 {
-                    new Postcode
-                    {
-                        PostCode = "Postcode1",
-                    },
-                    new Postcode
-                    {
-                        PostCode = "Postcode2",
-                    },
-                    new Postcode
-                    {
-                        PostCode = "Postcode3",
-                    },
-                    new Postcode
-                    {
-                        PostCode = "Postcode10",
-                    }
+                    ID = "3",
+                    Standard = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new EPAOrganisation
+                {
+                    ID = "33",
+                    Standard = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new EPAOrganisation
+                {
+                    ID = "334",
+                    Standard = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+            };
+        }
+
+        private List<LARSLearningDelivery> TestLarsLearningDeliveries()
+        {
+            return new List<LARSLearningDelivery>
+            {
+                new LARSLearningDelivery
+                {
+                    LearnAimRef = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSLearningDelivery
+                {
+                    LearnAimRef = "2",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSLearningDelivery
+                {
+                    LearnAimRef = "3",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+            };
+        }
+
+        private List<LARSStandard> TestLarsStandards()
+        {
+            return new List<LARSStandard>
+            {
+                new LARSStandard
+                {
+                    StandardCode = 1,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSStandard
+                {
+                    StandardCode = 2,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSStandard
+                {
+                    StandardCode = 3,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSStandard
+                {
+                    StandardCode = 33,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+                new LARSStandard
+                {
+                    StandardCode = 34,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                },
+            };
+        }
+
+
+        private List<LARSFramework> TestLarsFrameworks()
+        {
+            return new List<LARSFramework>
+            {
+                new LARSFramework
+                {
+                    FworkCode = 1,
+                    ProgType = 2,
+                    PwayCode = 3,
+                },
+                new LARSFramework
+                {
+                    FworkCode = 2,
+                    ProgType = 2,
+                    PwayCode = 3,
+                },
+                new LARSFramework
+                {
+                    FworkCode = 2,
+                    ProgType = 2,
+                    PwayCode = 2,
                 }
             };
         }
 
+        private List<Organisation> TestOrganisations()
+        {
+            return new List<Organisation>
+            {
+                new Organisation
+                {
+                    UKPRN = 1,
+                    PartnerUKPRN = true,
+                },
+                new Organisation
+                {
+                    UKPRN = 2,
+                    PartnerUKPRN = true,
+                },
+                new Organisation
+                {
+                    UKPRN = 3,
+                    PartnerUKPRN = false,
+                },
+                new Organisation
+                {
+                    UKPRN = 30,
+                    PartnerUKPRN = false,
+                },
+                new Organisation
+                {
+                    UKPRN = 300,
+                    PartnerUKPRN = false,
+                },
+            };
+        }
+
+        private List<Postcode> TestPostcodes()
+        {
+            return new List<Postcode>
+            {
+                new Postcode
+                {
+                    PostCode = "Postcode1",
+                },
+                new Postcode
+                {
+                    PostCode = "Postcode2",
+                },
+                new Postcode
+                {
+                    PostCode = "Postcode3",
+                },
+                new Postcode
+                {
+                    PostCode = "Postcode10",
+                }
+            };
+        }
 
         private DesktopReferenceDataFileRetrievalService NewService(IJsonSerializationService jsonSerializationService = null)
         {
