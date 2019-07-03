@@ -64,7 +64,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 orgRSMock.Object,
                 postcodesRSMock.Object).PopulateAsync(CancellationToken.None);
 
-            root.DateGenerated.Should().BeCloseTo(DateTime.UtcNow);
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
             root.AppsEarningsHistories.Should().HaveCount(0);
             root.Employers.Should().HaveCount(3);

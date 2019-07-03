@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
@@ -25,6 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.RegisterModule<RepositoryModule>();
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<ReferenceDataRepositoryServicesModule>();
+            containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
             containerBuilder.RegisterType<MessageHandler>().As<IMessageHandler<JobContextMessage>>();
         }
     }

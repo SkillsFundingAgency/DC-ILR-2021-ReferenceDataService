@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<MessageProvider>().As<IMessageProvider>();
             containerBuilder.RegisterType<ReferenceDataPopulationService>().As<IReferenceDataPopulationService>();
             containerBuilder.RegisterType<MessageMapperService>().As<IMessageMapperService>();
-            containerBuilder.RegisterType<FileProvider>().As<IFileProvider>();
+            containerBuilder.RegisterType<FilePersister>().As<IFilePersister>();
         }
     }
 }
