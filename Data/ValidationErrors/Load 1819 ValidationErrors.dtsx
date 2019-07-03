@@ -1,0 +1,1295 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/29/2018 4:42:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DevUser"
+  DTS:CreatorName="DevUser"
+  DTS:DTSID="{95172565-68B5-48BF-93A9-84083394000A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.92"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Load 1819 ValidationErrors"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{C55D93C3-6398-4FFE-B43C-F538CE6C56A7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[App Log Connection String]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{74F0C0E1-B294-4D4F-B5D5-E413812FD49C}"
+      DTS:ObjectName="App Log Connection String">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::AppLogConnectionString_ConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source Connection Manager]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E97E4542-C8A1-4A90-AA18-A38FBDA79679}"
+      DTS:ObjectName="Source Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::SourceConnectionManager_ConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Target Connection Manager]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{86E1CE56-F3B2-4A5A-ACFF-4C6DFB8BCD0A}"
+      DTS:ObjectName="Target Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::TargetConnectionManager_ConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{247012F3-F7A6-42A8-87E5-7F182B38238E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RefDataName">
+      <DTS:VariableValue
+        DTS:DataType="8">Validation Errors 1819</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{08FFDC8D-7159-41F0-82B4-E00E6ADFE56F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceSchema">
+      <DTS:VariableValue
+        DTS:DataType="8">dbo</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F82E09B7-B4B6-4C74-8A03-54EF245E68A7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StagingSchema">
+      <DTS:VariableValue
+        DTS:DataType="8">Staging</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SEQ - Process - Log Completed"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{5dd4bcf6-402a-43f0-ad95-9ced0b37055f}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ - Process - Log Completed">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{b64c5f78-966a-47d5-8487-f257ff018a24}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="Action">
+          <DTS:VariableValue
+            DTS:DataType="8">Completed</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{60f0d391-6c24-4f08-b4be-e12cf9eae41f}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="Name">
+          <DTS:VariableValue
+            DTS:DataType="8">Log Start</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{d2ccc606-b10d-4d7d-b2bc-559a373c0f97}"
+          DTS:EvaluateAsExpression="True"
+          DTS:Expression="&quot;INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])&#xA;SELECT &#xA; '&quot; + @[User::RefDataName] + &quot; Ref Data Refresh &quot; + @[User::Action] + &quot;' AS [Message]&#xA;,'&quot; + @[User::RefDataName] + &quot; Ref Data Refresh &quot; + @[User::Action] + &quot;' AS [MessageTemplate]&#xA;,'Information' AS [Level]&#xA;,GETUTCDATE() AS [TimeStampUTC]&#xA;,NULL AS [Exception]&#xA;,HOST_NAME() AS [MachineName]&#xA;,'SSIS Loader' AS [ProcessName]&#xA;,NULL AS [ThreadId]&#xA;,'&quot; + @[User::RefDataName]+ &quot;' AS [CallerName]&#xA;,NULL AS [SourceFile]&#xA;,NULL AS [LineNumber]&#xA;,NULL AS [JobId]&#xA;,NULL AS [TaskKey]&quot;&#xA;"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="SqlCommand">
+          <DTS:VariableValue
+            DTS:DataType="8">INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])
+SELECT 
+ 'Validation Errors 1819 Ref Data Refresh Completed' AS [Message]
+,'Validation Errors 1819 Ref Data Refresh Completed' AS [MessageTemplate]
+,'Information' AS [Level]
+,GETUTCDATE() AS [TimeStampUTC]
+,NULL AS [Exception]
+,HOST_NAME() AS [MachineName]
+,'SSIS Loader' AS [ProcessName]
+,NULL AS [ThreadId]
+,'Validation Errors 1819' AS [CallerName]
+,NULL AS [SourceFile]
+,NULL AS [LineNumber]
+,NULL AS [JobId]
+,NULL AS [TaskKey]</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:PropertyExpression
+        DTS:Name="Name">"SEQ - Process - Log " + @[User::Action]</DTS:PropertyExpression>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Process - Log Completed\SQL - Log Completed"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{eb009b12-052d-4d1e-afc8-aa58ee674060}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Log Completed"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Name">"SQL - Log " + @[User::Action]</DTS:PropertyExpression>
+          <DTS:PropertyExpression
+            DTS:Name="SqlStatementSource">@[User::SqlCommand]</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{74F0C0E1-B294-4D4F-B5D5-E413812FD49C}"
+              SQLTask:SqlStatementSource="INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])&#xA;SELECT &#xA; 'Validation Errors 1819 Ref Data Refresh Completed' AS [Message]&#xA;,'Validation Errors 1819 Ref Data Refresh Completed' AS [MessageTemplate]&#xA;,'Information' AS [Level]&#xA;,GETUTCDATE() AS [TimeStampUTC]&#xA;,NULL AS [Exception]&#xA;,HOST_NAME() AS [MachineName]&#xA;,'SSIS Loader' AS [ProcessName]&#xA;,NULL AS [ThreadId]&#xA;,'Validation Errors 1819' AS [CallerName]&#xA;,NULL AS [SourceFile]&#xA;,NULL AS [LineNumber]&#xA;,NULL AS [JobId]&#xA;,NULL AS [TaskKey]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ - Process - Log Started"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{989112a4-ceee-4599-a094-4b241088b227}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ - Process - Log Started">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{dca13dc1-99be-4994-a98d-fde6ad8fcf54}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="Action">
+          <DTS:VariableValue
+            DTS:DataType="8">Started</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{5ee588b4-600f-4f54-aab4-727b0636cc41}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="Name">
+          <DTS:VariableValue
+            DTS:DataType="8">Log Start</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{eaaa1a91-1ba8-4f57-a1e0-0ed3500cd851}"
+          DTS:EvaluateAsExpression="True"
+          DTS:Expression="&quot;INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])&#xA;SELECT &#xA; '&quot; + @[User::RefDataName] + &quot; Ref Data Refresh &quot; + @[User::Action] + &quot;' AS [Message]&#xA;,'&quot; + @[User::RefDataName] + &quot; Ref Data Refresh &quot; + @[User::Action] + &quot;' AS [MessageTemplate]&#xA;,'Information' AS [Level]&#xA;,GETUTCDATE() AS [TimeStampUTC]&#xA;,NULL AS [Exception]&#xA;,HOST_NAME() AS [MachineName]&#xA;,'SSIS Loader' AS [ProcessName]&#xA;,NULL AS [ThreadId]&#xA;,'&quot; + @[User::RefDataName]+ &quot;' AS [CallerName]&#xA;,NULL AS [SourceFile]&#xA;,NULL AS [LineNumber]&#xA;,NULL AS [JobId]&#xA;,NULL AS [TaskKey]&quot;&#xA;"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="SqlCommand">
+          <DTS:VariableValue
+            DTS:DataType="8">INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])
+SELECT 
+ 'Validation Errors 1819 Ref Data Refresh Started' AS [Message]
+,'Validation Errors 1819 Ref Data Refresh Started' AS [MessageTemplate]
+,'Information' AS [Level]
+,GETUTCDATE() AS [TimeStampUTC]
+,NULL AS [Exception]
+,HOST_NAME() AS [MachineName]
+,'SSIS Loader' AS [ProcessName]
+,NULL AS [ThreadId]
+,'Validation Errors 1819' AS [CallerName]
+,NULL AS [SourceFile]
+,NULL AS [LineNumber]
+,NULL AS [JobId]
+,NULL AS [TaskKey]</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:PropertyExpression
+        DTS:Name="Name">"SEQ - Process - Log " + @[User::Action]</DTS:PropertyExpression>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Process - Log Started\SQL - Log Started"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{afa3abf8-3144-467e-a497-c42355218bc3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Log Started"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Name">"SQL - Log " + @[User::Action]</DTS:PropertyExpression>
+          <DTS:PropertyExpression
+            DTS:Name="SqlStatementSource">@[User::SqlCommand]</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{74F0C0E1-B294-4D4F-B5D5-E413812FD49C}"
+              SQLTask:SqlStatementSource="INSERT INTO [dbo].[Logs]([Message],[MessageTemplate],[Level],[TimeStampUTC],[Exception],[MachineName],[ProcessName],[ThreadId],[CallerName],[SourceFile],[LineNumber],[JobId],[TaskKey])&#xA;SELECT &#xA; 'Validation Errors 1819 Ref Data Refresh Started' AS [Message]&#xA;,'Validation Errors 1819 Ref Data Refresh Started' AS [MessageTemplate]&#xA;,'Information' AS [Level]&#xA;,GETUTCDATE() AS [TimeStampUTC]&#xA;,NULL AS [Exception]&#xA;,HOST_NAME() AS [MachineName]&#xA;,'SSIS Loader' AS [ProcessName]&#xA;,NULL AS [ThreadId]&#xA;,'Validation Errors 1819' AS [CallerName]&#xA;,NULL AS [SourceFile]&#xA;,NULL AS [LineNumber]&#xA;,NULL AS [JobId]&#xA;,NULL AS [TaskKey]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ - Process Data"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{95ad2ad1-f334-450a-891a-6a5922de82bf}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ - Process Data">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Process Data\SEQ - Process - Process Data"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{c01415e4-b03c-448f-ac17-e51f8b4c16d7}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SEQ - Process - Process Data">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:DTSID="{b0b441f8-be18-4bad-82d8-8979db2fe269}"
+              DTS:IncludeInDebugDump="2345"
+              DTS:Namespace="User"
+              DTS:ObjectName="Name">
+              <DTS:VariableValue
+                DTS:DataType="8">Process Data</DTS:VariableValue>
+            </DTS:Variable>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:DTSID="{1a9dd023-665a-4274-b1d0-592e62be554b}"
+              DTS:EvaluateAsExpression="True"
+              DTS:Expression="&quot;EXEC [&quot; + @[User::StagingSchema] +  &quot;].[usp_Process];&quot;"
+              DTS:IncludeInDebugDump="2345"
+              DTS:Namespace="User"
+              DTS:ObjectName="SqlCommand">
+              <DTS:VariableValue
+                DTS:DataType="8">EXEC [Staging].[usp_Process];</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:PropertyExpression
+            DTS:Name="Name">LTRIM(RTRIM( "SEQ - Process - " + @[User::Name]))</DTS:PropertyExpression>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\SEQ - Process Data\SEQ - Process - Process Data\SQL - Run - Process Data"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{9f0f21f0-5dd5-4b8c-b929-6d352e8142cb}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Run - Process Data"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:PropertyExpression
+                DTS:Name="Name">LTRIM(RTRIM("SQL - Run - " + @[User::Name]))</DTS:PropertyExpression>
+              <DTS:PropertyExpression
+                DTS:Name="SqlStatementSource">@[User::SqlCommand]</DTS:PropertyExpression>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{86E1CE56-F3B2-4A5A-ACFF-4C6DFB8BCD0A}"
+                  SQLTask:SqlStatementSource="EXEC [Staging].[usp_Process];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ - Stage - Rules"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{5f9b7426-549d-4cf1-a168-a22e590e1b8e}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ - Stage - Rules">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{61a06365-3378-46af-b7b9-06418c6319db}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="Name">
+          <DTS:VariableValue
+            DTS:DataType="8">Rules</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{c59a5387-4030-4510-81f6-2d24bb6b3b30}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="SourceObjectSelectStatement">
+          <DTS:VariableValue
+            DTS:DataType="8">SELECT [RuleID] as [Rulename] ,[Severity] as [Severity] ,[ErrorMessage] as [Message] FROM [dbo].[ErrorMessage]</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{2ab0f9bf-d194-43ce-9d01-b9608cd46d7a}"
+          DTS:EvaluateAsExpression="True"
+          DTS:Expression="&quot;[&quot; + @[User::StagingSchema] + &quot;].[&quot; + @[User::Name] +&quot;]&quot;"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="StagingObjectName">
+          <DTS:VariableValue
+            DTS:DataType="8">[Staging].[Rules]</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:PropertyExpression
+        DTS:Name="Name">LTRIM(RTRIM( "SEQ - Stage - " + @[User::Name]))</DTS:PropertyExpression>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Stage - Rules\DFT - Rules"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{3d2e3992-82f2-46d0-8e14-9df47a2523f7}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT - Rules"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Name">LTRIM(RTRIM("DFT - " + @[User::Name]))</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <pipeline
+              autoAdjustBufferSize="true"
+              defaultBufferMaxRows="2500"
+              defaultBufferSize="50485760"
+              version="1">
+              <components>
+                <component
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input].Columns[Severity]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="Severity"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[Severity]" />
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input].Columns[RuleID]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="250"
+                          cachedName="RuleID"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[RuleID]" />
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input].Columns[Message]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2000"
+                          cachedName="Message"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output].Columns[Message]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Rulename_WSTR]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Rulename_WSTR]"
+                          name="Rulename_WSTR"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[RuleID]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Severity_WSTR]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="1"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Severity_WSTR]"
+                          name="Severity_WSTR"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[Severity]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Message_WSTR]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="2000"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Message_WSTR]"
+                          name="Message_WSTR"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output].Columns[Message]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Derived Column"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Inputs[Derived Column Input].Columns[ErrorMessage_Str]"
+                          cachedCodepage="1252"
+                          cachedDataType="text"
+                          cachedName="ErrorMessage"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[ErrorMessage]"
+                          name="ErrorMessage_Str" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output].Columns[Message]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="2000"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output].Columns[Message]"
+                          name="Message"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,2000,1252)#{Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[ErrorMessage]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,2000,1252)ErrorMessage_Str</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [RuleID]
+      ,[Severity]
+      ,[ErrorMessage]
+FROM [ErrorMessage] E
+WHERE E.[CollectionType] = 'ILR1819' 
+  AND E.[Version] = (SELECT MAX(EM.[Version])  FROM [ErrorMessage] EM  WHERE EM.[CollectionType] = 'ILR1819' )</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Source Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Source Connection Manager]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[RuleID]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RuleID]"
+                          length="250"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[RuleID]"
+                          name="RuleID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[Severity]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Severity]"
+                          length="1"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[Severity]"
+                          name="Severity"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[ErrorMessage]"
+                          codePage="1252"
+                          dataType="text"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ErrorMessage]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].Columns[ErrorMessage]"
+                          name="ErrorMessage"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RuleID]"
+                          codePage="1252"
+                          dataType="str"
+                          length="250"
+                          name="RuleID" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Severity]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="Severity" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ErrorMessage]"
+                          codePage="1252"
+                          dataType="text"
+                          name="ErrorMessage" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RuleID]"
+                          codePage="1252"
+                          dataType="str"
+                          length="250"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RuleID]"
+                          name="RuleID" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Severity]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Severity]"
+                          name="Severity" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorMessage]"
+                          codePage="1252"
+                          dataType="text"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorMessage]"
+                          name="ErrorMessage" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Target Data"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Staging].[Rules]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable">User::StagingObjectName</property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">true</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">true</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Target Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Target Connection Manager]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Severity_WSTR]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="Severity_WSTR"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Severity]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Severity_WSTR]" />
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Rulename_WSTR]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="Rulename_WSTR"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Rulename]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Rulename_WSTR]" />
+                        <inputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Message_WSTR]"
+                          cachedDataType="wstr"
+                          cachedLength="2000"
+                          cachedName="Message_WSTR"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Message]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output].Columns[Message_WSTR]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Rulename]"
+                          dataType="wstr"
+                          length="50"
+                          name="Rulename" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Severity]"
+                          dataType="wstr"
+                          length="1"
+                          name="Severity" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Message]"
+                          dataType="wstr"
+                          length="2000"
+                          name="Message" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules.Paths[Data Conversion Output]"
+                  endId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]"
+                  name="Data Conversion Output"
+                  startId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules.Paths[Derived Column Output]"
+                  endId="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules.Paths[OLE DB Source Output]"
+                  endId="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column.Inputs[Derived Column Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{30e6f605-2d2c-4e33-9423-98834be96e0d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Delete from - Rules"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:DTSID="{dc1fe4e5-eca5-4c5c-8f9d-40d29a5ea9d3}"
+              DTS:EvaluateAsExpression="True"
+              DTS:Expression="&quot;DELETE FROM &quot; + @[User::StagingObjectName] + &quot;;&quot;"
+              DTS:IncludeInDebugDump="2345"
+              DTS:Namespace="User"
+              DTS:ObjectName="SqlCommand">
+              <DTS:VariableValue
+                DTS:DataType="8">DELETE FROM [Staging].[Rules];</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:PropertyExpression
+            DTS:Name="Name">LTRIM(RTRIM("SQL - Delete from - " + @[User::Name]))</DTS:PropertyExpression>
+          <DTS:PropertyExpression
+            DTS:Name="SqlStatementSource">@[User::SqlCommand]</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E1CE56-F3B2-4A5A-ACFF-4C6DFB8BCD0A}"
+              SQLTask:SqlStatementSource="DELETE FROM [Staging].[Rules];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ - Stage - Rules.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1fa8edea-66cf-4730-b1f3-60eb8a9bd395}"
+          DTS:From="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SEQ - Stage - Rules\DFT - Rules" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2646CFBD-CC89-4B0A-B1BB-7EBC5E93798A}"
+      DTS:From="Package\SEQ - Stage - Rules"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SEQ - Process Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{6D091886-F6AF-41D5-B311-3E9ACB5A0CF4}"
+      DTS:From="Package\SEQ - Process Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SEQ - Process - Log Completed" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E998312B-9C7B-42AD-A0EC-B7AB7F2C3AD0}"
+      DTS:From="Package\SEQ - Process - Log Started"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SEQ - Stage - Rules" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="240,42"
+          Id="Package\SEQ - Process - Log Completed\SQL - Log Completed"
+          TopLeft="20.5,12.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="283,69"
+          Size="283,112"
+          Id="Package\SEQ - Process - Log Completed"
+          TopLeft="786.88888888888,279.055555555554" />
+        <NodeLayout
+          Size="240,42"
+          Id="Package\SEQ - Process - Log Started\SQL - Log Started"
+          TopLeft="20.5,12.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="283,69"
+          Size="283,112"
+          Id="Package\SEQ - Process - Log Started"
+          TopLeft="64,105" />
+        <NodeLayout
+          Size="248,42"
+          Id="Package\SEQ - Process Data\SEQ - Process - Process Data\SQL - Run - Process Data"
+          TopLeft="5.25,3.75" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="269,60"
+          Size="269,103"
+          Id="Package\SEQ - Process Data\SEQ - Process - Process Data"
+          TopLeft="17,9.25" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="313,128"
+          Size="313,171"
+          Id="Package\SEQ - Process Data"
+          TopLeft="769,61" />
+        <NodeLayout
+          Size="134,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules"
+          TopLeft="80,83.5" />
+        <NodeLayout
+          Size="289,42"
+          Id="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package\SEQ - Stage - Rules.PrecedenceConstraints[Constraint]"
+          TopLeft="148.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36"
+              Start="0,0"
+              End="0,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="300,142"
+          Size="300,185"
+          Id="Package\SEQ - Stage - Rules"
+          TopLeft="411,89" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="711,181.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="58,-35"
+              Start="0,0"
+              End="50.5,-35">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="25,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,0"
+                    Point2="29,0"
+                    Point3="29,-4" />
+                  <mssgle:LineSegment
+                    End="29,-31" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29,-31"
+                    Point2="29,-35"
+                    Point3="33,-35" />
+                  <mssgle:LineSegment
+                    End="50.5,-35" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="926.94444444444,232">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.0555555555541"
+              Start="0,0"
+              End="0,39.5555555555541">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5555555555541" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="347,161">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64,20.5"
+              Start="0,0"
+              End="56.5,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28,0"
+                    Point2="32,0"
+                    Point3="32,4" />
+                  <mssgle:LineSegment
+                    End="32,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32,16.5"
+                    Point2="32,20.5"
+                    Point3="36,20.5" />
+                  <mssgle:LineSegment
+                    End="56.5,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Derived Column"
+          TopLeft="349.125,135.666666666667" />
+        <NodeLayout
+          Size="135,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Target Data"
+          TopLeft="358.625,297" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source"
+          TopLeft="351.125,55" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Data Conversion"
+          TopLeft="348.125,216.333333333333" />
+        <EdgeLayout
+          Id="Package\SEQ - Stage - Rules\DFT - Rules.Paths[OLE DB Source Output]"
+          TopLeft="426.125,97">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.6666666666667"
+              Start="0,0"
+              End="0,31.1666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.1666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ - Stage - Rules\DFT - Rules.Paths[Derived Column Output]"
+          TopLeft="426.125,177.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.6666666666667"
+              Start="0,0"
+              End="0,31.1666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.1666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ - Stage - Rules\DFT - Rules.Paths[Data Conversion Output]"
+          TopLeft="426.125,258.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.6666666666667"
+              Start="0,0"
+              End="0,31.1666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.1666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules\Target Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

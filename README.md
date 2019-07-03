@@ -18,3 +18,20 @@ If you want to learn more about creating good readme files then refer the follow
 - [ASP.NET Core](https://github.com/aspnet/Home)
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+
+# DC-ILR-1920-ReferenceDataService
+
+# Command used to Generate Repo Contents from another repo
+
+## CD to folder to create clone repo in
+
+```
+mkdir CloneRepo
+cd CloneRepo
+git clone --bare https://sfa-gov-uk@dev.azure.com/sfa-gov-uk/DCT/_git/DC-ILR-1819-ReferenceDataService
+cd DC-ILR-1819-ReferenceDataService.git
+git push --mirror https://sfa-gov-uk@dev.azure.com/sfa-gov-uk/DCT/_git/DC-ILR-1920-ReferenceDataService
+cd.. 
+rmdir /s DC-ILR-1819-ReferenceDataService.git
+```
