@@ -25,9 +25,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             var campusIdentifiers = await _organisations
                 .CampusIdentifiers
+                .Include(ci => ci.CampusIdentifierUkprn)
+                .ThenInclude(c => c.CampusIdentifierSpecResources)
                 .Where(c => ukprns.Contains(c.MasterUkprn))
-                .GroupBy(mu => mu.MasterUkprn)
-                .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken) ?? new Dictionary<long, List<string>>();
+                .Select(c => new OrganisationCampusIdentifier
+                {
+                    UKPRN = c.MasterUkprn,
+                    CampusIdentifier = c.CampusIdentifier1,
+                    EffectiveFrom = c.EffectiveFrom,
+                    EffectiveTo = c.EffectiveTo,
+                    SpecialistResources = c.CampusIdentifierUkprn.CampusIdentifierSpecResources.Select(sr =>
+                    new SpecialistResource
+                    {
+                        IsSpecialistResource = sr.SpecialistResources,
+                        EffectiveFrom = sr.EffectiveFrom,
+                        EffectiveTo = sr.EffectiveTo,
+                    }).ToList(),
+                })
+                .GroupBy(ci => ci.UKPRN)
+                .ToDictionaryAsync(
+                k => k.Key,
+                v => v.Select(c => c).ToList(),
+                cancellationToken);
 
             return await _organisations
                 .MasterOrganisations
@@ -61,11 +80,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                       }).ToListAsync(cancellationToken);
         }
 
-        public List<string> GetCampusIdentifiers(long ukprn, Dictionary<long, List<string>> campusIdentifiers)
+        public List<OrganisationCampusIdentifier> GetCampusIdentifiers(long ukprn, Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiers)
         {
             campusIdentifiers.TryGetValue(ukprn, out var campusIds);
 
-            return campusIds ?? new List<string>();
+            return campusIds ?? new List<OrganisationCampusIdentifier>();
         }
     }
 }
