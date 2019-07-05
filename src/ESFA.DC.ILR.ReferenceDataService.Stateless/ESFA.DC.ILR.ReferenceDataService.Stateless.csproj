@@ -418,7 +418,7 @@
       <Name>ESFA.DC.ILR.ReferenceDataService.Providers</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
-      <Project>{522d563b-9412-4748-b7ce-21cad291331e}</Project>
+      <Project>{522D563B-9412-4748-B7CE-21CAD291331E}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.csproj">

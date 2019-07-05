@@ -76,6 +76,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     MasterUkprn = 1,
                     CampusIdentifier1 = "CampId_01",
+                    CampusIdentifierUkprn = new CampusIdentifierUkprn
+                    {
+                        CampusIdentifierSpecResources = new List<CampusIdentifierSpecResource>
+                        {
+                            new CampusIdentifierSpecResource
+                            {
+                                SpecialistResources = true
+                            }
+                        }
+                    }
                 },
             };
 
@@ -94,7 +104,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             organisations.Where(o => o.UKPRN == 1).Select(o => o.UKPRN).Should().BeEquivalentTo(1);
             organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType1");
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().Should().BeEquivalentTo("CampId_01");
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().CampusIdentifier.Should().BeEquivalentTo("CampId_01");
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().Be(true);
             organisations.Where(o => o.UKPRN == 1).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(true);
             organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.OrganisationFundings).Should().HaveCount(2);
 
@@ -108,15 +119,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void GetCampusIdentifiers()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
+            var campusListOne = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId1"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId2"
+                },
+            };
 
-            var dictionary = new Dictionary<long, List<string>>
+            var campusListTwo = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId3"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId4"
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationCampusIdentifier>>
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(1, dictionary).Should().BeEquivalentTo(campusListOne);
@@ -125,15 +155,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void GetCampusIdentifiers_MisMatch()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
+            var campusListOne = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId1"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId2"
+                },
+            };
 
-            var dictionary = new Dictionary<long, List<string>>
+            var campusListTwo = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId3"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId4"
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationCampusIdentifier>>
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(4, dictionary).Should().BeNullOrEmpty();
@@ -142,18 +191,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void GetCampusIdentifiers_Null()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
-
-            var dictionary = new Dictionary<long, List<string>>
-            {
-                { 1, campusListOne },
-                { 2, campusListTwo },
-                { 3, campusListThree },
-            };
-
-            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNullOrEmpty();
+            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<OrganisationCampusIdentifier>>()).Should().BeNullOrEmpty();
         }
 
         private OrganisationsRepositoryService NewService(IOrganisationsContext organisations = null)

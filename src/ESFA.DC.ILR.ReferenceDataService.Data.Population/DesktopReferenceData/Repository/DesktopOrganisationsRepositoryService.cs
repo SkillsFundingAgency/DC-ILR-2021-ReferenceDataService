@@ -22,9 +22,36 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         public async Task<IReadOnlyCollection<Organisation>> RetrieveAsync(CancellationToken cancellationToken)
         {
             var campusIdentifiers = await _organisations
-                .CampusIdentifiers
-                .GroupBy(mu => mu.MasterUkprn)
-                .ToDictionaryAsync(k => k.Key, v => v.Select(c => c.CampusIdentifier1).ToList(), cancellationToken) ?? new Dictionary<long, List<string>>();
+               .CampusIdentifiers
+               .ToListAsync(cancellationToken);
+
+            var campusIdentifiersList = new List<OrganisationCampusIdentifier>();
+
+            foreach (var ci in campusIdentifiers)
+            {
+                var specialistResource = ci.CampusIdentifierUkprn?.CampusIdentifierSpecResources?.Select(sr => new SpecialistResource
+                {
+                    IsSpecialistResource = sr.SpecialistResources,
+                    EffectiveFrom = sr.EffectiveFrom,
+                    EffectiveTo = sr.EffectiveTo,
+                }).ToList() ?? new List<SpecialistResource>();
+
+                campusIdentifiersList.Add(new OrganisationCampusIdentifier
+                {
+                    UKPRN = ci.MasterUkprn,
+                    CampusIdentifier = ci.CampusIdentifier1,
+                    EffectiveFrom = ci.EffectiveFrom,
+                    EffectiveTo = ci.EffectiveTo,
+                    SpecialistResources = specialistResource
+                });
+            }
+
+            var campusIdentifiersDictionary =
+                campusIdentifiersList
+                .GroupBy(ci => ci.UKPRN)
+                .ToDictionary(
+                k => k.Key,
+                v => v.Select(c => c).ToList());
 
             return await _organisations
                 .MasterOrganisations
@@ -38,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                           UKPRN = (int)o.Ukprn,
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
-                          CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),
+                          CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
                           OrganisationFundings = o.OrgFundings.Select(of =>
                           new OrganisationFunding()
                           {
@@ -58,11 +85,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                       }).ToListAsync(cancellationToken);
         }
 
-        public List<string> GetCampusIdentifiers(long ukprn, Dictionary<long, List<string>> campusIdentifiers)
+        public List<OrganisationCampusIdentifier> GetCampusIdentifiers(long ukprn, Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiers)
         {
             campusIdentifiers.TryGetValue(ukprn, out var campusIds);
 
-            return campusIds ?? new List<string>();
+            return campusIds ?? new List<OrganisationCampusIdentifier>();
         }
     }
 }

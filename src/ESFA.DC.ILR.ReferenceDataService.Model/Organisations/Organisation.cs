@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
 
         public string LegalOrgType { get; set; }
 
-        public List<string> CampusIdentifers { get; set; }
+        public List<OrganisationCampusIdentifier> CampusIdentifers { get; set; }
 
         public List<OrganisationFunding> OrganisationFundings { get; set; }
 
