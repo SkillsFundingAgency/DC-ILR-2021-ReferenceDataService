@@ -25,28 +25,36 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             var campusIdentifiers = await _organisations
                 .CampusIdentifiers
-                .Include(ci => ci.CampusIdentifierUkprn)
-                .ThenInclude(c => c.CampusIdentifierSpecResources)
                 .Where(c => ukprns.Contains(c.MasterUkprn))
-                .Select(c => new OrganisationCampusIdentifier
+                .ToListAsync(cancellationToken);
+
+            var campusIdentifiersList = new List<OrganisationCampusIdentifier>();
+
+            foreach (var ci in campusIdentifiers)
+            {
+                var specialistResource = ci.CampusIdentifierUkprn?.CampusIdentifierSpecResources?.Select(sr => new SpecialistResource
                 {
-                    UKPRN = c.MasterUkprn,
-                    CampusIdentifier = c.CampusIdentifier1,
-                    EffectiveFrom = c.EffectiveFrom,
-                    EffectiveTo = c.EffectiveTo,
-                    SpecialistResources = c.CampusIdentifierUkprn.CampusIdentifierSpecResources.Select(sr =>
-                    new SpecialistResource
-                    {
-                        IsSpecialistResource = sr.SpecialistResources,
-                        EffectiveFrom = sr.EffectiveFrom,
-                        EffectiveTo = sr.EffectiveTo,
-                    }).ToList(),
-                })
+                    IsSpecialistResource = sr.SpecialistResources,
+                    EffectiveFrom = sr.EffectiveFrom,
+                    EffectiveTo = sr.EffectiveTo,
+                }).ToList() ?? new List<SpecialistResource>();
+
+                campusIdentifiersList.Add(new OrganisationCampusIdentifier
+                {
+                    UKPRN = ci.MasterUkprn,
+                    CampusIdentifier = ci.CampusIdentifier1,
+                    EffectiveFrom = ci.EffectiveFrom,
+                    EffectiveTo = ci.EffectiveTo,
+                    SpecialistResources = specialistResource
+                });
+            }
+
+            var campusIdentifiersDictionary =
+                campusIdentifiersList
                 .GroupBy(ci => ci.UKPRN)
-                .ToDictionaryAsync(
+                .ToDictionary(
                 k => k.Key,
-                v => v.Select(c => c).ToList(),
-                cancellationToken);
+                v => v.Select(c => c).ToList());
 
             return await _organisations
                 .MasterOrganisations
@@ -60,7 +68,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                           UKPRN = (int)o.Ukprn,
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
-                          CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiers),
+                          CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
                           OrganisationFundings = o.OrgFundings.Select(of =>
                           new OrganisationFunding()
                           {
