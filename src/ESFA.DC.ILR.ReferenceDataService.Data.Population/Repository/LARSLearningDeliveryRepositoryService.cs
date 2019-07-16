@@ -25,6 +25,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             var larsFrameworks = new List<LARSFrameworkKey>();
 
             var learningDeliveries = await _larsContext.LARS_LearningDeliveries
+                .Include(l => l.LarsAnnualValues)
+                .Include(l => l.LarsCareerLearningPilots)
+                .Include(l => l.LarsLearningDeliveryCategories)
+                .Include(l => l.LarsFundings)
+                .Include(l => l.LarsValidities)
                 .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(
                     ld => new LARSLearningDelivery

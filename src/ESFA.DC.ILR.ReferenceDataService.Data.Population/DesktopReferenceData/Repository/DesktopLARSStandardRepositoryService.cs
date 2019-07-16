@@ -20,7 +20,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
         public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            return await _larsContext.LARS_Standards
+            var larsStandards = await _larsContext.LARS_Standards
+                .Include(l => l.LarsApprenticeshipStdFundings)
+                .Include(l => l.LarsStandardCommonComponents)
+                .Include(l => l.LarsStandardFundings)
+                .Include(l => l.LarsStandardValidities)
+                .ToListAsync(cancellationToken);
+
+            return larsStandards
                 .Select(
                     ls => new LARSStandard
                     {
@@ -78,7 +85,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                             LastNewStartDate = lsv.LastNewStartDate,
                             ValidityCategory = lsv.ValidityCategory,
                         }).ToList(),
-                    }).ToListAsync(cancellationToken);
+                    }).ToList();
         }
     }
 }

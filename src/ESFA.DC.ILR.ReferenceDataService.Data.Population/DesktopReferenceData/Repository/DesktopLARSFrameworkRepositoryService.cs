@@ -20,7 +20,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
         public async Task<IReadOnlyCollection<LARSFramework>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            return await _larsContext.LARS_Frameworks
+            var larsFrameworks = await _larsContext.LARS_Frameworks
+                .Include(l => l.LarsFrameworkAims)
+                .Include(l => l.LarsApprenticeshipFworkFundings)
+                .Include(l => l.LarsFrameworkCmnComps)
+                .ToListAsync(cancellationToken);
+
+            return larsFrameworks
                 .Select(lf => new LARSFramework
                 {
                     FworkCode = lf.FworkCode,
@@ -61,7 +67,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                         EffectiveFrom = lcc.EffectiveFrom,
                         EffectiveTo = lcc.EffectiveTo,
                     }).ToList(),
-                }).ToListAsync(cancellationToken);
+                }).ToList();
         }
     }
 }
