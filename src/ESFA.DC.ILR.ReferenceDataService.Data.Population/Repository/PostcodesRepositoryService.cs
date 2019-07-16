@@ -33,7 +33,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             var sfaPostcodeDisadvantages = await RetrieveSfaPostcodeDisadvantages(jsonParams, cancellationToken);
             var efaPostcodeDisadvantages = await RetrieveEfaPostcodeDisadvantages(jsonParams, cancellationToken);
             var dasPostcodeDisadvantages = await RetrieveDasPostcodeDisadvantages(jsonParams, cancellationToken);
-            var careerLearningPilots = await RetrieveCareerLearningPilots(jsonParams, cancellationToken);
             var onsData = await RetrieveOnsData(jsonParams, cancellationToken);
             var mcaglaSOF = await RetrieveMcaglaSOFData(jsonParams, cancellationToken);
 
@@ -45,7 +44,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     SfaAreaCosts = sfaAreaCosts.TryGetValue(postcode, out var sfaAreaCost) ? sfaAreaCosts[postcode] : null,
                     DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
                     EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
-                    CareerLearningPilots = careerLearningPilots.TryGetValue(postcode, out var pilot) ? careerLearningPilots[postcode] : null,
                     ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null,
                     McaglaSOFs = mcaglaSOF.TryGetValue(postcode, out var sOFs) ? mcaglaSOF[postcode] : null
                 }).ToList();
@@ -113,19 +111,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             return dasDisadvantages
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(DasPostcodeDisadvantagesToEntity).ToList());
-        }
-
-        public async Task<IDictionary<string, List<CareerLearningPilot>>> RetrieveCareerLearningPilots(string jsonParams, CancellationToken cancellationToken)
-        {
-            var sqlcareerLearningPilots = $@"SELECT P.[Postcode], J.[AreaCode], J.[EffectiveFrom], J.[EffectiveTo] 
-                                                                FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
-                                                                INNER JOIN [dbo].[CareerLearningPilot_Postcode] J ON J.[Postcode] = P.[Postcode]";
-
-            var careerPilots = await RetrieveAsync<CareerLearningPilotPostcode>(jsonParams, sqlcareerLearningPilots, cancellationToken);
-
-            return careerPilots
-                .GroupBy(p => p.Postcode)
-                .ToDictionary(k => k.Key, p => p.Select(CareerLearningPilotsToEntity).ToList());
         }
 
         public async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(string jsonParams, CancellationToken cancellationToken)
@@ -202,16 +187,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 Uplift = efaPostcodeDisadvantage.Uplift,
                 EffectiveFrom = efaPostcodeDisadvantage.EffectiveFrom,
                 EffectiveTo = efaPostcodeDisadvantage.EffectiveTo
-            };
-        }
-
-        public CareerLearningPilot CareerLearningPilotsToEntity(CareerLearningPilotPostcode careerLearningPilot)
-        {
-            return new CareerLearningPilot
-            {
-                AreaCode = careerLearningPilot.AreaCode,
-                EffectiveFrom = careerLearningPilot.EffectiveFrom,
-                EffectiveTo = careerLearningPilot.EffectiveTo
             };
         }
 
