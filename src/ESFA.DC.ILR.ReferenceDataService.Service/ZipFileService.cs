@@ -25,9 +25,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
         public async Task SaveCollectionZipAsync(string zipFileName, string container, IReadOnlyDictionary<string, object> zipContents, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Zip File Creation");
-            using (var memoryStream = new MemoryStream())
+            using (var stream = await _fileService.OpenWriteStreamAsync(zipFileName, container, cancellationToken))
             {
-                using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Update, true))
+                using (var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create, true))
                 {
                     foreach (var file in zipContents)
                     {
@@ -35,32 +35,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                     }
                 }
 
-                using (var fileStream = await _fileService.OpenWriteStreamAsync(zipFileName, container, cancellationToken))
-                {
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    await memoryStream.CopyToAsync(fileStream);
-                }
-
                 _logger.LogInfo("Finished Zip File Creation");
             }
         }
-
-        //private void AddFileToZip(ZipArchive zipArchive, string fileName, object fileContent)
-        //{
-        //    _logger.LogInfo("Writing " + fileName + " to zip file.");
-
-        //    var file = zipArchive.CreateEntry(fileName);
-
-        //    using (var entryStream = file.Open())
-        //    {
-        //        entryStream.CopyTo(fileContentStream)
-        //        //using (var streamWriter = new StreamWriter(entryStream))
-        //        //{
-        //        //    streamWriter.Write(,
-        //        //        //_jsonSerializationService.Serialize(fileContent));
-        //        //}
-        //    }
-        //}
 
         private void AddFileToZip(ZipArchive zipArchive, string fileName, object fileContent)
         {
@@ -68,19 +45,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
 
             var file = zipArchive.CreateEntry(fileName);
 
-            using (Stream fileContentStream = new MemoryStream())
+            using (var entryStream = file.Open())
             {
-                _jsonSerializationService.Serialize(fileContent, fileContentStream);
-
-                using (var entryStream = file.Open())
-                {
-                    fileContentStream.CopyTo(entryStream);
-                    //using (var streamWriter = new StreamWriter(entryStream))
-                    //{
-                    //    streamWriter.Write(,
-                    //        //_jsonSerializationService.Serialize(fileContent));
-                    //}
-                }
+                _jsonSerializationService.Serialize(fileContent, entryStream);
             }
         }
     }
