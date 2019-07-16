@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ESFA.DC.ILR.ReferenceDataService.Desktop</RootNamespace>
-    <Version>0.1.102</Version>
+    <Version>0.1.2</Version>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
     <Product>ESFA.DC.ILR1920.ReferenceDataService.Desktop</Product>
