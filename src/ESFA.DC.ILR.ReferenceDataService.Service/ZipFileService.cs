@@ -5,21 +5,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
 using ESFA.DC.Logging.Interfaces;
+using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
     public class ZipFileService : IZipFileService
     {
+        private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IFileService _fileService;
         private readonly ILogger _logger;
 
-        public ZipFileService(IFileService fileService, ILogger logger)
+        public ZipFileService(IJsonSerializationService jsonSerializationService, IFileService fileService, ILogger logger)
         {
+            _jsonSerializationService = jsonSerializationService;
             _fileService = fileService;
             _logger = logger;
         }
 
-        public async Task SaveCollectionZipAsync(string zipFileName, string container, IReadOnlyDictionary<string, string> zipContents, CancellationToken cancellationToken)
+        public async Task SaveCollectionZipAsync(string zipFileName, string container, IReadOnlyDictionary<string, object> zipContents, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Zip File Creation");
             using (var memoryStream = new MemoryStream())
@@ -42,17 +45,41 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             }
         }
 
-        private void AddFileToZip(ZipArchive zipArchive, string fileName, string fileContent)
+        //private void AddFileToZip(ZipArchive zipArchive, string fileName, object fileContent)
+        //{
+        //    _logger.LogInfo("Writing " + fileName + " to zip file.");
+
+        //    var file = zipArchive.CreateEntry(fileName);
+
+        //    using (var entryStream = file.Open())
+        //    {
+        //        entryStream.CopyTo(fileContentStream)
+        //        //using (var streamWriter = new StreamWriter(entryStream))
+        //        //{
+        //        //    streamWriter.Write(,
+        //        //        //_jsonSerializationService.Serialize(fileContent));
+        //        //}
+        //    }
+        //}
+
+        private void AddFileToZip(ZipArchive zipArchive, string fileName, object fileContent)
         {
             _logger.LogInfo("Writing " + fileName + " to zip file.");
 
             var file = zipArchive.CreateEntry(fileName);
 
-            using (var entryStream = file.Open())
+            using (Stream fileContentStream = new MemoryStream())
             {
-                using (var streamWriter = new StreamWriter(entryStream))
+                _jsonSerializationService.Serialize(fileContent, fileContentStream);
+
+                using (var entryStream = file.Open())
                 {
-                    streamWriter.Write(fileContent);
+                    fileContentStream.CopyTo(entryStream);
+                    //using (var streamWriter = new StreamWriter(entryStream))
+                    //{
+                    //    streamWriter.Write(,
+                    //        //_jsonSerializationService.Serialize(fileContent));
+                    //}
                 }
             }
         }

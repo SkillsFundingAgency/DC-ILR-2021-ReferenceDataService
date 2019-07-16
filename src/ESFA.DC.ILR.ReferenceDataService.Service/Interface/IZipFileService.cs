@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
     public interface IZipFileService
     {
-        Task SaveCollectionZipAsync(string zipFileName, string container, IReadOnlyDictionary<string, string> zipContents, CancellationToken cancellationToken);
+        Task SaveCollectionZipAsync(string zipFileName, string container, IReadOnlyDictionary<string, object> zipContents, CancellationToken cancellationToken);
     }
 }

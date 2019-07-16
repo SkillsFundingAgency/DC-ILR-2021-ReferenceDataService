@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ESFA.DC.ILR.ReferenceDataService.Desktop</RootNamespace>
-    <Version>0.1.1</Version>
+    <Version>0.1.102</Version>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
     <Product>ESFA.DC.ILR1920.ReferenceDataService.Desktop</Product>
@@ -31,9 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\IlrReferenceData.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\IlrReferenceData.zip" />
   </ItemGroup>
 
   <ItemGroup>

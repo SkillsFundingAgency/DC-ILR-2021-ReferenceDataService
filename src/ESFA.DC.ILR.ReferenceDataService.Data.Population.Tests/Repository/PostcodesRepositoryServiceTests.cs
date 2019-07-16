@@ -274,14 +274,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
-                    CareerLearningPilots = new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    },
                     ONSData = new List<ONSData>
                     {
                         new ONSData
@@ -356,20 +348,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         new DasDisadvantage
                         {
                             Uplift = 1.5m,
-                            EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    },
-                    CareerLearningPilots = new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code2",
                             EffectiveFrom = new DateTime(2018, 9, 2)
                         }
                     },
@@ -744,78 +722,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public async Task RetrieveCareerLearningPilots()
-        {
-            var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
-
-            var taskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
-
-            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
-            {
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode1",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code2",
-                    EffectiveFrom = new DateTime(2018, 9, 2)
-                }
-            };
-
-            taskResult.SetResult(careerLearningPilotsPostcode);
-
-            var careerLearningPilotsDictionary = new Dictionary<string, List<CareerLearningPilot>>
-            {
-                {
-                    "PostCode1", new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
-                },
-                {
-                    "PostCode2", new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code2",
-                            EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    }
-                }
-            };
-
-            var service = NewServiceMock();
-
-            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
-
-            var result = await service.Object.RetrieveCareerLearningPilots(json, cancellationToken);
-
-            result.Should().BeEquivalentTo(careerLearningPilotsDictionary);
-        }
-
-        [Fact]
         public async Task RetrieveOnsData()
         {
             var cancellationToken = CancellationToken.None;
@@ -1041,26 +947,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
 
             NewService().SfaAreaCostsToEntity(sfaPostcodeAreaCost).Should().BeEquivalentTo(sfaAreaCost);
-        }
-
-        [Fact]
-        public void CareerLearningPilotsToEntity()
-        {
-            var careerLearningPilotPostcode = new CareerLearningPilotPostcode
-            {
-                AreaCode = "Area1",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            var careerLearningPilot = new CareerLearningPilot
-            {
-                AreaCode = "Area1",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            NewService().CareerLearningPilotsToEntity(careerLearningPilotPostcode).Should().BeEquivalentTo(careerLearningPilot);
         }
 
         [Fact]
