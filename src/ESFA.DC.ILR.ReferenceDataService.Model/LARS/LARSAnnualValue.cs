@@ -4,6 +4,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 {
     public class LARSAnnualValue : AbstractTimeBoundedEntity
     {
+        public string LearnAimRef { get; set; }
+
         public int? BasicSkills { get; set; }
 
         public int? BasicSkillsType { get; set; }

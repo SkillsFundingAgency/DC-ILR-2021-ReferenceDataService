@@ -36,124 +36,139 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
-                    LarsFundings = new List<LarsFunding>
-                    {
-                        new LarsFunding
-                        {
-                            LearnAimRef = "LearnAimRef1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            FundingCategory = "Cat1",
-                            RateUnWeighted = 1.0m,
-                            RateWeighted = 2.0m,
-                            WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy",
-                        },
-                        new LarsFunding
-                        {
-                            LearnAimRef = "LearnAimRef1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            FundingCategory = "Cat2",
-                            RateUnWeighted = 1.0m,
-                            RateWeighted = 2.0m,
-                            WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy",
-                        },
-                        new LarsFunding
-                        {
-                            LearnAimRef = "LearnAimRef1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            FundingCategory = "Cat3",
-                            RateUnWeighted = 1.0m,
-                            RateWeighted = 2.0m,
-                            WeightingFactor = "Factor",
-                            CreatedBy = "CreatedBy",
-                        },
-                    },
-                    LarsValidities = new List<LarsValidity>
-                    {
-                        new LarsValidity
-                        {
-                            LearnAimRef = "LearnAimRef1",
-                            StartDate = new DateTime(2018, 8, 1),
-                            EndDate = null,
-                            LastNewStartDate = new DateTime(2018, 8, 1),
-                            ValidityCategory = "Cat1",
-                            CreatedBy = "CreatedBy",
-                        },
-                        new LarsValidity
-                        {
-                            LearnAimRef = "LearnAimRef1",
-                            StartDate = new DateTime(2018, 8, 1),
-                            EndDate = null,
-                            LastNewStartDate = new DateTime(2018, 8, 1),
-                            ValidityCategory = "Cat2",
-                            CreatedBy = "CreatedBy",
-                        },
-                    },
                 },
                 new LarsLearningDelivery
                 {
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
-                    LarsLearningDeliveryCategories = new List<LarsLearningDeliveryCategory>
-                    {
-                        new LarsLearningDeliveryCategory
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            CategoryRef = 1,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            CreatedBy = "CreatedBy",
-                        },
-                        new LarsLearningDeliveryCategory
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            CategoryRef = 2,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            CreatedBy = "CreatedBy",
-                        },
-                    },
-                    LarsAnnualValues = new List<LarsAnnualValue>
-                    {
-                        new LarsAnnualValue
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            BasicSkills = 1,
-                            BasicSkillsType = 2,
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            FullLevel2EntitlementCategory = 3,
-                            FullLevel3EntitlementCategory = 4,
-                            FullLevel2Percent = 5,
-                            FullLevel3Percent = 6,
-                            CreatedBy = "CreatedBy",
-                        },
-                    },
-                    LarsCareerLearningPilots = new List<LarsCareerLearningPilot>
-                    {
-                        new LarsCareerLearningPilot
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            AreaCode = "1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            SubsidyRate = 2,
-                            CreatedBy = "CreatedBy",
-                        },
-                        new LarsCareerLearningPilot
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            AreaCode = "1.2",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            SubsidyRate = 2,
-                            CreatedBy = "CreatedBy",
-                        },
-                    },
+                }
+            };
+
+            IEnumerable<LarsAnnualValue> larsAnnualValueList = new List<LarsAnnualValue>
+            {
+                new LarsAnnualValue
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    BasicSkills = 1,
+                    BasicSkillsType = 2,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    FullLevel2EntitlementCategory = 3,
+                    FullLevel3EntitlementCategory = 4,
+                    FullLevel2Percent = 5,
+                    FullLevel3Percent = 6,
+                    CreatedBy = "CreatedBy",
+                },
+            };
+
+            IEnumerable<LarsCareerLearningPilot> larsCareerLearningPilotsList = new List<LarsCareerLearningPilot>
+            {
+                new LarsCareerLearningPilot
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    AreaCode = "1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    SubsidyRate = 2,
+                    CreatedBy = "CreatedBy",
+                },
+                new LarsCareerLearningPilot
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    AreaCode = "1.2",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    SubsidyRate = 2,
+                    CreatedBy = "CreatedBy",
+                },
+            };
+
+            IEnumerable<LarsLearningDeliveryCategory> larsLearningDeliveryCategoryList = new List<LarsLearningDeliveryCategory>
+            {
+                new LarsLearningDeliveryCategory
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    CategoryRef = 1,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    CreatedBy = "CreatedBy",
+                },
+                new LarsLearningDeliveryCategory
+                {
+                    LearnAimRef = "LearnAimRef2",
+                    CategoryRef = 2,
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    CreatedBy = "CreatedBy",
+                },
+            };
+
+            IEnumerable<LarsFunding> larsFundingsList = new List<LarsFunding>
+            {
+                new LarsFunding
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    FundingCategory = "Cat1",
+                    RateUnWeighted = 1.0m,
+                    RateWeighted = 2.0m,
+                    WeightingFactor = "Factor",
+                    CreatedBy = "CreatedBy",
+                },
+                new LarsFunding
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    FundingCategory = "Cat2",
+                    RateUnWeighted = 1.0m,
+                    RateWeighted = 2.0m,
+                    WeightingFactor = "Factor",
+                    CreatedBy = "CreatedBy",
+                },
+                new LarsFunding
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = null,
+                    FundingCategory = "Cat3",
+                    RateUnWeighted = 1.0m,
+                    RateWeighted = 2.0m,
+                    WeightingFactor = "Factor",
+                    CreatedBy = "CreatedBy",
+                },
+            };
+
+            IEnumerable<LarsValidity> larsValiditiesList = new List<LarsValidity>
+            {
+                new LarsValidity
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    StartDate = new DateTime(2018, 8, 1),
+                    EndDate = null,
+                    LastNewStartDate = new DateTime(2018, 8, 1),
+                    ValidityCategory = "Cat1",
+                    CreatedBy = "CreatedBy",
+                },
+                new LarsValidity
+                {
+                    LearnAimRef = "LearnAimRef1",
+                    StartDate = new DateTime(2018, 8, 1),
+                    EndDate = null,
+                    LastNewStartDate = new DateTime(2018, 8, 1),
+                    ValidityCategory = "Cat2",
+                    CreatedBy = "CreatedBy",
+                },
+            };
+
+            IEnumerable<LarsFrameworkAim> larsFrameworkAimsList = new List<LarsFrameworkAim>
+            {
+                new LarsFrameworkAim
+                {
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    FrameworkComponentType = 1,
+                    LearnAimRef = "LearnAimRef1",
                 },
             };
 
@@ -165,15 +180,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                    ProgType = 2,
                    PwayCode = 3,
                    EffectiveFrom = new DateTime(2018, 8, 1),
-                   LarsFrameworkAims = new List<LarsFrameworkAim>
-                   {
-                       new LarsFrameworkAim
-                       {
-                           EffectiveFrom = new DateTime(2018, 8, 1),
-                           FrameworkComponentType = 1,
-                           LearnAimRef = "LearnAimRef1",
-                       },
-                   },
                    LarsFrameworkCmnComps = new List<LarsFrameworkCmnComp>
                    {
                        new LarsFrameworkCmnComp
@@ -214,9 +220,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
 
             var larsLearningDeliveryMock = larsLearningDeliveryList.AsQueryable().BuildMockDbSet();
+            var larsAnnualValueMock = larsAnnualValueList.AsQueryable().BuildMockDbSet();
+            var larsCareerLearningPilotsMock = larsCareerLearningPilotsList.AsQueryable().BuildMockDbSet();
+            var larsCategoriesMock = larsLearningDeliveryCategoryList.AsQueryable().BuildMockDbSet();
+            var larsFundingMock = larsFundingsList.AsQueryable().BuildMockDbSet();
+            var larsValiditiesMock = larsValiditiesList.AsQueryable().BuildMockDbSet();
+            var larsFrameworkAimsMock = larsFrameworkAimsList.AsQueryable().BuildMockDbSet();
+
             var larsFrameworkMock = larsFrameworkList.AsQueryable().BuildMockDbSet();
 
             larsMock.Setup(l => l.LARS_LearningDeliveries).Returns(larsLearningDeliveryMock.Object);
+            larsMock.Setup(l => l.LARS_AnnualValues).Returns(larsAnnualValueMock.Object);
+            larsMock.Setup(l => l.LARS_CareerLearningPilots).Returns(larsCareerLearningPilotsMock.Object);
+            larsMock.Setup(l => l.LARS_LearningDeliveryCategories).Returns(larsCategoriesMock.Object);
+            larsMock.Setup(l => l.LARS_Fundings).Returns(larsFundingMock.Object);
+            larsMock.Setup(l => l.LARS_Validities).Returns(larsValiditiesMock.Object);
+            larsMock.Setup(l => l.LARS_FrameworkAims).Returns(larsFrameworkAimsMock.Object);
             larsMock.Setup(l => l.LARS_Frameworks).Returns(larsFrameworkMock.Object);
 
             var larsLearningDeliveries = await NewService(larsMock.Object).RetrieveAsync(larsLearningDeliveryKeys, CancellationToken.None);
@@ -271,6 +290,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             },
                             LARSFrameworkAim = new LARSFrameworkAim
                             {
+                                LearnAimRef = "LearnAimRef1",
                                 FrameworkComponentType = 1,
                                 EffectiveFrom = new DateTime(2018, 8, 1),
                                 EffectiveTo = null,
@@ -281,6 +301,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSFunding
                         {
+                            LearnAimRef = "LearnAimRef1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat1",
@@ -290,6 +311,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSFunding
                         {
+                            LearnAimRef = "LearnAimRef1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat2",
@@ -299,6 +321,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSFunding
                         {
+                            LearnAimRef = "LearnAimRef1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat3",
@@ -311,6 +334,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSValidity
                         {
+                            LearnAimRef = "LearnAimRef1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
@@ -318,6 +342,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSValidity
                         {
+                            LearnAimRef = "LearnAimRef1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
@@ -378,12 +403,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSLearningDeliveryCategory
                         {
+                            LearnAimRef = "LearnAimRef2",
                             CategoryRef = 1,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                         },
                         new LARSLearningDeliveryCategory
                         {
+                            LearnAimRef = "LearnAimRef2",
                             CategoryRef = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
@@ -393,6 +420,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSAnnualValue
                         {
+                            LearnAimRef = "LearnAimRef2",
                             BasicSkills = 1,
                             BasicSkillsType = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
@@ -407,6 +435,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSCareerLearningPilot
                         {
+                            LearnAimRef = "LearnAimRef2",
                             AreaCode = "1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
@@ -414,6 +443,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSCareerLearningPilot
                         {
+                            LearnAimRef = "LearnAimRef2",
                             AreaCode = "1.2",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
