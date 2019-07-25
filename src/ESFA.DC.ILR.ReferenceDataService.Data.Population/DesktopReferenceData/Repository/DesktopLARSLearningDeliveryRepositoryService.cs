@@ -23,13 +23,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         {
             var learningDeliveries = await BuildLARSLearningDelvieries(cancellationToken);
             var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(cancellationToken);
-            var larsCareerLearningPilotsDictionary = await BuildLARSCareerLearningPilotsDictionary(cancellationToken);
             var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(cancellationToken);
             var larsFundingsDictionary = await BuildLARSFundingDictionary(cancellationToken);
             var larsValiditiesDictionary = await BuildLARSValidityDictionary(cancellationToken);
 
             var defaultLarsAnnualValues = new List<LARSAnnualValue>();
-            var defaultLarsCareerLearningPilots = new List<LARSCareerLearningPilot>();
             var defaultLarsLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
             var defaultLarsFundings = new List<LARSFunding>();
             var defaultLarsValidities = new List<LARSValidity>();
@@ -38,7 +36,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             foreach (var learningDelivery in learningDeliveries)
             {
                 learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
-                learningDelivery.LARSCareerLearningPilots = larsCareerLearningPilotsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var careerLearningPilots) ? careerLearningPilots : defaultLarsCareerLearningPilots;
                 learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
                 learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
                 learningDelivery.LARSValidities = larsValiditiesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var validities) ? validities : defaultLarsValidities;
@@ -92,26 +89,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             }).ToListAsync(cancellationToken);
 
             return larsAnnualValuesList
-                .GroupBy(l => l.LearnAimRef, StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(
-                k => k.Key,
-                v => v.Select(l => l).ToList(),
-                StringComparer.OrdinalIgnoreCase);
-        }
-
-        private async Task<Dictionary<string, List<LARSCareerLearningPilot>>> BuildLARSCareerLearningPilotsDictionary(CancellationToken cancellationToken)
-        {
-            var larsLearningDeliveryCategoriesList = await _larsContext.LARS_CareerLearningPilots
-            .Select(lc => new LARSCareerLearningPilot
-            {
-                LearnAimRef = lc.LearnAimRef,
-                AreaCode = lc.AreaCode,
-                EffectiveFrom = lc.EffectiveFrom,
-                EffectiveTo = lc.EffectiveTo,
-                SubsidyRate = lc.SubsidyRate,
-            }).ToListAsync(cancellationToken);
-
-            return larsLearningDeliveryCategoriesList
                 .GroupBy(l => l.LearnAimRef, StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(
                 k => k.Key,

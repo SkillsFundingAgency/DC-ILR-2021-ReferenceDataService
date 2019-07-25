@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
             var larsFrameworks = new List<LARSFrameworkKey>();
 
             var larsLearningDeliveries = referenceData.LARSLearningDeliveries
-                .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef))
+                .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .ToList();
 
             foreach (var key in input)

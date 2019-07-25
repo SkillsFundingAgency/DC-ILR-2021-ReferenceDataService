@@ -61,28 +61,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
-            IEnumerable<LarsCareerLearningPilot> larsCareerLearningPilotsList = new List<LarsCareerLearningPilot>
-            {
-                new LarsCareerLearningPilot
-                {
-                    LearnAimRef = "LearnAimRef2",
-                    AreaCode = "1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = null,
-                    SubsidyRate = 2,
-                    CreatedBy = "CreatedBy",
-                },
-                new LarsCareerLearningPilot
-                {
-                    LearnAimRef = "LearnAimRef2",
-                    AreaCode = "1.2",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = null,
-                    SubsidyRate = 2,
-                    CreatedBy = "CreatedBy",
-                },
-            };
-
             IEnumerable<LarsLearningDeliveryCategory> larsLearningDeliveryCategoryList = new List<LarsLearningDeliveryCategory>
             {
                 new LarsLearningDeliveryCategory
@@ -221,7 +199,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var larsLearningDeliveryMock = larsLearningDeliveryList.AsQueryable().BuildMockDbSet();
             var larsAnnualValueMock = larsAnnualValueList.AsQueryable().BuildMockDbSet();
-            var larsCareerLearningPilotsMock = larsCareerLearningPilotsList.AsQueryable().BuildMockDbSet();
             var larsCategoriesMock = larsLearningDeliveryCategoryList.AsQueryable().BuildMockDbSet();
             var larsFundingMock = larsFundingsList.AsQueryable().BuildMockDbSet();
             var larsValiditiesMock = larsValiditiesList.AsQueryable().BuildMockDbSet();
@@ -231,7 +208,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             larsMock.Setup(l => l.LARS_LearningDeliveries).Returns(larsLearningDeliveryMock.Object);
             larsMock.Setup(l => l.LARS_AnnualValues).Returns(larsAnnualValueMock.Object);
-            larsMock.Setup(l => l.LARS_CareerLearningPilots).Returns(larsCareerLearningPilotsMock.Object);
             larsMock.Setup(l => l.LARS_LearningDeliveryCategories).Returns(larsCategoriesMock.Object);
             larsMock.Setup(l => l.LARS_Fundings).Returns(larsFundingMock.Object);
             larsMock.Setup(l => l.LARS_Validities).Returns(larsValiditiesMock.Object);
@@ -349,7 +325,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             ValidityCategory = "Cat2",
                         },
                     },
-                    LARSCareerLearningPilots = new List<LARSCareerLearningPilot>(),
                     LARSLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>(),
                     LARSAnnualValues = new List<LARSAnnualValue>(),
                 },
@@ -429,25 +404,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             FullLevel3EntitlementCategory = 4,
                             FullLevel2Percent = 5,
                             FullLevel3Percent = 6,
-                        },
-                    },
-                    LARSCareerLearningPilots = new List<LARSCareerLearningPilot>
-                    {
-                        new LARSCareerLearningPilot
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            AreaCode = "1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            SubsidyRate = 2,
-                        },
-                        new LARSCareerLearningPilot
-                        {
-                            LearnAimRef = "LearnAimRef2",
-                            AreaCode = "1.2",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = null,
-                            SubsidyRate = 2,
                         },
                     },
                 },

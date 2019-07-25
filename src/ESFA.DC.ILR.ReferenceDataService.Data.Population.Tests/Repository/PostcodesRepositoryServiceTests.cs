@@ -27,7 +27,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var sfaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeDisadvantage>>();
             var efaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
             var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
-            var careerLearningPilotsTaskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
             var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
             var mcaglaSOFTaskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
 
@@ -139,29 +138,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
-            {
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode1",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code2",
-                    EffectiveFrom = new DateTime(2018, 9, 2)
-                }
-            };
-
             var onsPostcodes = new List<OnsPostcode>
             {
                 new OnsPostcode
@@ -216,7 +192,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
             efaDisadvantageTaskResult.SetResult(efaDisadvantage);
             dasDisadvantageTaskResult.SetResult(dasDisadvantage);
-            careerLearningPilotsTaskResult.SetResult(careerLearningPilotsPostcode);
             onsDataTaskResult.SetResult(onsPostcodes);
             mcaglaSOFTaskResult.SetResult(mcaglaSofPostCodes);
 
@@ -231,7 +206,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Setup(s => s.RetrieveAsync<SfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
-            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(careerLearningPilotsTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(mcaglaSOFTaskResult.Task);
 
