@@ -41,8 +41,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public List<LARSAnnualValue> LARSAnnualValues { get; set; }
 
-        public List<LARSCareerLearningPilot> LARSCareerLearningPilots { get; set; }
-
         public List<LARSFramework> LARSFrameworks { get; set; }
 
         public List<LARSFunding> LARSFundings { get; set; }
