@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,16 +47,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     Period = esv.CollectionPeriod,
                     PaymentValue = esv.PaymentValue
                 }))
-                .GroupBy(c => c.FundingLine)
+                .GroupBy(c => c.FundingLine, StringComparer.OrdinalIgnoreCase)
                 .ToDictionaryAsync(
                    fundingLine => fundingLine.Key,
                    fundingLineValues => fundingLineValues.Select(flv => flv)
-                   .GroupBy(p => p.PaymentName)
+                   .GroupBy(p => p.PaymentName, StringComparer.OrdinalIgnoreCase)
                    .ToDictionary(
                        paymentName => paymentName.Key,
-                       paymentNameValue => paymentNameValue.ToDictionary(
+                       paymentNameValue => paymentNameValue
+                       .ToDictionary(
                            k3 => k3.Period,
-                           v3 => v3.PaymentValue)),
+                           v3 => v3.PaymentValue), StringComparer.OrdinalIgnoreCase),
+                   StringComparer.OrdinalIgnoreCase,
                    cancellationToken);
 
             return MapEasValues(easFundingLines, easValuesDictionary);
