@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                    }).ToList()
                }).ToListAsync(cancellationToken);
 
-            var easValuesDictionary = await _easContext.EasSubmissions?
+            var easValuesList = await _easContext.EasSubmissions?
                 .Where(u => u.Ukprn == ukprn.ToString())
                 .SelectMany(es => es.EasSubmissionValues
                 .Select(esv => new EasSubmissionDecodedValue
@@ -47,24 +47,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     Period = esv.CollectionPeriod,
                     PaymentValue = esv.PaymentValue
                 }))
-                .GroupBy(c => c.FundingLine, StringComparer.OrdinalIgnoreCase)
-                .ToDictionaryAsync(
-                   fundingLine => fundingLine.Key,
-                   fundingLineValues => fundingLineValues.Select(flv => flv)
-                   .GroupBy(p => p.PaymentName, StringComparer.OrdinalIgnoreCase)
-                   .ToDictionary(
-                       paymentName => paymentName.Key,
-                       paymentNameValue => paymentNameValue
-                       .ToDictionary(
-                           k3 => k3.Period,
-                           v3 => v3.PaymentValue), StringComparer.OrdinalIgnoreCase),
-                   StringComparer.OrdinalIgnoreCase,
-                   cancellationToken);
+                .ToListAsync(cancellationToken);
+
+            var easValuesDictionary = BuildEasDictionary(easValuesList);
 
             return MapEasValues(easFundingLines, easValuesDictionary);
         }
 
-        public IReadOnlyCollection<EASFundingLine> MapEasValues(List<EASFundingLine> easFundingLines, Dictionary<string, Dictionary<string, Dictionary<int, decimal?>>> easValuesDictionary)
+        public IReadOnlyCollection<EASFundingLine> MapEasValues(List<EASFundingLine> easFundingLines, IDictionary<string, Dictionary<string, Dictionary<int, decimal?>>> easValuesDictionary)
         {
             foreach (var fundline in easFundingLines)
             {
@@ -100,6 +90,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             }
 
             return easFundingLines;
+        }
+
+        private IDictionary<string, Dictionary<string, Dictionary<int, decimal?>>> BuildEasDictionary(List<EasSubmissionDecodedValue> easSubmissionDecodedValues)
+        {
+            return
+                easSubmissionDecodedValues?
+                .GroupBy(c => c.FundingLine, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(
+                   fundingLine => fundingLine.Key,
+                   fundingLineValues => fundingLineValues.Select(flv => flv)
+                   .GroupBy(p => p.PaymentName, StringComparer.OrdinalIgnoreCase)
+                   .ToDictionary(
+                       paymentName => paymentName.Key,
+                       paymentNameValue => paymentNameValue
+                       .ToDictionary(
+                           k3 => k3.Period,
+                           v3 => v3.PaymentValue), StringComparer.OrdinalIgnoreCase),
+                   StringComparer.OrdinalIgnoreCase);
         }
     }
 }
