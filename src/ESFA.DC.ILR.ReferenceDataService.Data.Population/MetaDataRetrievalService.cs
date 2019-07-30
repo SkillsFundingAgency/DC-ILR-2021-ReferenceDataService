@@ -73,6 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
                 ValidationRules = await _ilReferenceDataRepositoryService.RetrieveValidationRulesAsync(cancellationToken),
                 Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken),
+                CollectionDates = _ilReferenceDataRepositoryService.RetrieveCollectionDates(),
             };
 
             return Validate(metaData);

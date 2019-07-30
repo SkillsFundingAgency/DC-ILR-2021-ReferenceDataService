@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 {
@@ -14,5 +15,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
         public IReadOnlyCollection<ValidationRule> ValidationRules { get; set; }
 
         public IReadOnlyCollection<Lookup> Lookups { get; set; }
+
+        public IlrCollectionDates CollectionDates { get; set; }
     }
 }
