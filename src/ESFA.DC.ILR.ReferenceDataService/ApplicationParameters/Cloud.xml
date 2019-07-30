@@ -24,6 +24,6 @@
     <Parameter Name="EmployersConnectionString" Value="__EmployersDbConnectionString_EFCore_RO__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryConnectionString_EFCore_RO__" />
     <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RO__" />
-    <Parameter Name="EasConnectionString" Value="EasConnectionString_EFCore_RO__" />
+    <Parameter Name="EasConnectionString" Value="__EasConnectionStringRO__" />
   </Parameters>
 </Application>
