@@ -19,5 +19,7 @@
         string AppsEarningsHistoryConnectionString { get; }
 
         string IlrReferenceDataConnectionString { get; }
+
+        string EasConnectionString { get; }
     }
 }

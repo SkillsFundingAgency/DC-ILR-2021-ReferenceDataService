@@ -32,7 +32,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
             var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
-            var mcaglaSOF = RetrieveMcaglaSOFData(cancellationToken);
 
             var taskList = new List<Task>
             {
@@ -41,8 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 sfaPostcodeDisadvantages,
                 efaPostcodeDisadvantages,
                 dasPostcodeDisadvantages,
-                onsData,
-                mcaglaSOF
+                onsData
             };
 
             await Task.WhenAll(taskList);
@@ -56,7 +54,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                     DasDisadvantages = dasPostcodeDisadvantages.Result.TryGetValue(postcode, out var dasDisadValue) ? dasDisadValue : null,
                     EfaDisadvantages = efaPostcodeDisadvantages.Result.TryGetValue(postcode, out var efaDisadValue) ? efaDisadValue : null,
                     ONSData = onsData.Result.TryGetValue(postcode, out var onsValue) ? onsValue : null,
-                    McaglaSOFs = mcaglaSOF.Result.TryGetValue(postcode, out var sOFs) ? sOFs : null
                 }).ToList();
         }
 
@@ -132,19 +129,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 .ToDictionary(k => k.Key, p => p.Select(ONSDataToEntity).ToList());
         }
 
-        public async Task<IDictionary<string, List<McaglaSOF>>> RetrieveMcaglaSOFData(CancellationToken cancellationToken)
-        {
-            var sqlMcaglaSOFData = $@" SELECT [Postcode], [McaglaShortCode], [SofCode], 
-                                              [EffectiveFrom], [EffectiveTo]
-                                              FROM [dbo].[MCAGLA_SOF]";
-
-            var mcaglaSof = await RetrieveAsync<McaglaSof>(sqlMcaglaSOFData, cancellationToken);
-
-            return mcaglaSof
-                .GroupBy(p => p.Postcode)
-                .ToDictionary(k => k.Key, p => p.Select(McaglaSofToEntity).ToList());
-        }
-
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string sql, CancellationToken cancellationToken)
         {
             using (var sqlConnection = new SqlConnection(_referenceDataOptions.PostcodesConnectionString))
@@ -205,16 +189,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 LocalAuthority = onsPostcode.LocalAuthority,
                 Nuts = onsPostcode.Nuts,
                 Termination = GetEndOfMonthDateFromYearMonthString(onsPostcode.Termination),
-            };
-        }
-
-        public McaglaSOF McaglaSofToEntity(McaglaSof mcaglaSof)
-        {
-            return new McaglaSOF
-            {
-                SofCode = mcaglaSof.SofCode,
-                EffectiveFrom = mcaglaSof.EffectiveFrom,
-                EffectiveTo = mcaglaSof.EffectiveTo
             };
         }
 

@@ -63,26 +63,45 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveLookupsAsync()
         {
-            var lookups = new List<Model.MetaData.Lookup>
+            var lookups = new List<ReferenceDataService.Model.MetaData.Lookup>
             {
-                new Model.MetaData.Lookup { Name = "Lookup1", Code = "Code1", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1), SubCategories = new List<Model.MetaData.LookupSubCategory>() },
-                new Model.MetaData.Lookup { Name = "Lookup1", Code = "Code2", EffectiveFrom = new DateTime(1900, 1, 1), EffectiveTo = new DateTime(2099, 1, 1), SubCategories = new List<Model.MetaData.LookupSubCategory>() },
-                new Model.MetaData.Lookup { Name = "Lookup2", Code = "Code1",  SubCategories = new List<Model.MetaData.LookupSubCategory>() },
-                new Model.MetaData.Lookup
+                new ReferenceDataService.Model.MetaData.Lookup
+                {
+                    Name = "Lookup1",
+                    Code = "Code1",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                    SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
+                },
+                new ReferenceDataService.Model.MetaData.Lookup
+                {
+                    Name = "Lookup1",
+                    Code = "Code2",
+                    EffectiveFrom = new DateTime(1900, 1, 1),
+                    EffectiveTo = new DateTime(2099, 1, 1),
+                    SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
+                },
+                new ReferenceDataService.Model.MetaData.Lookup
+                {
+                    Name = "Lookup2",
+                    Code = "Code1",
+                    SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
+                },
+                new ReferenceDataService.Model.MetaData.Lookup
                 {
                     Name = "Lookup3",
                     Code = "Code1",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
-                    SubCategories = new List<Model.MetaData.LookupSubCategory>
+                    SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>
                     {
-                        new Model.MetaData.LookupSubCategory
+                        new ReferenceDataService.Model.MetaData.LookupSubCategory
                         {
                             Code = "Code3_1",
                             EffectiveFrom = new DateTime(1900, 1, 1),
                             EffectiveTo = new DateTime(2099, 1, 1),
                         },
-                        new Model.MetaData.LookupSubCategory
+                        new ReferenceDataService.Model.MetaData.LookupSubCategory
                         {
                             Code = "Code3_2",
                             EffectiveFrom = new DateTime(1900, 1, 1),

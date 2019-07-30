@@ -6,6 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
+using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
@@ -33,6 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var referenceDataVersions = TestReferenceDataVersions();
             var appsEarningHistories = TestAppsEarningHistories();
+            var eas = TestEas();
             var employers = TestEmployers();
             var epaOrgs = TestEpaOrgs();
             var fcsContractAllocations = TestFcs();
@@ -45,6 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
             var appsHistoryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
+            var easRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>>>();
             var employersRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             var epaOrgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
             var fcsRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>>();
@@ -57,6 +60,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
             appsHistoryRSMock.Setup(s => s.RetrieveAsync(mapperData.FM36Ulns, cancellationToken)).Returns(Task.FromResult(appsEarningHistories));
+            easRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(eas));
             employersRSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
             epaOrgRSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
             fcsRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
@@ -70,6 +74,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 messageMapperServiceMock.Object,
                 metaDataServiceMock.Object,
                 appsHistoryRSMock.Object,
+                easRSMock.Object,
                 employersRSMock.Object,
                 epaOrgRSMock.Object,
                 fcsRSMock.Object,
@@ -108,6 +113,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             {
                 new ApprenticeshipEarningsHistory(),
                 new ApprenticeshipEarningsHistory(),
+            };
+        }
+
+        private IReadOnlyCollection<EASFundingLine> TestEas()
+        {
+            return new List<EASFundingLine>
+            {
+                new EASFundingLine(),
+                new EASFundingLine(),
+                new EASFundingLine(),
             };
         }
 
@@ -207,6 +222,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>> easRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
             IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,
@@ -220,6 +236,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 messageMapperService,
                 metaDataReferenceService,
                 appEarningsHistoryRepositoryService,
+                easRepositoryService,
                 employersRepositoryService,
                 epaOrganisationsRepositoryService,
                 fcsRepositoryService,
