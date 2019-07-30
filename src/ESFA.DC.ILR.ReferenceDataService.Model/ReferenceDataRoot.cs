@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
+using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
@@ -14,6 +15,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
         public MetaData.MetaData MetaDatas { get; set; }
 
         public IReadOnlyCollection<ApprenticeshipEarningsHistory> AppsEarningsHistories { get; set; }
+
+        public IReadOnlyCollection<EASFundingLine> EasFundingLines { get; set; }
 
         public IReadOnlyCollection<Employer> Employers { get; set; }
 

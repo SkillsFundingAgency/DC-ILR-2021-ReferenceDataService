@@ -5,6 +5,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.I
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
+using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
@@ -74,6 +75,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             {
                 MetaDatas = metaDatas.Result,
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
+                EasFundingLines = new List<EASFundingLine>(),
                 Employers = employers.Result,
                 EPAOrganisations = epaOrganisations.Result,
                 FCSContractAllocations = new List<FcsContractAllocation>(),

@@ -257,14 +257,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
-                    McaglaSOFs = new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
                 },
                 new Postcode
                 {
@@ -339,20 +331,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Lep1 = "Lep11",
                             LocalAuthority = "LocalAuthority",
                             EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    },
-                    McaglaSOFs = new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode2",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     }
                 },
@@ -774,76 +752,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public async Task RetrieveMcaglaSOFData()
-        {
-            var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
-
-            var taskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
-
-            var mcaglaPostcoeSOF = new List<McaglaSof>
-            {
-               new McaglaSof
-                {
-                    Postcode = "PostCode1",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                },
-               new McaglaSof
-                {
-                    Postcode = "PostCode2",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-               new McaglaSof
-                 {
-                     Postcode = "PostCode2",
-                     SofCode = "SofCode2",
-                     EffectiveFrom = new DateTime(2018, 8, 1),
-                 }
-            };
-
-            taskResult.SetResult(mcaglaPostcoeSOF);
-
-            var expectedResult = new Dictionary<string, List<McaglaSOF>>
-            {
-                 {
-                    "PostCode1", new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                             SofCode = "SofCode1",
-                             EffectiveFrom = new DateTime(2018, 8, 1),
-                        }
-                    }
-                 },
-                 {
-                    "PostCode2", new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode2",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
-                 }
-            };
-
-            var service = NewServiceMock();
-            service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
-            var result = await service.Object.RetrieveMcaglaSOFData(json, cancellationToken);
-
-            result.Should().BeEquivalentTo(expectedResult);
-        }
-
-        [Fact]
         public void SfaPostcodeDisadvantagesToEntity()
         {
             var sfaPostcodeDisadvantage = new SfaPostcodeDisadvantage
@@ -947,42 +855,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
 
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
-        }
-
-        [Fact]
-        public void McaglaSofToEntity()
-        {
-            var mcaglaSof = new McaglaSof
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var expectedMcaglasSOF = new McaglaSOF
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            NewService().McaglaSofToEntity(mcaglaSof).Should().BeEquivalentTo(expectedMcaglasSOF);
-        }
-
-        [Fact]
-        public void McaglaSofToEntity_Should_BeFalse()
-        {
-            var mcaglaSof = new McaglaSof
-            {
-                SofCode = "SofCode2",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var expectedMcaglasSOF = new McaglaSOF
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            NewService().McaglaSofToEntity(mcaglaSof).Should().NotBeSameAs(expectedMcaglasSOF);
         }
 
         private PostcodesRepositoryService NewService(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)

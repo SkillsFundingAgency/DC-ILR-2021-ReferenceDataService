@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
+using ESFA.DC.EAS1920.EF;
+using ESFA.DC.EAS1920.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
@@ -104,6 +106,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 
                 return new IlrReferenceDataContext(options);
             }).As<IIlrReferenceDataContext>().InstancePerLifetimeScope();
+
+            containerBuilder.Register(c =>
+            {
+                DbContextOptions<EasContext> options = new DbContextOptionsBuilder<EasContext>()
+                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EasConnectionString).Options;
+
+                return new EasContext(options);
+            }).As<IEasdbContext>().InstancePerLifetimeScope();
         }
     }
 }
