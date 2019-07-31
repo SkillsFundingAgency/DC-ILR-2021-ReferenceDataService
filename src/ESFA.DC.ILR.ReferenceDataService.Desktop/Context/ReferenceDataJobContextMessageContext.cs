@@ -1,4 +1,5 @@
-﻿using ESFA.DC.ILR.Constants;
+﻿using System;
+using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 
@@ -30,5 +31,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
         public string OutputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
         public string Task { get; }
+
+        public int ReturnPeriod
+        {
+            get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod].ToString());
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod] = value;
+        }
     }
 }

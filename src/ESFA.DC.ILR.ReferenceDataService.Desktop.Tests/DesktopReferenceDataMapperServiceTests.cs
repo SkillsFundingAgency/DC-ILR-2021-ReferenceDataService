@@ -7,6 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
@@ -225,11 +226,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var desktopReferenceDataFileRetrievalServiceMock = new Mock<IDesktopReferenceDataFileRetrievalService>();
             var metaDataMapperMock = new Mock<IDesktopReferenceMetaDataMapper>();
-            var employersMapperServiceMock = new Mock<IDesktopReferenceDataMapper< IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
+            var employersMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             var epaOrganisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
-            var larsLearningDeliveryMapperServiceMock = new Mock<IDesktopReferenceDataMapper< IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
+            var larsLearningDeliveryMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
             var larsStandardMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
-            var organisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper< IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
+            var organisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
             var postcodesMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
 
             messageMapperServiceMock.Setup(sm => sm.MapFromMessage(message)).Returns(mapperData);
@@ -491,7 +492,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                 }
             };
         }
- 
+
         private DesktopReferenceDataMapperService NewService(
             IMessageMapperService messageMapperService = null,
             IDesktopReferenceDataFileRetrievalService desktopReferenceDataFileRetrievalService = null,

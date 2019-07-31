@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
@@ -13,5 +13,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
         string OutputReferenceDataFileKey { get; }
 
         string Task { get; }
+
+        int ReturnPeriod { get; set; }
     }
 }
