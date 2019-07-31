@@ -44,6 +44,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
 
             var desktopContextMock = new Mock<IDesktopContext>();
+            desktopContextMock.Setup(dm => dm.KeyValuePairs)
+               .Returns(new Dictionary<string, object>
+               {
+                    { "IlrReferenceData", "IlrReferenceData" },
+                    { "OriginalFilename", "OriginalFilename" },
+                    { "Filename", "Filename" },
+                    { "Container", "Container" },
+                    { "ReturnPeriod", 0 }
+               });
 
             IReferenceDataContext referenceDataContext = new ReferenceDataJobContextMessageContext(desktopContextMock.Object);
 
