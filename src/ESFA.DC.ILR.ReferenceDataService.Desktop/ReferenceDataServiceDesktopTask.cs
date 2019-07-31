@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
                 referenceDataContext,
                 message.HeaderEntity.CollectionDetailsEntity.FilePreparationDate,
                 referenceData.MetaDatas.CollectionDates.ReturnPeriods);
-            _logger.LogInfo("Finished adding Return Period to Context");
+            _logger.LogInfo("Finished adding Return Period " + referenceDataContext.ReturnPeriod.ToString() + "to Context");
 
             return desktopContext;
         }
