@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesktopContextReturnPeriodUpdateServiceTests.cs" />
     <Compile Include="DesktopReferenceDataFileRetrievalServiceTests.cs" />
     <Compile Include="MapperTests.cs" />
     <Compile Include="DesktopReferenceDataMapperServiceTests.cs" />
