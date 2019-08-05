@@ -66,6 +66,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                       o => new Organisation
                       {
                           UKPRN = (int)o.Ukprn,
+                          Name = o.OrgDetail.Name,
                           LegalOrgType = o.OrgDetail.LegalOrgType,
                           PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
                           CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),

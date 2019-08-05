@@ -6,6 +6,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
     {
         public int UKPRN { get; set; }
 
+        public string Name { get; set; }
+
         public bool? PartnerUKPRN { get; set; }
 
         public string LegalOrgType { get; set; }

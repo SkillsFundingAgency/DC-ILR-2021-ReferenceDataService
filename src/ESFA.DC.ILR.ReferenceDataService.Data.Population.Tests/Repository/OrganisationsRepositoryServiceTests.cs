@@ -32,6 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 1,
                         LegalOrgType = "LegalType1",
+                        Name = "Name1"
                     },
                     OrgPartnerUkprns = new List<OrgPartnerUkprn>
                     {
@@ -66,6 +67,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 2,
                         LegalOrgType = "LegalType2",
+                        Name = "Name2"
                     },
                 },
             };
@@ -104,6 +106,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             organisations.Where(o => o.UKPRN == 1).Select(o => o.UKPRN).Should().BeEquivalentTo(1);
             organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType1");
+            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.Name).Should().BeEquivalentTo("Name1");
             organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().CampusIdentifier.Should().BeEquivalentTo("CampId_01");
             organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().Be(true);
             organisations.Where(o => o.UKPRN == 1).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(true);
@@ -111,6 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             organisations.Where(o => o.UKPRN == 2).Select(o => o.UKPRN).Should().BeEquivalentTo(2);
             organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType2");
+            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.Name).Should().BeEquivalentTo("Name2");
             organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.CampusIdentifers).Should().BeNullOrEmpty();
             organisations.Where(o => o.UKPRN == 2).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(false);
             organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.OrganisationFundings).Should().BeNullOrEmpty();
