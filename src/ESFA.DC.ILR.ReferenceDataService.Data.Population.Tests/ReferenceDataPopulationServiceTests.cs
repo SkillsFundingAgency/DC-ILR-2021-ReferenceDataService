@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
             var appsHistoryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
-            var easRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>>>();
+            var easRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>>();
             var employersRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             var epaOrgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
             var fcsRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>>();
@@ -116,13 +116,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private IReadOnlyCollection<EASFundingLine> TestEas()
+        private IReadOnlyCollection<EasFundingLine> TestEas()
         {
-            return new List<EASFundingLine>
+            return new List<EasFundingLine>
             {
-                new EASFundingLine(),
-                new EASFundingLine(),
-                new EASFundingLine(),
+                new EasFundingLine(),
+                new EasFundingLine(),
+                new EasFundingLine(),
             };
         }
 
@@ -222,7 +222,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
-            IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>> easRepositoryService = null,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> easRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
             IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,

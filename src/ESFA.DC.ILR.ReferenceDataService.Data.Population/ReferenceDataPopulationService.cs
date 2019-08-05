@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IMessageMapperService _messageMapperService;
         private readonly IMetaDataRetrievalService _metaDataRetrievalService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> _appEarningsHistoryRepositoryService;
-        private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>> _easRepositoryService;
+        private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> _easRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> _employersRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
         private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> _fcsRepositoryService;
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             IMessageMapperService messageMapperService,
             IMetaDataRetrievalService metaDataRetrievalService,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService,
-            IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>> easRepositoryService,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> easRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
             IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService,

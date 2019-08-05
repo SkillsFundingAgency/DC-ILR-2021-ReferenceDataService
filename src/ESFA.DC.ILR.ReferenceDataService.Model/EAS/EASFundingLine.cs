@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 {
-    public class EASFundingLine
+    public class EasFundingLine
     {
         public string FundLine { get; set; }
 

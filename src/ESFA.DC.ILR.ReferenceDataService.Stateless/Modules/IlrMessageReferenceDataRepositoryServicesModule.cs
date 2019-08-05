@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<AppEarningsHistoryRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
-            containerBuilder.RegisterType<EasRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<EASFundingLine>>>();
+            containerBuilder.RegisterType<EasRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>>();
             containerBuilder.RegisterType<EmployersRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             containerBuilder.RegisterType<EpaOrganisationsRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
             containerBuilder.RegisterType<FcsRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>>();

@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
 
         public IReadOnlyCollection<ApprenticeshipEarningsHistory> AppsEarningsHistories { get; set; }
 
-        public IReadOnlyCollection<EASFundingLine> EasFundingLines { get; set; }
+        public IReadOnlyCollection<EasFundingLine> EasFundingLines { get; set; }
 
         public IReadOnlyCollection<Employer> Employers { get; set; }
 

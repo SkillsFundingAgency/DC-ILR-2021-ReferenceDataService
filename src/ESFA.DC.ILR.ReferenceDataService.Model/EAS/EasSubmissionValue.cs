@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 {
     public class EasSubmissionValue
     {
@@ -10,28 +6,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 
         public string AdjustmentTypeName { get; set; }
 
-        public decimal? Period1 { get; set; }
+        public EasPaymentValue Period1 { get; set; }
 
-        public decimal? Period2 { get; set; }
+        public EasPaymentValue Period2 { get; set; }
 
-        public decimal? Period3 { get; set; }
+        public EasPaymentValue Period3 { get; set; }
 
-        public decimal? Period4 { get; set; }
+        public EasPaymentValue Period4 { get; set; }
 
-        public decimal? Period5 { get; set; }
+        public EasPaymentValue Period5 { get; set; }
 
-        public decimal? Period6 { get; set; }
+        public EasPaymentValue Period6 { get; set; }
 
-        public decimal? Period7 { get; set; }
+        public EasPaymentValue Period7 { get; set; }
 
-        public decimal? Period8 { get; set; }
+        public EasPaymentValue Period8 { get; set; }
 
-        public decimal? Period9 { get; set; }
+        public EasPaymentValue Period9 { get; set; }
 
-        public decimal? Period10 { get; set; }
+        public EasPaymentValue Period10 { get; set; }
 
-        public decimal? Period11 { get; set; }
+        public EasPaymentValue Period11 { get; set; }
 
-        public decimal? Period12 { get; set; }
+        public EasPaymentValue Period12 { get; set; }
     }
 }
