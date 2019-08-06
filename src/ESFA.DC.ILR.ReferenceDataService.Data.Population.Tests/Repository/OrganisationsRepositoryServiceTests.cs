@@ -91,11 +91,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
+            IEnumerable<CampusIdentifierSpecResource> campusIdentifiersSpecResources = new List<CampusIdentifierSpecResource>
+            {
+                new CampusIdentifierSpecResource
+                {
+                    MasterUkprn = 1,
+                    CampusIdentifier = "CampId_01",
+                    SpecialistResources = true,
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                },
+                new CampusIdentifierSpecResource
+                {
+                    MasterUkprn = 1,
+                    CampusIdentifier = "CampId_02",
+                    SpecialistResources = true,
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                },
+            };
+
             var masterOrgMock = masterOrgList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersMock = campusIdentifiersList.AsQueryable().BuildMockDbSet();
+            var campusIdentifiersSpecResourcesMock = campusIdentifiersSpecResources.AsQueryable().BuildMockDbSet();
 
             organisationsMock.Setup(o => o.MasterOrganisations).Returns(masterOrgMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifiers).Returns(campusIdentifiersMock.Object);
+            organisationsMock.Setup(o => o.CampusIdentifierSpecResources).Returns(campusIdentifiersSpecResourcesMock.Object);
 
             var organisations = await NewService(organisationsMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
 
