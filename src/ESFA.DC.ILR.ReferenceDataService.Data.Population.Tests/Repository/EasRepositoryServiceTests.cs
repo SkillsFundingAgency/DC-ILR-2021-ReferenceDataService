@@ -21,9 +21,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void MapEasValues()
         {
-            var easFundingLines = new List<EASFundingLine>
+            var paymentPeriod1 = new EasPaymentValue(1.0m, null);
+            var paymentPeriod2 = new EasPaymentValue(2.0m, null);
+            var paymentPeriod3 = new EasPaymentValue(3.0m, null);
+
+            var easFundingLines = new List<EasFundingLine>
             {
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine1",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -40,7 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     }
                 },
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine2",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -59,45 +63,45 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, decimal?>>>
+            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>>
             {
                 {
-                    "FundLine1", new Dictionary<string, Dictionary<int, decimal?>>
+                    "FundLine1", new Dictionary<string, Dictionary<int, EasPaymentValue>>
                     {
                         {
-                            "PaymentName1", new Dictionary<int, decimal?>
+                            "PaymentName1", new Dictionary<int, EasPaymentValue>
                             {
-                                { 1, 1.0m },
-                                { 2, 2.0m }
+                                { 1, paymentPeriod1 },
+                                { 2, paymentPeriod2 }
                             }
                         },
                         {
-                            "PaymentName11", new Dictionary<int, decimal?>
+                            "PaymentName11", new Dictionary<int, EasPaymentValue>
                             {
-                                { 1, 1.0m },
-                                { 2, 2.0m },
-                                { 3, 3.0m }
+                                { 1, paymentPeriod1 },
+                                { 2, paymentPeriod2 },
+                                { 3, paymentPeriod3 }
                             }
                         }
                     }
                 },
                 {
-                    "FundLine2", new Dictionary<string, Dictionary<int, decimal?>>
+                    "FundLine2", new Dictionary<string, Dictionary<int, EasPaymentValue>>
                     {
                         {
-                            "PaymentName2", new Dictionary<int, decimal?>
+                            "PaymentName2", new Dictionary<int, EasPaymentValue>
                             {
-                                { 1, 1.0m },
-                                { 2, 2.0m }
+                                { 1, paymentPeriod1 },
+                                { 2, paymentPeriod2 }
                             }
                         }
                     }
                 }
             };
 
-            var expectedOutput = new List<EASFundingLine>
+            var expectedOutput = new List<EasFundingLine>
             {
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine1",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -106,20 +110,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AdjustmentTypeName = "AdjustmentTypeName1",
                             PaymentName = "PaymentName1",
-                            Period1 = 1.0m,
-                            Period2 = 2.0m
+                            Period1 = paymentPeriod1,
+                            Period2 = paymentPeriod2
                         },
                         new EasSubmissionValue
                         {
                             AdjustmentTypeName = "AdjustmentTypeName11",
                             PaymentName = "PaymentName11",
-                            Period1 = 1.0m,
-                            Period2 = 2.0m,
-                            Period3 = 3.0m
+                            Period1 = paymentPeriod1,
+                            Period2 = paymentPeriod2,
+                            Period3 = paymentPeriod3,
                         }
                     }
                 },
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine2",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -128,8 +132,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AdjustmentTypeName = "AdjustmentTypeName2",
                             PaymentName = "PaymentName2",
-                            Period1 = 1.0m,
-                            Period2 = 2.0m
+                            Period1 = paymentPeriod1,
+                            Period2 = paymentPeriod2,
                         },
                         new EasSubmissionValue
                         {
@@ -146,9 +150,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void MapEasValues_NoEasValues()
         {
-            var easFundingLines = new List<EASFundingLine>
+            var easFundingLines = new List<EasFundingLine>
             {
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine1",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -165,7 +169,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     }
                 },
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine2",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -184,11 +188,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, decimal?>>>();
+            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>>();
 
-            var expectedOutput = new List<EASFundingLine>
+            var expectedOutput = new List<EasFundingLine>
             {
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine1",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -205,7 +209,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         }
                     }
                 },
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine2",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -230,9 +234,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
-            var expectedOutput = new List<EASFundingLine>
+            var paymentPeriod1 = new EasPaymentValue(1.0m, null);
+            var paymentPeriod11 = new EasPaymentValue(11.0m, null);
+            var paymentPeriod2 = new EasPaymentValue(2.0m, null);
+
+            var expectedOutput = new List<EasFundingLine>
             {
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine1",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -241,17 +249,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AdjustmentTypeName = "AdjustmentTypeName1",
                             PaymentName = "PaymentName1",
-                            Period1 = 1.0m,
+                            Period1 = paymentPeriod1,
                         },
                         new EasSubmissionValue
                         {
                             AdjustmentTypeName = "AdjustmentTypeName11",
                             PaymentName = "PaymentName11",
-                            Period11 = 11.0m,
+                            Period11 = paymentPeriod11,
                         }
                     }
                 },
-                new EASFundingLine
+                new EasFundingLine
                 {
                     FundLine = "FundLine2",
                     EasSubmissionValues = new List<EasSubmissionValue>
@@ -260,7 +268,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             AdjustmentTypeName = "AdjustmentTypeName2",
                             PaymentName = "PaymentName2",
-                            Period2 = 2.0m,
+                            Period2 = paymentPeriod2,
                         },
                         new EasSubmissionValue
                         {

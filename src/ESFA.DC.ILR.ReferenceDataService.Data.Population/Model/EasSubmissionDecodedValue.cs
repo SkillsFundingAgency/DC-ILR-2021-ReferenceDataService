@@ -11,5 +11,7 @@
         public int Period { get; set; }
 
         public decimal? PaymentValue { get; set; }
+
+        public int? DevolvedAreaSof { get; set; }
     }
 }
