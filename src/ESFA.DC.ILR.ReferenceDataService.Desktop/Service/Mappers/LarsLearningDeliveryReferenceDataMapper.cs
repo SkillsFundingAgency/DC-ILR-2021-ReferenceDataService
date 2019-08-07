@@ -25,7 +25,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                         lf.FworkCode == key.FworkCode
                     && lf.ProgType == key.ProgType
                     && lf.PwayCode == key.PwayCode)
-                    .FirstOrDefault();
+                    .Select(l => new LARSFramework
+                    {
+                        FworkCode = l.FworkCode,
+                        PwayCode = l.PwayCode,
+                        ProgType = l.ProgType,
+                        EffectiveFromNullable = l.EffectiveFromNullable,
+                        EffectiveTo = l.EffectiveTo,
+                        LARSFrameworkAim = l.LARSFrameworkAims?.FirstOrDefault(fa => fa.LearnAimRef == key.LearnAimRef),
+                        LARSFrameworkApprenticeshipFundings = l.LARSFrameworkApprenticeshipFundings,
+                        LARSFrameworkCommonComponents = l.LARSFrameworkCommonComponents,
+                    }).FirstOrDefault();
 
                 if (framework != null)
                 {

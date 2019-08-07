@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
             containerBuilder.RegisterType<DesktopEpaOrganisationsRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>>();
             containerBuilder.RegisterType<DesktopLarsStandardRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>>();
             containerBuilder.RegisterType<DesktopLarsLearningDeliveryRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>>();
-            containerBuilder.RegisterType<DesktopLarsFrameworkRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>>>();
+            containerBuilder.RegisterType<DesktopLarsFrameworkRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>>();
             containerBuilder.RegisterType<DesktopOrganisationsRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>>();
             containerBuilder.RegisterType<DesktopPostcodesRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>>();
         }

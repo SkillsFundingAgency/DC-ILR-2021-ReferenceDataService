@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var epaOrgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>>();
             var larsLearningDeliveryRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>>();
             var larsStandardRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>>();
-            var larsFrameworkRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>>>();
+            var larsFrameworkRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>>();
             var orgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>>();
             var postcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>>();
 
@@ -153,12 +153,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
-        private IReadOnlyCollection<LARSFramework> TestLarsFrameworks()
+        private IReadOnlyCollection<LARSFrameworkDesktop> TestLarsFrameworks()
         {
-            return new List<LARSFramework>
+            return new List<LARSFrameworkDesktop>
             {
-                new LARSFramework(),
-                new LARSFramework(),
+                new LARSFrameworkDesktop(),
+                new LARSFrameworkDesktop(),
             };
         }
 
@@ -186,7 +186,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
-            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>> larsFrameworkRepositoryService = null,
+            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> larsFrameworkRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> postcodesRepositoryService = null)
         {

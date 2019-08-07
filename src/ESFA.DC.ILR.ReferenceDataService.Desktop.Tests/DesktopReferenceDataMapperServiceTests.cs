@@ -394,21 +394,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         EffectiveFrom = new DateTime(2018, 8, 1),
                     },
                 },
-                LARSFrameworks = new List<LARSFramework>
+                LARSFrameworks = new List<LARSFrameworkDesktop>
                 {
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 1,
                         ProgType = 2,
                         PwayCode = 3,
                     },
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 2,
                         ProgType = 2,
                         PwayCode = 3,
                     },
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 2,
                         ProgType = 2,

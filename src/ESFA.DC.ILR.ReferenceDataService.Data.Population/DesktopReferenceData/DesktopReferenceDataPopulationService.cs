@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> _larsStandardRepositoryService;
-        private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>> _larsFrameworkRepositoryService;
+        private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> _larsFrameworkRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> _organisationsRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
 
@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService,
-            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>> larsFrameworkRepositoryService,
+            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> larsFrameworkRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> organisationsRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> postcodesRepositoryService)
         {
