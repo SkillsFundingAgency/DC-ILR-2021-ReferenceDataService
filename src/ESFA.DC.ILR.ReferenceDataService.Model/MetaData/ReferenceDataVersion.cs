@@ -11,5 +11,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
         public OrganisationsVersion OrganisationsVersion { get; set; }
 
         public PostcodesVersion PostcodesVersion { get; set; }
+
+        public EasUploadDateTime EasUploadDateTime { get; set; }
     }
 }

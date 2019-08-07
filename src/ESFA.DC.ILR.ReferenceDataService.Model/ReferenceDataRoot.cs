@@ -7,6 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model
 {
@@ -31,6 +32,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
         public IReadOnlyCollection<Organisation> Organisations { get; set; }
 
         public IReadOnlyCollection<Postcode> Postcodes { get; set; }
+
+        public DevolvedPostocdes DevolvedPostocdes { get; set; }
 
         public IReadOnlyCollection<long> ULNs { get; set; }
     }
