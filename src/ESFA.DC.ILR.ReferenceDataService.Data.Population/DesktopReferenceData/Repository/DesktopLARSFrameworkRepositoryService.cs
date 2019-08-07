@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
 {
-    public class DesktopLarsFrameworkRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFramework>>
+    public class DesktopLarsFrameworkRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>
     {
         private readonly ILARSContext _larsContext;
 
@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             _larsContext = larsContext;
         }
 
-        public async Task<IReadOnlyCollection<LARSFramework>> RetrieveAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LARSFrameworkDesktop>> RetrieveAsync(CancellationToken cancellationToken)
         {
             var larsFrameworks = await _larsContext.LARS_Frameworks
                 .Include(l => l.LarsFrameworkAims)
@@ -27,20 +27,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 .ToListAsync(cancellationToken);
 
             return larsFrameworks
-                .Select(lf => new LARSFramework
+                .Select(lf => new LARSFrameworkDesktop
                 {
                     FworkCode = lf.FworkCode,
                     ProgType = lf.ProgType,
                     PwayCode = lf.PwayCode,
                     EffectiveFromNullable = lf.EffectiveFrom,
                     EffectiveTo = lf.EffectiveTo,
-                    LARSFrameworkAim = lf.LarsFrameworkAims.Select(lfa =>
+                    LARSFrameworkAims = lf.LarsFrameworkAims.Select(lfa =>
                     new LARSFrameworkAim
                     {
+                        LearnAimRef = lfa.LearnAimRef,
                         EffectiveFrom = lfa.EffectiveFrom,
                         EffectiveTo = lfa.EffectiveTo,
                         FrameworkComponentType = lfa.FrameworkComponentType,
-                    }).FirstOrDefault(),
+                    }).ToList(),
                     LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
                     new LARSFrameworkApprenticeshipFunding
                     {

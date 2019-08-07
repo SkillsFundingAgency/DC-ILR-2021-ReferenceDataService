@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
 {
     public class DesktopReferenceDataRoot : ReferenceDataRoot
     {
-        public IReadOnlyCollection<LARSFramework> LARSFrameworks { get; set; }
+        public IReadOnlyCollection<LARSFrameworkDesktop> LARSFrameworks { get; set; }
     }
 }

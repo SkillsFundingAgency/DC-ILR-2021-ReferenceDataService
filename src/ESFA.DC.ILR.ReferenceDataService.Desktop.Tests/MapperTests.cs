@@ -165,6 +165,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                             FworkCode = 1,
                             ProgType = 2, 
                             PwayCode = 3, 
+                            LARSFrameworkAim = new LARSFrameworkAim
+                            {
+                                LearnAimRef = "1"
+                            }
                         }
                     },
                     EffectiveFrom = new DateTime(2018, 8, 1),
@@ -418,21 +422,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         EffectiveFrom = new DateTime(2018, 8, 1),
                     },
                 },
-                LARSFrameworks = new List<LARSFramework>
+                LARSFrameworks = new List<LARSFrameworkDesktop>
                 {
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 1,
                         ProgType = 2,
                         PwayCode = 3,
+                        LARSFrameworkAims = new List<LARSFrameworkAim>
+                        {
+                            new LARSFrameworkAim
+                            {
+                                LearnAimRef = "1",
+                            }
+                        }
                     },
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 2,
                         ProgType = 2,
                         PwayCode = 3,
                     },
-                    new LARSFramework
+                    new LARSFrameworkDesktop
                     {
                         FworkCode = 2,
                         ProgType = 2,

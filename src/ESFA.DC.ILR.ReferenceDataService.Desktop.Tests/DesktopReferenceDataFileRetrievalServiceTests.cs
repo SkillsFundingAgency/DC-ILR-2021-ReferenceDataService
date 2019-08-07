@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Employer>>(It.IsAny<Stream>())).Returns(TestEmployers());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<EPAOrganisation>>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSLearningDelivery>>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSFramework>>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSFrameworkDesktop>>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSStandard>>(It.IsAny<Stream>())).Returns(TestLarsStandards());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Organisation>>(It.IsAny<Stream>())).Returns(TestOrganisations());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Postcode>>(It.IsAny<Stream>())).Returns(TestPostcodes());
@@ -242,23 +242,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
         }
 
 
-        private List<LARSFramework> TestLarsFrameworks()
+        private List<LARSFrameworkDesktop> TestLarsFrameworks()
         {
-            return new List<LARSFramework>
+            return new List<LARSFrameworkDesktop>
             {
-                new LARSFramework
+                new LARSFrameworkDesktop
                 {
                     FworkCode = 1,
                     ProgType = 2,
                     PwayCode = 3,
                 },
-                new LARSFramework
+                new LARSFrameworkDesktop
                 {
                     FworkCode = 2,
                     ProgType = 2,
                     PwayCode = 3,
                 },
-                new LARSFramework
+                new LARSFrameworkDesktop
                 {
                     FworkCode = 2,
                     ProgType = 2,
