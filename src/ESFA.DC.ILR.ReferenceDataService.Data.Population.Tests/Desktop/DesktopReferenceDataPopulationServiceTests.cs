@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var organisations = TestOrganisations();
             var postcodes = TestPostcodes();
 
-            var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
+            var metaDataServiceMock = new Mock<IDesktopMetaDataRetrievalService>();
             var devolvedPostcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<DevolvedPostcodes>>();
             var employersRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>>>();
             var epaOrgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>>();
@@ -203,7 +203,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         }
 
         private DesktopReferenceDataPopulationService NewService(
-            IMetaDataRetrievalService metaDataRetrievalService = null,
+            IDesktopMetaDataRetrievalService metaDataRetrievalService = null,
             IDesktopReferenceDataRepositoryService<DevolvedPostcodes> devolvedPostcodesRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> employersRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,

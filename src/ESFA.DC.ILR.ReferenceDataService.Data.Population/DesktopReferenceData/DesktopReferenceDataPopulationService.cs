@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 {
     public class DesktopReferenceDataPopulationService : IDesktopReferenceDataPopulationService
     {
-        private readonly IMetaDataRetrievalService _metaDataRetrievalService;
+        private readonly IDesktopMetaDataRetrievalService _metaDataRetrievalService;
         private readonly IDesktopReferenceDataRepositoryService<DevolvedPostcodes> _devolvedPostcodesRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> _employersRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
 
         public DesktopReferenceDataPopulationService(
-            IMetaDataRetrievalService metaDataRetrievalService,
+            IDesktopMetaDataRetrievalService metaDataRetrievalService,
             IDesktopReferenceDataRepositoryService<DevolvedPostcodes> devolvedPostcodesRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> employersRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,

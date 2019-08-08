@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface
 {
     public interface IMetaDataRetrievalService
     {
-        Task<MetaData> RetrieveAsync(CancellationToken cancellationToken);
+        Task<MetaData> RetrieveAsync(int ukprn, CancellationToken cancellationToken);
     }
 }

@@ -69,7 +69,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
             return new ReferenceDataRoot
             {
-                MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
+                MetaDatas = await _metaDataRetrievalService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
                 DevolvedPostocdes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
                 EasFundingLines = await _easRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),

@@ -12,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
@@ -19,6 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<MetaDataRetrievalService>().As<IMetaDataRetrievalService>();
             containerBuilder.RegisterType<AppEarningsHistoryRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
             containerBuilder.RegisterType<EasRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>>();
             containerBuilder.RegisterType<DevolvedPostcodesRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes>>();
