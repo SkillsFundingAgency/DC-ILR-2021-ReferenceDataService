@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
+using ESFA.DC.EAS1920.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
@@ -17,11 +18,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
     public class MetaDataRetrievalService : IMetaDataRetrievalService
     {
+        private const string EasLastUpdated = "EAS Last Updated";
         private const string EmployersVersionName = "Employers Version";
         private const string LarsVersionName = "LARS Version";
         private const string OrganisationsVersionName = "Organisations Version";
         private const string PostcodesVersionName = "Potcodes Version";
 
+        private readonly IEasdbContext _easContext;
         private readonly IEmployersContext _employersContext;
         private readonly ILARSContext _larsContext;
         private readonly IOrganisationsContext _organisationsContext;
@@ -30,6 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public MetaDataRetrievalService(
+            IEasdbContext easContext,
             IEmployersContext employersContext,
             ILARSContext larsContext,
             IOrganisationsContext organisationsContext,
@@ -37,6 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService,
             IDateTimeProvider dateTimeProvider)
         {
+            _easContext = easContext;
             _employersContext = employersContext;
             _larsContext = larsContext;
             _organisationsContext = organisationsContext;
@@ -45,8 +50,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
+        public async Task<MetaData> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
         {
+            var latestEAS = await _easContext.EasSubmissions.FirstOrDefaultAsync(v => v.Ukprn == ukprn.ToString());
+
             var metaData = new MetaData
             {
                 DateGenerated = _dateTimeProvider.GetNowUtc(),
@@ -69,6 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                         .OrderByDescending(v => v.VersionNumber)
                         .Select(v => new PostcodesVersion(v.VersionNumber))
                         .FirstOrDefaultAsync(cancellationToken),
+                    EasUploadDateTime = new EasUploadDateTime(latestEAS?.UpdatedOn),
                 },
                 ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
                 ValidationRules = await _ilReferenceDataRepositoryService.RetrieveValidationRulesAsync(cancellationToken),

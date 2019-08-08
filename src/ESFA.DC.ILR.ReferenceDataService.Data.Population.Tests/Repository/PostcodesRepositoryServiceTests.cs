@@ -164,36 +164,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var mcaglaSofPostCodes = new List<McaglaSof>
-            {
-                new McaglaSof
-                {
-                    Postcode = "PostCode1",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                },
-                new McaglaSof
-                {
-                    Postcode = "PostCode2",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new McaglaSof
-                 {
-                     Postcode = "PostCode2",
-                     SofCode = "SofCode2",
-                     EffectiveFrom = new DateTime(2018, 8, 1),
-                 },
-            };
-
             masterPostcodeTaskResult.SetResult(masterPostcodes);
             sfaAreaCostTaskResult.SetResult(sfaAreaCost);
             sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
             efaDisadvantageTaskResult.SetResult(efaDisadvantage);
             dasDisadvantageTaskResult.SetResult(dasDisadvantage);
             onsDataTaskResult.SetResult(onsPostcodes);
-            mcaglaSOFTaskResult.SetResult(mcaglaSofPostCodes);
 
             var jsonSerializationMock = new Mock<IJsonSerializationService>();
 
@@ -207,7 +183,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
-            service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(mcaglaSOFTaskResult.Task);
 
             var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
 

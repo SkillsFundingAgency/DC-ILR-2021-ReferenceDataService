@@ -10,7 +10,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<MetaDataRetrievalService>().As<IMetaDataRetrievalService>();
             containerBuilder.RegisterType<IlrReferenceDataRepositoryService>().As<IIlrReferenceDataRepositoryService>();
         }
     }

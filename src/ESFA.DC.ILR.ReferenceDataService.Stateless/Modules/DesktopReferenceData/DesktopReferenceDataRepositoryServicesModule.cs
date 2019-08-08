@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -7,6 +8,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceData
 {
@@ -14,6 +16,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<DesktopMetaDataRetrievalService>().As<IDesktopMetaDataRetrievalService>();
+            containerBuilder.RegisterType<DesktopDevolvedPostcodesRepositoryService>().As<IDesktopReferenceDataRepositoryService<DevolvedPostcodes>>();
             containerBuilder.RegisterType<DesktopEmployersRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>>>();
             containerBuilder.RegisterType<DesktopEpaOrganisationsRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>>();
             containerBuilder.RegisterType<DesktopLarsStandardRepositoryService>().As<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>>();

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
+using ESFA.DC.EAS1920.EF;
+using ESFA.DC.EAS1920.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ReferenceData.Employers.Model;
@@ -19,6 +21,7 @@ using MockQueryable.Moq;
 using Moq;
 using Xunit;
 using static ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
+using ValidationError = ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
@@ -32,7 +35,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var orgVersion = "Version3";
             var postcodesVersion = "Version4";
             var utcDateTime = new DateTime(2019, 8, 1);
+            var easDateTime = new DateTime(2019, 8, 1);
 
+            var easMock = new Mock<IEasdbContext>();
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
             var orgMock = new Mock<IOrganisationsContext>();
@@ -41,6 +46,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var dateTimeProviderMock = new Mock<IDateTimeProvider>();
 
             dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(utcDateTime);
+
+            IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
+            {
+                new EasSubmission { Ukprn = "1", UpdatedOn = new DateTime(2019, 8, 1) },
+                new EasSubmission { Ukprn = "2", UpdatedOn = new DateTime(2019, 9, 1) }
+            };
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -105,11 +116,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Lookup { Code = "Lookup3", Name = "Lookup" },
             };
 
+            var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
+            easMock.Setup(e => e.EasSubmissions).Returns(easDbMock.Object);
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
@@ -119,18 +132,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationRulesAsync(CancellationToken.None)).Returns(Task.FromResult(validationRules));
 
             var serviceResult = await NewService(
+                easMock.Object,
                 employersMock.Object,
                 larsMock.Object,
                 orgMock.Object,
                 postcodesMock.Object,
                 ilrReferenceDataRepositoryServiceMock.Object,
-                dateTimeProviderMock.Object).RetrieveAsync(CancellationToken.None);
+                dateTimeProviderMock.Object).RetrieveAsync(1, CancellationToken.None);
 
             serviceResult.DateGenerated.Should().Be(utcDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
+            serviceResult.ReferenceDataVersions.EasUploadDateTime.UploadDateTime.Should().BeSameDateAs(easDateTime);
             serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
             serviceResult.ValidationRules.Should().BeEquivalentTo(validationRules);
         }
@@ -138,6 +153,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync_ThrowsException()
         {
+            var easDateTime = new DateTime(2019, 8, 1);
+
+            var easMock = new Mock<IEasdbContext>();
             var employersMock = new Mock<IEmployersContext>();
             var larsMock = new Mock<ILARSContext>();
             var orgMock = new Mock<IOrganisationsContext>();
@@ -146,6 +164,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var dateTimeProviderMock = new Mock<IDateTimeProvider>();
 
             dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
+
+            IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
+            {
+                new EasSubmission { Ukprn = "1", UpdatedOn = new DateTime(2019, 8, 1) },
+                new EasSubmission { Ukprn = "2", UpdatedOn = new DateTime(2019, 9, 1) }
+            };
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
             {
@@ -192,11 +216,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Lookup { Code = "Lookup3", Name = "Lookup" },
             };
 
+            var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
+            easMock.Setup(e => e.EasSubmissions).Returns(easDbMock.Object);
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
@@ -207,12 +233,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             Func<Task> serviceResult = async () =>
             {
                 await NewService(
+                         easMock.Object,
                          employersMock.Object,
                          larsMock.Object,
                          orgMock.Object,
                          postcodesMock.Object,
                          ilrReferenceDataRepositoryServiceMock.Object,
-                         dateTimeProviderMock.Object).RetrieveAsync(CancellationToken.None);
+                         dateTimeProviderMock.Object).RetrieveAsync(1, CancellationToken.None);
             };
 
             serviceResult.Should().Throw<ArgumentOutOfRangeException>().WithMessage("Specified argument was out of the range of valid values." +
@@ -220,6 +247,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         private MetaDataRetrievalService NewService(
+            IEasdbContext eas = null,
             IEmployersContext employers = null,
             ILARSContext larsContext = null,
             IOrganisationsContext organisationsContext = null,
@@ -228,6 +256,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             IDateTimeProvider dateTimeProvider = null)
         {
             return new MetaDataRetrievalService(
+                eas,
                 employers,
                 larsContext,
                 organisationsContext,

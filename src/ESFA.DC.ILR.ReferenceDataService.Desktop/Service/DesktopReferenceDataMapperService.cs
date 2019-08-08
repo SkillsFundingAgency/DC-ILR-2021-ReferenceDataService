@@ -11,6 +11,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 {
@@ -19,6 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         private readonly IMessageMapperService _messageMapperService;
         private readonly IDesktopReferenceDataFileRetrievalService _desktopReferenceDataFileRetrievalService;
         private readonly IDesktopReferenceMetaDataMapper _metaDataMapper;
+        private readonly IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes> _devolvedPostcodesMapperService;
         private readonly IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> _employersMapperService;
         private readonly IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsMapperService;
         private readonly IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryMapperService;
@@ -30,6 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             IMessageMapperService messageMapperService,
             IDesktopReferenceDataFileRetrievalService desktopReferenceDataFileRetrievalService,
             IDesktopReferenceMetaDataMapper metaDataMapper,
+            IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes> devolvedPostcodesMapperService,
             IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersMapperService,
             IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsMapperService,
             IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryMapperService,
@@ -40,6 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _messageMapperService = messageMapperService;
             _desktopReferenceDataFileRetrievalService = desktopReferenceDataFileRetrievalService;
             _metaDataMapper = metaDataMapper;
+            _devolvedPostcodesMapperService = devolvedPostcodesMapperService;
             _employersMapperService = employersMapperService;
             _epaOrganisationsMapperService = epaOrganisationsMapperService;
             _larsLearningDeliveryMapperService = larsLearningDeliveryMapperService;
@@ -57,6 +61,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             return new ReferenceDataRoot
             {
                 MetaDatas = _metaDataMapper.Retrieve(desktopReferenceData),
+                DevolvedPostocdes = _devolvedPostcodesMapperService.Retrieve(messageData.Postcodes, desktopReferenceData),
                 Employers = _employersMapperService.Retrieve(messageData.EmployerIds, desktopReferenceData),
                 EPAOrganisations = _epaOrganisationsMapperService.Retrieve(messageData.EpaOrgIds, desktopReferenceData),
                 LARSLearningDeliveries = _larsLearningDeliveryMapperService.Retrieve(messageData.LARSLearningDeliveryKeys, desktopReferenceData),

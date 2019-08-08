@@ -12,12 +12,14 @@ using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData
 {
     public class DesktopReferenceDataPopulationService : IDesktopReferenceDataPopulationService
     {
-        private readonly IMetaDataRetrievalService _metaDataRetrievalService;
+        private readonly IDesktopMetaDataRetrievalService _metaDataRetrievalService;
+        private readonly IDesktopReferenceDataRepositoryService<DevolvedPostcodes> _devolvedPostcodesRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> _employersRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
@@ -27,7 +29,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
 
         public DesktopReferenceDataPopulationService(
-            IMetaDataRetrievalService metaDataRetrievalService,
+            IDesktopMetaDataRetrievalService metaDataRetrievalService,
+            IDesktopReferenceDataRepositoryService<DevolvedPostcodes> devolvedPostcodesRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> employersRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
@@ -37,6 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> postcodesRepositoryService)
         {
             _metaDataRetrievalService = metaDataRetrievalService;
+            _devolvedPostcodesRepositoryService = devolvedPostcodesRepositoryService;
             _employersRepositoryService = employersRepositoryService;
             _epaOrganisationsRepositoryService = epaOrganisationsRepositoryService;
             _larsLearningDeliveryRepositoryService = larsLearningDeliveryRepositoryService;
@@ -49,6 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         public async Task<DesktopReferenceDataRoot> PopulateAsync(CancellationToken cancellationToken)
         {
             var metaDatas = _metaDataRetrievalService.RetrieveAsync(cancellationToken);
+            var devolvedPostcodes = _devolvedPostcodesRepositoryService.RetrieveAsync(cancellationToken);
             var employers = _employersRepositoryService.RetrieveAsync(cancellationToken);
             var epaOrganisations = _epaOrganisationsRepositoryService.RetrieveAsync(cancellationToken);
             var larsLearningDeliveries = _larsLearningDeliveryRepositoryService.RetrieveAsync(cancellationToken);
@@ -60,6 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             var taskList = new List<Task>
             {
                 metaDatas,
+                devolvedPostcodes,
                 employers,
                 epaOrganisations,
                 larsLearningDeliveries,
@@ -75,6 +81,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             {
                 MetaDatas = metaDatas.Result,
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
+                DevolvedPostocdes = devolvedPostcodes.Result,
                 EasFundingLines = new List<EasFundingLine>(),
                 Employers = employers.Result,
                 EPAOrganisations = epaOrganisations.Result,
