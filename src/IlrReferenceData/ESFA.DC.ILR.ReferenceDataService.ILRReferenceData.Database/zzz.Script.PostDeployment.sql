@@ -2408,7 +2408,7 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_07', 
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_08', N'E', N'The Achievement date must be completed for apprenticeship standards and traineeship programmes with a status of achieved')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_09', N'E', N'The Achievement date must not be completed for aims that are not traineeship or apprenticeship standard programme aims')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_10', N'E', N'The Achievement date must not be more than 6 months after the Learning actual end date')
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_11', N'E', N'The Achievement date must be 7 days after the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_11', N'W', N'The Achievement date must be 7 days after the Learning actual end date')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_01', N'E', N'The Additional delivery hours must not be returned for learning aims that started prior to 1 August 2015')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_02', N'E', N'The Additional delivery hours must not be returned for EFA, Community Learning or Non-funded provision')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_03', N'E', N'The Additional delivery hours must only be returned for ESOL qualification or unit aims')
