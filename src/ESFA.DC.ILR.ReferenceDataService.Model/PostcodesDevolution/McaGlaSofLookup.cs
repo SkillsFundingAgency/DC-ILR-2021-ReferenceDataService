@@ -1,6 +1,8 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution
+﻿using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution
 {
-    public class McaGlaSofLookup
+    public class McaGlaSofLookup : AbstractTimeBoundedEntity
     {
         public string SofCode { get; set; }
 

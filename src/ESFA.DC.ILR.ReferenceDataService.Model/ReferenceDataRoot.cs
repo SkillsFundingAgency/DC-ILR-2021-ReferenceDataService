@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
 
         public IReadOnlyCollection<Postcode> Postcodes { get; set; }
 
-        public DevolvedPostocdes DevolvedPostocdes { get; set; }
+        public DevolvedPostcodes DevolvedPostocdes { get; set; }
 
         public IReadOnlyCollection<long> ULNs { get; set; }
     }

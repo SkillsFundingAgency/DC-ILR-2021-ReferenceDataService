@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
@@ -15,6 +16,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -34,6 +36,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var referenceDataVersions = TestReferenceDataVersions();
             var appsEarningHistories = TestAppsEarningHistories();
+            var devolvedPostcodes = TestDevolvedPostcodes();
             var eas = TestEas();
             var employers = TestEmployers();
             var epaOrgs = TestEpaOrgs();
@@ -47,6 +50,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
             var appsHistoryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
+            var devolvedPostcodesRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes>>();
             var easRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>>();
             var employersRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             var epaOrgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
@@ -60,6 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             messageMapperServiceMock.Setup(s => s.MapFromMessage(message)).Returns(mapperData);
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
             appsHistoryRSMock.Setup(s => s.RetrieveAsync(mapperData.FM36Ulns, cancellationToken)).Returns(Task.FromResult(appsEarningHistories));
+            devolvedPostcodesRSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(devolvedPostcodes));
             easRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(eas));
             employersRSMock.Setup(s => s.RetrieveAsync(mapperData.EmployerIds, cancellationToken)).Returns(Task.FromResult(employers));
             epaOrgRSMock.Setup(s => s.RetrieveAsync(mapperData.EpaOrgIds, cancellationToken)).Returns(Task.FromResult(epaOrgs));
@@ -74,6 +79,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 messageMapperServiceMock.Object,
                 metaDataServiceMock.Object,
                 appsHistoryRSMock.Object,
+                devolvedPostcodesRSMock.Object,
                 easRSMock.Object,
                 employersRSMock.Object,
                 epaOrgRSMock.Object,
@@ -113,6 +119,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             {
                 new ApprenticeshipEarningsHistory(),
                 new ApprenticeshipEarningsHistory(),
+            };
+        }
+
+        private DevolvedPostcodes TestDevolvedPostcodes()
+        {
+            return new DevolvedPostcodes
+            {
+                McaGlaSofLookups = new List<McaGlaSofLookup>
+                {
+                    new McaGlaSofLookup
+                    {
+                        SofCode = "105",
+                        McaGlaFullName = "Full Name",
+                        McaGlaShortCode = "ShortCode",
+                        EffectiveFrom = new DateTime(2019, 8, 1)
+                    }
+                }
             };
         }
 
@@ -222,6 +245,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IMessageMapperService messageMapperService = null,
             IMetaDataRetrievalService metaDataReferenceService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService = null,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes> devolvedPostcodesRepositoryService = null,
             IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> easRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
@@ -236,6 +260,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 messageMapperService,
                 metaDataReferenceService,
                 appEarningsHistoryRepositoryService,
+                devolvedPostcodesRepositoryService,
                 easRepositoryService,
                 employersRepositoryService,
                 epaOrganisationsRepositoryService,

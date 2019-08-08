@@ -8,6 +8,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
 {
@@ -16,6 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<MetaDataReferenceDataMapper>().As<IDesktopReferenceMetaDataMapper>();
+            containerBuilder.RegisterType<DevolvedPostcodesReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes>>();
             containerBuilder.RegisterType<EmployersReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             containerBuilder.RegisterType<EpaOrganisationsReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
             containerBuilder.RegisterType<LarsStandardReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();

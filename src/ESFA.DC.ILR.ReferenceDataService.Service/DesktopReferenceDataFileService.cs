@@ -27,6 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             var referenceDataDictionary = new Dictionary<string, object>();
 
             referenceDataDictionary.Add(DesktopReferenceDataConstants.MetaDataFile, desktopReferenceDataRoot.MetaDatas);
+            referenceDataDictionary.Add(DesktopReferenceDataConstants.DevolvedPostcodesFile, desktopReferenceDataRoot.DevolvedPostocdes);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.EmployersFile, desktopReferenceDataRoot.Employers);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.EPAOrganisationsFile, desktopReferenceDataRoot.EPAOrganisations);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSFrameworksFile, desktopReferenceDataRoot.LARSFrameworks);

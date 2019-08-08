@@ -13,6 +13,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
@@ -21,6 +22,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IMessageMapperService _messageMapperService;
         private readonly IMetaDataRetrievalService _metaDataRetrievalService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> _appEarningsHistoryRepositoryService;
+        private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes> _devolvedPostcodesRepositoryService;
         private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> _easRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> _employersRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> _epaOrganisationsRepositoryService;
@@ -35,6 +37,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             IMessageMapperService messageMapperService,
             IMetaDataRetrievalService metaDataRetrievalService,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>> appEarningsHistoryRepositoryService,
+            IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes> devolvedPostcodesRepositoryService,
             IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>> easRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService,
@@ -48,6 +51,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             _messageMapperService = messageMapperService;
             _metaDataRetrievalService = metaDataRetrievalService;
             _appEarningsHistoryRepositoryService = appEarningsHistoryRepositoryService;
+            _devolvedPostcodesRepositoryService = devolvedPostcodesRepositoryService;
             _easRepositoryService = easRepositoryService;
             _employersRepositoryService = employersRepositoryService;
             _epaOrganisationsRepositoryService = epaOrganisationsRepositoryService;
@@ -67,6 +71,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 MetaDatas = await _metaDataRetrievalService.RetrieveAsync(cancellationToken),
                 AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
+                DevolvedPostocdes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
                 EasFundingLines = await _easRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 Employers = await _employersRepositoryService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
                 EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),

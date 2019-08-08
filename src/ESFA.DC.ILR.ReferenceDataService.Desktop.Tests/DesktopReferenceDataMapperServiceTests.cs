@@ -16,6 +16,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
@@ -60,6 +61,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         Name = "Name2",
                     }
                 },
+            };
+
+            var devolvedPostcodes = new DevolvedPostcodes
+            {
+                McaGlaSofLookups = new List<McaGlaSofLookup>
+                {
+                    new McaGlaSofLookup
+                    {
+                        SofCode = "105",
+                        McaGlaFullName = "Full Name",
+                        McaGlaShortCode = "ShortCode",
+                        EffectiveFrom = new DateTime(2019, 8, 1)
+                    }
+                }
             };
 
             var employers = new List<Employer>
@@ -215,6 +230,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var expectedReferenceDataRoot = new ReferenceDataRoot
             {
                 MetaDatas = metaData,
+                DevolvedPostocdes = devolvedPostcodes,
                 Employers = employers,
                 EPAOrganisations = epaOrgs,
                 LARSLearningDeliveries = larsLearningDeliveries,
@@ -226,6 +242,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var desktopReferenceDataFileRetrievalServiceMock = new Mock<IDesktopReferenceDataFileRetrievalService>();
             var metaDataMapperMock = new Mock<IDesktopReferenceMetaDataMapper>();
+            var devolvedPostcodesMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes>>();
             var employersMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
             var epaOrganisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
             var larsLearningDeliveryMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
@@ -236,6 +253,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             messageMapperServiceMock.Setup(sm => sm.MapFromMessage(message)).Returns(mapperData);
             desktopReferenceDataFileRetrievalServiceMock.Setup(sm => sm.Retrieve()).Returns(desktopReferenceData);
             metaDataMapperMock.Setup(sm => sm.Retrieve(desktopReferenceData)).Returns(metaData);
+            devolvedPostcodesMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(devolvedPostcodes);
             employersMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<int>>(), desktopReferenceData)).Returns(employers);
             epaOrganisationsMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(epaOrgs);
             larsLearningDeliveryMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<LARSLearningDeliveryKey>>(), desktopReferenceData)).Returns(larsLearningDeliveries);
@@ -247,6 +265,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                 messageMapperServiceMock.Object,
                 desktopReferenceDataFileRetrievalServiceMock.Object,
                 metaDataMapperMock.Object,
+                devolvedPostcodesMock.Object,
                 employersMapperServiceMock.Object,
                 epaOrganisationsMapperServiceMock.Object,
                 larsLearningDeliveryMapperServiceMock.Object,
@@ -295,6 +314,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                             Message = "Message",
                         }
                     },
+                },
+                DevolvedPostocdes = new DevolvedPostcodes
+                {
+                    McaGlaSofLookups = new List<McaGlaSofLookup>
+                    {
+                         new McaGlaSofLookup
+                         {
+                             SofCode = "105",
+                             McaGlaFullName = "Full Name",
+                             McaGlaShortCode = "ShortCode",
+                             EffectiveFrom = new DateTime(2019, 8, 1)
+                         }
+                    }
                 },
                 Employers = new List<Employer>
                 {
@@ -497,6 +529,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             IMessageMapperService messageMapperService = null,
             IDesktopReferenceDataFileRetrievalService desktopReferenceDataFileRetrievalService = null,
             IDesktopReferenceMetaDataMapper metaDataMapper = null,
+            IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes> devolvedPostcodesMapperService = null,
             IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersMapperService = null,
             IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsMapperService = null,
             IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryMapperService = null,
@@ -508,6 +541,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                 messageMapperService,
                 desktopReferenceDataFileRetrievalService,
                 metaDataMapper,
+                devolvedPostcodesMapperService,
                 employersMapperService,
                 epaOrganisationsMapperService,
                 larsLearningDeliveryMapperService,

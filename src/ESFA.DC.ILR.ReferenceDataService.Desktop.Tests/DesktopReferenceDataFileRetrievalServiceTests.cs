@@ -12,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -29,6 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
 
             jsonSerializationServiceMock.Setup(js => js.Deserialize<MetaData>(It.IsAny<Stream>())).Returns(TestNetaData());
+            jsonSerializationServiceMock.Setup(js => js.Deserialize<DevolvedPostcodes>(It.IsAny<Stream>())).Returns(TestDevolvedPostcodes());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Employer>>(It.IsAny<Stream>())).Returns(TestEmployers());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<EPAOrganisation>>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSLearningDelivery>>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
@@ -45,6 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             return new DesktopReferenceDataRoot
             {
                 MetaDatas = TestNetaData(),
+                DevolvedPostocdes = TestDevolvedPostcodes(),
                 Employers = TestEmployers(),
                 EPAOrganisations = TestEpaOrgs(),
                 LARSLearningDeliveries = TestLarsLearningDeliveries(),
@@ -96,6 +99,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                             Message = "Message",
                         }
                     },
+            };
+        }
+
+        private DevolvedPostcodes TestDevolvedPostcodes()
+        {
+            return new DevolvedPostcodes
+            {
+                McaGlaSofLookups = new List<McaGlaSofLookup>
+                {
+                    new McaGlaSofLookup
+                    {
+                        SofCode = "105",
+                        McaGlaFullName = "Full Name",
+                        McaGlaShortCode = "ShortCode",
+                        EffectiveFrom = new DateTime(2019, 8, 1)
+                    }
+                }
             };
         }
 

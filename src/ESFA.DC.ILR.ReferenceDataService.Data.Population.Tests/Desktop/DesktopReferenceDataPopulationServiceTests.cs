@@ -13,6 +13,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -28,6 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var referenceDataVersions = TestReferenceDataVersions();
             var appsEarningHistories = TestAppsEarningHistories();
+            var devolvedPostcodes = TestDevolvedPostcodes();
             var employers = TestEmployers();
             var epaOrgs = TestEpaOrgs();
             var larsLearningDeliveries = TestLarsLearningDeliveries();
@@ -37,6 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var postcodes = TestPostcodes();
 
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
+            var devolvedPostcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<DevolvedPostcodes>>();
             var employersRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>>>();
             var epaOrgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>>();
             var larsLearningDeliveryRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>>();
@@ -46,6 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var postcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>>();
 
             metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
+            devolvedPostcodesRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(devolvedPostcodes));
             employersRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(employers));
             epaOrgRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(epaOrgs));
             larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
@@ -56,6 +60,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             var root = await NewService(
                 metaDataServiceMock.Object,
+                devolvedPostcodesRSMock.Object,
                 employersRSMock.Object,
                 epaOrgRSMock.Object,
                 larsLearningDeliveryRSMock.Object,
@@ -93,6 +98,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             {
                 new ApprenticeshipEarningsHistory(),
                 new ApprenticeshipEarningsHistory(),
+            };
+        }
+
+        private DevolvedPostcodes TestDevolvedPostcodes()
+        {
+            return new DevolvedPostcodes
+            {
+                McaGlaSofLookups = new List<McaGlaSofLookup>
+                {
+                    new McaGlaSofLookup
+                    {
+                        SofCode = "105",
+                        McaGlaFullName = "Full Name",
+                        McaGlaShortCode = "ShortCode",
+                        EffectiveFrom = new DateTime(2019, 8, 1)
+                    }
+                }
             };
         }
 
@@ -182,6 +204,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
         private DesktopReferenceDataPopulationService NewService(
             IMetaDataRetrievalService metaDataRetrievalService = null,
+            IDesktopReferenceDataRepositoryService<DevolvedPostcodes> devolvedPostcodesRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>> employersRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>> epaOrganisationsRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
@@ -192,6 +215,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         {
             return new DesktopReferenceDataPopulationService(
                 metaDataRetrievalService,
+                devolvedPostcodesRepositoryService,
                 employersRepositoryService,
                 epaOrganisationsRepositoryService,
                 larsLearningDeliveryRepositoryService,

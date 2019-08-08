@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
@@ -15,6 +13,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Constants;
 using ESFA.DC.Serialization.Interfaces;
 
@@ -32,14 +31,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         public DesktopReferenceDataRoot Retrieve()
         {
             var referenceData = new DesktopReferenceDataRoot();
-            var zipFIlePath = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault();
+            var zipFilePath = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault();
 
-            using (var zipFileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(zipFIlePath))
+            using (var zipFileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(zipFilePath))
             {
                 using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {
                     referenceData.MetaDatas = RetrieveModel<MetaData>(zip, DesktopReferenceDataConstants.MetaDataFile);
                     referenceData.AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>();
+                    referenceData.DevolvedPostocdes = RetrieveModel<DevolvedPostcodes>(zip, DesktopReferenceDataConstants.DevolvedPostcodesFile);
                     referenceData.Employers = RetrieveModel<List<Employer>>(zip, DesktopReferenceDataConstants.EmployersFile);
                     referenceData.EPAOrganisations = RetrieveModel<List<EPAOrganisation>>(zip, DesktopReferenceDataConstants.EPAOrganisationsFile);
                     referenceData.FCSContractAllocations = new List<FcsContractAllocation>();
