@@ -7,6 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Stateless.Constants;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.EPA.Model;
@@ -21,24 +22,30 @@ using ESFA.DC.ReferenceData.Postcodes.Model;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.ReferenceData.ULN.Model;
 using ESFA.DC.ReferenceData.ULN.Model.Interface;
-using ESFA.DC.ServiceFabric.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
     public class RepositoryModule : Module
     {
+        private readonly IReferenceDataOptions _referenceDataOptions;
+
+        public RepositoryModule(IReferenceDataOptions referenceDataOptions)
+        {
+            _referenceDataOptions = referenceDataOptions;
+        }
+
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            var configHelper = new ConfigurationHelper();
 
-            var referenceDataOptions = configHelper.GetSectionValues<ReferenceDataOptions>("ReferenceDataSection");
-            containerBuilder.RegisterInstance(referenceDataOptions).As<IReferenceDataOptions>().SingleInstance();
+            containerBuilder.RegisterInstance(_referenceDataOptions).As<IReferenceDataOptions>();
+            containerBuilder.RegisterType<PostcodesDbContextFactory>().As<IDbContextFactory<IPostcodesContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.PostcodesConnectionString);
 
             containerBuilder.Register(c =>
             {
                 DbContextOptions<AppEarnHistoryContext> options = new DbContextOptionsBuilder<AppEarnHistoryContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().AppsEarningsHistoryConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.AppsEarningsHistoryConnectionString).Options;
 
                 return new AppEarnHistoryContext(options);
             }).As<IAppEarnHistoryContext>();
@@ -46,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<EmployersContext> options = new DbContextOptionsBuilder<EmployersContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EmployersConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.EmployersConnectionString).Options;
 
                 return new EmployersContext(options);
             }).As<IEmployersContext>();
@@ -54,7 +61,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<EpaContext> options = new DbContextOptionsBuilder<EpaContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EPAConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.EPAConnectionString).Options;
 
                 return new EpaContext(options);
             }).As<IEpaContext>();
@@ -62,7 +69,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<FcsContext> options = new DbContextOptionsBuilder<FcsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().FCSConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.FCSConnectionString).Options;
 
                 return new FcsContext(options);
             }).As<IFcsContext>();
@@ -70,7 +77,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<LarsContext> options = new DbContextOptionsBuilder<LarsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().LARSConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.LARSConnectionString).Options;
 
                 return new LarsContext(options);
             }).As<ILARSContext>();
@@ -78,7 +85,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<OrganisationsContext> options = new DbContextOptionsBuilder<OrganisationsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().OrganisationsConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.OrganisationsConnectionString).Options;
 
                 return new OrganisationsContext(options);
             }).As<IOrganisationsContext>();
@@ -86,7 +93,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<PostcodesContext> options = new DbContextOptionsBuilder<PostcodesContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().PostcodesConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.PostcodesConnectionString).Options;
 
                 return new PostcodesContext(options);
             }).As<IPostcodesContext>();
@@ -94,7 +101,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<UlnContext> options = new DbContextOptionsBuilder<UlnContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().ULNConnectionstring).Options;
+                    .UseSqlServer(_referenceDataOptions.ULNConnectionstring).Options;
 
                 return new UlnContext(options);
             }).As<IUlnContext>();
@@ -102,7 +109,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<IlrReferenceDataContext> options = new DbContextOptionsBuilder<IlrReferenceDataContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().IlrReferenceDataConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.IlrReferenceDataConnectionString).Options;
 
                 return new IlrReferenceDataContext(options);
             }).As<IIlrReferenceDataContext>();
@@ -110,7 +117,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.Register(c =>
             {
                 DbContextOptions<EasContext> options = new DbContextOptionsBuilder<EasContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EasConnectionString).Options;
+                    .UseSqlServer(_referenceDataOptions.EasConnectionString).Options;
 
                 return new EasContext(options);
             }).As<IEasdbContext>();

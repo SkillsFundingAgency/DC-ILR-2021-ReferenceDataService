@@ -11,7 +11,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
     {
         public DevolvedPostcodes Retrieve(IReadOnlyCollection<string> input, DesktopReferenceDataRoot referenceData)
         {
-            return referenceData.DevolvedPostocdes;
+            return new DevolvedPostcodes
+            {
+                McaGlaSofLookups = referenceData.DevolvedPostocdes.McaGlaSofLookups,
+                Postcodes = referenceData.DevolvedPostocdes.Postcodes.Where(p => input.Contains(p.Postcode, StringComparer.OrdinalIgnoreCase)).ToList(),
+            };
         }
     }
 }
