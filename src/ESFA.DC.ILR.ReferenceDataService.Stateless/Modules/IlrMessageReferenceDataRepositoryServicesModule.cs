@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
+using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
-using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {

@@ -18,6 +18,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                 .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .ToList();
 
+            var larsFrameworkAims = referenceData.LARSFrameworkAims
+                 .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+
+            var larsFrameworkAimsDictionary = referenceData.LARSFrameworkAims
+               .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef.ToUpper(), ld.FworkCode, ld.ProgType, ld.PwayCode))
+               .ToDictionary(
+                k => k.Key,
+                v => v.Select(fa => new LARSFrameworkAim
+                {
+                    LearnAimRef = fa.LearnAimRef.ToUpper(),
+                    FrameworkComponentType = fa.FrameworkComponentType,
+                    EffectiveFrom = fa.EffectiveFrom,
+                    EffectiveTo = fa.EffectiveTo,
+                }).FirstOrDefault());
+
             foreach (var key in input)
             {
                 var framework = referenceData.LARSFrameworks
@@ -32,9 +48,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                         ProgType = l.ProgType,
                         EffectiveFromNullable = l.EffectiveFromNullable,
                         EffectiveTo = l.EffectiveTo,
-                        LARSFrameworkAim = l.LARSFrameworkAims?.FirstOrDefault(fa => fa.LearnAimRef == key.LearnAimRef),
                         LARSFrameworkApprenticeshipFundings = l.LARSFrameworkApprenticeshipFundings,
                         LARSFrameworkCommonComponents = l.LARSFrameworkCommonComponents,
+                        LARSFrameworkAim = larsFrameworkAimsDictionary.TryGetValue(key, out var frameworkAims) ? frameworkAims : null,
                     }).FirstOrDefault();
 
                 if (framework != null)

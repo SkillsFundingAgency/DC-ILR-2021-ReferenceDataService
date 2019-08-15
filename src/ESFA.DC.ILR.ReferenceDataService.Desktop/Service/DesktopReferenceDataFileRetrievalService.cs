@@ -44,6 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     referenceData.EPAOrganisations = RetrieveModel<List<EPAOrganisation>>(zip, DesktopReferenceDataConstants.EPAOrganisationsFile);
                     referenceData.FCSContractAllocations = new List<FcsContractAllocation>();
                     referenceData.LARSFrameworks = RetrieveModel<List<LARSFrameworkDesktop>>(zip, DesktopReferenceDataConstants.LARSFrameworksFile);
+                    referenceData.LARSFrameworkAims = RetrieveModel<List<LARSFrameworkAimDesktop>>(zip, DesktopReferenceDataConstants.LARSFrameworkAimsFile);
                     referenceData.LARSLearningDeliveries = RetrieveModel<List<LARSLearningDelivery>>(zip, DesktopReferenceDataConstants.LARSLearningDeliveriesFile);
                     referenceData.LARSStandards = RetrieveModel<List<LARSStandard>>(zip, DesktopReferenceDataConstants.LARSStandardsFile);
                     referenceData.Organisations = RetrieveModel<List<Organisation>>(zip, DesktopReferenceDataConstants.OrganisationsFile);
