@@ -21,7 +21,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         public async Task<IReadOnlyCollection<LARSFrameworkDesktop>> RetrieveAsync(CancellationToken cancellationToken)
         {
             var larsFrameworks = await _larsContext.LARS_Frameworks
-                .Include(l => l.LarsFrameworkAims)
                 .Include(l => l.LarsApprenticeshipFworkFundings)
                 .Include(l => l.LarsFrameworkCmnComps)
                 .ToListAsync(cancellationToken);
@@ -34,14 +33,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                     PwayCode = lf.PwayCode,
                     EffectiveFromNullable = lf.EffectiveFrom,
                     EffectiveTo = lf.EffectiveTo,
-                    LARSFrameworkAims = lf.LarsFrameworkAims.Select(lfa =>
-                    new LARSFrameworkAim
-                    {
-                        LearnAimRef = lfa.LearnAimRef,
-                        EffectiveFrom = lfa.EffectiveFrom,
-                        EffectiveTo = lfa.EffectiveTo,
-                        FrameworkComponentType = lfa.FrameworkComponentType,
-                    }).ToList(),
                     LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
                     new LARSFrameworkApprenticeshipFunding
                     {

@@ -25,6 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> _larsStandardRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> _larsFrameworkRepositoryService;
+        private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkAimDesktop>> _larsFrameworkAimsRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> _organisationsRepositoryService;
         private readonly IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
 
@@ -36,6 +37,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> larsFrameworkRepositoryService,
+            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkAimDesktop>> larsFrameworkAimsRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> organisationsRepositoryService,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> postcodesRepositoryService)
         {
@@ -46,6 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             _larsLearningDeliveryRepositoryService = larsLearningDeliveryRepositoryService;
             _larsStandardRepositoryService = larsStandardRepositoryService;
             _larsFrameworkRepositoryService = larsFrameworkRepositoryService;
+            _larsFrameworkAimsRepositoryService = larsFrameworkAimsRepositoryService;
             _organisationsRepositoryService = organisationsRepositoryService;
             _postcodesRepositoryService = postcodesRepositoryService;
         }
@@ -59,6 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             var larsLearningDeliveries = _larsLearningDeliveryRepositoryService.RetrieveAsync(cancellationToken);
             var larsStandards = _larsStandardRepositoryService.RetrieveAsync(cancellationToken);
             var larsFrameworks = _larsFrameworkRepositoryService.RetrieveAsync(cancellationToken);
+            var larsFrameworkAims = _larsFrameworkAimsRepositoryService.RetrieveAsync(cancellationToken);
             var organisations = _organisationsRepositoryService.RetrieveAsync(cancellationToken);
             var postcodes = _postcodesRepositoryService.RetrieveAsync(cancellationToken);
 
@@ -71,6 +75,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 larsLearningDeliveries,
                 larsStandards,
                 larsFrameworks,
+                larsFrameworkAims,
                 organisations,
                 postcodes
             };
@@ -89,6 +94,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 LARSLearningDeliveries = larsLearningDeliveries.Result,
                 LARSStandards = larsStandards.Result,
                 LARSFrameworks = larsFrameworks.Result,
+                LARSFrameworkAims = larsFrameworkAims.Result,
                 Organisations = organisations.Result,
                 Postcodes = postcodes.Result,
                 ULNs = new List<long>(),

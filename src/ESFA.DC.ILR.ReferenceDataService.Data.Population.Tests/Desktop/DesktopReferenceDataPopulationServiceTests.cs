@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
@@ -35,6 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var larsLearningDeliveries = TestLarsLearningDeliveries();
             var larsStandards = TestLarsStandards();
             var larsFrameworks = TestLarsFrameworks();
+            var larsFrameworkAims = TestLarsFrameworkAims();
             var organisations = TestOrganisations();
             var postcodes = TestPostcodes();
 
@@ -45,6 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var larsLearningDeliveryRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>>();
             var larsStandardRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>>();
             var larsFrameworkRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>>();
+            var larsFrameworkAimsRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkAimDesktop>>>();
             var orgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>>();
             var postcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>>();
 
@@ -55,6 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
             larsStandardRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(larsStandards));
             larsFrameworkRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(larsFrameworks));
+            larsFrameworkAimsRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(larsFrameworkAims));
             orgRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(organisations));
             postcodesRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(postcodes));
 
@@ -66,6 +68,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 larsLearningDeliveryRSMock.Object,
                 larsStandardRSMock.Object,
                 larsFrameworkRSMock.Object,
+                larsFrameworkAimsRSMock.Object,
                 orgRSMock.Object,
                 postcodesRSMock.Object).PopulateAsync(CancellationToken.None);
 
@@ -75,6 +78,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             root.EPAOrganisations.Should().HaveCount(3);
             root.FCSContractAllocations.Should().HaveCount(0);
             root.LARSLearningDeliveries.Should().HaveCount(2);
+            root.LARSFrameworks.Should().HaveCount(2);
+            root.LARSFrameworkAims.Should().HaveCount(2);
             root.LARSStandards.Should().HaveCount(2);
             root.Organisations.Should().HaveCount(2);
             root.Postcodes.Should().HaveCount(2);
@@ -184,6 +189,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
+        private IReadOnlyCollection<LARSFrameworkAimDesktop> TestLarsFrameworkAims()
+        {
+            return new List<LARSFrameworkAimDesktop>
+            {
+                new LARSFrameworkAimDesktop(),
+                new LARSFrameworkAimDesktop(),
+            };
+        }
+
         private IReadOnlyCollection<Organisation> TestOrganisations()
         {
             return new List<Organisation>
@@ -210,6 +224,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>> larsFrameworkRepositoryService = null,
+            IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkAimDesktop>> larsFrameworkAimsRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
             IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>> postcodesRepositoryService = null)
         {
@@ -221,6 +236,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 larsLearningDeliveryRepositoryService,
                 larsStandardRepositoryService,
                 larsFrameworkRepositoryService,
+                larsFrameworkAimsRepositoryService,
                 organisationsRepositoryService,
                 postcodesRepositoryService);
         }

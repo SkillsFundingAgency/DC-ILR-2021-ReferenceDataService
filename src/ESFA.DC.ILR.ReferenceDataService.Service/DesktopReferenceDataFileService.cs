@@ -7,7 +7,6 @@ using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
-using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
@@ -31,12 +30,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             referenceDataDictionary.Add(DesktopReferenceDataConstants.EmployersFile, desktopReferenceDataRoot.Employers);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.EPAOrganisationsFile, desktopReferenceDataRoot.EPAOrganisations);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSFrameworksFile, desktopReferenceDataRoot.LARSFrameworks);
+            referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSFrameworkAimsFile, desktopReferenceDataRoot.LARSFrameworkAims);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSLearningDeliveriesFile, desktopReferenceDataRoot.LARSLearningDeliveries);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSStandardsFile, desktopReferenceDataRoot.LARSStandards);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.OrganisationsFile, desktopReferenceDataRoot.Organisations);
             referenceDataDictionary.Add(DesktopReferenceDataConstants.PostcodesFile, desktopReferenceDataRoot.Postcodes);
 
-            await _zipFileService.SaveCollectionZipAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceDataDictionary, cancellationToken);
+            await _zipFileService.SaveCollectionZipAsync(
+                referenceDataContext.OutputReferenceDataFileKey,
+                referenceDataContext.Container,
+                desktopReferenceDataRoot.MetaDatas,
+                desktopReferenceDataRoot.DevolvedPostocdes,
+                desktopReferenceDataRoot.Employers,
+                desktopReferenceDataRoot.EPAOrganisations,
+                desktopReferenceDataRoot.LARSFrameworks,
+                desktopReferenceDataRoot.LARSFrameworkAims,
+                desktopReferenceDataRoot.LARSLearningDeliveries,
+                desktopReferenceDataRoot.LARSStandards,
+                desktopReferenceDataRoot.Organisations,
+                desktopReferenceDataRoot.Postcodes,
+                cancellationToken);
         }
     }
 }

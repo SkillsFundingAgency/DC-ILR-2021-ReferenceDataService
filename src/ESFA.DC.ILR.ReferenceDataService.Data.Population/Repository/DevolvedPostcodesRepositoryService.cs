@@ -12,40 +12,43 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class DevolvedPostcodesRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<string>, DevolvedPostcodes>
     {
-        private readonly IPostcodesContext _postcodesContext;
+        private readonly Func<IPostcodesContext> _postcodesContextFactory;
 
-        public DevolvedPostcodesRepositoryService(IPostcodesContext postcodesContext)
+        public DevolvedPostcodesRepositoryService(Func<IPostcodesContext> postcodesContextFactory)
         {
-            _postcodesContext = postcodesContext;
+            _postcodesContextFactory = postcodesContextFactory;
         }
 
         public async Task<DevolvedPostcodes> RetrieveAsync(IReadOnlyCollection<string> input, CancellationToken cancellationToken)
         {
             // TODO: input parameter to be used in story  84296 to return
 
-            var mcaGlaFullNames = await _postcodesContext.McaglaFullNames?
-                .Where(e => e.EffectiveTo == null)
-                .ToDictionaryAsync(
-                k => k.McaglaShortCode,
-                v => v.FullName,
-                StringComparer.OrdinalIgnoreCase,
-                cancellationToken);
-
-            var mcaGlaSofCodes = await _postcodesContext.McaglaSofs?.ToListAsync(cancellationToken);
-
-            var mcaGlaSofLookups = mcaGlaSofCodes.Select(m => new McaGlaSofLookup
+            using (var context = _postcodesContextFactory())
             {
-                SofCode = m.SofCode,
-                McaGlaShortCode = m.McaglaShortCode,
-                McaGlaFullName = mcaGlaFullNames.TryGetValue(m.McaglaShortCode, out var fullname) ? fullname : string.Empty,
-                EffectiveFrom = m.EffectiveFrom,
-                EffectiveTo = m.EffectiveTo
-            }).ToList();
+                var mcaGlaFullNames = await context.McaglaFullNames?
+                            .Where(e => e.EffectiveTo == null)
+                            .ToDictionaryAsync(
+                            k => k.McaglaShortCode,
+                            v => v.FullName,
+                            StringComparer.OrdinalIgnoreCase,
+                            cancellationToken);
 
-            return new DevolvedPostcodes
-            {
-                McaGlaSofLookups = mcaGlaSofLookups
-            };
+                var mcaGlaSofCodes = await context.McaglaSofs?.ToListAsync(cancellationToken);
+
+                var mcaGlaSofLookups = mcaGlaSofCodes.Select(m => new McaGlaSofLookup
+                {
+                    SofCode = m.SofCode,
+                    McaGlaShortCode = m.McaglaShortCode,
+                    McaGlaFullName = mcaGlaFullNames.TryGetValue(m.McaglaShortCode, out var fullname) ? fullname : string.Empty,
+                    EffectiveFrom = m.EffectiveFrom,
+                    EffectiveTo = m.EffectiveTo
+                }).ToList();
+
+                return new DevolvedPostcodes
+                {
+                    McaGlaSofLookups = mcaGlaSofLookups
+                };
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().AppsEarningsHistoryConnectionString).Options;
 
                 return new AppEarnHistoryContext(options);
-            }).As<IAppEarnHistoryContext>().InstancePerLifetimeScope();
+            }).As<IAppEarnHistoryContext>();
 
             containerBuilder.Register(c =>
             {
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().EmployersConnectionString).Options;
 
                 return new EmployersContext(options);
-            }).As<IEmployersContext>().InstancePerLifetimeScope();
+            }).As<IEmployersContext>();
 
             containerBuilder.Register(c =>
             {
@@ -57,7 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().EPAConnectionString).Options;
 
                 return new EpaContext(options);
-            }).As<IEpaContext>().InstancePerLifetimeScope();
+            }).As<IEpaContext>();
 
             containerBuilder.Register(c =>
             {
@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().FCSConnectionString).Options;
 
                 return new FcsContext(options);
-            }).As<IFcsContext>().InstancePerLifetimeScope();
+            }).As<IFcsContext>();
 
             containerBuilder.Register(c =>
             {
@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().LARSConnectionString).Options;
 
                 return new LarsContext(options);
-            }).As<ILARSContext>().InstancePerLifetimeScope();
+            }).As<ILARSContext>();
 
             containerBuilder.Register(c =>
             {
@@ -81,7 +81,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().OrganisationsConnectionString).Options;
 
                 return new OrganisationsContext(options);
-            }).As<IOrganisationsContext>().InstancePerLifetimeScope();
+            }).As<IOrganisationsContext>();
 
             containerBuilder.Register(c =>
             {
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().PostcodesConnectionString).Options;
 
                 return new PostcodesContext(options);
-            }).As<IPostcodesContext>().InstancePerLifetimeScope();
+            }).As<IPostcodesContext>();
 
             containerBuilder.Register(c =>
             {
@@ -97,7 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().ULNConnectionstring).Options;
 
                 return new UlnContext(options);
-            }).As<IUlnContext>().InstancePerLifetimeScope();
+            }).As<IUlnContext>();
 
             containerBuilder.Register(c =>
             {
@@ -105,7 +105,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().IlrReferenceDataConnectionString).Options;
 
                 return new IlrReferenceDataContext(options);
-            }).As<IIlrReferenceDataContext>().InstancePerLifetimeScope();
+            }).As<IIlrReferenceDataContext>();
 
             containerBuilder.Register(c =>
             {
@@ -113,7 +113,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
                     .UseSqlServer(c.Resolve<IReferenceDataOptions>().EasConnectionString).Options;
 
                 return new EasContext(options);
-            }).As<IEasdbContext>().InstancePerLifetimeScope();
+            }).As<IEasdbContext>();
         }
     }
 }

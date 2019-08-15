@@ -1,9 +1,7 @@
-﻿using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+﻿using System.Linq;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 {

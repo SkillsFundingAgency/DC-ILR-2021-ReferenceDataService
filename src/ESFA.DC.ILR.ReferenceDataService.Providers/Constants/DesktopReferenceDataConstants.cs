@@ -7,6 +7,7 @@
         public const string EmployersFile = "Employers.json";
         public const string EPAOrganisationsFile = "EPAOrganisations.json";
         public const string LARSFrameworksFile = "LARSFrameworks.json";
+        public const string LARSFrameworkAimsFile = "LARSFrameworkAims.json";
         public const string LARSLearningDeliveriesFile = "LARSLearningDeliveries.json";
         public const string LARSStandardsFile = "LARSStandards.json";
         public const string OrganisationsFile = "Organisations.json";
