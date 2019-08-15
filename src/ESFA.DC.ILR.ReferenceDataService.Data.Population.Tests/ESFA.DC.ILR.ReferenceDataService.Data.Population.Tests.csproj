@@ -226,6 +226,7 @@
     <Compile Include="Repository\OrganisationsRepositoryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EmployersRepositoryServiceTests.cs" />
+    <Compile Include="Repository\DevolvedPostcodesRepositoryServiceTests.cs" />
     <Compile Include="Repository\PostcodesRepositoryServiceTests.cs" />
     <Compile Include="Repository\IlrReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\UlnRepositoryServiceTests.cs" />

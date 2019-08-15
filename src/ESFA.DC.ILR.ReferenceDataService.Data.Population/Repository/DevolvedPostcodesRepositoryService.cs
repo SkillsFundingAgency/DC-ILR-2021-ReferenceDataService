@@ -48,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             }
         }
 
-        public async Task<List<McaGlaSofLookup>> RetrieveMcaGlaLookups(IPostcodesContext context, CancellationToken cancellationToken)
+        public virtual async Task<List<McaGlaSofLookup>> RetrieveMcaGlaLookups(IPostcodesContext context, CancellationToken cancellationToken)
         {
             var mcaGlaFullNames = await context.McaglaFullNames?
                             .Where(e => e.EffectiveTo == null)
@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             }).ToList();
         }
 
-        public async Task<List<DevolvedPostcode>> RetrieveDevolvedPostcodes(string jsonParams, CancellationToken cancellationToken)
+        public virtual async Task<List<DevolvedPostcode>> RetrieveDevolvedPostcodes(string jsonParams, CancellationToken cancellationToken)
         {
             var sqlSfaAreaCost = $@"SELECT
                                        D.[Postcode]
