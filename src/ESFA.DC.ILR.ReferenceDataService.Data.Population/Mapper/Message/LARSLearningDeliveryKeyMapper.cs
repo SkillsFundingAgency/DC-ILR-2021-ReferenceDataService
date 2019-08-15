@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                 .Where(l => l.LearningDeliveries != null)
                 .SelectMany(l => l.LearningDeliveries)
                 .Where(laf => laf.LearnAimRef != null)
-                .Select(ld => new LARSLearningDeliveryKey(ld.LearnAimRef.ToUpper(), ld.FworkCodeNullable, ld.ProgTypeNullable, ld.PwayCodeNullable))
+                .Select(ld => new LARSLearningDeliveryKey(ld.LearnAimRef, ld.FworkCodeNullable, ld.ProgTypeNullable, ld.PwayCodeNullable))
                 .Distinct().ToList()
             ?? new List<LARSLearningDeliveryKey>();
         }

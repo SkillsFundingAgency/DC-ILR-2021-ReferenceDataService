@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                 .ToList();
 
             var larsFrameworkAimsDictionary = referenceData.LARSFrameworkAims
-               .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef.ToUpper(), ld.FworkCode, ld.ProgType, ld.PwayCode))
+               .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef, ld.FworkCode, ld.ProgType, ld.PwayCode))
                .ToDictionary(
                 k => k.Key,
                 v => v.Select(fa => new LARSFrameworkAim

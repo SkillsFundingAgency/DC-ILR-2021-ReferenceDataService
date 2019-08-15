@@ -4,7 +4,7 @@
     {
         public LARSLearningDeliveryKey(string learnAimRef, int? fworkCode, int? progType, int? pwayCode)
         {
-            LearnAimRef = learnAimRef;
+            LearnAimRef = learnAimRef.ToUpper();
             FworkCode = fworkCode;
             ProgType = progType;
             PwayCode = pwayCode;
