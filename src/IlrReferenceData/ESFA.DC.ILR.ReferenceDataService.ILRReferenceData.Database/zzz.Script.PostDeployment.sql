@@ -3155,7 +3155,7 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_04', 
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_01', N'E', N'The Type of instance year is not a valid code')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_02', N'E', N'The Type of instance year is not valid for this Completion of year of instance')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UCASAPPID_01', N'E', N'The UCAS application code must be returned for this learning aim')
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_03', N'E', N'The UKPRN is not the same as recorded in the Header')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_03', N'F', N'The UKPRN is not the same as recorded in the Header')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_05', N'E', N'There is no ESF funding relationship for this UKPRN')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_06', N'E', N'There is no Adult skills funding relationship for this UKPRN')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_08', N'E', N'There is no Advanced Learner Loans Bursary funding relationship for this UKPRN')
