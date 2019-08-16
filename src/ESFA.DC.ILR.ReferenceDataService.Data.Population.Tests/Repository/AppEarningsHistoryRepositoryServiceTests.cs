@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using FluentAssertions;
 using MockQueryable.Moq;
@@ -19,8 +20,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var ulns = new List<long> { 10000000, 20000000, 30000000 };
-
-            var appHistoryMock = new Mock<IAppEarnHistoryContext>();
 
             IEnumerable<AppsEarningsHistory> appHistoriesList = new List<AppsEarningsHistory>
             {
@@ -127,9 +126,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var appHistoriesMock = appHistoriesList.AsQueryable().BuildMockDbSet();
 
+            var appHistoryMock = new Mock<IAppEarnHistoryContext>();
             appHistoryMock.Setup(a => a.AppsEarningsHistories).Returns(appHistoriesMock.Object);
 
-            var appHistoryResult = await NewService(appHistoryMock.Object).RetrieveAsync(ulns, CancellationToken.None);
+            var appHistoryContextFactoryMock = new Mock<IDbContextFactory<IAppEarnHistoryContext>>();
+            appHistoryContextFactoryMock.Setup(c => c.Create()).Returns(appHistoryMock.Object);
+
+            var appHistoryResult = await NewService(appHistoryContextFactoryMock.Object).RetrieveAsync(ulns, CancellationToken.None);
 
             appHistoryResult.Should().HaveCount(3);
             appHistoryResult.Select(u => u.ULN).Should().Contain(10000000);
@@ -143,9 +146,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             appHistoryResult.Where(u => u.ULN == 20000000).Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_20000000");
         }
 
-        private AppEarningsHistoryRepositoryService NewService(IAppEarnHistoryContext appHistoryContext = null)
+        private AppEarningsHistoryRepositoryService NewService(IDbContextFactory<IAppEarnHistoryContext> appHistoryContextFactory = null)
         {
-            return new AppEarningsHistoryRepositoryService(appHistoryContext);
+            return new AppEarningsHistoryRepositoryService(appHistoryContextFactory);
         }
     }
 }

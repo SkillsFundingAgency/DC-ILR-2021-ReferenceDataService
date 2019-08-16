@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ReferenceData.EPA.Model;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
@@ -19,8 +20,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var epaOrgIds = new List<string> { "EpaOrg1", "EpaOrg2", "EpaOrg3" };
-
-            var epaMock = new Mock<IEpaContext>();
 
             IEnumerable<Period> periodsList = new List<Period>
             {
@@ -64,9 +63,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var periodsMock = periodsList.AsQueryable().BuildMockDbSet();
 
+            var epaMock = new Mock<IEpaContext>();
+            var epaContextFactoryMock = new Mock<IDbContextFactory<IEpaContext>>();
+            epaContextFactoryMock.Setup(c => c.Create()).Returns(epaMock.Object);
+
             epaMock.Setup(o => o.Periods).Returns(periodsMock.Object);
 
-            var epaOganisations = await NewService(epaMock.Object).RetrieveAsync(epaOrgIds, CancellationToken.None);
+            var epaOganisations = await NewService(epaContextFactoryMock.Object).RetrieveAsync(epaOrgIds, CancellationToken.None);
 
             epaOganisations.Should().HaveCount(5);
             epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg1");
@@ -83,9 +86,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             epaOganisations.Where(e => e.ID == "EpaOrg3").Select(e => e.Standard).Should().Contain("1", "2");
         }
 
-        private EpaOrganisationsRepositoryService NewService(IEpaContext epaContext = null)
+        private EpaOrganisationsRepositoryService NewService(IDbContextFactory<IEpaContext> epaContextFactory = null)
         {
-            return new EpaOrganisationsRepositoryService(epaContext);
+            return new EpaOrganisationsRepositoryService(epaContextFactory);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -20,8 +21,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var ukprns = new List<int> { 1, 2, 3 };
-
-            var organisationsMock = new Mock<IOrganisationsContext>();
 
             IEnumerable<MasterOrganisation> masterOrgList = new List<MasterOrganisation>
             {
@@ -113,11 +112,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var campusIdentifiersMock = campusIdentifiersList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersSpecResourcesMock = campusIdentifiersSpecResources.AsQueryable().BuildMockDbSet();
 
+            var organisationsMock = new Mock<IOrganisationsContext>();
+
             organisationsMock.Setup(o => o.MasterOrganisations).Returns(masterOrgMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifiers).Returns(campusIdentifiersMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifierSpecResources).Returns(campusIdentifiersSpecResourcesMock.Object);
 
-            var organisations = await NewService(organisationsMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
+            var organisationsContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
+            organisationsContextFactoryMock.Setup(c => c.Create()).Returns(organisationsMock.Object);
+
+            var organisations = await NewService(organisationsContextFactoryMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
 
             organisations.Should().HaveCount(2);
             organisations.Select(o => o.UKPRN).Should().Contain(1);
@@ -218,9 +222,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().GetCampusIdentifiers(1, new Dictionary<long, List<OrganisationCampusIdentifier>>()).Should().BeNullOrEmpty();
         }
 
-        private OrganisationsRepositoryService NewService(IOrganisationsContext organisations = null)
+        private OrganisationsRepositoryService NewService(IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)
         {
-            return new OrganisationsRepositoryService(organisations);
+            return new OrganisationsRepositoryService(organisationsContextFactory);
         }
     }
 }

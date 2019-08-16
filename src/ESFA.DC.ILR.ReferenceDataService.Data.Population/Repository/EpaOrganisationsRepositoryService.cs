@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
@@ -12,16 +13,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class EpaOrganisationsRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>
     {
-        private readonly IEpaContext _epaContext;
+        private readonly IDbContextFactory<IEpaContext> _epaContextFactory;
 
-        public EpaOrganisationsRepositoryService(IEpaContext epaContext)
+        public EpaOrganisationsRepositoryService(IDbContextFactory<IEpaContext> epaContextFactory)
         {
-            _epaContext = epaContext;
+            _epaContextFactory = epaContextFactory;
         }
 
         public async Task<IReadOnlyCollection<EPAOrganisation>> RetrieveAsync(IReadOnlyCollection<string> epaOrgIds, CancellationToken cancellationToken)
         {
-            return await _epaContext?
+            using (var context = _epaContextFactory.Create())
+            {
+                return await context?
                         .Periods?.Where(o => epaOrgIds.Contains(o.OrganisationId, StringComparer.OrdinalIgnoreCase))
                         .Select(epa => new EPAOrganisation
                         {
@@ -30,6 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             EffectiveFrom = epa.EffectiveFrom,
                             EffectiveTo = epa.EffectiveTo,
                         }).ToListAsync(cancellationToken);
+            }
         }
     }
 }

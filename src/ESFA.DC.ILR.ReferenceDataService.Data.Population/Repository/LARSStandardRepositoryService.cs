@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -12,16 +13,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class LarsStandardRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>
     {
-        private readonly ILARSContext _larsContext;
+        private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
 
-        public LarsStandardRepositoryService(ILARSContext larsContext)
+        public LarsStandardRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
         {
-            _larsContext = larsContext;
+            _larsContextFactory = larsContextFactory;
         }
 
         public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(IReadOnlyCollection<int> stdCodes, CancellationToken cancellationToken)
         {
-            return await _larsContext.LARS_Standards
+            using (var context = _larsContextFactory.Create())
+            {
+                return await context.LARS_Standards
                 .Include(l => l.LarsApprenticeshipStdFundings)
                 .Include(l => l.LarsStandardCommonComponents)
                 .Include(l => l.LarsStandardFundings)
@@ -85,6 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             ValidityCategory = lsv.ValidityCategory,
                         }).ToList(),
                     }).ToListAsync(cancellationToken);
+            }
         }
     }
 }
