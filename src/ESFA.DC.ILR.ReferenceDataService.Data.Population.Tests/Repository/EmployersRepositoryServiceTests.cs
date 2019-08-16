@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ReferenceData.Employers.Model;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
@@ -19,8 +20,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var empIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 31, 32, 33, 34, 35 };
-
-            var employersMock = new Mock<IEmployersContext>();
 
             IEnumerable<Employer> edrsList = new List<Employer>
             {
@@ -67,10 +66,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var edrsDbMock = edrsList.AsQueryable().BuildMockDbSet();
             var lempDbMock = lempList.AsQueryable().BuildMockDbSet();
 
+            var employersMock = new Mock<IEmployersContext>();
+
             employersMock.Setup(e => e.Employers).Returns(edrsDbMock.Object);
             employersMock.Setup(e => e.LargeEmployers).Returns(lempDbMock.Object);
 
-            var serviceResult = await NewService(employersMock.Object).RetrieveAsync(empIds, CancellationToken.None);
+            var employersContextFactoryMock = new Mock<IDbContextFactory<IEmployersContext>>();
+            employersContextFactoryMock.Setup(c => c.Create()).Returns(employersMock.Object);
+
+            var serviceResult = await NewService(employersContextFactoryMock.Object).RetrieveAsync(empIds, CancellationToken.None);
 
             serviceResult.Should().HaveCount(21);
             serviceResult.Select(e => e.ERN).Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());
@@ -78,9 +82,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.Where(e => e.ERN == 8).SelectMany(e => e.LargeEmployerEffectiveDates).Should().HaveCount(2);
         }
 
-        private EmployersRepositoryService NewService(IEmployersContext employers = null)
+        private EmployersRepositoryService NewService(IDbContextFactory<IEmployersContext> employersContextFactory = null)
         {
-            return new EmployersRepositoryService(employers);
+            return new EmployersRepositoryService(employersContextFactory);
         }
     }
 }

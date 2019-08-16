@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -13,98 +14,102 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class LarsLearningDeliveryRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>
     {
-        private readonly ILARSContext _larsContext;
+        private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
 
-        public LarsLearningDeliveryRepositoryService(ILARSContext larsContext)
+        public LarsLearningDeliveryRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
         {
-            _larsContext = larsContext;
+            _larsContextFactory = larsContextFactory;
         }
 
         public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
         {
-            var larsFrameworks = new List<LARSFrameworkKey>();
-
-            var learningDeliveries = await BuildLARSLearningDelvieries(inputKeys, cancellationToken);
-            var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(inputKeys, cancellationToken);
-            var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(inputKeys, cancellationToken);
-            var larsFundingsDictionary = await BuildLARSFundingDictionary(inputKeys, cancellationToken);
-            var larsValiditiesDictionary = await BuildLARSValidityDictionary(inputKeys, cancellationToken);
-            var frameworkAimDictionary = await BuildLARSFrameworkAimDictionary(inputKeys, cancellationToken);
-
-            foreach (var key in inputKeys)
+            using (var context = _larsContextFactory.Create())
             {
-                var framework = await _larsContext.LARS_Frameworks
-                    .Where(lf =>
-                        lf.FworkCode == key.FworkCode
-                    && lf.ProgType == key.ProgType
-                    && lf.PwayCode == key.PwayCode)
-                    .Select(lf => new LARSFramework
-                    {
-                        FworkCode = lf.FworkCode,
-                        ProgType = lf.ProgType,
-                        PwayCode = lf.PwayCode,
-                        EffectiveFromNullable = lf.EffectiveFrom,
-                        EffectiveTo = lf.EffectiveTo,
-                        LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
-                        new LARSFrameworkApprenticeshipFunding
-                        {
-                            BandNumber = laf.BandNumber,
-                            CareLeaverAdditionalPayment = laf.CareLeaverAdditionalPayment,
-                            CoreGovContributionCap = laf.CoreGovContributionCap,
-                            Duration = laf.Duration,
-                            EffectiveFrom = laf.EffectiveFrom,
-                            EffectiveTo = laf.EffectiveTo,
-                            FundableWithoutEmployer = laf.FundableWithoutEmployer,
-                            FundingCategory = laf.FundingCategory,
-                            MaxEmployerLevyCap = laf.MaxEmployerLevyCap,
-                            ReservedValue2 = laf.ReservedValue2,
-                            ReservedValue3 = laf.ReservedValue3,
-                            SixteenToEighteenEmployerAdditionalPayment = laf._1618employerAdditionalPayment,
-                            SixteenToEighteenFrameworkUplift = laf._1618frameworkUplift,
-                            SixteenToEighteenIncentive = laf._1618incentive,
-                            SixteenToEighteenProviderAdditionalPayment = laf._1618providerAdditionalPayment,
-                        }).ToList(),
-                        LARSFrameworkCommonComponents = lf.LarsFrameworkCmnComps.Select(lcc =>
-                        new LARSFrameworkCommonComponent
-                        {
-                            CommonComponent = lcc.CommonComponent,
-                            EffectiveFrom = lcc.EffectiveFrom,
-                            EffectiveTo = lcc.EffectiveTo,
-                        }).ToList(),
-                    })
-                    .FirstOrDefaultAsync(cancellationToken);
+                var larsFrameworks = new List<LARSFrameworkKey>();
 
-                if (framework != null)
+                var learningDeliveries = await BuildLARSLearningDelvieries(inputKeys, context, cancellationToken);
+                var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(inputKeys, context, cancellationToken);
+                var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(inputKeys, context, cancellationToken);
+                var larsFundingsDictionary = await BuildLARSFundingDictionary(inputKeys, context, cancellationToken);
+                var larsValiditiesDictionary = await BuildLARSValidityDictionary(inputKeys, context, cancellationToken);
+                var frameworkAimDictionary = await BuildLARSFrameworkAimDictionary(inputKeys, context, cancellationToken);
+
+                foreach (var key in inputKeys)
                 {
-                    framework.LARSFrameworkAim = frameworkAimDictionary.TryGetValue(key.LearnAimRef, out var frameworkAim) ? frameworkAim : null;
+                    var framework = await context.LARS_Frameworks
+                        .Where(lf =>
+                            lf.FworkCode == key.FworkCode
+                        && lf.ProgType == key.ProgType
+                        && lf.PwayCode == key.PwayCode)
+                        .Select(lf => new LARSFramework
+                        {
+                            FworkCode = lf.FworkCode,
+                            ProgType = lf.ProgType,
+                            PwayCode = lf.PwayCode,
+                            EffectiveFromNullable = lf.EffectiveFrom,
+                            EffectiveTo = lf.EffectiveTo,
+                            LARSFrameworkApprenticeshipFundings = lf.LarsApprenticeshipFworkFundings.Select(laf =>
+                            new LARSFrameworkApprenticeshipFunding
+                            {
+                                BandNumber = laf.BandNumber,
+                                CareLeaverAdditionalPayment = laf.CareLeaverAdditionalPayment,
+                                CoreGovContributionCap = laf.CoreGovContributionCap,
+                                Duration = laf.Duration,
+                                EffectiveFrom = laf.EffectiveFrom,
+                                EffectiveTo = laf.EffectiveTo,
+                                FundableWithoutEmployer = laf.FundableWithoutEmployer,
+                                FundingCategory = laf.FundingCategory,
+                                MaxEmployerLevyCap = laf.MaxEmployerLevyCap,
+                                ReservedValue2 = laf.ReservedValue2,
+                                ReservedValue3 = laf.ReservedValue3,
+                                SixteenToEighteenEmployerAdditionalPayment = laf._1618employerAdditionalPayment,
+                                SixteenToEighteenFrameworkUplift = laf._1618frameworkUplift,
+                                SixteenToEighteenIncentive = laf._1618incentive,
+                                SixteenToEighteenProviderAdditionalPayment = laf._1618providerAdditionalPayment,
+                            }).ToList(),
+                            LARSFrameworkCommonComponents = lf.LarsFrameworkCmnComps.Select(lcc =>
+                            new LARSFrameworkCommonComponent
+                            {
+                                CommonComponent = lcc.CommonComponent,
+                                EffectiveFrom = lcc.EffectiveFrom,
+                                EffectiveTo = lcc.EffectiveTo,
+                            }).ToList(),
+                        })
+                        .FirstOrDefaultAsync(cancellationToken);
 
-                    larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
+                    if (framework != null)
+                    {
+                        framework.LARSFrameworkAim = frameworkAimDictionary.TryGetValue(key.LearnAimRef, out var frameworkAim) ? frameworkAim : null;
+
+                        larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
+                    }
                 }
+
+                var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList(), StringComparer.OrdinalIgnoreCase);
+
+                var defaultLarsAnnualValues = new List<LARSAnnualValue>();
+                var defaultLarsLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
+                var defaultLarsFundings = new List<LARSFunding>();
+                var defaultLarsValidities = new List<LARSValidity>();
+                var defaultLarsFrameworks = new List<LARSFramework>();
+
+                foreach (var learningDelivery in learningDeliveries)
+                {
+                    learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
+                    learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
+                    learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
+                    learningDelivery.LARSValidities = larsValiditiesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var validities) ? validities : defaultLarsValidities;
+                    learningDelivery.LARSFrameworks = frameworkDictionary.TryGetValue(learningDelivery.LearnAimRef, out var frameworks) ? frameworks : defaultLarsFrameworks;
+                }
+
+                return learningDeliveries;
             }
-
-            var frameworkDictionary = larsFrameworks.GroupBy(l => l.LearnAimRef).ToDictionary(k => k.Key, v => v.Select(l => l.LARSFramework).ToList(), StringComparer.OrdinalIgnoreCase);
-
-            var defaultLarsAnnualValues = new List<LARSAnnualValue>();
-            var defaultLarsLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
-            var defaultLarsFundings = new List<LARSFunding>();
-            var defaultLarsValidities = new List<LARSValidity>();
-            var defaultLarsFrameworks = new List<LARSFramework>();
-
-            foreach (var learningDelivery in learningDeliveries)
-            {
-                learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
-                learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
-                learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
-                learningDelivery.LARSValidities = larsValiditiesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var validities) ? validities : defaultLarsValidities;
-                learningDelivery.LARSFrameworks = frameworkDictionary.TryGetValue(learningDelivery.LearnAimRef, out var frameworks) ? frameworks : defaultLarsFrameworks;
-            }
-
-            return learningDeliveries;
         }
 
-        private async Task<List<LARSLearningDelivery>> BuildLARSLearningDelvieries(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<List<LARSLearningDelivery>> BuildLARSLearningDelvieries(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            return await _larsContext.LARS_LearningDeliveries
+            return await context.LARS_LearningDeliveries
                 .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(
                 ld => new LARSLearningDelivery
@@ -131,9 +136,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 }).ToListAsync(cancellationToken);
         }
 
-        private async Task<Dictionary<string, List<LARSAnnualValue>>> BuildLARSAnnualValueDictionary(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, List<LARSAnnualValue>>> BuildLARSAnnualValueDictionary(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsAnnualValuesList = await _larsContext.LARS_AnnualValues
+            var larsAnnualValuesList = await context.LARS_AnnualValues
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(la => new LARSAnnualValue
                 {
@@ -156,9 +162,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task<Dictionary<string, List<LARSLearningDeliveryCategory>>> BuildLARSLearningDeliveryCategoryDictionary(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, List<LARSLearningDeliveryCategory>>> BuildLARSLearningDeliveryCategoryDictionary(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsLearningDeliveryCategoriesList = await _larsContext.LARS_LearningDeliveryCategories
+            var larsLearningDeliveryCategoriesList = await context.LARS_LearningDeliveryCategories
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(ldc => new LARSLearningDeliveryCategory
                 {
@@ -176,9 +183,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task<Dictionary<string, List<LARSFunding>>> BuildLARSFundingDictionary(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, List<LARSFunding>>> BuildLARSFundingDictionary(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsFundingList = await _larsContext.LARS_Fundings
+            var larsFundingList = await context.LARS_Fundings
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(lf => new LARSFunding
                 {
@@ -199,9 +207,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task<Dictionary<string, List<LARSValidity>>> BuildLARSValidityDictionary(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, List<LARSValidity>>> BuildLARSValidityDictionary(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsValiditiesList = await _larsContext.LARS_Validities
+            var larsValiditiesList = await context.LARS_Validities
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(lv => new LARSValidity
                 {
@@ -220,9 +229,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task<Dictionary<string, LARSFrameworkAim>> BuildLARSFrameworkAimDictionary(IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, CancellationToken cancellationToken)
+        private async Task<Dictionary<string, LARSFrameworkAim>> BuildLARSFrameworkAimDictionary(
+            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsFrameworkAimList = await _larsContext.LARS_FrameworkAims
+            var larsFrameworkAimList = await context.LARS_FrameworkAims
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                  .Select(lfa => new LARSFrameworkAim
                  {

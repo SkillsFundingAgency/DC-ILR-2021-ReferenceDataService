@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -27,8 +28,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
                 new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 3),
             };
-
-            var larsMock = new Mock<ILARSContext>();
 
             IEnumerable<LarsLearningDelivery> larsLearningDeliveryList = new List<LarsLearningDelivery>
             {
@@ -206,6 +205,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var larsFrameworkMock = larsFrameworkList.AsQueryable().BuildMockDbSet();
 
+            var larsMock = new Mock<ILARSContext>();
+
             larsMock.Setup(l => l.LARS_LearningDeliveries).Returns(larsLearningDeliveryMock.Object);
             larsMock.Setup(l => l.LARS_AnnualValues).Returns(larsAnnualValueMock.Object);
             larsMock.Setup(l => l.LARS_LearningDeliveryCategories).Returns(larsCategoriesMock.Object);
@@ -214,7 +215,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             larsMock.Setup(l => l.LARS_FrameworkAims).Returns(larsFrameworkAimsMock.Object);
             larsMock.Setup(l => l.LARS_Frameworks).Returns(larsFrameworkMock.Object);
 
-            var larsLearningDeliveries = await NewService(larsMock.Object).RetrieveAsync(larsLearningDeliveryKeys, CancellationToken.None);
+            var larsContextFactoryMock = new Mock<IDbContextFactory<ILARSContext>>();
+            larsContextFactoryMock.Setup(c => c.Create()).Returns(larsMock.Object);
+
+            var larsLearningDeliveries = await NewService(larsContextFactoryMock.Object).RetrieveAsync(larsLearningDeliveryKeys, CancellationToken.None);
 
             expectedLearningDeliveries.Should().BeEquivalentTo(larsLearningDeliveries);
         }
@@ -410,9 +414,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
         }
 
-        private LarsLearningDeliveryRepositoryService NewService(ILARSContext larsContext = null)
+        private LarsLearningDeliveryRepositoryService NewService(IDbContextFactory<ILARSContext> larsContextFactory = null)
         {
-            return new LarsLearningDeliveryRepositoryService(larsContext);
+            return new LarsLearningDeliveryRepositoryService(larsContextFactory);
         }
     }
 }

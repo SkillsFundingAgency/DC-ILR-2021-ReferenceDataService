@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Model;
@@ -15,16 +16,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     public class EasRepositoryService : IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>
     {
         private readonly EasPaymentValue defaultPaymentValue = new EasPaymentValue(null, null);
-        private readonly IEasdbContext _easContext;
+        private readonly IDbContextFactory<IEasdbContext> _easContextFactory;
 
-        public EasRepositoryService(IEasdbContext easContext)
+        public EasRepositoryService(IDbContextFactory<IEasdbContext> easContextFactory)
         {
-            _easContext = easContext;
+            _easContextFactory = easContextFactory;
         }
 
         public async Task<IReadOnlyCollection<EasFundingLine>> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
         {
-            var easFundingLines = await _easContext.FundingLines?
+            using (var context = _easContextFactory.Create())
+            {
+                var easFundingLines = await context.FundingLines?
                .Select(f => new EasFundingLine
                {
                    FundLine = f.Name,
@@ -36,23 +39,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                    }).ToList()
                }).ToListAsync(cancellationToken);
 
-            var easValuesList = await _easContext.EasSubmissions?
-                .Where(u => u.Ukprn == ukprn.ToString())
-                .SelectMany(es => es.EasSubmissionValues
-                .Select(esv => new EasSubmissionDecodedValue
-                {
-                    FundingLine = esv.Payment.FundingLine.Name,
-                    AdjustmentName = esv.Payment.AdjustmentType.Name,
-                    PaymentName = esv.Payment.PaymentName,
-                    Period = esv.CollectionPeriod,
-                    PaymentValue = esv.PaymentValue,
-                    DevolvedAreaSof = esv.DevolvedAreaSoF
-                }))
-                .ToListAsync(cancellationToken);
+                var easValuesList = await context.EasSubmissions?
+                    .Where(u => u.Ukprn == ukprn.ToString())
+                    .SelectMany(es => es.EasSubmissionValues
+                    .Select(esv => new EasSubmissionDecodedValue
+                    {
+                        FundingLine = esv.Payment.FundingLine.Name,
+                        AdjustmentName = esv.Payment.AdjustmentType.Name,
+                        PaymentName = esv.Payment.PaymentName,
+                        Period = esv.CollectionPeriod,
+                        PaymentValue = esv.PaymentValue,
+                        DevolvedAreaSof = esv.DevolvedAreaSoF
+                    }))
+                    .ToListAsync(cancellationToken);
 
-            var easValuesDictionary = BuildEasDictionary(easValuesList);
+                var easValuesDictionary = BuildEasDictionary(easValuesList);
 
-            return MapEasValues(easFundingLines, easValuesDictionary);
+                return MapEasValues(easFundingLines, easValuesDictionary);
+            }
         }
 
         public IReadOnlyCollection<EasFundingLine> MapEasValues(List<EasFundingLine> easFundingLines, IDictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>> easValuesDictionary)

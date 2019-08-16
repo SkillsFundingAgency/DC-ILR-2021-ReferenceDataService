@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ReferenceData.FCS.Model;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
@@ -291,7 +292,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             fcsMock.Setup(f => f.EsfEligibilityRules).Returns(eligibilityRulesMock.Object);
             fcsMock.Setup(f => f.ContractDeliverableCodeMappings).Returns(contractDeliverableCodeMappingMock.Object);
 
-            var service = await NewService(fcsMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
+            var fcsContextFactoryMock = new Mock<IDbContextFactory<IFcsContext>>();
+            fcsContextFactoryMock.Setup(c => c.Create()).Returns(fcsMock.Object);
+
+            var service = await NewService(fcsContextFactoryMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(4);
             service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
@@ -585,7 +589,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             fcsMock.Setup(f => f.EsfEligibilityRules).Returns(eligibilityRulesMock.Object);
             fcsMock.Setup(f => f.ContractDeliverableCodeMappings).Returns(contractDeliverableCodeMappingMock.Object);
 
-            var service = await NewService(fcsMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
+            var fcsContextFactoryMock = new Mock<IDbContextFactory<IFcsContext>>();
+            fcsContextFactoryMock.Setup(c => c.Create()).Returns(fcsMock.Object);
+
+            var service = await NewService(fcsContextFactoryMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(4);
             service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
@@ -601,9 +608,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Where(f => f.ContractAllocationNumber == "102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
         }
 
-        private FcsRepositoryService NewService(IFcsContext fcs = null)
+        private FcsRepositoryService NewService(IDbContextFactory<IFcsContext> fcsContextFactory = null)
         {
-            return new FcsRepositoryService(fcs);
+            return new FcsRepositoryService(fcsContextFactory);
         }
     }
 }

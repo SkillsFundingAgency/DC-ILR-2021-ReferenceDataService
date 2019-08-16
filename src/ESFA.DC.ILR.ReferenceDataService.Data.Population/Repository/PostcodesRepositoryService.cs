@@ -9,17 +9,23 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
+using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class PostcodesRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>
     {
+        private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IReferenceDataOptions _referenceDataOptions;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public PostcodesRepositoryService(IReferenceDataOptions referenceDataOptions, IJsonSerializationService jsonSerializationService)
+        public PostcodesRepositoryService(
+            IDbContextFactory<IPostcodesContext> postcodesContextFactory,
+            IReferenceDataOptions referenceDataOptions,
+            IJsonSerializationService jsonSerializationService)
         {
+            _postcodesContextFactory = postcodesContextFactory;
             _referenceDataOptions = referenceDataOptions;
             _jsonSerializationService = jsonSerializationService;
         }
@@ -28,23 +34,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             var jsonParams = _jsonSerializationService.Serialize(input);
 
-            var masterPostcodes = await RetrieveMasterPostcodes(jsonParams, cancellationToken);
-            var sfaAreaCosts = await RetrieveSfaAreaCosts(jsonParams, cancellationToken);
-            var sfaPostcodeDisadvantages = await RetrieveSfaPostcodeDisadvantages(jsonParams, cancellationToken);
-            var efaPostcodeDisadvantages = await RetrieveEfaPostcodeDisadvantages(jsonParams, cancellationToken);
-            var dasPostcodeDisadvantages = await RetrieveDasPostcodeDisadvantages(jsonParams, cancellationToken);
-            var onsData = await RetrieveOnsData(jsonParams, cancellationToken);
+            using (var context = _postcodesContextFactory.Create())
+            {
+                var masterPostcodes = await RetrieveMasterPostcodes(jsonParams, cancellationToken);
+                var sfaAreaCosts = await RetrieveSfaAreaCosts(jsonParams, cancellationToken);
+                var sfaPostcodeDisadvantages = await RetrieveSfaPostcodeDisadvantages(jsonParams, cancellationToken);
+                var efaPostcodeDisadvantages = await RetrieveEfaPostcodeDisadvantages(jsonParams, cancellationToken);
+                var dasPostcodeDisadvantages = await RetrieveDasPostcodeDisadvantages(jsonParams, cancellationToken);
+                var onsData = await RetrieveOnsData(jsonParams, cancellationToken);
 
-            return masterPostcodes
-                .Select(postcode => new Postcode()
-                {
-                    PostCode = postcode,
-                    SfaDisadvantages = sfaPostcodeDisadvantages.TryGetValue(postcode, out var sfaDisad) ? sfaPostcodeDisadvantages[postcode] : null,
-                    SfaAreaCosts = sfaAreaCosts.TryGetValue(postcode, out var sfaAreaCost) ? sfaAreaCosts[postcode] : null,
-                    DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
-                    EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
-                    ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null,
-                }).ToList();
+                return masterPostcodes
+                    .Select(postcode => new Postcode()
+                    {
+                        PostCode = postcode,
+                        SfaDisadvantages = sfaPostcodeDisadvantages.TryGetValue(postcode, out var sfaDisad) ? sfaPostcodeDisadvantages[postcode] : null,
+                        SfaAreaCosts = sfaAreaCosts.TryGetValue(postcode, out var sfaAreaCost) ? sfaAreaCosts[postcode] : null,
+                        DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
+                        EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
+                        ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null,
+                    }).ToList();
+            }
         }
 
         public async Task<List<string>> RetrieveMasterPostcodes(string jsonParams, CancellationToken cancellationToken)

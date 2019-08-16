@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -14,11 +15,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     public class EmployersRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>
     {
         private const int BatchSize = 5000;
-        private readonly IEmployersContext _employersContext;
+        private readonly IDbContextFactory<IEmployersContext> _employersContextFactory;
 
-        public EmployersRepositoryService(IEmployersContext employersContext)
+        public EmployersRepositoryService(IDbContextFactory<IEmployersContext> employersContextFactory)
         {
-            _employersContext = employersContext;
+            _employersContextFactory = employersContextFactory;
         }
 
         public async Task<IReadOnlyCollection<Employer>> RetrieveAsync(IReadOnlyCollection<int> input, CancellationToken cancellationToken)
@@ -28,32 +29,35 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             var batches = input.Batch(BatchSize);
 
-            foreach (var batch in batches)
+            using (var context = _employersContextFactory.Create())
             {
-                edrsEmpIds.AddRange(
-                    await _employersContext.Employers
-                     .Where(e => batch.Contains(e.Urn))
-                     .Select(e => e.Urn)
-                     .ToListAsync(cancellationToken));
-
-                largeEmployers.AddRange(
-                    await _employersContext.LargeEmployers
-                     .Where(e => batch.Contains(e.Ern))
-                     .ToListAsync(cancellationToken));
-            }
-
-            return
-                edrsEmpIds
-                .Select(empId => new Employer
+                foreach (var batch in batches)
                 {
-                    ERN = empId,
-                    LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
-                    .Select(le => new LargeEmployerEffectiveDates
+                    edrsEmpIds.AddRange(
+                        await context.Employers
+                         .Where(e => batch.Contains(e.Urn))
+                         .Select(e => e.Urn)
+                         .ToListAsync(cancellationToken));
+
+                    largeEmployers.AddRange(
+                        await context.LargeEmployers
+                         .Where(e => batch.Contains(e.Ern))
+                         .ToListAsync(cancellationToken));
+                }
+
+                return
+                    edrsEmpIds
+                    .Select(empId => new Employer
                     {
-                        EffectiveFrom = le.EffectiveFrom,
-                        EffectiveTo = le.EffectiveTo,
-                    }).ToList(),
-                }).ToList();
+                        ERN = empId,
+                        LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
+                        .Select(le => new LargeEmployerEffectiveDates
+                        {
+                            EffectiveFrom = le.EffectiveFrom,
+                            EffectiveTo = le.EffectiveTo,
+                        }).ToList(),
+                    }).ToList();
+            }
         }
     }
 }

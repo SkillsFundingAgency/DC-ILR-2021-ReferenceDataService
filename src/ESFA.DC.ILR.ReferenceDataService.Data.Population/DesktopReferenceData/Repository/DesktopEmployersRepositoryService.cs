@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
@@ -12,29 +13,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 {
     public class DesktopEmployersRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Employer>>
     {
-        private const int BatchSize = 5000;
-        private readonly IEmployersContext _employersContext;
+        private readonly IDbContextFactory<IEmployersContext> _employersContextFactory;
 
-        public DesktopEmployersRepositoryService(IEmployersContext employersContext)
+        public DesktopEmployersRepositoryService(IDbContextFactory<IEmployersContext> employersContextFactory)
         {
-            _employersContext = employersContext;
+            _employersContextFactory = employersContextFactory;
         }
 
         public async Task<IReadOnlyCollection<Employer>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            var largeEmployers = await _employersContext.LargeEmployers.ToListAsync(cancellationToken);
+            using (var context = _employersContextFactory.Create())
+            {
+                var largeEmployers = await context.LargeEmployers.ToListAsync(cancellationToken);
 
-            return
-                largeEmployers.GroupBy(le => le.Ern)
-                .Select(e => new Employer
-                {
-                    ERN = e.Key,
-                    LargeEmployerEffectiveDates = e.Select(le => new LargeEmployerEffectiveDates
+                return
+                    largeEmployers.GroupBy(le => le.Ern)
+                    .Select(e => new Employer
                     {
-                        EffectiveFrom = le.EffectiveFrom,
-                        EffectiveTo = le.EffectiveTo,
-                    }).ToList(),
-                }).ToList();
+                        ERN = e.Key,
+                        LargeEmployerEffectiveDates = e.Select(le => new LargeEmployerEffectiveDates
+                        {
+                            EffectiveFrom = le.EffectiveFrom,
+                            EffectiveTo = le.EffectiveTo,
+                        }).ToList(),
+                    }).ToList();
+            }
         }
     }
 }

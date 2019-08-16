@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
@@ -19,7 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
     public class IlrReferenceDataRepositoryServiceTests
     {
         [Fact]
-        public async Task RetrieveValErrorsAsync()
+        public async Task RetrieveIlrReferenceDataAsync()
         {
             var validationErrors = new List<ValidationError>
             {
@@ -35,35 +36,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ValidationError { RuleName = "Rule10", Severity = SeverityLevel.Error, Message = "Message10" },
             };
 
-            var validationErrorsMock = new Mock<IIlrReferenceDataContext>();
-
             IEnumerable<Rule> errorsList = new List<Rule>
             {
-                new Rule { Rulename = "Rule1", Severity = "E", Message = "Message1" },
-                new Rule { Rulename = "Rule2", Severity = "E", Message = "Message2" },
-                new Rule { Rulename = "Rule3", Severity = "E", Message = "Message3" },
-                new Rule { Rulename = "Rule4", Severity = "E", Message = "Message4" },
-                new Rule { Rulename = "Rule5", Severity = "W", Message = "Message5" },
-                new Rule { Rulename = "Rule6", Severity = "W", Message = "Message6" },
-                new Rule { Rulename = "Rule7", Severity = "E", Message = "Message7" },
-                new Rule { Rulename = "Rule8", Severity = "E", Message = "Message8" },
-                new Rule { Rulename = "Rule9", Severity = "E", Message = "Message9" },
-                new Rule { Rulename = "Rule10", Severity = "E", Message = "Message10" },
+                new Rule { Rulename = "Rule1", Severity = "E", Message = "Message1", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule2", Severity = "E", Message = "Message2", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule3", Severity = "E", Message = "Message3", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule4", Severity = "E", Message = "Message4", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule5", Severity = "W", Message = "Message5", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule6", Severity = "W", Message = "Message6", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule7", Severity = "E", Message = "Message7", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule8", Severity = "E", Message = "Message8", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule9", Severity = "E", Message = "Message9", Desktop = true, Online = true },
+                new Rule { Rulename = "Rule10", Severity = "E", Message = "Message10", Desktop = true, Online = true },
             };
 
-            var errorsListDbMock = errorsList.AsQueryable().BuildMockDbSet();
-
-            validationErrorsMock.Setup(v => v.Rules).Returns(errorsListDbMock.Object);
-
-            var serviceResult = await NewService(validationErrorsMock.Object).RetrieveValidationErrorsAsync(CancellationToken.None);
-
-            serviceResult.Count().Should().Be(10);
-            serviceResult.ToList().Should().BeEquivalentTo(validationErrors);
-        }
-
-        [Fact]
-        public async Task RetrieveLookupsAsync()
-        {
             var lookups = new List<ReferenceDataService.Model.MetaData.Lookup>
             {
                 new ReferenceDataService.Model.MetaData.Lookup
@@ -112,8 +98,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
-            var lookupsMock = new Mock<IIlrReferenceDataContext>();
-
             var lookupSubCategoriesList = new List<ILRReferenceData.Model.LookupSubCategory>
             {
                 new ILRReferenceData.Model.LookupSubCategory
@@ -152,19 +136,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
-            var lookupListDbMock = lookupsList.AsQueryable().BuildMockDbSet();
-
-            lookupsMock.Setup(v => v.Lookups).Returns(lookupListDbMock.Object);
-
-            var serviceResult = await NewService(lookupsMock.Object).RetrieveLookupsAsync(CancellationToken.None);
-
-            serviceResult.Count().Should().Be(4);
-            serviceResult.ToList().Should().BeEquivalentTo(lookups);
-        }
-
-        [Fact]
-        public async Task RetrieveCollectionDates()
-        {
             var collectionDates = new IlrCollectionDates
             {
                 CensusDates = new List<CensusDate>
@@ -184,29 +155,46 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 ReturnPeriods = new List<ReturnPeriod>
                 {
-                    new ReturnPeriod { Name = "R01", Period = 1, Start = new DateTime(2019, 08, 23), End = new DateTime(2019, 09, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R02", Period = 2, Start = new DateTime(2019, 09, 07), End = new DateTime(2019, 10, 04, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R01", Period = 1, Start = new DateTime(2019, 08, 22), End = new DateTime(2019, 09, 05, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R02", Period = 2, Start = new DateTime(2019, 09, 06), End = new DateTime(2019, 10, 04, 23, 59, 59) },
                     new ReturnPeriod { Name = "R03", Period = 3, Start = new DateTime(2019, 10, 05), End = new DateTime(2019, 11, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R04", Period = 4, Start = new DateTime(2019, 11, 07), End = new DateTime(2019, 12, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R05", Period = 5, Start = new DateTime(2019, 12, 07), End = new DateTime(2020, 01, 07, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R04", Period = 4, Start = new DateTime(2019, 11, 07), End = new DateTime(2019, 12, 05, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R05", Period = 5, Start = new DateTime(2019, 12, 06), End = new DateTime(2020, 01, 07, 23, 59, 59) },
                     new ReturnPeriod { Name = "R06", Period = 6, Start = new DateTime(2020, 01, 08), End = new DateTime(2020, 02, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R07", Period = 7, Start = new DateTime(2020, 02, 07), End = new DateTime(2020, 03, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R08", Period = 8, Start = new DateTime(2020, 03, 07), End = new DateTime(2020, 04, 04, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R09", Period = 9, Start = new DateTime(2020, 04, 05), End = new DateTime(2020, 05, 07, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R10", Period = 10, Start = new DateTime(2020, 05, 08), End = new DateTime(2020, 06, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R11", Period = 11, Start = new DateTime(2020, 06, 07), End = new DateTime(2020, 07, 04, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R12", Period = 12, Start = new DateTime(2020, 07, 05), End = new DateTime(2020, 08, 06, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R13", Period = 13, Start = new DateTime(2020, 08, 07), End = new DateTime(2020, 09, 13, 23, 59, 59) },
-                    new ReturnPeriod { Name = "R14", Period = 14, Start = new DateTime(2020, 09, 14), End = new DateTime(2020, 10, 17, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R07", Period = 7, Start = new DateTime(2020, 02, 07), End = new DateTime(2020, 03, 05, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R08", Period = 8, Start = new DateTime(2020, 03, 06), End = new DateTime(2020, 04, 06, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R09", Period = 9, Start = new DateTime(2020, 04, 07), End = new DateTime(2020, 05, 06, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R10", Period = 10, Start = new DateTime(2020, 05, 07), End = new DateTime(2020, 06, 04, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R11", Period = 11, Start = new DateTime(2020, 06, 05), End = new DateTime(2020, 07, 06, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R12", Period = 12, Start = new DateTime(2020, 07, 07), End = new DateTime(2020, 08, 06, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R13", Period = 13, Start = new DateTime(2020, 08, 07), End = new DateTime(2020, 09, 14, 23, 59, 59) },
+                    new ReturnPeriod { Name = "R14", Period = 14, Start = new DateTime(2020, 09, 15), End = new DateTime(2020, 10, 22, 23, 59, 59) },
                 }
             };
 
-            NewService().RetrieveCollectionDates().Should().BeEquivalentTo(collectionDates);
+            var errorsListDbMock = errorsList.AsQueryable().BuildMockDbSet();
+            var lookupListDbMock = lookupsList.AsQueryable().BuildMockDbSet();
+
+            var ilrRefDataMock = new Mock<IIlrReferenceDataContext>();
+            var ilrRefDataContextFactoryMock = new Mock<IDbContextFactory<IIlrReferenceDataContext>>();
+
+            ilrRefDataMock.Setup(v => v.Rules).Returns(errorsListDbMock.Object);
+            ilrRefDataMock.Setup(v => v.Lookups).Returns(lookupListDbMock.Object);
+
+            ilrRefDataContextFactoryMock.Setup(c => c.Create()).Returns(ilrRefDataMock.Object);
+
+            var serviceResult = await NewService(ilrRefDataContextFactoryMock.Object).RetrieveIlrReferenceDataAsync(CancellationToken.None);
+
+            serviceResult.ValidationErrors.Should().HaveCount(10);
+            serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
+            serviceResult.Lookups.Should().HaveCount(4);
+            serviceResult.Lookups.ToList().Should().BeEquivalentTo(lookups);
+            serviceResult.CollectionDates.Should().BeEquivalentTo(collectionDates);
         }
 
-        private IlrReferenceDataRepositoryService NewService(IIlrReferenceDataContext ilrReferenceDataContext = null)
+        private IlrReferenceDataRepositoryService NewService(IDbContextFactory<IIlrReferenceDataContext> ilrReferenceDataContextFactory = null)
         {
-            return new IlrReferenceDataRepositoryService(ilrReferenceDataContext);
+            return new IlrReferenceDataRepositoryService(ilrReferenceDataContextFactory);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.EAS1920.EF;
 using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using FluentAssertions;
@@ -279,8 +280,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var easMock = new Mock<IEasdbContext>();
-
             var fundingLinesMock = new List<FundingLine>
             {
                 new FundingLine
@@ -445,17 +444,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             }.AsQueryable().BuildMockDbSet();
 
+            var easMock = new Mock<IEasdbContext>();
+
             easMock.Setup(e => e.FundingLines).Returns(fundingLinesMock.Object);
             easMock.Setup(e => e.EasSubmissions).Returns(easSubmissionsMock.Object);
 
-            var easFundLines = await NewService(easMock.Object).RetrieveAsync(12345678, CancellationToken.None);
+            var easContextFactoryMock = new Mock<IDbContextFactory<IEasdbContext>>();
+            easContextFactoryMock.Setup(c => c.Create()).Returns(easMock.Object);
+
+            var easFundLines = await NewService(easContextFactoryMock.Object).RetrieveAsync(12345678, CancellationToken.None);
 
             easFundLines.Should().BeEquivalentTo(expectedOutput);
         }
 
-        private EasRepositoryService NewService(IEasdbContext easContext = null)
+        private EasRepositoryService NewService(IDbContextFactory<IEasdbContext> easContextFactory = null)
         {
-            return new EasRepositoryService(easContext);
+            return new EasRepositoryService(easContextFactory);
         }
     }
 }

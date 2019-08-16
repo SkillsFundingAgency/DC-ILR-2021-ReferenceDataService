@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.EAS1920.EF;
 using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ReferenceData.Employers.Model;
@@ -36,16 +37,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var postcodesVersion = "Version4";
             var utcDateTime = new DateTime(2019, 8, 1);
             var easDateTime = new DateTime(2019, 8, 1);
-
-            var easMock = new Mock<IEasdbContext>();
-            var employersMock = new Mock<IEmployersContext>();
-            var larsMock = new Mock<ILARSContext>();
-            var orgMock = new Mock<IOrganisationsContext>();
-            var postcodesMock = new Mock<IPostcodesContext>();
-            var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
-            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
-
-            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(utcDateTime);
 
             IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
             {
@@ -116,27 +107,57 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Lookup { Code = "Lookup3", Name = "Lookup" },
             };
 
+            var metaData = new MetaData
+            {
+                Lookups = lookups,
+                ValidationErrors = validationErrors,
+                ValidationRules = validationRules
+            };
+
             var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
+            var easMock = new Mock<IEasdbContext>();
+            var employersMock = new Mock<IEmployersContext>();
+            var larsMock = new Mock<ILARSContext>();
+            var orgMock = new Mock<IOrganisationsContext>();
+            var postcodesMock = new Mock<IPostcodesContext>();
+            var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            var easContextFactoryMock = new Mock<IDbContextFactory<IEasdbContext>>();
+            var employersContextFactoryMock = new Mock<IDbContextFactory<IEmployersContext>>();
+            var larsContextFactoryMock = new Mock<IDbContextFactory<ILARSContext>>();
+            var orgContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
+            var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
+            var ilrReferenceDataRepositoryServiceContextFactoryMock = new Mock<IDbContextFactory<IIlrReferenceDataRepositoryService>>();
+
+            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(utcDateTime);
+
             easMock.Setup(e => e.EasSubmissions).Returns(easDbMock.Object);
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationErrorsAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveLookupsAsync(CancellationToken.None)).Returns(Task.FromResult(lookups));
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationRulesAsync(CancellationToken.None)).Returns(Task.FromResult(validationRules));
+
+            easContextFactoryMock.Setup(c => c.Create()).Returns(easMock.Object);
+            employersContextFactoryMock.Setup(c => c.Create()).Returns(employersMock.Object);
+            larsContextFactoryMock.Setup(c => c.Create()).Returns(larsMock.Object);
+            orgContextFactoryMock.Setup(c => c.Create()).Returns(orgMock.Object);
+            postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesMock.Object);
+            ilrReferenceDataRepositoryServiceContextFactoryMock.Setup(c => c.Create()).Returns(ilrReferenceDataRepositoryServiceMock.Object);
+
+            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveIlrReferenceDataAsync(CancellationToken.None)).Returns(Task.FromResult(metaData));
 
             var serviceResult = await NewService(
-                easMock.Object,
-                employersMock.Object,
-                larsMock.Object,
-                orgMock.Object,
-                postcodesMock.Object,
+                easContextFactoryMock.Object,
+                employersContextFactoryMock.Object,
+                larsContextFactoryMock.Object,
+                orgContextFactoryMock.Object,
+                postcodesContextFactoryMock.Object,
                 ilrReferenceDataRepositoryServiceMock.Object,
                 dateTimeProviderMock.Object).RetrieveAsync(1, CancellationToken.None);
 
@@ -154,16 +175,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync_ThrowsException()
         {
             var easDateTime = new DateTime(2019, 8, 1);
-
-            var easMock = new Mock<IEasdbContext>();
-            var employersMock = new Mock<IEmployersContext>();
-            var larsMock = new Mock<ILARSContext>();
-            var orgMock = new Mock<IOrganisationsContext>();
-            var postcodesMock = new Mock<IPostcodesContext>();
-            var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
-            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
-
-            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
 
             IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
             {
@@ -216,28 +227,58 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Lookup { Code = "Lookup3", Name = "Lookup" },
             };
 
+            var metaData = new MetaData
+            {
+                Lookups = lookups,
+                ValidationErrors = validationErrors,
+            };
+
             var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
+            var easMock = new Mock<IEasdbContext>();
+            var employersMock = new Mock<IEmployersContext>();
+            var larsMock = new Mock<ILARSContext>();
+            var orgMock = new Mock<IOrganisationsContext>();
+            var postcodesMock = new Mock<IPostcodesContext>();
+            var ilrReferenceDataRepositoryServiceMock = new Mock<IIlrReferenceDataRepositoryService>();
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            var easContextFactoryMock = new Mock<IDbContextFactory<IEasdbContext>>();
+            var employersContextFactoryMock = new Mock<IDbContextFactory<IEmployersContext>>();
+            var larsContextFactoryMock = new Mock<IDbContextFactory<ILARSContext>>();
+            var orgContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
+            var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
+            var ilrReferenceDataRepositoryServiceContextFactoryMock = new Mock<IDbContextFactory<IIlrReferenceDataRepositoryService>>();
+
+            dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(DateTime.UtcNow);
+
             easMock.Setup(e => e.EasSubmissions).Returns(easDbMock.Object);
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveValidationErrorsAsync(CancellationToken.None)).Returns(Task.FromResult(validationErrors));
-            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveLookupsAsync(CancellationToken.None)).Returns(Task.FromResult(lookups));
+
+            easContextFactoryMock.Setup(c => c.Create()).Returns(easMock.Object);
+            employersContextFactoryMock.Setup(c => c.Create()).Returns(employersMock.Object);
+            larsContextFactoryMock.Setup(c => c.Create()).Returns(larsMock.Object);
+            orgContextFactoryMock.Setup(c => c.Create()).Returns(orgMock.Object);
+            postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesMock.Object);
+            ilrReferenceDataRepositoryServiceContextFactoryMock.Setup(c => c.Create()).Returns(ilrReferenceDataRepositoryServiceMock.Object);
+
+            ilrReferenceDataRepositoryServiceMock.Setup(v => v.RetrieveIlrReferenceDataAsync(CancellationToken.None)).Returns(Task.FromResult(metaData));
 
             Func<Task> serviceResult = async () =>
             {
                 await NewService(
-                         easMock.Object,
-                         employersMock.Object,
-                         larsMock.Object,
-                         orgMock.Object,
-                         postcodesMock.Object,
+                         easContextFactoryMock.Object,
+                         employersContextFactoryMock.Object,
+                         larsContextFactoryMock.Object,
+                         orgContextFactoryMock.Object,
+                         postcodesContextFactoryMock.Object,
                          ilrReferenceDataRepositoryServiceMock.Object,
                          dateTimeProviderMock.Object).RetrieveAsync(1, CancellationToken.None);
             };
@@ -247,21 +288,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         private MetaDataRetrievalService NewService(
-            IEasdbContext eas = null,
-            IEmployersContext employers = null,
-            ILARSContext larsContext = null,
-            IOrganisationsContext organisationsContext = null,
-            IPostcodesContext postcodesContext = null,
-            IIlrReferenceDataRepositoryService ilrReferenceDataRepositoryService = null,
+            IDbContextFactory<IEasdbContext> easContextFactory = null,
+            IDbContextFactory<IEmployersContext> employersContextFactory = null,
+            IDbContextFactory<ILARSContext> larsContextFactory = null,
+            IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null,
+            IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
+            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService = null,
             IDateTimeProvider dateTimeProvider = null)
         {
             return new MetaDataRetrievalService(
-                eas,
-                employers,
-                larsContext,
-                organisationsContext,
-                postcodesContext,
-                ilrReferenceDataRepositoryService,
+                easContextFactory,
+                employersContextFactory,
+                larsContextFactory,
+                organisationsContextFactory,
+                postcodesContextFactory,
+                ilReferenceDataRepositoryService,
                 dateTimeProvider);
         }
     }

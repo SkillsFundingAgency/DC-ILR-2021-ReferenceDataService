@@ -6,6 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
+using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -175,7 +176,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             jsonSerializationMock.Setup(sm => sm.Serialize(postcodes)).Returns(json);
 
-            var service = NewServiceMock(jsonSerializationService: jsonSerializationMock.Object);
+            var postcodesContextMock = new Mock<IPostcodesContext>();
+            var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
+            postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesContextMock.Object);
+
+            var service = NewServiceMock(postcodesContextFactory: postcodesContextFactoryMock.Object, jsonSerializationService: jsonSerializationMock.Object);
 
             service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(masterPostcodeTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaAreaCostTaskResult.Task);
@@ -832,14 +837,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
         }
 
-        private PostcodesRepositoryService NewService(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
+        private PostcodesRepositoryService NewService(
+            IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
+            IReferenceDataOptions referenceDataOptions = null,
+            IJsonSerializationService jsonSerializationService = null)
         {
-            return new PostcodesRepositoryService(referenceDataOptions, jsonSerializationService);
+            return new PostcodesRepositoryService(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
         }
 
-        private Mock<PostcodesRepositoryService> NewServiceMock(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
+        private Mock<PostcodesRepositoryService> NewServiceMock(
+             IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
+             IReferenceDataOptions referenceDataOptions = null,
+             IJsonSerializationService jsonSerializationService = null)
         {
-            return new Mock<PostcodesRepositoryService>(referenceDataOptions, jsonSerializationService);
+            return new Mock<PostcodesRepositoryService>(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
         }
     }
 }
