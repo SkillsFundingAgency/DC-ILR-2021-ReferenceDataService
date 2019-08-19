@@ -12,6 +12,6 @@
 
         public decimal? PaymentValue { get; set; }
 
-        public int? DevolvedAreaSof { get; set; }
+        public int DevolvedAreaSof { get; set; }
     }
 }

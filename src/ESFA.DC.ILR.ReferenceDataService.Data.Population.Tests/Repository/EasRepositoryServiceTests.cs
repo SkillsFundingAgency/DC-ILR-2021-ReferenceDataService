@@ -235,9 +235,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
-            var paymentPeriod1 = new EasPaymentValue(1.0m, null);
-            var paymentPeriod11 = new EasPaymentValue(11.0m, null);
-            var paymentPeriod2 = new EasPaymentValue(2.0m, null);
+            var paymentPeriod1 = new EasPaymentValue(1.0m, new List<int> { 1 });
+            var paymentPeriod11 = new EasPaymentValue(11.0m, new List<int> { 11 });
+            var paymentPeriod2 = new EasPaymentValue(2.0m, new List<int> { 2, 22 });
 
             var expectedOutput = new List<EasFundingLine>
             {
@@ -366,8 +366,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                     Name = "FundLine1",
                                     Id = 1
                                 },
-                                PaymentName = "PaymentName1"
-                            }
+                                PaymentName = "PaymentName1",
+                            },
+                            DevolvedAreaSoF = 1
                         },
                         new EasSubmissionValueEF
                         {
@@ -388,7 +389,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                     Id = 11
                                 },
                                 PaymentName = "PaymentName11"
-                            }
+                            },
+                            DevolvedAreaSoF = 11
                         },
                         new EasSubmissionValueEF
                         {
@@ -409,7 +411,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                     Id = 2
                                 },
                                 PaymentName = "PaymentName2"
-                            }
+                            },
+                            DevolvedAreaSoF = 2
+                        },
+                        new EasSubmissionValueEF
+                        {
+                            CollectionPeriod = 2,
+                            PaymentId = 2,
+                            PaymentValue = 2.0m,
+                            Payment = new PaymentType
+                            {
+                                AdjustmentTypeId = 2,
+                                AdjustmentType = new AdjustmentType
+                                {
+                                    Id = 2,
+                                    Name = "AdjustmentTypeName2"
+                                },
+                                FundingLine = new FundingLine
+                                {
+                                    Name = "FundLine2",
+                                    Id = 2
+                                },
+                                PaymentName = "PaymentName2"
+                            },
+                            DevolvedAreaSoF = 22
                         }
                     }
                 },
@@ -454,7 +479,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var easFundLines = await NewService(easContextFactoryMock.Object).RetrieveAsync(12345678, CancellationToken.None);
 
-            easFundLines.Should().BeEquivalentTo(expectedOutput);
+            var resultFundline1Period1 = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1.PaymentValue;
+            var resultFundline1Period1Sofs = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1.DevolvedAreaSofs;
+            var expectedFundline1Period1 = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1.PaymentValue;
+            var expectedFundline1Period1Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1.DevolvedAreaSofs;
+
+            var resultFundline1Period11 = easFundLines.ToArray()[0].EasSubmissionValues.First().Period11.PaymentValue;
+            var resultFundline1Period11Sofs = easFundLines.ToArray()[0].EasSubmissionValues.First().Period11.DevolvedAreaSofs;
+            var expectedFundline1Period11 = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period11.PaymentValue;
+            var expectedFundline1Period11Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period11.DevolvedAreaSofs;
+
+            var resultFundline2Period2 = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2.PaymentValue;
+            var resultFundline2Period2Sofs = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2.DevolvedAreaSofs;
+            var expectedFundline2Period2 = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2.PaymentValue;
+            var expectedFundline2Period2Sofs = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2.DevolvedAreaSofs;
+
+            easFundLines.ToArray()[0].FundLine.Should().Be("FundLine1");
+            easFundLines.ToArray()[1].FundLine.Should().Be("FundLine2");
+            easFundLines.ToArray()[0].EasSubmissionValues.Should().HaveCount(2);
+            easFundLines.ToArray()[1].EasSubmissionValues.Should().HaveCount(2);
+            resultFundline1Period1.Should().Be(expectedFundline1Period1);
+            expectedFundline1Period1Sofs.Should().BeEquivalentTo(expectedFundline1Period1Sofs);
+            resultFundline1Period11.Should().Be(expectedFundline1Period11);
+            expectedFundline1Period11Sofs.Should().BeEquivalentTo(expectedFundline1Period11Sofs);
+            resultFundline2Period2.Should().Be(expectedFundline2Period2);
+            expectedFundline2Period2Sofs.Should().BeEquivalentTo(expectedFundline2Period2Sofs);
         }
 
         private EasRepositoryService NewService(IDbContextFactory<IEasdbContext> easContextFactory = null)

@@ -1,15 +1,17 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
+﻿using System.Collections.Generic;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 {
     public struct EasPaymentValue
     {
-        public EasPaymentValue(decimal? paymentValue, int? devolvedAraSof)
+        public EasPaymentValue(decimal? paymentValue, IEnumerable<int> devolvedAraSofs)
         {
             PaymentValue = paymentValue;
-            DevolvedAreaSof = devolvedAraSof;
+            DevolvedAreaSofs = devolvedAraSofs;
         }
 
         public decimal? PaymentValue { get; set; }
 
-        public int? DevolvedAreaSof { get; set; }
+        public IEnumerable<int> DevolvedAreaSofs { get; set; }
     }
 }
