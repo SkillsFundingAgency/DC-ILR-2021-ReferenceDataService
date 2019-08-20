@@ -122,7 +122,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                                eas.PaymentValue,
                                sofDictionary.TryGetValue(new { eas.FundingLine, eas.AdjustmentName, eas.PaymentName, eas.Period, eas.PaymentValue }, out var sofList)
                                ? sofList
-                               : Enumerable.Empty<int>())).FirstOrDefault()),
+                               : new List<int>())).FirstOrDefault()),
                        StringComparer.OrdinalIgnoreCase),
                    StringComparer.OrdinalIgnoreCase);
         }

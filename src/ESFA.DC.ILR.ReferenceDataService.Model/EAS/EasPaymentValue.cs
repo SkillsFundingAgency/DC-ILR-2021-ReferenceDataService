@@ -4,7 +4,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 {
     public struct EasPaymentValue
     {
-        public EasPaymentValue(decimal? paymentValue, IEnumerable<int> devolvedAraSofs)
+        public EasPaymentValue(decimal? paymentValue, List<int> devolvedAraSofs)
         {
             PaymentValue = paymentValue;
             DevolvedAreaSofs = devolvedAraSofs;
@@ -12,6 +12,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 
         public decimal? PaymentValue { get; set; }
 
-        public IEnumerable<int> DevolvedAreaSofs { get; set; }
+        public List<int> DevolvedAreaSofs { get; set; }
     }
 }
