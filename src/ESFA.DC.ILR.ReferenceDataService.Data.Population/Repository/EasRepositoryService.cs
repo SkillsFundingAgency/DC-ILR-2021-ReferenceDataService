@@ -99,8 +99,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         private IDictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>> BuildEasDictionary(List<EasSubmissionDecodedValue> easSubmissionDecodedValues)
         {
-            return
-                easSubmissionDecodedValues?
+            var sofDictionary =
+                easSubmissionDecodedValues
+                .GroupBy(x => new { x.FundingLine, x.AdjustmentName, x.PaymentName, x.Period, x.PaymentValue })
+                .ToDictionary(
+                    k => k.Key,
+                    v => v.Select(s => s.DevolvedAreaSof).ToList());
+
+            return easSubmissionDecodedValues?
                 .GroupBy(c => c.FundingLine, StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(
                    fundingLine => fundingLine.Key,
@@ -109,9 +115,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                    .ToDictionary(
                        paymentName => paymentName.Key,
                        paymentNameValue => paymentNameValue
+                       .GroupBy(p => p.Period)
                        .ToDictionary(
-                           k3 => k3.Period,
-                           v3 => new EasPaymentValue(v3.PaymentValue, v3.DevolvedAreaSof)), StringComparer.OrdinalIgnoreCase),
+                           k3 => k3.Key,
+                           v3 => v3.Select(eas => new EasPaymentValue(
+                               eas.PaymentValue,
+                               sofDictionary.TryGetValue(new { eas.FundingLine, eas.AdjustmentName, eas.PaymentName, eas.Period, eas.PaymentValue }, out var sofList)
+                               ? sofList
+                               : Enumerable.Empty<int>())).FirstOrDefault()),
+                       StringComparer.OrdinalIgnoreCase),
                    StringComparer.OrdinalIgnoreCase);
         }
     }
