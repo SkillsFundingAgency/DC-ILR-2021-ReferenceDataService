@@ -2857,7 +2857,7 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_01',
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_02', N'E', N'The Gross tuition fee must be equal to or greater than the Net tuition fee')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_03', N'E', N'The Gross tuition fee must not be greater than ?30000')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_2', N'W', N'The file preparation date is after today''s date')
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_3', N'E', N'The UKPRN in the filename does not match the UKPRN in the Header')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_3', N'F', N'The UKPRN in the filename does not match the UKPRN in the Header')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_01', N'W', N'The HE centre location postcode should be a valid postcode on the list of complete UK postcodes table or be ZZ99 9ZZ')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_02', N'E', N'The Postcode must conform to the valid postcode format')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Inconsistent UKPRN', N'E', N'The UKPRN in the file name does not match the provider''s UKPRN in the Hub')
@@ -3261,5 +3261,22 @@ WHERE [Rulename] IN
 	,'OutULN_02'
 )
 
+
 RAISERROR('Rules Desktop Flags Completed',10,1)
+GO
+
+--These rules off for R01 launch
+UPDATE [dbo].[Rules]
+SET [Online] = 0, [Desktop] = 0
+WHERE [Rulename] IN
+(
+	 'LearnStartDate_07'
+	,'DelLocPostcode_18'
+	,'LearnDelFAMType_64'
+	,'R112'
+	,'R113'
+	,'PHours_01'
+)
+
+RAISERROR('Rules Online/Desktop Flags For R01 Completed',10,1)
 GO
