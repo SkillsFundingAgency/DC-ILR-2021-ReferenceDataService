@@ -2942,6 +2942,7 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamTy
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_71', N'E', N'There should be an ACT 2 record for this LDM code')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_72', N'E', N'If LDM 359 has been returned and the aims have been recorded against funding model 99, then ADL 1 must be used')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_73', N'E', N'LDM 359 can only be recorded against funding models 81 or 99')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_74', N'W', N'The Source of funding is not valid for this Funding model')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnerHE_02', N'E', N'A Learning Delivery HE record must be returned')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_01', N'E', N'The FAM type and code is not valid')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_03', N'E', N'The FAM type and code is not valid for this Learning start date')
