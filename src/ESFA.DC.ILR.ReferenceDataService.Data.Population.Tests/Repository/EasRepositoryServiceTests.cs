@@ -22,9 +22,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void MapEasValues()
         {
-            var paymentPeriod1 = new EasPaymentValue(1.0m, null);
-            var paymentPeriod2 = new EasPaymentValue(2.0m, null);
-            var paymentPeriod3 = new EasPaymentValue(3.0m, null);
+            var paymentPeriod1 = new List<EasPaymentValue> { new EasPaymentValue(1.0m, null) };
+            var paymentPeriod2 = new List<EasPaymentValue> { new EasPaymentValue(2.0m, null) };
+            var paymentPeriod3 = new List<EasPaymentValue> { new EasPaymentValue(3.0m, null) };
 
             var easFundingLines = new List<EasFundingLine>
             {
@@ -64,20 +64,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>>
+            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, List<EasPaymentValue>>>>
             {
                 {
-                    "FundLine1", new Dictionary<string, Dictionary<int, EasPaymentValue>>
+                    "FundLine1", new Dictionary<string, Dictionary<int, List<EasPaymentValue>>>
                     {
                         {
-                            "PaymentName1", new Dictionary<int, EasPaymentValue>
+                            "PaymentName1", new Dictionary<int, List<EasPaymentValue>>
                             {
                                 { 1, paymentPeriod1 },
                                 { 2, paymentPeriod2 }
                             }
                         },
                         {
-                            "PaymentName11", new Dictionary<int, EasPaymentValue>
+                            "PaymentName11", new Dictionary<int, List<EasPaymentValue>>
                             {
                                 { 1, paymentPeriod1 },
                                 { 2, paymentPeriod2 },
@@ -87,10 +87,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "FundLine2", new Dictionary<string, Dictionary<int, EasPaymentValue>>
+                    "FundLine2", new Dictionary<string, Dictionary<int, List<EasPaymentValue>>>
                     {
                         {
-                            "PaymentName2", new Dictionary<int, EasPaymentValue>
+                            "PaymentName2", new Dictionary<int, List<EasPaymentValue>>
                             {
                                 { 1, paymentPeriod1 },
                                 { 2, paymentPeriod2 }
@@ -189,7 +189,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>>();
+            var easValuesDictionary = new Dictionary<string, Dictionary<string, Dictionary<int, List<EasPaymentValue>>>>();
 
             var expectedOutput = new List<EasFundingLine>
             {
@@ -235,9 +235,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
-            var paymentPeriod1 = new EasPaymentValue(1.0m, new List<int> { 1 });
-            var paymentPeriod11 = new EasPaymentValue(11.0m, new List<int> { 11 });
-            var paymentPeriod2 = new EasPaymentValue(2.0m, new List<int> { 2, 22 });
+            var paymentPeriod1 = new List<EasPaymentValue> { new EasPaymentValue(1.0m, 1) };
+            var paymentPeriod11 = new List<EasPaymentValue> { new EasPaymentValue(11.0m, 11) };
+            var paymentPeriod2 = new List<EasPaymentValue> { new EasPaymentValue(2.0m, 2), new EasPaymentValue(2.0m, 22) };
 
             var expectedOutput = new List<EasFundingLine>
             {
@@ -479,30 +479,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var easFundLines = await NewService(easContextFactoryMock.Object).RetrieveAsync(12345678, CancellationToken.None);
 
-            var resultFundline1Period1 = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1.PaymentValue;
-            var resultFundline1Period1Sofs = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1.DevolvedAreaSofs;
-            var expectedFundline1Period1 = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1.PaymentValue;
-            var expectedFundline1Period1Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1.DevolvedAreaSofs;
+            var resultFundline1Period1 = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1;
+            var resultFundline1Period1Sofs = easFundLines.ToArray()[0].EasSubmissionValues.First().Period1;
+            var expectedFundline1Period1 = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1;
+            var expectedFundline1Period1Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period1;
 
-            var resultFundline1Period11 = easFundLines.ToArray()[0].EasSubmissionValues.First().Period11.PaymentValue;
-            var resultFundline1Period11Sofs = easFundLines.ToArray()[0].EasSubmissionValues.First().Period11.DevolvedAreaSofs;
-            var expectedFundline1Period11 = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period11.PaymentValue;
-            var expectedFundline1Period11Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.First().Period11.DevolvedAreaSofs;
+            var resultFundline1Period11 = easFundLines.ToArray()[0].EasSubmissionValues.ToArray()[1].Period11;
+            var resultFundline1Period11Sofs = easFundLines.ToArray()[0].EasSubmissionValues.ToArray()[1].Period11;
+            var expectedFundline1Period11 = expectedOutput.ToArray()[0].EasSubmissionValues.ToArray()[1].Period11;
+            var expectedFundline1Period11Sofs = expectedOutput.ToArray()[0].EasSubmissionValues.ToArray()[1].Period11;
 
-            var resultFundline2Period2 = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2.PaymentValue;
-            var resultFundline2Period2Sofs = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2.DevolvedAreaSofs;
-            var expectedFundline2Period2 = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2.PaymentValue;
-            var expectedFundline2Period2Sofs = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2.DevolvedAreaSofs;
+            var resultFundline2Period2 = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2;
+            var resultFundline2Period2Sofs = easFundLines.ToArray()[1].EasSubmissionValues.First().Period2;
+            var expectedFundline2Period2 = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2;
+            var expectedFundline2Period2Sofs = expectedOutput.ToArray()[1].EasSubmissionValues.First().Period2;
 
             easFundLines.ToArray()[0].FundLine.Should().Be("FundLine1");
             easFundLines.ToArray()[1].FundLine.Should().Be("FundLine2");
             easFundLines.ToArray()[0].EasSubmissionValues.Should().HaveCount(2);
             easFundLines.ToArray()[1].EasSubmissionValues.Should().HaveCount(2);
-            resultFundline1Period1.Should().Be(expectedFundline1Period1);
+            resultFundline1Period1.Should().BeEquivalentTo(expectedFundline1Period1);
             expectedFundline1Period1Sofs.Should().BeEquivalentTo(expectedFundline1Period1Sofs);
-            resultFundline1Period11.Should().Be(expectedFundline1Period11);
+            resultFundline1Period11.Should().BeEquivalentTo(expectedFundline1Period11);
             expectedFundline1Period11Sofs.Should().BeEquivalentTo(expectedFundline1Period11Sofs);
-            resultFundline2Period2.Should().Be(expectedFundline2Period2);
+            resultFundline2Period2.Should().BeEquivalentTo(expectedFundline2Period2);
             expectedFundline2Period2Sofs.Should().BeEquivalentTo(expectedFundline2Period2Sofs);
         }
 

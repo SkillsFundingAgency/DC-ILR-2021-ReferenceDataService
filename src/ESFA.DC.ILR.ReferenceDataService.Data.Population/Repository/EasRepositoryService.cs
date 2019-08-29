@@ -15,7 +15,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class EasRepositoryService : IReferenceDataRetrievalService<int, IReadOnlyCollection<EasFundingLine>>
     {
-        private readonly EasPaymentValue defaultPaymentValue = new EasPaymentValue(null, null);
         private readonly IDbContextFactory<IEasdbContext> _easContextFactory;
 
         public EasRepositoryService(IDbContextFactory<IEasdbContext> easContextFactory)
@@ -59,7 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             }
         }
 
-        public IReadOnlyCollection<EasFundingLine> MapEasValues(List<EasFundingLine> easFundingLines, IDictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>> easValuesDictionary)
+        public IReadOnlyCollection<EasFundingLine> MapEasValues(List<EasFundingLine> easFundingLines, IDictionary<string, Dictionary<string, Dictionary<int, List<EasPaymentValue>>>> easValuesDictionary)
         {
             foreach (var fundline in easFundingLines)
             {
@@ -79,25 +78,25 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         continue;
                     }
 
-                    submissionValue.Period1 = paymentValues.TryGetValue(PopulationConstants.Period1, out var paymentValue1) ? paymentValue1 : defaultPaymentValue;
-                    submissionValue.Period2 = paymentValues.TryGetValue(PopulationConstants.Period2, out var paymentValue2) ? paymentValue2 : defaultPaymentValue;
-                    submissionValue.Period3 = paymentValues.TryGetValue(PopulationConstants.Period3, out var paymentValue3) ? paymentValue3 : defaultPaymentValue;
-                    submissionValue.Period4 = paymentValues.TryGetValue(PopulationConstants.Period4, out var paymentValue4) ? paymentValue4 : defaultPaymentValue;
-                    submissionValue.Period5 = paymentValues.TryGetValue(PopulationConstants.Period5, out var paymentValue5) ? paymentValue5 : defaultPaymentValue;
-                    submissionValue.Period6 = paymentValues.TryGetValue(PopulationConstants.Period6, out var paymentValue6) ? paymentValue6 : defaultPaymentValue;
-                    submissionValue.Period7 = paymentValues.TryGetValue(PopulationConstants.Period7, out var paymentValue7) ? paymentValue7 : defaultPaymentValue;
-                    submissionValue.Period8 = paymentValues.TryGetValue(PopulationConstants.Period8, out var paymentValue8) ? paymentValue8 : defaultPaymentValue;
-                    submissionValue.Period9 = paymentValues.TryGetValue(PopulationConstants.Period9, out var paymentValue9) ? paymentValue9 : defaultPaymentValue;
-                    submissionValue.Period10 = paymentValues.TryGetValue(PopulationConstants.Period10, out var paymentValue10) ? paymentValue10 : defaultPaymentValue;
-                    submissionValue.Period11 = paymentValues.TryGetValue(PopulationConstants.Period11, out var paymentValue11) ? paymentValue11 : defaultPaymentValue;
-                    submissionValue.Period12 = paymentValues.TryGetValue(PopulationConstants.Period12, out var paymentValue12) ? paymentValue12 : defaultPaymentValue;
+                    submissionValue.Period1 = paymentValues.TryGetValue(PopulationConstants.Period1, out var paymentValue1) ? paymentValue1 : null;
+                    submissionValue.Period2 = paymentValues.TryGetValue(PopulationConstants.Period2, out var paymentValue2) ? paymentValue2 : null;
+                    submissionValue.Period3 = paymentValues.TryGetValue(PopulationConstants.Period3, out var paymentValue3) ? paymentValue3 : null;
+                    submissionValue.Period4 = paymentValues.TryGetValue(PopulationConstants.Period4, out var paymentValue4) ? paymentValue4 : null;
+                    submissionValue.Period5 = paymentValues.TryGetValue(PopulationConstants.Period5, out var paymentValue5) ? paymentValue5 : null;
+                    submissionValue.Period6 = paymentValues.TryGetValue(PopulationConstants.Period6, out var paymentValue6) ? paymentValue6 : null;
+                    submissionValue.Period7 = paymentValues.TryGetValue(PopulationConstants.Period7, out var paymentValue7) ? paymentValue7 : null;
+                    submissionValue.Period8 = paymentValues.TryGetValue(PopulationConstants.Period8, out var paymentValue8) ? paymentValue8 : null;
+                    submissionValue.Period9 = paymentValues.TryGetValue(PopulationConstants.Period9, out var paymentValue9) ? paymentValue9 : null;
+                    submissionValue.Period10 = paymentValues.TryGetValue(PopulationConstants.Period10, out var paymentValue10) ? paymentValue10 : null;
+                    submissionValue.Period11 = paymentValues.TryGetValue(PopulationConstants.Period11, out var paymentValue11) ? paymentValue11 : null;
+                    submissionValue.Period12 = paymentValues.TryGetValue(PopulationConstants.Period12, out var paymentValue12) ? paymentValue12 : null;
                 }
             }
 
             return easFundingLines;
         }
 
-        private IDictionary<string, Dictionary<string, Dictionary<int, EasPaymentValue>>> BuildEasDictionary(List<EasSubmissionDecodedValue> easSubmissionDecodedValues)
+        private IDictionary<string, Dictionary<string, Dictionary<int, List<EasPaymentValue>>>> BuildEasDictionary(List<EasSubmissionDecodedValue> easSubmissionDecodedValues)
         {
             var sofDictionary =
                 easSubmissionDecodedValues
@@ -118,11 +117,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                        .GroupBy(p => p.Period)
                        .ToDictionary(
                            k3 => k3.Key,
-                           v3 => v3.Select(eas => new EasPaymentValue(
-                               eas.PaymentValue,
-                               sofDictionary.TryGetValue(new { eas.FundingLine, eas.AdjustmentName, eas.PaymentName, eas.Period, eas.PaymentValue }, out var sofList)
-                               ? sofList
-                               : new List<int>())).FirstOrDefault()),
+                           v3 => v3.Select(
+                               eas => new EasPaymentValue(
+                               eas.PaymentValue, eas.DevolvedAreaSof == -1 ? null : (int?)eas.DevolvedAreaSof)).ToList()),
                        StringComparer.OrdinalIgnoreCase),
                    StringComparer.OrdinalIgnoreCase);
         }
