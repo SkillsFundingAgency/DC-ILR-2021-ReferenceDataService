@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
@@ -239,6 +240,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                 Postcodes = postcodes,
             };
 
+            var referenceDataContext = new Mock<IReferenceDataContext>();
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var desktopReferenceDataFileRetrievalServiceMock = new Mock<IDesktopReferenceDataFileRetrievalService>();
             var metaDataMapperMock = new Mock<IDesktopReferenceMetaDataMapper>();
@@ -251,7 +253,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var postcodesMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
 
             messageMapperServiceMock.Setup(sm => sm.MapFromMessage(message)).Returns(mapperData);
-            desktopReferenceDataFileRetrievalServiceMock.Setup(sm => sm.Retrieve()).Returns(desktopReferenceData);
+            desktopReferenceDataFileRetrievalServiceMock.Setup(sm => sm.Retrieve(referenceDataContext.Object, CancellationToken.None)).Returns(Task.FromResult(desktopReferenceData));
             metaDataMapperMock.Setup(sm => sm.Retrieve(desktopReferenceData)).Returns(metaData);
             devolvedPostcodesMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(devolvedPostcodes);
             employersMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<int>>(), desktopReferenceData)).Returns(employers);
@@ -271,7 +273,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                 larsLearningDeliveryMapperServiceMock.Object,
                 larsStandardMapperServiceMock.Object,
                 organisationsMapperServiceMock.Object,
-                postcodesMapperServiceMock.Object).PopulateAsync(message, CancellationToken.None).Result.Should().BeEquivalentTo(expectedReferenceDataRoot);
+                postcodesMapperServiceMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None).Result.Should().BeEquivalentTo(expectedReferenceDataRoot);
         }
 
         private DesktopReferenceDataRoot TestReferenceData()

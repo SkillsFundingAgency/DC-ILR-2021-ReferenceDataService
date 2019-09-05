@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Compression;
-using System.Linq;
-using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -21,19 +23,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 {
     public class DesktopReferenceDataFileRetrievalService : IDesktopReferenceDataFileRetrievalService
     {
+        private readonly IFileService _fileService;
         private readonly IJsonSerializationService _jsonSerializationService;
 
-        public DesktopReferenceDataFileRetrievalService(IJsonSerializationService jsonSerializationService)
+        public DesktopReferenceDataFileRetrievalService(IFileService fileService, IJsonSerializationService jsonSerializationService)
         {
+            _fileService = fileService;
             _jsonSerializationService = jsonSerializationService;
         }
 
-        public DesktopReferenceDataRoot Retrieve()
+        public async Task<DesktopReferenceDataRoot> Retrieve(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
         {
             var referenceData = new DesktopReferenceDataRoot();
-            var zipFilePath = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault();
 
-            using (var zipFileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(zipFilePath))
+            var zipFilePath = referenceDataContext.InputReferenceDataFileKey;
+
+            using (var zipFileStream = await _fileService.OpenReadStreamAsync(referenceDataContext.InputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
             {
                 using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {

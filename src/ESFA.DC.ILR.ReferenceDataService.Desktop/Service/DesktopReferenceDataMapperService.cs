@@ -5,6 +5,7 @@ using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
@@ -52,11 +53,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _postcodesMapperService = postcodesMapperService;
         }
 
-        public async Task<ReferenceDataRoot> PopulateAsync(IMessage message, CancellationToken cancellationToken)
+        public async Task<ReferenceDataRoot> PopulateAsync(IReferenceDataContext referenceDataContext, IMessage message, CancellationToken cancellationToken)
         {
             var messageData = _messageMapperService.MapFromMessage(message);
 
-            var desktopReferenceData = _desktopReferenceDataFileRetrievalService.Retrieve();
+            var desktopReferenceData = await _desktopReferenceDataFileRetrievalService.Retrieve(referenceDataContext, cancellationToken);
 
             return new ReferenceDataRoot
             {

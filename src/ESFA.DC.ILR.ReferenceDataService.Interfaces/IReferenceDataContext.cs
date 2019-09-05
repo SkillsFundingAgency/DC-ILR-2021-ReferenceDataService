@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
     public interface IReferenceDataContext
     {
@@ -9,6 +7,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
         string OriginalFileReference { get; set; }
 
         string Container { get; }
+
+        string InputReferenceDataFileKey { get; }
 
         string OutputReferenceDataFileKey { get; }
 

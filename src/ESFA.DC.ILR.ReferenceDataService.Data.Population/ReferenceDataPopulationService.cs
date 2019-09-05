@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
@@ -63,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             _ulnRepositoryService = ulnRepositoryService;
         }
 
-        public async Task<ReferenceDataRoot> PopulateAsync(IMessage message, CancellationToken cancellationToken)
+        public async Task<ReferenceDataRoot> PopulateAsync(IReferenceDataContext referenceDataContext, IMessage message, CancellationToken cancellationToken)
         {
             var messageData = _messageMapperService.MapFromMessage(message);
 

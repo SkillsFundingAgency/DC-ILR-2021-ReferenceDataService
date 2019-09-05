@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -24,10 +29,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
     public class DesktopReferenceDataFileRetrievalServiceTests
     {
         [Fact]
-        public void Retrieve()
+        public async Task Retrieve()
         {
+            var cancellationToken = CancellationToken.None;
             var expectedReferenceData = TestReferenceData();
+            var fileServiceMock = new Mock<IFileService>();
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
+            var referenceDataContext = new Mock<IReferenceDataContext>();
+            
+            var currentPath = System.IO.Directory.GetCurrentDirectory();
+            referenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
+            referenceDataContext.Setup(r => r.Container).Returns(currentPath);
 
             jsonSerializationServiceMock.Setup(js => js.Deserialize<MetaData>(It.IsAny<Stream>())).Returns(TestNetaData());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<DevolvedPostcodes>(It.IsAny<Stream>())).Returns(TestDevolvedPostcodes());
@@ -39,7 +51,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Organisation>>(It.IsAny<Stream>())).Returns(TestOrganisations());
             jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Postcode>>(It.IsAny<Stream>())).Returns(TestPostcodes());
 
-            NewService(jsonSerializationServiceMock.Object).Retrieve().Should().BeEquivalentTo(expectedReferenceData);
+            using (Stream stream = new FileStream(currentPath + "\\ReferenceData.zip", FileMode.Open))
+            {
+                fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
+                   referenceDataContext.Object.InputReferenceDataFileKey,
+                   referenceDataContext.Object.Container,
+                   cancellationToken)).ReturnsAsync(stream);
+
+                var result = await NewService(fileServiceMock.Object, jsonSerializationServiceMock.Object).Retrieve(referenceDataContext.Object, cancellationToken);
+                result.Should().BeEquivalentTo(expectedReferenceData);
+            }
         }
 
         private DesktopReferenceDataRoot TestReferenceData()
@@ -342,9 +363,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
         }
 
-        private DesktopReferenceDataFileRetrievalService NewService(IJsonSerializationService jsonSerializationService = null)
+        private DesktopReferenceDataFileRetrievalService NewService(
+            IFileService fileService = null,
+            IJsonSerializationService jsonSerializationService = null)
         {
-            return new DesktopReferenceDataFileRetrievalService(jsonSerializationService);
+            return new DesktopReferenceDataFileRetrievalService(fileService, jsonSerializationService);
         }
     }
 }
