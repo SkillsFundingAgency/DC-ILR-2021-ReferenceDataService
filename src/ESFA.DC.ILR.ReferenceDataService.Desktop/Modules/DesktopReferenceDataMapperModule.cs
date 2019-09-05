@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using ESFA.DC.FileService;
+using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers;
@@ -16,6 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<FileSystemFileService>().As<IFileService>();
             containerBuilder.RegisterType<MetaDataReferenceDataMapper>().As<IDesktopReferenceMetaDataMapper>();
             containerBuilder.RegisterType<DevolvedPostcodesReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes>>();
             containerBuilder.RegisterType<EmployersReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();

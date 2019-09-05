@@ -1,9 +1,12 @@
-﻿using ESFA.DC.ILR.ReferenceDataService.Model;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IDesktopReferenceDataFileRetrievalService
     {
-        DesktopReferenceDataRoot Retrieve();
+        Task<DesktopReferenceDataRoot> Retrieve(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken);
     }
 }

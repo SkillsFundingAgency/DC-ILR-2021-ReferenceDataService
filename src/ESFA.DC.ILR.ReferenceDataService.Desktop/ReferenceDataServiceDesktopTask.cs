@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
 
             // get reference data and build model.
             _logger.LogInfo("Starting Reference Data Population");
-            var referenceData = await _referenceDataPopulationService.PopulateAsync(message, cancellationToken);
+            var referenceData = await _referenceDataPopulationService.PopulateAsync(referenceDataContext, message, cancellationToken);
             _logger.LogInfo("Finished Reference Data Population");
 
             // output model.

@@ -28,6 +28,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
+        public string InputReferenceDataFileKey => _jobContextMessage.KeyValuePairs["FISReferenceData"].ToString();
+
         public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
 
         public string Task => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks).First();

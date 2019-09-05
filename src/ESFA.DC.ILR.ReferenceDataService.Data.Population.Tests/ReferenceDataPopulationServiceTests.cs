@@ -6,6 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -47,6 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var postcodes = TestPostcodes();
             var ulns = TestUlnCollection();
 
+            var referenceDataContext = new Mock<IReferenceDataContext>();
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var metaDataServiceMock = new Mock<IMetaDataRetrievalService>();
             var appsHistoryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<ApprenticeshipEarningsHistory>>>();
@@ -88,7 +90,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 larsStandardRSMock.Object,
                 orgRSMock.Object,
                 postcodesRSMock.Object,
-                ulnRSMock.Object).PopulateAsync(message, CancellationToken.None);
+                ulnRSMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None);
 
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
             root.AppsEarningsHistories.Should().HaveCount(2);
