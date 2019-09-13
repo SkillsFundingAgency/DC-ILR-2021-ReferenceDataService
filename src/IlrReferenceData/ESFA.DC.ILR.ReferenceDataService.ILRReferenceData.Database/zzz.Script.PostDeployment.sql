@@ -2942,7 +2942,7 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamTy
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_71', N'E', N'There should be an ACT 2 record for this LDM code')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_72', N'E', N'If LDM 359 has been returned and the aims have been recorded against funding model 99, then ADL 1 must be used')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_73', N'E', N'LDM 359 can only be recorded against funding models 81 or 99')
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_74', N'W', N'The Source of funding is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_74', N'E', N'The Source of funding is not valid for this Funding model')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnerHE_02', N'E', N'A Learning Delivery HE record must be returned')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_01', N'E', N'The FAM type and code is not valid')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_03', N'E', N'The FAM type and code is not valid for this Learning start date')
@@ -3100,6 +3100,8 @@ INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R117', N'E', 
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R118', N'E', N'All programme aims with LDM357 must have a corresponding component aim with the same learning delivery monitoring type and code')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R119', N'E', N'The apprenticeship financial record cannot be before the Learning start date when the total negotiated price has been returned')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R120', N'W', N'The number of planned learning hours should not be greater than 40 hours per week')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R121', N'E', N'There must be a Date applies to that matches the achievement date for this aim.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R122', N'E', N'The achievement date is not known, therefore the Date applies to record must not be returned.')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R20', N'E', N'The learner must not have more than one competency aim at the same time')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R30', N'E', N'All aims that are part of a programme must have a corresponding programme aim with the same Programme type, Framework code and Apprenticeship pathway (if returned)')
 INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R31', N'E', N'An open programme must have an associated learning aim with the same Programme type, Framework code, Apprenticeship pathway and Standard code (if returned)')
@@ -3271,8 +3273,6 @@ WHERE [Rulename] IN
 	 'LearnStartDate_07'
 	,'DelLocPostcode_18'
 	,'LearnDelFAMType_64'
-	,'R112'
-	,'R113'
 	,'PHours_01'
 )
 
