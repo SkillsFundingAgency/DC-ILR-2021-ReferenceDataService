@@ -2419,783 +2419,783 @@ DELETE FROM [dbo].[Rules]
 GO
 
 
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Accom_01', N'E', N'The Accommodation is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_02', N'W', N'The Achievement date should not be after the current teaching year end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_03', N'E', N'The Achievement date must not be before the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_04', N'E', N'The Learning actual end date must be returned for this Achievement date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_05', N'E', N'The Achievement date must be after the Learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_07', N'E', N'The Achievement date must be before the file preparation date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_08', N'E', N'The Achievement date must be completed for apprenticeship standards and traineeship programmes with a status of achieved');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_09', N'E', N'The Achievement date must not be completed for aims that are not traineeship or apprenticeship standard programme aims');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_10', N'E', N'The Achievement date must not be more than 6 months after the Learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_11', N'W', N'The Achievement date must be 7 days after the Learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_01', N'E', N'The Additional delivery hours must not be returned for learning aims that started prior to 1 August 2015');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_02', N'E', N'The Additional delivery hours must not be returned for EFA, Community Learning or Non-funded provision');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_03', N'E', N'The Additional delivery hours must only be returned for ESOL qualification or unit aims');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_04', N'E', N'The Additional delivery hours must not exceed 24 hours in a day');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_05', N'W', N'The Additional delivery hours should not exceed 35 hours in a week');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_06', N'W', N'The Additional delivery hours divided by the number of days of study is greater than 9 and less than 24');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Addline1_03', N'E', N'Address line 1 has not been returned.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_03', N'E', N'''Apprenticeship financial record date'' is wrong. It can''t be after the file preparation date''. Check ''apprenticeship financial record date'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_04', N'E', N'The price must not be after the learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_05', N'E', N'A total training price must not be returned after a residual training price has been recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_06', N'E', N'A total assessment price must not be returned after a residual assessment price has been recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_07', N'E', N'A total training price and residual training price record must not have the same financial date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_08', N'E', N'A total assessment price and residual assessment price record must not have the same financial date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_09', N'E', N'The apprenticeship financial record date must not be more than one year before the start of the apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_12', N'E', N'The apprenticeship financial record date should not be more than one year after the Learning actual end date of the apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_01', N'E', N'An apprenticeship Financial Record for the Total training price must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_02', N'E', N'The financial type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_04', N'E', N'The Apprenticeship Financial Record must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_07', N'E', N'A financial record for the total assessment price must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_08', N'E', N'This Financial code must not be used for this funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_10', N'W', N'An ''end-point assessment price'' is missing. An end point assessment price is required for all apprenticeship standards. Once you''ve agreed an ''end point assessment price'' with the assessor, you must record it on the ILR. ');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_11', N'E', N'This Financial code must not be used for apprenticeship frameworks');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_12', N'E', N'The price must be returned for this programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_13', N'E', N'There must be a price record that applies from the start of the programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_14', N'E', N'A financial record for the training price must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AgreeId_02', N'E', N'Learning delivery FAM type'' and code is wrong. By entering an ''Agreement identifier'', the ''Learning delivery FAM type'' must be ACT and the ''Learning delivery FAM code'' must be 1. This tells us the apprenticeship is funded by a contract of services with the employer. Check that you have the right type (ACT) and code (1) in ''Learning delivery FAM type'' and ''Learning delivery FAM code''. Also check the start date of the employment status is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimSeqNumber_02', N'E', N'The Aim sequence number is greater than the count of the learning aims');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_01', N'E', N'The Aim type is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_05', N'E', N'The Aim type is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_07', N'E', N'A core aim must not be recorded with a source of funding of 105');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ALSCost_02', N'E', N'The Learning support cost field must only be returned for High Needs Students');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CampId_01', N'E', N'The Campus identifier is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CampId_02', N'E', N'The UKPRN is not the same as recorded in the Header');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_01', N'E', N'The Completion status is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_02', N'E', N'The Learning actual end date must not be returned for this Completion status');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_03', N'E', N'The Learning actual end date must be returned for this Completion status');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_04', N'E', N'The Outcome must be returned for this completion status');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_05', N'W', N'The Completion status is not valid for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_06', N'E', N'The Completion status is not valid for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_07', N'E', N'The completion status has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ConRefNumber_01', N'E', N'The Contract reference number is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ConRefNumber_03', N'E', N'The Contract reference number must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_01', N'E', N'The Contact preference type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_02', N'E', N'The combination of Contact preference type and code is not valid, this learner is not to be contacted');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_03', N'E', N'The Contact preference type and code is not valid for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_04', N'E', N'These contact preference types cannot all be used at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_05', N'E', N'These contact preference types cannot all be used at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_06', N'E', N'There must not be more than two records with a Contact preference type of RUI');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_07', N'E', N'There must not be more than three records with a Contact preference type of PMC');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateEmpStatApp_01', N'E', N'The Date employment status applies must not be after the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateEmpStatApp_02', N'E', N'The Date employment status applies must not be before 1 August 1990');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_01', N'E', N'The Date of birth must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_02', N'W', N' ''Date of birth'' may be missing. You should enter the learner''s date of birth. Check the ''date of birth'' is complete and correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_04', N'E', N'The learner is 115 or over');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_05', N'W', N'The learner is under 4');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_06', N'W', N'The learner is under 13');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_07', N'E', N'The learner is 25 or over so the Source of funding must not be EFA');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_12', N'E', N'The learner is under 19 and the Community Learning provision is PCDL or NLDC');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_13', N'W', N'The learner is HEFCE funded and should not be under 16 years old');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_14', N'W', N'The learner is under 18');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_20', N'E', N'The learner is under 19 and the Source of funding is not the EFA');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_23', N'E', N'The Date of birth has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_24', N'E', N'The Unique learner number has been returned and the Date of birth has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_25', N'E', N'The learner is under 19');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_26', N'E', N'The learner is under 19 and financed by an Advanced Learner Loan');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_27', N'E', N'The learner''s Date of birth is on or after the start of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_30', N'E', N'The learner is between 19 and 24 and has an Education health plan, and the Funding model and/or Source of funding is not the EFA');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_32', N'E', N'The learning aim started on or after 1 August 2015 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_34', N'E', N'The learner is recorded as a High Needs Student but there is no Education health care plan recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_35', N'E', N'The learner is under 19 and the planned duration of the programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_36', N'E', N'The learner is 19 or over and the planned duration of the programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_37', N'E', N'The learner is 19 or over and the planned duration of the programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_38', N'E', N'The learner is under 19 and the actual duration of the programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_40', N'E', N'The learner is 19 or over and the actual duration of the programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_41', N'W', N'The learner is under 19');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_43', N'E', N'The learner is under 15');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_44', N'E', N'The learner''s age is outside of the age range described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_46', N'E', N'The planned duration of the programme does not reach the required minimum duration for an apprenticeship standard');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_47', N'E', N'The actual duration of the programme does not reach the required minimum duration for an apprenticeship standard');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_48', N'E', N'The learner is not over the school leaving age');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_49', N'E', N'The learning aim started on or after 1 August 2016 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_50', N'E', N'The learner must not start a traineeship programme until after 1 August of the academic year in which they turn 16');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_51', N'E', N'The learners age is ineligible for a traineeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_52', N'E', N'The programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_53', N'E', N'The programme does not reach the required minimum duration of an apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_54', N'E', N'The learner is not over the school leaving age');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_55', N'E', N'The learning aim started on or after 1 August 2017 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_03', N'W', N' ''Delivery location postcode'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''delivery location postcode'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_11', N'E', N'The Delivery location postcode is not in the correct format');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_14', N'E', N'The Delivery location postcode is not valid in the local authority described in the ESF Tender Specification');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Accom_01', N'E', N'The Accommodation is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_02', N'W', N'The Achievement date should not be after the current teaching year end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_03', N'E', N'The Achievement date must not be before the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_04', N'E', N'The Learning actual end date must be returned for this Achievement date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_05', N'E', N'The Achievement date must be after the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_07', N'E', N'The Achievement date must be before the file preparation date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_08', N'E', N'The Achievement date must be completed for apprenticeship standards and traineeship programmes with a status of achieved')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_09', N'E', N'The Achievement date must not be completed for aims that are not traineeship or apprenticeship standard programme aims')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_10', N'E', N'The Achievement date must not be more than 6 months after the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AchDate_11', N'W', N'The Achievement date must be 7 days after the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_01', N'E', N'The Additional delivery hours must not be returned for learning aims that started prior to 1 August 2015')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_02', N'E', N'The Additional delivery hours must not be returned for EFA, Community Learning or Non-funded provision')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_03', N'E', N'The Additional delivery hours must only be returned for ESOL qualification or unit aims')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_04', N'E', N'The Additional delivery hours must not exceed 24 hours in a day')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_05', N'W', N'The Additional delivery hours should not exceed 35 hours in a week')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AddHours_06', N'W', N'The Additional delivery hours divided by the number of days of study is greater than 9 and less than 24')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Addline1_03', N'E', N'Address line 1 has not been returned.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_03', N'E', N'''Apprenticeship financial record date'' is wrong. It can''t be after the file preparation date''. Check ''apprenticeship financial record date'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_04', N'E', N'The price must not be after the learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_05', N'E', N'A total training price must not be returned after a residual training price has been recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_06', N'E', N'A total assessment price must not be returned after a residual assessment price has been recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_07', N'E', N'A total training price and residual training price record must not have the same financial date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_08', N'E', N'A total assessment price and residual assessment price record must not have the same financial date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_09', N'E', N'The apprenticeship financial record date must not be more than one year before the start of the apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinDate_12', N'E', N'The apprenticeship financial record date should not be more than one year after the Learning actual end date of the apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_01', N'E', N'An apprenticeship Financial Record for the Total training price must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_02', N'E', N'The financial type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_04', N'E', N'The Apprenticeship Financial Record must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_07', N'E', N'A financial record for the total assessment price must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_08', N'E', N'This Financial code must not be used for this funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_10', N'W', N'An ''end-point assessment price'' is missing. An end point assessment price is required for all apprenticeship standards. Once you''ve agreed an ''end point assessment price'' with the assessor, you must record it on the ILR. ')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_11', N'E', N'This Financial code must not be used for apprenticeship frameworks')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_12', N'E', N'The price must be returned for this programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_13', N'E', N'There must be a price record that applies from the start of the programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AFinType_14', N'E', N'A financial record for the training price must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AgreeId_02', N'E', N'Learning delivery FAM type'' and code is wrong. By entering an ''Agreement identifier'', the ''Learning delivery FAM type'' must be ACT and the ''Learning delivery FAM code'' must be 1. This tells us the apprenticeship is funded by a contract of services with the employer. Check that you have the right type (ACT) and code (1) in ''Learning delivery FAM type'' and ''Learning delivery FAM code''. Also check the start date of the employment status is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimSeqNumber_02', N'E', N'The Aim sequence number is greater than the count of the learning aims')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_01', N'E', N'The Aim type is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_05', N'E', N'The Aim type is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'AimType_07', N'E', N'A core aim must not be recorded with a source of funding of 105')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ALSCost_02', N'E', N'The Learning support cost field must only be returned for High Needs Students')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CampId_01', N'E', N'The Campus identifier is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CampId_02', N'E', N'The UKPRN is not the same as recorded in the Header')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_01', N'E', N'The Completion status is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_02', N'E', N'The Learning actual end date must not be returned for this Completion status')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_03', N'E', N'The Learning actual end date must be returned for this Completion status')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_04', N'E', N'The Outcome must be returned for this completion status')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_05', N'W', N'The Completion status is not valid for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_06', N'E', N'The Completion status is not valid for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'CompStatus_07', N'E', N'The completion status has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ConRefNumber_01', N'E', N'The Contract reference number is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ConRefNumber_03', N'E', N'The Contract reference number must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_01', N'E', N'The Contact preference type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_02', N'E', N'The combination of Contact preference type and code is not valid, this learner is not to be contacted')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_03', N'E', N'The Contact preference type and code is not valid for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_04', N'E', N'These contact preference types cannot all be used at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_05', N'E', N'These contact preference types cannot all be used at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_06', N'E', N'There must not be more than two records with a Contact preference type of RUI')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ContPrefType_07', N'E', N'There must not be more than three records with a Contact preference type of PMC')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateEmpStatApp_01', N'E', N'The Date employment status applies must not be after the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateEmpStatApp_02', N'E', N'The Date employment status applies must not be before 1 August 1990')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_01', N'E', N'The Date of birth must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_02', N'W', N' ''Date of birth'' may be missing. You should enter the learner''s date of birth. Check the ''date of birth'' is complete and correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_04', N'E', N'The learner is 115 or over')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_05', N'W', N'The learner is under 4')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_06', N'W', N'The learner is under 13')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_07', N'E', N'The learner is 25 or over so the Source of funding must not be EFA')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_12', N'E', N'The learner is under 19 and the Community Learning provision is PCDL or NLDC')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_13', N'W', N'The learner is HEFCE funded and should not be under 16 years old')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_14', N'W', N'The learner is under 18')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_20', N'E', N'The learner is under 19 and the Source of funding is not the EFA')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_23', N'E', N'The Date of birth has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_24', N'E', N'The Unique learner number has been returned and the Date of birth has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_25', N'E', N'The learner is under 19')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_26', N'E', N'The learner is under 19 and financed by an Advanced Learner Loan')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_27', N'E', N'The learner''s Date of birth is on or after the start of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_30', N'E', N'The learner is between 19 and 24 and has an Education health plan, and the Funding model and/or Source of funding is not the EFA')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_32', N'E', N'The learning aim started on or after 1 August 2015 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_34', N'E', N'The learner is recorded as a High Needs Student but there is no Education health care plan recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_35', N'E', N'The learner is under 19 and the planned duration of the programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_36', N'E', N'The learner is 19 or over and the planned duration of the programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_37', N'E', N'The learner is 19 or over and the planned duration of the programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_38', N'E', N'The learner is under 19 and the actual duration of the programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_40', N'E', N'The learner is 19 or over and the actual duration of the programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_41', N'W', N'The learner is under 19')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_43', N'E', N'The learner is under 15')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_44', N'E', N'The learner''s age is outside of the age range described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_46', N'E', N'The planned duration of the programme does not reach the required minimum duration for an apprenticeship standard')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_47', N'E', N'The actual duration of the programme does not reach the required minimum duration for an apprenticeship standard')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_48', N'E', N'The learner is not over the school leaving age')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_49', N'E', N'The learning aim started on or after 1 August 2016 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_50', N'E', N'The learner must not start a traineeship programme until after 1 August of the academic year in which they turn 16')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_51', N'E', N'The learners age is ineligible for a traineeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_52', N'E', N'The programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_53', N'E', N'The programme does not reach the required minimum duration of an apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_54', N'E', N'The learner is not over the school leaving age')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DateOfBirth_55', N'E', N'The learning aim started on or after 1 August 2017 and the learner is 24 or over and the aim is Level 3 or above and the Funding model is Adult skills')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_03', N'W', N' ''Delivery location postcode'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''delivery location postcode'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_11', N'E', N'The Delivery location postcode is not in the correct format')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_14', N'E', N'The Delivery location postcode is not valid in the local authority described in the ESF Tender Specification')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_15', N'E', N'The Delivery location postcode is not valid in the LEP described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_16', N'E', N'The Delivery location postcode is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_17', N'E', N'''Delivery location postcode'' is wrong. It''s not within the local authority stated in the tender specification. Check ''delivery location postcode'' is correct and within the local authority stated in your tender specification.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_18', N'E', N'The Delivery location postcode is not valid in the LEP described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_01', N'W', N'No matching UKPRN record found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_02', N'W', N'No matching ULN found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_03', N'W', N'No matching standard code found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_04', N'W', N'No matching framework code found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_05', N'W', N'No matching programme type code found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_06', N'W', N'No matching pathway code found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_07', N'W', N'No matching negotiated cost of training and assessment found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_08', N'W', N'Multiple matching records found');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_09', N'W', N'The learning delivery start month is before the agreed start month');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_10', N'W', N'The employer has stopped payments for this apprentice');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_11', N'W', N'The employer is not currently a levy payer');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_12', N'W', N'The employer has paused payments for this apprentice');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DOMICILE_01', N'E', N'The Domicile must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DOMICILE_02', N'E', N'The Domicile is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ELQ_01', N'E', N'The ELQ must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ELQ_02', N'E', N'The ELQ is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_01', N'E', N'''Employer identifier'' is wrong. We can''t find the number you''ve provided on our system. Check that the ''Employer identifier'' is correct. You can use 999999999 if you''re waiting for an employer ID to be allocated.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_02', N'E', N'The Employer identifier does not pass the checksum calculation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_10', N'E', N'The Employer identifier has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_13', N'E', N'The Employer identifier is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_01', N'E', N'The Employment outcome must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_02', N'E', N'The Employment outcome is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_03', N'E', N'The Employment outcome must not be returned for apprenticeships');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_01', N'E', N'An Employment status record has not been returned that applies prior to this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_02', N'E', N'An Employment status record has not been returned that applies prior to this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_04', N'E', N'The Employment status is not valid for learning aims funded by ESF');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_05', N'E', N'The Employment status is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_06', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_07', N'E', N'An Employment status record has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_08', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_09', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_10', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_11', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_12', N'W', N'''Employment status'' may be wrong. The apprentice should be in employment at the start of their apprenticeship. Check ''employment status'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_14', N'E', N'The learner''s Employment status does not match the employment status described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_15', N'E', N'The Employment status on the start date of an apprenticeship programme must not be unknown');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_17', N'E', N'The Employment status on the start date of an traineeship programme must not be unknown');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_18', N'E', N'The learner must not be employed for more than 16 hours her week at the start of the programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_19', N'E', N'The learner must not be employed for more than 16 hours her week at the start of the programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_20', N'E', N'The learner must be in paid employment for this Learning Delivery Monitoring code to be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_01', N'E', N'The GCSE English qualification grade has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_02', N'E', N'The GCSE English qualification grade is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_03', N'E', N'The Learner FAM Type of Eligibility for EFA disadvantage funding must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_04', N'E', N'GCSE English qualification grade must be ''NONE''');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Entity_1', N'E', N'You''re unable to submit this file because it doesn''t contain any valid learners. Please upload an updated file.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_01', N'W', N' ''End point assessment organisation'' may be wrong. It''s not a recognised organisation for the standard you''re delivering on the planned end date of the apprenticeship. Check ''end point assessment organisation'' and ''planned end date'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_02', N'E', N'The End point assessment organisation payment record has been returned but there is no record of the End point assessment organisation.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_03', N'E', N'''Apprenticeship Financial Record'' is missing. As you''ve returned the ''end point assessment organisation'' ID, you also need to return the end point assessment financial details. Check apprenticeship financial record includes the end point assessment price.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_01', N'E', N'The Employment status monitoring type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_02', N'E', N'The learner''s Employment status is ''in paid employment'' and the Employment intensity indicator has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_05', N'E', N'The learner''s Employment status is ''in paid employment'' and the Length of unemployment has been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_07', N'E', N'The learner is self employed and the Employment status is not ''in paid employment''');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_08', N'E', N'The Length of unemployment has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_09', N'E', N'The Length of employment has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_10', N'E', N'The Length of employment has been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_11', N'E', N'The Employment status monitoring type and code is not valid for the Employment status date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_12', N'E', N'The Employment intensity indicator or Self employed indicator has been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_13', N'E', N'The learner''s Length of unemployment does not match the length of unemployment described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_14', N'E', N'The learner''s benefit status does not match the benefit status described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_15', N'E', N'There must not be more than one record with an ESM type of SEI, EII, LOU, LOE, BSI, PEI, or SEM');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Ethnicity_01', N'E', N'The Ethnicity is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_01', N'E', N'The learner''s Family name must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_02', N'E', N'The learner''s Family name must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_04', N'E', N'The learner''s Family name must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Accom_AL', N'E', N'The value returned for Accom is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddHours_AL', N'E', N'The length of the value returned for AddHours is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddHours_AR', N'E', N'The AddHours is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine1_AL', N'E', N'The length of the value returned for AddLine1 is not between 1 and 50 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine1_AP', N'E', N'The AddLine1 does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine2_AL', N'E', N'The length of the value returned for AddLine2 is not between 1 and 50 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine2_AP', N'E', N'The AddLine2 does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine3_AL', N'E', N'The length of the value returned for AddLine3 is not between 1 and 50 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine3_AP', N'E', N'The AddLine3 does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine4_AL', N'E', N'The length of the value returned for AddLine4 is not between 1 and 50 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine4_AP', N'E', N'The AddLine4 does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_AL', N'E', N'The length of the value returned for AFinAmount is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_AR', N'E', N'The AFinAmount is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_MA', N'E', N'The AFinAmount has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinCode_AL', N'E', N'The length of the value returned for AFinCode is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinCode_MA', N'E', N'The AFinCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinDate_MA', N'E', N'The AFinDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_AL', N'E', N'The length of the value returned for AFinType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_AP', N'E', N'The AFinType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_MA', N'E', N'The AFinType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AgreeId_AL', N'E', N'The value returned for AgreeId is greater than the permitted length');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AgreeId_AP', N'E', N'The AgreeId does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_AL', N'E', N'The length of the value returned for AimSeqNumber is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_AR', N'E', N'The AimSeqNumber is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_MA', N'E', N'The AimSeqNumber has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimType_AL', N'E', N'The value returned for AimType is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimType_MA', N'E', N'The AimType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ALSCost_AL', N'E', N'The length of the value returned for ALSCost is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ALSCost_AR', N'E', N'The ALSCost is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CampId_AL', N'E', N'The value returned for CampId is greater than the permitted length');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CampId_AP', N'E', N'The CampId does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CompStatus_AL', N'E', N'The value returned for CompStatus is not 1 character long');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_15', N'E', N'The Delivery location postcode is not valid in the LEP described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_16', N'E', N'The Delivery location postcode is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_17', N'E', N'''Delivery location postcode'' is wrong. It''s not within the local authority stated in the tender specification. Check ''delivery location postcode'' is correct and within the local authority stated in your tender specification.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DelLocPostCode_18', N'E', N'The Delivery location postcode is not valid in the LEP described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_01', N'W', N'No matching UKPRN record found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_02', N'W', N'No matching ULN found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_03', N'W', N'No matching standard code found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_04', N'W', N'No matching framework code found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_05', N'W', N'No matching programme type code found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_06', N'W', N'No matching pathway code found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_07', N'W', N'No matching negotiated cost of training and assessment found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_08', N'W', N'Multiple matching records found')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_09', N'W', N'The learning delivery start month is before the agreed start month')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_10', N'W', N'The employer has stopped payments for this apprentice')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_11', N'W', N'The employer is not currently a levy payer')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DLOCK_12', N'W', N'The employer has paused payments for this apprentice')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DOMICILE_01', N'E', N'The Domicile must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'DOMICILE_02', N'E', N'The Domicile is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ELQ_01', N'E', N'The ELQ must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ELQ_02', N'E', N'The ELQ is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_01', N'E', N'''Employer identifier'' is wrong. We can''t find the number you''ve provided on our system. Check that the ''Employer identifier'' is correct. You can use 999999999 if you''re waiting for an employer ID to be allocated.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_02', N'E', N'The Employer identifier does not pass the checksum calculation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_10', N'E', N'The Employer identifier has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpId_13', N'E', N'The Employer identifier is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_01', N'E', N'The Employment outcome must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_02', N'E', N'The Employment outcome is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpOutcome_03', N'E', N'The Employment outcome must not be returned for apprenticeships')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_01', N'E', N'An Employment status record has not been returned that applies prior to this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_02', N'E', N'An Employment status record has not been returned that applies prior to this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_04', N'E', N'The Employment status is not valid for learning aims funded by ESF')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_05', N'E', N'The Employment status is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_06', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_07', N'E', N'An Employment status record has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_08', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_09', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_10', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_11', N'E', N'An Employment status record has not been returned that applies prior to the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_12', N'W', N'''Employment status'' may be wrong. The apprentice should be in employment at the start of their apprenticeship. Check ''employment status'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_14', N'E', N'The learner''s Employment status does not match the employment status described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_15', N'E', N'The Employment status on the start date of an apprenticeship programme must not be unknown')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_17', N'E', N'The Employment status on the start date of an traineeship programme must not be unknown')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_18', N'E', N'The learner must not be employed for more than 16 hours her week at the start of the programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_19', N'E', N'The learner must not be employed for more than 16 hours her week at the start of the programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EmpStat_20', N'E', N'The learner must be in paid employment for this Learning Delivery Monitoring code to be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_01', N'E', N'The GCSE English qualification grade has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_02', N'E', N'The GCSE English qualification grade is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_03', N'E', N'The Learner FAM Type of Eligibility for EFA disadvantage funding must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EngGrade_04', N'E', N'GCSE English qualification grade must be ''NONE''')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Entity_1', N'E', N'You''re unable to submit this file because it doesn''t contain any valid learners. Please upload an updated file.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_01', N'W', N' ''End point assessment organisation'' may be wrong. It''s not a recognised organisation for the standard you''re delivering on the planned end date of the apprenticeship. Check ''end point assessment organisation'' and ''planned end date'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_02', N'E', N'The End point assessment organisation payment record has been returned but there is no record of the End point assessment organisation.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'EPAOrgID_03', N'E', N'''Apprenticeship Financial Record'' is missing. As you''ve returned the ''end point assessment organisation'' ID, you also need to return the end point assessment financial details. Check apprenticeship financial record includes the end point assessment price.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_01', N'E', N'The Employment status monitoring type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_02', N'E', N'The learner''s Employment status is ''in paid employment'' and the Employment intensity indicator has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_05', N'E', N'The learner''s Employment status is ''in paid employment'' and the Length of unemployment has been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_07', N'E', N'The learner is self employed and the Employment status is not ''in paid employment''')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_08', N'E', N'The Length of unemployment has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_09', N'E', N'The Length of employment has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_10', N'E', N'The Length of employment has been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_11', N'E', N'The Employment status monitoring type and code is not valid for the Employment status date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_12', N'E', N'The Employment intensity indicator or Self employed indicator has been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_13', N'E', N'The learner''s Length of unemployment does not match the length of unemployment described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_14', N'E', N'The learner''s benefit status does not match the benefit status described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ESMType_15', N'E', N'There must not be more than one record with an ESM type of SEI, EII, LOU, LOE, BSI, PEI, or SEM')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Ethnicity_01', N'E', N'The Ethnicity is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_01', N'E', N'The learner''s Family name must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_02', N'E', N'The learner''s Family name must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FamilyName_04', N'E', N'The learner''s Family name must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Accom_AL', N'E', N'The value returned for Accom is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddHours_AL', N'E', N'The length of the value returned for AddHours is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddHours_AR', N'E', N'The AddHours is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine1_AL', N'E', N'The length of the value returned for AddLine1 is not between 1 and 50 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine1_AP', N'E', N'The AddLine1 does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine2_AL', N'E', N'The length of the value returned for AddLine2 is not between 1 and 50 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine2_AP', N'E', N'The AddLine2 does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine3_AL', N'E', N'The length of the value returned for AddLine3 is not between 1 and 50 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine3_AP', N'E', N'The AddLine3 does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine4_AL', N'E', N'The length of the value returned for AddLine4 is not between 1 and 50 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AddLine4_AP', N'E', N'The AddLine4 does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_AL', N'E', N'The length of the value returned for AFinAmount is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_AR', N'E', N'The AFinAmount is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinAmount_MA', N'E', N'The AFinAmount has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinCode_AL', N'E', N'The length of the value returned for AFinCode is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinCode_MA', N'E', N'The AFinCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinDate_MA', N'E', N'The AFinDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_AL', N'E', N'The length of the value returned for AFinType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_AP', N'E', N'The AFinType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AFinType_MA', N'E', N'The AFinType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AgreeId_AL', N'E', N'The value returned for AgreeId is greater than the permitted length')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AgreeId_AP', N'E', N'The AgreeId does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_AL', N'E', N'The length of the value returned for AimSeqNumber is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_AR', N'E', N'The AimSeqNumber is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimSeqNumber_MA', N'E', N'The AimSeqNumber has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimType_AL', N'E', N'The value returned for AimType is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_AimType_MA', N'E', N'The AimType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ALSCost_AL', N'E', N'The length of the value returned for ALSCost is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ALSCost_AR', N'E', N'The ALSCost is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CampId_AL', N'E', N'The value returned for CampId is greater than the permitted length')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CampId_AP', N'E', N'The CampId does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CompStatus_AL', N'E', N'The value returned for CompStatus is not 1 character long')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CompStatus_MA', N'E', N'The CompStatus has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ConRefNumber_AL', N'E', N'The length of the value returned for ConRefNumber is not between 1 and 20 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ConRefNumber_AP', N'E', N'The ConRefNumber does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContactPreference_EO', N'E', N'The ContactPreference has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefCode_AL', N'E', N'The value returned for ContPrefCode is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefCode_MA', N'E', N'The ContPrefCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_AL', N'E', N'The length of the value returned for ContPrefType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_AP', N'E', N'The ContPrefType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_MA', N'E', N'The ContPrefType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DateEmpStatApp_MA', N'E', N'The DateEmpStatApp has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_AL', N'E', N'The length of the value returned for DelLocPostCode is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_AP', N'E', N'The DelLocPostCode does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_MA', N'E', N'The DelLocPostCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DOMICILE_AL', N'E', N'The length of the value returned for DOMICILE is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DOMICILE_AP', N'E', N'The DOMICILE does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_DPOutcome_EO', N'E', N'The DPOutcome has not met the minimum occurrence requirement');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_AL', N'E', N'The length of the value returned for LearnRefNumber is not between 1 and 12 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_AP', N'E', N'The LearnRefNumber does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_MA', N'E', N'The LearnRefNumber has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCode_AL', N'E', N'The length of the value returned for OutCode is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCode_MA', N'E', N'The OutCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCollDate_MA', N'E', N'The OutCollDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutStartDate_MA', N'E', N'The OutStartDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_AL', N'E', N'The length of the value returned for OutType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_AP', N'E', N'The OutType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_MA', N'E', N'The OutType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_AL', N'E', N'The length of the value returned for ULN is not between 1 and 10 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_AR', N'E', N'The ULN is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_MA', N'E', N'The ULN has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ELQ_AL', N'E', N'The value returned for ELQ is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Email_AL', N'E', N'The length of the value returned for Email is not between 1 and 100 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Email_AP', N'E', N'The Email does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpId_AL', N'E', N'The length of the value returned for EmpId is not between 1 and 9 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmploymentStatusMonitoring_EO', N'E', N'The EmploymentStatusMonitoring has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpOutcome_AL', N'E', N'The value returned for EmpOutcome is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpStat_AL', N'E', N'The length of the value returned for EmpStat is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpStat_MA', N'E', N'The EmpStat has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EngGrade_AL', N'E', N'The length of the value returned for EngGrade is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EngGrade_AP', N'E', N'The EngGrade does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EPAOrgID_AL', N'E', N'The length of the value returned for EPAOrgID is not between 1 and 7 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EPAOrgID_AP', N'E', N'The EPAOrgID does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMCode_AL', N'E', N'The length of the value returned for ESMCode is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMCode_MA', N'E', N'The ESMCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_AL', N'E', N'The length of the value returned for ESMType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_AP', N'E', N'The ESMType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_MA', N'E', N'The ESMType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Ethnicity_AL', N'E', N'The length of the value returned for Ethnicity is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Ethnicity_MA', N'E', N'The Ethnicity has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FamilyName_AL', N'E', N'The length of the value returned for FamilyName is not between 1 and 100 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FamilyName_AP', N'E', N'The FamilyName does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_AL', N'E', N'The length of the value returned for FINAMOUNT is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_AR', N'E', N'The FINAMOUNT is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_MA', N'E', N'The FINAMOUNT has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINTYPE_AL', N'E', N'The value returned for FINTYPE is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINTYPE_MA', N'E', N'The FINTYPE has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDCOMP_AL', N'E', N'The value returned for FUNDCOMP is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDCOMP_MA', N'E', N'The FUNDCOMP has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDLEV_AL', N'E', N'The length of the value returned for FUNDLEV is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDLEV_MA', N'E', N'The FUNDLEV has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FundModel_AL', N'E', N'The length of the value returned for FundModel is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FundModel_MA', N'E', N'The FundModel has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FworkCode_AL', N'E', N'The length of the value returned for FworkCode is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GivenNames_AL', N'E', N'The length of the value returned for GivenNames is not between 1 and 100 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GivenNames_AP', N'E', N'The GivenNames does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GROSSFEE_AL', N'E', N'The length of the value returned for GROSSFEE is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GROSSFEE_AR', N'E', N'The GROSSFEE is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_HEPostCode_AL', N'E', N'The length of the value returned for HEPostCode is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_HEPostCode_AP', N'E', N'The HEPostCode does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_AL', N'E', N'The length of the value returned for LearnAimRef is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_AP', N'E', N'The LearnAimRef does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_MA', N'E', N'The LearnAimRef has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_AL', N'E', N'The length of the value returned for LearnDelFAMCode is not between 1 and 5 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_AP', N'E', N'The LearnDelFAMCode does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_MA', N'E', N'The LearnDelFAMCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_AL', N'E', N'The length of the value returned for LearnDelFAMType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_AP', N'E', N'The LearnDelFAMType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_MA', N'E', N'The LearnDelFAMType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerFAM_EO', N'E', N'The LearnerFAM has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerHE_EO', N'E', N'The LearnerHE has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerHEFinancialSupport_EO', N'E', N'The LearnerHEFinancialSupport has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMCode_AL', N'E', N'The length of the value returned for LearnFAMCode is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMCode_MA', N'E', N'The LearnFAMCode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_AL', N'E', N'The length of the value returned for LearnFAMType is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_AP', N'E', N'The LearnFAMType does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_MA', N'E', N'The LearnFAMType has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearningDelivery_EO', N'E', N'The LearningDelivery has not met the minimum occurrence requirement');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearningDeliveryHE_EO', N'E', N'The LearningDeliveryHE has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnPlanEndDate_MA', N'E', N'The LearnPlanEndDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_AL', N'E', N'The length of the value returned for LearnRefNumber is not between 1 and 12 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_AP', N'E', N'The LearnRefNumber does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_MA', N'E', N'The LearnRefNumber has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnStartDate_MA', N'E', N'The LearnStartDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDandHealthProblem_EO', N'E', N'The LLDDandHealthProblem has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDCat_AL', N'E', N'The length of the value returned for LLDDCat is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDCat_MA', N'E', N'The LLDDCat has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDHealthProb_AL', N'E', N'The value returned for LLDDHealthProb is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDHealthProb_MA', N'E', N'The LLDDHealthProb has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MathGrade_AL', N'E', N'The length of the value returned for MathGrade is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MathGrade_AP', N'E', N'The MathGrade does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MODESTUD_AL', N'E', N'The length of the value returned for MODESTUD is not between 1 and 2 characters');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_CompStatus_MA', N'E', N'The CompStatus has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ConRefNumber_AL', N'E', N'The length of the value returned for ConRefNumber is not between 1 and 20 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ConRefNumber_AP', N'E', N'The ConRefNumber does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContactPreference_EO', N'E', N'The ContactPreference has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefCode_AL', N'E', N'The value returned for ContPrefCode is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefCode_MA', N'E', N'The ContPrefCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_AL', N'E', N'The length of the value returned for ContPrefType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_AP', N'E', N'The ContPrefType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ContPrefType_MA', N'E', N'The ContPrefType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DateEmpStatApp_MA', N'E', N'The DateEmpStatApp has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_AL', N'E', N'The length of the value returned for DelLocPostCode is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_AP', N'E', N'The DelLocPostCode does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DelLocPostCode_MA', N'E', N'The DelLocPostCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DOMICILE_AL', N'E', N'The length of the value returned for DOMICILE is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DOMICILE_AP', N'E', N'The DOMICILE does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_DPOutcome_EO', N'E', N'The DPOutcome has not met the minimum occurrence requirement')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_AL', N'E', N'The length of the value returned for LearnRefNumber is not between 1 and 12 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_AP', N'E', N'The LearnRefNumber does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_LearnRefNumber_MA', N'E', N'The LearnRefNumber has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCode_AL', N'E', N'The length of the value returned for OutCode is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCode_MA', N'E', N'The OutCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutCollDate_MA', N'E', N'The OutCollDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutStartDate_MA', N'E', N'The OutStartDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_AL', N'E', N'The length of the value returned for OutType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_AP', N'E', N'The OutType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_OutType_MA', N'E', N'The OutType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_AL', N'E', N'The length of the value returned for ULN is not between 1 and 10 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_AR', N'E', N'The ULN is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_DP_ULN_MA', N'E', N'The ULN has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ELQ_AL', N'E', N'The value returned for ELQ is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Email_AL', N'E', N'The length of the value returned for Email is not between 1 and 100 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Email_AP', N'E', N'The Email does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpId_AL', N'E', N'The length of the value returned for EmpId is not between 1 and 9 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmploymentStatusMonitoring_EO', N'E', N'The EmploymentStatusMonitoring has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpOutcome_AL', N'E', N'The value returned for EmpOutcome is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpStat_AL', N'E', N'The length of the value returned for EmpStat is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EmpStat_MA', N'E', N'The EmpStat has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EngGrade_AL', N'E', N'The length of the value returned for EngGrade is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EngGrade_AP', N'E', N'The EngGrade does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EPAOrgID_AL', N'E', N'The length of the value returned for EPAOrgID is not between 1 and 7 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_EPAOrgID_AP', N'E', N'The EPAOrgID does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMCode_AL', N'E', N'The length of the value returned for ESMCode is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMCode_MA', N'E', N'The ESMCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_AL', N'E', N'The length of the value returned for ESMType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_AP', N'E', N'The ESMType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ESMType_MA', N'E', N'The ESMType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Ethnicity_AL', N'E', N'The length of the value returned for Ethnicity is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Ethnicity_MA', N'E', N'The Ethnicity has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FamilyName_AL', N'E', N'The length of the value returned for FamilyName is not between 1 and 100 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FamilyName_AP', N'E', N'The FamilyName does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_AL', N'E', N'The length of the value returned for FINAMOUNT is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_AR', N'E', N'The FINAMOUNT is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINAMOUNT_MA', N'E', N'The FINAMOUNT has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINTYPE_AL', N'E', N'The value returned for FINTYPE is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FINTYPE_MA', N'E', N'The FINTYPE has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDCOMP_AL', N'E', N'The value returned for FUNDCOMP is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDCOMP_MA', N'E', N'The FUNDCOMP has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDLEV_AL', N'E', N'The length of the value returned for FUNDLEV is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FUNDLEV_MA', N'E', N'The FUNDLEV has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FundModel_AL', N'E', N'The length of the value returned for FundModel is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FundModel_MA', N'E', N'The FundModel has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_FworkCode_AL', N'E', N'The length of the value returned for FworkCode is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GivenNames_AL', N'E', N'The length of the value returned for GivenNames is not between 1 and 100 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GivenNames_AP', N'E', N'The GivenNames does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GROSSFEE_AL', N'E', N'The length of the value returned for GROSSFEE is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_GROSSFEE_AR', N'E', N'The GROSSFEE is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_HEPostCode_AL', N'E', N'The length of the value returned for HEPostCode is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_HEPostCode_AP', N'E', N'The HEPostCode does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_AL', N'E', N'The length of the value returned for LearnAimRef is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_AP', N'E', N'The LearnAimRef does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnAimRef_MA', N'E', N'The LearnAimRef has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_AL', N'E', N'The length of the value returned for LearnDelFAMCode is not between 1 and 5 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_AP', N'E', N'The LearnDelFAMCode does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMCode_MA', N'E', N'The LearnDelFAMCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_AL', N'E', N'The length of the value returned for LearnDelFAMType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_AP', N'E', N'The LearnDelFAMType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnDelFAMType_MA', N'E', N'The LearnDelFAMType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerFAM_EO', N'E', N'The LearnerFAM has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerHE_EO', N'E', N'The LearnerHE has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnerHEFinancialSupport_EO', N'E', N'The LearnerHEFinancialSupport has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMCode_AL', N'E', N'The length of the value returned for LearnFAMCode is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMCode_MA', N'E', N'The LearnFAMCode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_AL', N'E', N'The length of the value returned for LearnFAMType is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_AP', N'E', N'The LearnFAMType does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnFAMType_MA', N'E', N'The LearnFAMType has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearningDelivery_EO', N'E', N'The LearningDelivery has not met the minimum occurrence requirement')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearningDeliveryHE_EO', N'E', N'The LearningDeliveryHE has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnPlanEndDate_MA', N'E', N'The LearnPlanEndDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_AL', N'E', N'The length of the value returned for LearnRefNumber is not between 1 and 12 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_AP', N'E', N'The LearnRefNumber does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnRefNumber_MA', N'E', N'The LearnRefNumber has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LearnStartDate_MA', N'E', N'The LearnStartDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDandHealthProblem_EO', N'E', N'The LLDDandHealthProblem has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDCat_AL', N'E', N'The length of the value returned for LLDDCat is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDCat_MA', N'E', N'The LLDDCat has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDHealthProb_AL', N'E', N'The value returned for LLDDHealthProb is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_LLDDHealthProb_MA', N'E', N'The LLDDHealthProb has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MathGrade_AL', N'E', N'The length of the value returned for MathGrade is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MathGrade_AP', N'E', N'The MathGrade does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MODESTUD_AL', N'E', N'The length of the value returned for MODESTUD is not between 1 and 2 characters')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MODESTUD_MA', N'E', N'The MODESTUD has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MSTUFEE_AL', N'E', N'The length of the value returned for MSTUFEE is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MSTUFEE_MA', N'E', N'The MSTUFEE has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NETFEE_AL', N'E', N'The length of the value returned for NETFEE is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NETFEE_AR', N'E', N'The NETFEE is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NINumber_AL', N'E', N'The length of the value returned for NINumber is not between 1 and 9 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NINumber_AP', N'E', N'The NINumber does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NUMHUS_AL', N'E', N'The length of the value returned for NUMHUS is not between 1 and 20 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NUMHUS_AP', N'E', N'The NUMHUS does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OtherFundAdj_AL', N'E', N'The length of the value returned for OtherFundAdj is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OtherFundAdj_AR', N'E', N'The OtherFundAdj is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OTJHours_AL', N'E', N'The value returned for OTJHours does not contain a value between 0 and 9999');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OTJHours_AR', N'E', N'The OTJHours is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Outcome_AL', N'E', N'The value returned for Outcome is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OutGrade_AL', N'E', N'The length of the value returned for OutGrade is not between 1 and 6 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OutGrade_AP', N'E', N'The OutGrade does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PartnerUKPRN_AL', N'E', N'The length of the value returned for PartnerUKPRN is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PartnerUKPRN_AR', N'E', N'The PartnerUKPRN is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCFLDCS_AL', N'E', N'The length of the value returned for PCFLDCS is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCFLDCS_AR', N'E', N'The PCFLDCS is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCOLAB_AL', N'E', N'The length of the value returned for PCOLAB is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCOLAB_AR', N'E', N'The PCOLAB is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCSLDCS_AL', N'E', N'The length of the value returned for PCSLDCS is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCSLDCS_AR', N'E', N'The PCSLDCS is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCTLDCS_AL', N'E', N'The length of the value returned for PCTLDCS is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCTLDCS_AR', N'E', N'The PCTLDCS is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanEEPHours_AL', N'E', N'The length of the value returned for PlanEEPHours is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanEEPHours_AR', N'E', N'The PlanEEPHours is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanLearnHours_AL', N'E', N'The length of the value returned for PlanLearnHours is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanLearnHours_AR', N'E', N'The PlanLearnHours is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PMUKPRN_AL', N'E', N'The length of the value returned for PMUKPRN is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PMUKPRN_AR', N'E', N'The PMUKPRN is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_AL', N'E', N'The length of the value returned for Postcode is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_AP', N'E', N'The Postcode does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_MA', N'E', N'The Postcode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_AL', N'E', N'The length of the value returned for PostcodePrior is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_AP', N'E', N'The PostcodePrior does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_MA', N'E', N'The PostcodePrior has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevLearnRefNumber_AL', N'E', N'The length of the value returned for PrevLearnRefNumber is not between 1 and 12 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevLearnRefNumber_AP', N'E', N'The PrevLearnRefNumber does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevUKPRN_AL', N'E', N'The length of the value returned for PrevUKPRN is not between 1 and 8 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevUKPRN_AR', N'E', N'The PrevUKPRN is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrimaryLLDD_AL', N'E', N'The value returned for PrimaryLLDD is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorAttain_AL', N'E', N'The length of the value returned for PriorAttain is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorLearnFundAdj_AL', N'E', N'The length of the value returned for PriorLearnFundAdj is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorLearnFundAdj_AR', N'E', N'The PriorLearnFundAdj is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProgType_AL', N'E', N'The length of the value returned for ProgType is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProviderSpecDeliveryMonitoring_EO', N'E', N'The ProviderSpecDeliveryMonitoring has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProviderSpecLearnerMonitoring_EO', N'E', N'The ProviderSpecLearnerMonitoring has occurred more than allowed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_AL', N'E', N'The length of the value returned for ProvSpecDelMon is not between 1 and 20 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_AP', N'E', N'The ProvSpecDelMon does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_MA', N'E', N'The ProvSpecDelMon has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_AL', N'E', N'The value returned for ProvSpecDelMonOccur is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_AP', N'E', N'The ProvSpecDelMonOccur does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_MA', N'E', N'The ProvSpecDelMonOccur has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_AL', N'E', N'The length of the value returned for ProvSpecLearnMon is not between 1 and 20 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_AP', N'E', N'The ProvSpecLearnMon does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_MA', N'E', N'The ProvSpecLearnMon has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_AL', N'E', N'The value returned for ProvSpecLearnMonOccur is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_AP', N'E', N'The ProvSpecLearnMonOccur does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_MA', N'E', N'The ProvSpecLearnMonOccur has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PwayCode_AL', N'E', N'The length of the value returned for PwayCode is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_QUALENT3_AL', N'E', N'The length of the value returned for QUALENT3 is not between 1 and 3 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_QUALENT3_AP', N'E', N'The QUALENT3 does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SEC_AL', N'E', N'The value returned for SEC is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_AL', N'E', N'The value returned for Sex is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_AP', N'E', N'The Sex does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_MA', N'E', N'The Sex has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SOC2000_AL', N'E', N'The length of the value returned for SOC2000 is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SPECFEE_AL', N'E', N'The value returned for SPECFEE is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SPECFEE_MA', N'E', N'The SPECFEE has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SSN_AL', N'E', N'The length of the value returned for SSN is not between 1 and 13 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SSN_AP', N'E', N'The SSN does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_StdCode_AL', N'E', N'The length of the value returned for StdCode is not between 1 and 5 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_STULOAD_AL', N'E', N'The length of the value returned for STULOAD is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_STULOAD_AR', N'E', N'The STULOAD is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SWSupAimId_AL', N'E', N'The length of the value returned for SWSupAimId is not between 1 and 36 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SWSupAimId_AP', N'E', N'The SWSupAimId does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TelNo_AL', N'E', N'The length of the value returned for TelNo is not between 1 and 18 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TelNo_AP', N'E', N'The TelNo does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TTACCOM_AL', N'E', N'The value returned for TTACCOM is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TYPEYR_AL', N'E', N'The value returned for TYPEYR is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TYPEYR_MA', N'E', N'The TYPEYR has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASAPPID_AL', N'E', N'The length of the value returned for UCASAPPID is not between 1 and 9 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASAPPID_AP', N'E', N'The UCASAPPID does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AL', N'E', N'The length of the value returned for UCASPERID is not between 1 and 10 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AP', N'E', N'The UCASPERID does not match the validation pattern');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AR', N'E', N'The UCASPERID is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_AL', N'E', N'The length of the value returned for ULN is not between 1 and 10 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_AR', N'E', N'The ULN is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_MA', N'E', N'The ULN has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WithdrawReason_AL', N'E', N'The length of the value returned for WithdrawReason is not between 1 and 2 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceEmpId_AL', N'E', N'The length of the value returned for WorkPlaceEmpId is not between 1 and 9 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_AL', N'E', N'The length of the value returned for WorkPlaceHours is not between 1 and 4 characters');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_AR', N'E', N'The WorkPlaceHours is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_MA', N'E', N'The WorkPlaceHours has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceMode_AL', N'E', N'The value returned for WorkPlaceMode is not 1 character long');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceMode_MA', N'E', N'The WorkPlaceMode has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceStartDate_MA', N'E', N'The WorkPlaceStartDate has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_AL', N'E', N'The length of the value returned for YEARSTU is not between 1 and 2 characters');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MODESTUD_MA', N'E', N'The MODESTUD has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MSTUFEE_AL', N'E', N'The length of the value returned for MSTUFEE is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_MSTUFEE_MA', N'E', N'The MSTUFEE has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NETFEE_AL', N'E', N'The length of the value returned for NETFEE is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NETFEE_AR', N'E', N'The NETFEE is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NINumber_AL', N'E', N'The length of the value returned for NINumber is not between 1 and 9 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NINumber_AP', N'E', N'The NINumber does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NUMHUS_AL', N'E', N'The length of the value returned for NUMHUS is not between 1 and 20 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_NUMHUS_AP', N'E', N'The NUMHUS does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OtherFundAdj_AL', N'E', N'The length of the value returned for OtherFundAdj is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OtherFundAdj_AR', N'E', N'The OtherFundAdj is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OTJHours_AL', N'E', N'The value returned for OTJHours does not contain a value between 0 and 9999')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OTJHours_AR', N'E', N'The OTJHours is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Outcome_AL', N'E', N'The value returned for Outcome is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OutGrade_AL', N'E', N'The length of the value returned for OutGrade is not between 1 and 6 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_OutGrade_AP', N'E', N'The OutGrade does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PartnerUKPRN_AL', N'E', N'The length of the value returned for PartnerUKPRN is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PartnerUKPRN_AR', N'E', N'The PartnerUKPRN is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCFLDCS_AL', N'E', N'The length of the value returned for PCFLDCS is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCFLDCS_AR', N'E', N'The PCFLDCS is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCOLAB_AL', N'E', N'The length of the value returned for PCOLAB is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCOLAB_AR', N'E', N'The PCOLAB is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCSLDCS_AL', N'E', N'The length of the value returned for PCSLDCS is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCSLDCS_AR', N'E', N'The PCSLDCS is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCTLDCS_AL', N'E', N'The length of the value returned for PCTLDCS is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PCTLDCS_AR', N'E', N'The PCTLDCS is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanEEPHours_AL', N'E', N'The length of the value returned for PlanEEPHours is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanEEPHours_AR', N'E', N'The PlanEEPHours is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanLearnHours_AL', N'E', N'The length of the value returned for PlanLearnHours is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PlanLearnHours_AR', N'E', N'The PlanLearnHours is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PMUKPRN_AL', N'E', N'The length of the value returned for PMUKPRN is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PMUKPRN_AR', N'E', N'The PMUKPRN is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_AL', N'E', N'The length of the value returned for Postcode is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_AP', N'E', N'The Postcode does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Postcode_MA', N'E', N'The Postcode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_AL', N'E', N'The length of the value returned for PostcodePrior is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_AP', N'E', N'The PostcodePrior does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PostcodePrior_MA', N'E', N'The PostcodePrior has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevLearnRefNumber_AL', N'E', N'The length of the value returned for PrevLearnRefNumber is not between 1 and 12 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevLearnRefNumber_AP', N'E', N'The PrevLearnRefNumber does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevUKPRN_AL', N'E', N'The length of the value returned for PrevUKPRN is not between 1 and 8 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrevUKPRN_AR', N'E', N'The PrevUKPRN is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PrimaryLLDD_AL', N'E', N'The value returned for PrimaryLLDD is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorAttain_AL', N'E', N'The length of the value returned for PriorAttain is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorLearnFundAdj_AL', N'E', N'The length of the value returned for PriorLearnFundAdj is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PriorLearnFundAdj_AR', N'E', N'The PriorLearnFundAdj is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProgType_AL', N'E', N'The length of the value returned for ProgType is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProviderSpecDeliveryMonitoring_EO', N'E', N'The ProviderSpecDeliveryMonitoring has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProviderSpecLearnerMonitoring_EO', N'E', N'The ProviderSpecLearnerMonitoring has occurred more than allowed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_AL', N'E', N'The length of the value returned for ProvSpecDelMon is not between 1 and 20 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_AP', N'E', N'The ProvSpecDelMon does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMon_MA', N'E', N'The ProvSpecDelMon has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_AL', N'E', N'The value returned for ProvSpecDelMonOccur is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_AP', N'E', N'The ProvSpecDelMonOccur does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecDelMonOccur_MA', N'E', N'The ProvSpecDelMonOccur has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_AL', N'E', N'The length of the value returned for ProvSpecLearnMon is not between 1 and 20 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_AP', N'E', N'The ProvSpecLearnMon does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMon_MA', N'E', N'The ProvSpecLearnMon has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_AL', N'E', N'The value returned for ProvSpecLearnMonOccur is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_AP', N'E', N'The ProvSpecLearnMonOccur does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ProvSpecLearnMonOccur_MA', N'E', N'The ProvSpecLearnMonOccur has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_PwayCode_AL', N'E', N'The length of the value returned for PwayCode is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_QUALENT3_AL', N'E', N'The length of the value returned for QUALENT3 is not between 1 and 3 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_QUALENT3_AP', N'E', N'The QUALENT3 does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SEC_AL', N'E', N'The value returned for SEC is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_AL', N'E', N'The value returned for Sex is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_AP', N'E', N'The Sex does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_Sex_MA', N'E', N'The Sex has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SOC2000_AL', N'E', N'The length of the value returned for SOC2000 is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SPECFEE_AL', N'E', N'The value returned for SPECFEE is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SPECFEE_MA', N'E', N'The SPECFEE has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SSN_AL', N'E', N'The length of the value returned for SSN is not between 1 and 13 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SSN_AP', N'E', N'The SSN does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_StdCode_AL', N'E', N'The length of the value returned for StdCode is not between 1 and 5 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_STULOAD_AL', N'E', N'The length of the value returned for STULOAD is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_STULOAD_AR', N'E', N'The STULOAD is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SWSupAimId_AL', N'E', N'The length of the value returned for SWSupAimId is not between 1 and 36 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_SWSupAimId_AP', N'E', N'The SWSupAimId does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TelNo_AL', N'E', N'The length of the value returned for TelNo is not between 1 and 18 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TelNo_AP', N'E', N'The TelNo does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TTACCOM_AL', N'E', N'The value returned for TTACCOM is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TYPEYR_AL', N'E', N'The value returned for TYPEYR is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_TYPEYR_MA', N'E', N'The TYPEYR has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASAPPID_AL', N'E', N'The length of the value returned for UCASAPPID is not between 1 and 9 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASAPPID_AP', N'E', N'The UCASAPPID does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AL', N'E', N'The length of the value returned for UCASPERID is not between 1 and 10 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AP', N'E', N'The UCASPERID does not match the validation pattern')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_UCASPERID_AR', N'E', N'The UCASPERID is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_AL', N'E', N'The length of the value returned for ULN is not between 1 and 10 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_AR', N'E', N'The ULN is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_ULN_MA', N'E', N'The ULN has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WithdrawReason_AL', N'E', N'The length of the value returned for WithdrawReason is not between 1 and 2 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceEmpId_AL', N'E', N'The length of the value returned for WorkPlaceEmpId is not between 1 and 9 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_AL', N'E', N'The length of the value returned for WorkPlaceHours is not between 1 and 4 characters')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_AR', N'E', N'The WorkPlaceHours is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceHours_MA', N'E', N'The WorkPlaceHours has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceMode_AL', N'E', N'The value returned for WorkPlaceMode is not 1 character long')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceMode_MA', N'E', N'The WorkPlaceMode has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_WorkPlaceStartDate_MA', N'E', N'The WorkPlaceStartDate has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_AL', N'E', N'The length of the value returned for YEARSTU is not between 1 and 2 characters')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_AR', N'E', N'The YEARSTU is out of range');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_MA', N'E', N'The YEARSTU has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_1', N'E', N'There''s a problem. The filename should use the format ILR-LLLLLLLL-YYYY-yyyymmdd-hhmmss-NN.xml	');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_2', N'E', N'There''s a problem.  You have already uploaded a file with the same filename. Upload a file with a different filename.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_4', N'E', N'There''s a problem. The UK Provider Reference Number (UKPRN) is not valid - check the UKPRN is correct.	');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_5', N'E', N'There’s a problem.  The year in the filename should match the current year.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_6', N'E', N'The serial number in the filename (the last two characters) must be a two digit number.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_7', N'E', N'There''s a problem. The serial number in the filename must not be 00.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_8', N'E', N'There''s a problem.  The date/time in your filename must not be in the future.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_9', N'E', N'There''s a problem. The date and time in the filename must not be earlier than a file already uploaded.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FINTYPE_01', N'E', N'The Financial support type is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FINTYPE_02', N'E', N'There must not be more than one record with a Financial support type of Cash, Near cash, Accommodation discounts, or Other');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDCOMP_01', N'E', N'The Completion of year of instance is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_01', N'E', N'The Level applicable to Funding Council HEIFES is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_02', N'W', N'The Level applicable to Funding Council HEIFES is not valid for this type of learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_03', N'W', N'The Level applicable to Funding Council HEIFES is not valid for this type of learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_01', N'E', N'The Funding model is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_03', N'E', N'The Funding model is not valid for a learning aim financed by an Advanced Learner Loan');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_04', N'E', N'The Funding model is not valid for a learning aim which is part of an apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_05', N'E', N'The Funding model is not valid for starts before 1 May 2017');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_06', N'E', N'The funding model is not valid for this aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_07', N'E', N'The funding model is not valid for an apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_08', N'E', N'The funding model is not valid for this apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_09', N'E', N'The funding model is not valid for this apprenticeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_01', N'E', N'The Framework code must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_02', N'E', N'The Framework code must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_05', N'E', N'The Framework code, Pathway code and Programme type combination is not valid in the LARS database for this Learning aim reference');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_01', N'E', N'The learner''s Given names must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_02', N'E', N'The learner''s Given names must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_04', N'E', N'The learner''s Given names must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_01', N'E', N'The Gross tuition fee must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_02', N'E', N'The Gross tuition fee must be equal to or greater than the Net tuition fee');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_03', N'E', N'The Gross tuition fee must not be greater than £30000');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_2', N'E', N'You''re unable to submit this file because the file preparation date in your header record is in the future. Please upload an updated file.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_3', N'F', N'You''re unable to submit this file because the UKPRN in the file''s header record doesn''t match the UKPRN in the filename. Please upload an updated file.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_01', N'W', N'''HE centre location postcode'' is wrong. We don''t recognise the postcode you''ve given as a UK postcode. Check ''HE centre location postcode'' is correct. If it''s unknown, please don''t return that field.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_02', N'E', N'The Postcode must conform to the valid postcode format');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Inconsistent UKPRN', N'E', N'You''re unable to submit this file because the UKPRN in the file''s header record doesn''t match the UKPRN in the filename. Please upload an updated file.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnActEndDate_01', N'E', N'The Learning actual end date must be after the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnActEndDate_04', N'E', N'The Learning actual end date must be before the file preparation date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_01', N'E', N'The Learning aim reference is not a valid lookup on LARS');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_29', N'E', N'The Learning aim reference is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_30', N'E', N'The Learning aim reference is not valid for a programme aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_55', N'E', N'The learning aim must be recorded as the Core aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_56', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_57', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_59', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_71', N'E', N'''Sector subject area'' for this learning aim is wrong. The ''sector subject area'' must match the level in your Tender Specification. Check the learning aim is correct and that the sector subject area level matches what is in your Tender Specification.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_72', N'E', N'The learning aim''s level does not match the level described in the ESF Tender Specification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_73', N'E', N'''Sector subject area'' and/or level for this learning aim are wrong. They don''t match the area and level set out in your tender specification. Check the learning aim is correct and that the ''sector subject area'' level matches what is in your Tender Specification.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_78', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_79', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_80', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_81', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_84', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_85', N'E', N'The learning aim is not valid for Adult skills funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_86', N'E', N'The Learning aim reference is not valid for this funding model where the learning aim is not part of a traineeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_87', N'E', N'ZVOC or ZUXA aims must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_88', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model and this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_89', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model for this teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_01', N'E', N'The Date applies from or the Date applies to must be returned for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_02', N'E', N'The Date applies from must be after the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_03', N'E', N'The Date applies from must not be returned for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_04', N'E', N'The Date applies from must be returned for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_01', N'E', N'The Date applies to must not be before the Date applies from for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_02', N'W', N' ''Date applies to'' may be wrong. Unless the ''learning actual end date'' is later than the ''planned end date'', the ''Date applies to'' shouldn''t be after the planned end date for the learning. Check ''learning planned end date'' and ''Date applies to'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_03', N'E', N'The Date applies to must not be after the Learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_04', N'E', N'The Date applies to must not be returned for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_01', N'E', N'The Source of funding must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_02', N'E', N'The Full or co-funding indicator must be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_03', N'E', N'The Community Learning provision type must be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_04', N'E', N'The FAM type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_06', N'E', N'The FAM type and code is not valid for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_07', N'E', N'The Source of funding is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_08', N'E', N'The Source of funding is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_09', N'E', N'The Source of funding is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_14', N'E', N'The Eligibility for enhanced apprenticeship funding is only valid for apprenticeship aims');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_15', N'E', N'This Learning delivery monitoring code must not be returned where the Learning actual end date is completed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_16', N'E', N'This Learning delivery monitoring code is not valid for this file preparation date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_18', N'E', N'There must not be more than one record with a FAM type of SOF, FFI, EEF, RES, ADL, ASL, SPP, NSA, WPP, POD or FLN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_20', N'E', N'There must not be more than three occurrences with a FAM type of HEM');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_22', N'E', N'The Full or co-funding indicator must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_24', N'E', N'The FAM type is not valid for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_27', N'E', N'The ASL provision type must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_30', N'E', N'The Learning Delivery HE record must be returned for this FAM type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_31', N'E', N'There must not be more than four occurrences for the FAM type LDM');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_35', N'E', N'The Advanced Learner Loans indicator must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_36', N'E', N'The Advanced Learner Loans indicator must be completed where the Advanced Learner Loans Bursary funding indicator has been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_38', N'E', N'The Advanced Learner Loans Bursary fund indicator is not required for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_39', N'W', N'FAM type'' is missing. Based on the funding model, you need to return a FAM type of LDM. Check the funding model is correct. If so, enter LDM in FAM type andmake sure the correct code is in ''FAM code'' from the LDM codes list (available online - google ''LDM codes ESFA'').');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_40', N'E', N'The Advanced Learner Loans indicator must not be returned for apprenticeships');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_44', N'E', N'The Household situation must be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_45', N'E', N'There must not be more than two occurrences of Household Situation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_46', N'E', N'The Funding model must be Adult skills');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_48', N'E', N'The combination of Household situation codes is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_50', N'E', N'Learning Support Funding must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_53', N'E', N'''Learning delivery FAM type'' is wrong. The Advanced Learner Bursary rate 1 or 3 can''t be used when the aim is grant funded. Check ''FAM type'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_54', N'E', N'The combination of EEF and FFI codes is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_56', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_57', N'E', N'The Full funding indicator is not valid for this learning aim');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_AR', N'E', N'The YEARSTU is out of range')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FD_YEARSTU_MA', N'E', N'The YEARSTU has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_1', N'E', N'There''s a problem. The filename should use the format ILR-LLLLLLLL-YYYY-yyyymmdd-hhmmss-NN.xml	')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_2', N'E', N'There''s a problem.  You have already uploaded a file with the same filename. Upload a file with a different filename.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_4', N'E', N'There''s a problem. The UK Provider Reference Number (UKPRN) is not valid - check the UKPRN is correct.	')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_5', N'E', N'There’s a problem.  The year in the filename should match the current year.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_6', N'E', N'The serial number in the filename (the last two characters) must be a two digit number.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_7', N'E', N'There''s a problem. The serial number in the filename must not be 00.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_8', N'E', N'There''s a problem.  The date/time in your filename must not be in the future.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Filename_9', N'E', N'There''s a problem. The date and time in the filename must not be earlier than a file already uploaded.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FINTYPE_01', N'E', N'The Financial support type is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FINTYPE_02', N'E', N'There must not be more than one record with a Financial support type of Cash, Near cash, Accommodation discounts, or Other')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDCOMP_01', N'E', N'The Completion of year of instance is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_01', N'E', N'The Level applicable to Funding Council HEIFES is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_02', N'W', N'The Level applicable to Funding Council HEIFES is not valid for this type of learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FUNDLEV_03', N'W', N'The Level applicable to Funding Council HEIFES is not valid for this type of learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_01', N'E', N'The Funding model is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_03', N'E', N'The Funding model is not valid for a learning aim financed by an Advanced Learner Loan')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_04', N'E', N'The Funding model is not valid for a learning aim which is part of an apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_05', N'E', N'The Funding model is not valid for starts before 1 May 2017')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_06', N'E', N'The funding model is not valid for this aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_07', N'E', N'The funding model is not valid for an apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_08', N'E', N'The funding model is not valid for this apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FundModel_09', N'E', N'The funding model is not valid for this apprenticeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_01', N'E', N'The Framework code must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_02', N'E', N'The Framework code must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'FworkCode_05', N'E', N'The Framework code, Pathway code and Programme type combination is not valid in the LARS database for this Learning aim reference')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_01', N'E', N'The learner''s Given names must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_02', N'E', N'The learner''s Given names must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GivenNames_04', N'E', N'The learner''s Given names must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_01', N'E', N'The Gross tuition fee must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_02', N'E', N'The Gross tuition fee must be equal to or greater than the Net tuition fee')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'GROSSFEE_03', N'E', N'The Gross tuition fee must not be greater than £30000')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_2', N'E', N'You''re unable to submit this file because the file preparation date in your header record is in the future. Please upload an updated file.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Header_3', N'F', N'You''re unable to submit this file because the UKPRN in the file''s header record doesn''t match the UKPRN in the filename. Please upload an updated file.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_01', N'W', N'''HE centre location postcode'' is wrong. We don''t recognise the postcode you''ve given as a UK postcode. Check ''HE centre location postcode'' is correct. If it''s unknown, please don''t return that field.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'HEPostCode_02', N'E', N'The Postcode must conform to the valid postcode format')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Inconsistent UKPRN', N'E', N'You''re unable to submit this file because the UKPRN in the file''s header record doesn''t match the UKPRN in the filename. Please upload an updated file.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnActEndDate_01', N'E', N'The Learning actual end date must be after the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnActEndDate_04', N'E', N'The Learning actual end date must be before the file preparation date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_01', N'E', N'The Learning aim reference is not a valid lookup on LARS')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_29', N'E', N'The Learning aim reference is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_30', N'E', N'The Learning aim reference is not valid for a programme aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_55', N'E', N'The learning aim must be recorded as the Core aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_56', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_57', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_59', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_71', N'E', N'''Sector subject area'' for this learning aim is wrong. The ''sector subject area'' must match the level in your Tender Specification. Check the learning aim is correct and that the sector subject area level matches what is in your Tender Specification.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_72', N'E', N'The learning aim''s level does not match the level described in the ESF Tender Specification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_73', N'E', N'''Sector subject area'' and/or level for this learning aim are wrong. They don''t match the area and level set out in your tender specification. Check the learning aim is correct and that the ''sector subject area'' level matches what is in your Tender Specification.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_78', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_79', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_80', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_81', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_84', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_85', N'E', N'The learning aim is not valid for Adult skills funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_86', N'E', N'The Learning aim reference is not valid for this funding model where the learning aim is not part of a traineeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_87', N'E', N'ZVOC or ZUXA aims must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_88', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model and this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnAimRef_89', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model for this teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_01', N'E', N'The Date applies from or the Date applies to must be returned for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_02', N'E', N'The Date applies from must be after the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_03', N'E', N'The Date applies from must not be returned for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateFrom_04', N'E', N'The Date applies from must be returned for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_01', N'E', N'The Date applies to must not be before the Date applies from for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_02', N'W', N' ''Date applies to'' may be wrong. Unless the ''learning actual end date'' is later than the ''planned end date'', the ''Date applies to'' shouldn''t be after the planned end date for the learning. Check ''learning planned end date'' and ''Date applies to'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_03', N'E', N'The Date applies to must not be after the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMDateTo_04', N'E', N'The Date applies to must not be returned for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_01', N'E', N'The Source of funding must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_02', N'E', N'The Full or co-funding indicator must be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_03', N'E', N'The Community Learning provision type must be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_04', N'E', N'The FAM type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_06', N'E', N'The FAM type and code is not valid for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_07', N'E', N'The Source of funding is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_08', N'E', N'The Source of funding is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_09', N'E', N'The Source of funding is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_14', N'E', N'The Eligibility for enhanced apprenticeship funding is only valid for apprenticeship aims')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_15', N'E', N'This Learning delivery monitoring code must not be returned where the Learning actual end date is completed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_16', N'E', N'This Learning delivery monitoring code is not valid for this file preparation date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_18', N'E', N'There must not be more than one record with a FAM type of SOF, FFI, EEF, RES, ADL, ASL, SPP, NSA, WPP, POD or FLN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_20', N'E', N'There must not be more than three occurrences with a FAM type of HEM')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_22', N'E', N'The Full or co-funding indicator must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_24', N'E', N'The FAM type is not valid for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_27', N'E', N'The ASL provision type must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_30', N'E', N'The Learning Delivery HE record must be returned for this FAM type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_31', N'E', N'There must not be more than four occurrences for the FAM type LDM')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_35', N'E', N'The Advanced Learner Loans indicator must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_36', N'E', N'The Advanced Learner Loans indicator must be completed where the Advanced Learner Loans Bursary funding indicator has been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_38', N'E', N'The Advanced Learner Loans Bursary fund indicator is not required for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_39', N'W', N'FAM type'' is missing. Based on the funding model, you need to return a FAM type of LDM. Check the funding model is correct. If so, enter LDM in FAM type andmake sure the correct code is in ''FAM code'' from the LDM codes list (available online - google ''LDM codes ESFA'').')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_40', N'E', N'The Advanced Learner Loans indicator must not be returned for apprenticeships')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_44', N'E', N'The Household situation must be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_45', N'E', N'There must not be more than two occurrences of Household Situation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_46', N'E', N'The Funding model must be Adult skills')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_48', N'E', N'The combination of Household situation codes is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_50', N'E', N'Learning Support Funding must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_53', N'E', N'''Learning delivery FAM type'' is wrong. The Advanced Learner Bursary rate 1 or 3 can''t be used when the aim is grant funded. Check ''FAM type'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_54', N'E', N'The combination of EEF and FFI codes is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_56', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_57', N'E', N'The Full funding indicator is not valid for this learning aim')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_58', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_59', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_60', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_61', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_62', N'W', N' ''Learning delivery FAM type'' and ''learning delivery FAM code'' is wrong. The type and code you''ve returned indicates that this learner is co-funded. But this learner''s prior attainment must be 2 or above at the start of the aim to be co-funded. Check ''learning delivery FAM type'', ''learning delivery FAM code'' and ''prior attainment'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_63', N'E', N'The Apprenticeship contract type must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_64', N'E', N'The Apprenticeship contract type must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_65', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_66', N'E', N'The Full funding indicator is not valid for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_67', N'E', N'Learning support funding must only be recorded on a programme aim or English/maths aim for apprenticeship funded programmes');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_68', N'E', N'LDM356 can only be recorded on a Funding model 36 programme aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_69', N'E', N'LDM357 can only be recorded on Funding models 35 or 10 and starting on or after 1st November 2017');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_70', N'E', N'LDM358 can only be recorded against contracts between 1st January and 31 March 2018');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_71', N'E', N'There should be an ACT 2 record for this LDM code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_72', N'E', N'If LDM 359 has been returned and the aims have been recorded against funding model 99, then ADL 1 must be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_73', N'E', N'LDM 359 can only be recorded against funding models 81 or 99');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_74', N'W', N'The Source of funding is not valid for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnerHE_02', N'E', N'A Learning Delivery HE record must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_01', N'E', N'The FAM type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_03', N'E', N'The FAM type and code is not valid for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_09', N'E', N'There must not be more than one record with a FAM type of HNS, EHC, DLA, SEN, MCF, ECF or FME');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_10', N'E', N'There must not be more than four records with a FAM type of LSR');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_11', N'E', N'There must not be more than two records with a FAM type of EDF, NLM or PPE');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_14', N'E', N'The learner must not have both a FAM type of SEN and EHC');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_15', N'E', N'The learner is recorded as exempt from maths GCSE condition of funding due to a learning difficulty but there is no Education health care plan recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_16', N'E', N'The learner is recorded as exempt from English GCSE condition of funding due to a learning difficulty but there is no Education health care plan recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_02', N'E', N'A Learning Delivery HE record must be returned for this Source of funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_03', N'E', N'A Learning Delivery HE record must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_06', N'E', N'A Learning Delivery HE record must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_07', N'E', N'A Learning Delivery HE record must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_08', N'E', N'A Learning Delivery HE record must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnPlanEndDate_02', N'E', N'The Learning planned end date must not be before the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnPlanEndDate_03', N'E', N'The Learning planned end date must not be 10 years or more after the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_02', N'E', N'The Learning start date is more than 10 years before the start of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_03', N'E', N'The Learning start date must not be after the end of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_05', N'E', N'The Learning start date must not be on or before the learner''s Date of birth');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_06', N'E', N'The Learning start date of the apprenticeship programme must not be after the Effective to date of this apprenticeship pathway');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_07', N'E', N'The Learning start date of the apprenticeship programme must not be after the Effective to date of this component aim for this apprenticeship pathway');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_12', N'E', N'The Learning start date must not be more than one year in the future');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_13', N'E', N'The Learning start date of the apprenticeship standard programme must not be after the Effective to date of this apprenticeship standard');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_14', N'E', N'The Learning start date of the apprenticeship standard programme must not be after the Effective to date of this component aim for this standard');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_15', N'E', N'The Learning start date must be after the start date of the completed ZESF0001 aim for that contract');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_16', N'E', N'The Learning start date must not be before the start date of the contract');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_17', N'E', N'The Learning start date of the apprenticeship standard programme must not be before the Effective From date of this apprenticeship standard');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDCat_01', N'E', N'The LLDD and health problem category is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDCat_02', N'E', N'The LLDD and health problem category is not valid for this start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_01', N'E', N'The LLDD and health problem is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_04', N'E', N'The LLDD and Health Problem record has been returned and the learner does not consider himself or herself to have a learning difficulty and/or disability or health problem');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_06', N'E', N' ''LLDD and health problem'' is missing. You''ve indicated that the learner feels that they have a learning difficulty and/or disability or health problem, but have not entered the any ''LLDD and health problem'' details. Check ''LLDD and health problem'' is complete and correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_07', N'E', N'The LLDD and Health Problem record has not been returned and the learner does consider himself or herself to have a learning difficulty and/or disability or health problem');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LSDPostcode_01', N'E', N'The Learning start date postcode is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LSDPostcode_02', N'E', N'The learning aim start date postcode is not valid on the start date of the learning aim and the source of funding');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_01', N'E', N'The GCSE maths qualification grade has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_02', N'E', N'The GCSE maths qualification grade is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_03', N'E', N'The Learner FAM Type of Eligibility for EFA disadvantage funding must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_04', N'E', N'GCSE maths qualification grade must be ''NONE''');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MODESTUD_01', N'E', N'The Mode of study is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MODESTUD_03', N'E', N'The Mode of study is not valid for this Special fee indicator');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_01', N'E', N'The Major source of tuition fees is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_02', N'E', N'The Major source of tuition fees is not valid for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_03', N'W', N'The Major source of tuition fees is not consistent with the Domicile');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_04', N'W', N'The Major source of tuition fees is not consistent with the Domicile');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_05', N'W', N'The Major source of tuition fees is not consistent with the Domicile');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Namespace Mismatch', N'E', N'You''re unable to submit this file because the namespace doesn''t match the namespace outlined in the schema. You can download the ILR schema definitions from the ILR data guidance page [link to https://www.gov.uk/government/collections/individualised-learner-record-ilr] for the relevant academic year. Please upload an updated file.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NETFEE_01', N'E', N'The Net tuition fee must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NETFEE_02', N'W', N'''Net tuition fee'' may be wrong. The net fee is the fee after any financial support such as waivers or bursaries are taken into account. It should not be more than £9,000. Check the ''net tuition fee'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NINumber_01', N'E', N'The National Insurance number is not in the correct format');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NINumber_02', N'E', N'The National Insurance number must be returned for this learner');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NUMHUS_01', N'E', N'The Student instance identifier must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_01', N'E', N'The Original learning start date must not be more than 10 years before the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_02', N'E', N'The Original learning start date must not be on or after the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_03', N'E', N'The Original learning start date must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_04', N'E', N'The Restart indicator has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_05', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model on this Original learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_06', N'E', N'The Learning aim reference is Adult skills funded and is not valid in the LARS database on this Original learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_07', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model on this Original learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_08', N'E', N'The Learning aim reference is financed by an Advanced Learner Loan and is not valid in the LARS database on this Original learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_09', N'E', N'The Original learning start date for this funding model must not be before 1 May 2017');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OtherFundAdj_01', N'E', N'The Other funding adjustment must not be returned for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutCollDate_01', N'E', N'The Outcome collection date must not be after the file preparation date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutCollDate_02', N'E', N'The Outcome collection date must not be more than 10 years before the start of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_01', N'E', N'The Outcome is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_04', N'E', N'The Achievement date must not be returned for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_05', N'E', N'The Learning actual end date must be returned for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_07', N'E', N'There must be a Destination and progression record returned for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_08', N'E', N'There must be a Destination and progression record returned for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_09', N'E', N'The Completion status is not valid for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutEndDate_01', N'E', N'The Outcome end date must not be before the Outcome start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_01', N'E', N'The Outcome grade is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_03', N'W', N'The outcome grade is not valid for this level of qualification. For an entry level course that counts towards skills for life the achievement should be recorded as either EL1, EL2 or EL3, depending on the level. Check the learning aim and learning delivery outcome are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_04', N'E', N'The Outcome grade must not be returned for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_05', N'E', N'The Outcome grade is not valid for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_06', N'E', N'The Outcome grade is not valid for this Outcome');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_07', N'E', N'The Outcome grade is not valid for this type of qualification');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutStartDate_01', N'E', N'The Outcome start date must not be more than 10 years before the start of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutStartDate_02', N'E', N'The Outcome start date must not be more than 1 year after the end of the current teaching year');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_01', N'E', N'The Outcome type and code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_02', N'E', N'There must not be more than one record with the same start date and an Outcome type of EMP, NPE, VOL, GAP, SDE, or OTH');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_03', N'E', N'There must not be more than two records with the same start date and an Outcome type of EDU');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_04', N'E', N'There must not be DPOutcome records of both In Paid Employment and Not in paid Employment with the same Outcome start date');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_58', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_59', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_60', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_61', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_62', N'W', N' ''Learning delivery FAM type'' and ''learning delivery FAM code'' is wrong. The type and code you''ve returned indicates that this learner is co-funded. But this learner''s prior attainment must be 2 or above at the start of the aim to be co-funded. Check ''learning delivery FAM type'', ''learning delivery FAM code'' and ''prior attainment'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_63', N'E', N'The Apprenticeship contract type must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_64', N'E', N'The Apprenticeship contract type must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_65', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_66', N'E', N'The Full funding indicator is not valid for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_67', N'E', N'Learning support funding must only be recorded on a programme aim or English/maths aim for apprenticeship funded programmes')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_68', N'E', N'LDM356 can only be recorded on a Funding model 36 programme aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFAMType_69', N'E', N'LDM357 can only be recorded on Funding models 35 or 10 and starting on or after 1st November 2017')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_70', N'E', N'LDM358 can only be recorded against contracts between 1st January and 31 March 2018')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_71', N'E', N'There should be an ACT 2 record for this LDM code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_72', N'E', N'If LDM 359 has been returned and the aims have been recorded against funding model 99, then ADL 1 must be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_73', N'E', N'LDM 359 can only be recorded against funding models 81 or 99')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnDelFamType_74', N'E', N'The Source of funding is not valid for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnerHE_02', N'E', N'A Learning Delivery HE record must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_01', N'E', N'The FAM type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_03', N'E', N'The FAM type and code is not valid for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_09', N'E', N'There must not be more than one record with a FAM type of HNS, EHC, DLA, SEN, MCF, ECF or FME')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_10', N'E', N'There must not be more than four records with a FAM type of LSR')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_11', N'E', N'There must not be more than two records with a FAM type of EDF, NLM or PPE')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_14', N'E', N'The learner must not have both a FAM type of SEN and EHC')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_15', N'E', N'The learner is recorded as exempt from maths GCSE condition of funding due to a learning difficulty but there is no Education health care plan recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnFAMType_16', N'E', N'The learner is recorded as exempt from English GCSE condition of funding due to a learning difficulty but there is no Education health care plan recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_02', N'E', N'A Learning Delivery HE record must be returned for this Source of funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_03', N'E', N'A Learning Delivery HE record must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_06', N'E', N'A Learning Delivery HE record must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_07', N'E', N'A Learning Delivery HE record must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearningDeliveryHE_08', N'E', N'A Learning Delivery HE record must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnPlanEndDate_02', N'E', N'The Learning planned end date must not be before the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnPlanEndDate_03', N'E', N'The Learning planned end date must not be 10 years or more after the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_02', N'E', N'The Learning start date is more than 10 years before the start of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_03', N'E', N'The Learning start date must not be after the end of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_05', N'E', N'The Learning start date must not be on or before the learner''s Date of birth')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_06', N'E', N'The Learning start date of the apprenticeship programme must not be after the Effective to date of this apprenticeship pathway')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_07', N'E', N'The Learning start date of the apprenticeship programme must not be after the Effective to date of this component aim for this apprenticeship pathway')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_12', N'E', N'The Learning start date must not be more than one year in the future')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_13', N'E', N'The Learning start date of the apprenticeship standard programme must not be after the Effective to date of this apprenticeship standard')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_14', N'E', N'The Learning start date of the apprenticeship standard programme must not be after the Effective to date of this component aim for this standard')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_15', N'E', N'The Learning start date must be after the start date of the completed ZESF0001 aim for that contract')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_16', N'E', N'The Learning start date must not be before the start date of the contract')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LearnStartDate_17', N'E', N'The Learning start date of the apprenticeship standard programme must not be before the Effective From date of this apprenticeship standard')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDCat_01', N'E', N'The LLDD and health problem category is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDCat_02', N'E', N'The LLDD and health problem category is not valid for this start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_01', N'E', N'The LLDD and health problem is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_04', N'E', N'The LLDD and Health Problem record has been returned and the learner does not consider himself or herself to have a learning difficulty and/or disability or health problem')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_06', N'E', N' ''LLDD and health problem'' is missing. You''ve indicated that the learner feels that they have a learning difficulty and/or disability or health problem, but have not entered the any ''LLDD and health problem'' details. Check ''LLDD and health problem'' is complete and correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LLDDHealthProb_07', N'E', N'The LLDD and Health Problem record has not been returned and the learner does consider himself or herself to have a learning difficulty and/or disability or health problem')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LSDPostcode_01', N'E', N'The Learning start date postcode is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'LSDPostcode_02', N'E', N'The learning aim start date postcode is not valid on the start date of the learning aim and the source of funding')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_01', N'E', N'The GCSE maths qualification grade has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_02', N'E', N'The GCSE maths qualification grade is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_03', N'E', N'The Learner FAM Type of Eligibility for EFA disadvantage funding must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MathGrade_04', N'E', N'GCSE maths qualification grade must be ''NONE''')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MODESTUD_01', N'E', N'The Mode of study is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MODESTUD_03', N'E', N'The Mode of study is not valid for this Special fee indicator')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_01', N'E', N'The Major source of tuition fees is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_02', N'E', N'The Major source of tuition fees is not valid for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_03', N'W', N'The Major source of tuition fees is not consistent with the Domicile')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_04', N'W', N'The Major source of tuition fees is not consistent with the Domicile')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'MSTUFEE_05', N'W', N'The Major source of tuition fees is not consistent with the Domicile')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Namespace Mismatch', N'E', N'You''re unable to submit this file because the namespace doesn''t match the namespace outlined in the schema. You can download the ILR schema definitions from the ILR data guidance page [link to https://www.gov.uk/government/collections/individualised-learner-record-ilr] for the relevant academic year. Please upload an updated file.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NETFEE_01', N'E', N'The Net tuition fee must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NETFEE_02', N'W', N'''Net tuition fee'' may be wrong. The net fee is the fee after any financial support such as waivers or bursaries are taken into account. It should not be more than £9,000. Check the ''net tuition fee'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NINumber_01', N'E', N'The National Insurance number is not in the correct format')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NINumber_02', N'E', N'The National Insurance number must be returned for this learner')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'NUMHUS_01', N'E', N'The Student instance identifier must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_01', N'E', N'The Original learning start date must not be more than 10 years before the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_02', N'E', N'The Original learning start date must not be on or after the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_03', N'E', N'The Original learning start date must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_04', N'E', N'The Restart indicator has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_05', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model on this Original learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_06', N'E', N'The Learning aim reference is Adult skills funded and is not valid in the LARS database on this Original learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_07', N'E', N'The Learning aim reference is not valid in the LARS database for this Funding model on this Original learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_08', N'E', N'The Learning aim reference is financed by an Advanced Learner Loan and is not valid in the LARS database on this Original learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OrigLearnStartDate_09', N'E', N'The Original learning start date for this funding model must not be before 1 May 2017')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OtherFundAdj_01', N'E', N'The Other funding adjustment must not be returned for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutCollDate_01', N'E', N'The Outcome collection date must not be after the file preparation date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutCollDate_02', N'E', N'The Outcome collection date must not be more than 10 years before the start of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_01', N'E', N'The Outcome is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_04', N'E', N'The Achievement date must not be returned for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_05', N'E', N'The Learning actual end date must be returned for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_07', N'E', N'There must be a Destination and progression record returned for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_08', N'E', N'There must be a Destination and progression record returned for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Outcome_09', N'E', N'The Completion status is not valid for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutEndDate_01', N'E', N'The Outcome end date must not be before the Outcome start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_01', N'E', N'The Outcome grade is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_03', N'W', N'The outcome grade is not valid for this level of qualification. For an entry level course that counts towards skills for life the achievement should be recorded as either EL1, EL2 or EL3, depending on the level. Check the learning aim and learning delivery outcome are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_04', N'E', N'The Outcome grade must not be returned for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_05', N'E', N'The Outcome grade is not valid for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_06', N'E', N'The Outcome grade is not valid for this Outcome')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutGrade_07', N'E', N'The Outcome grade is not valid for this type of qualification')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutStartDate_01', N'E', N'The Outcome start date must not be more than 10 years before the start of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutStartDate_02', N'E', N'The Outcome start date must not be more than 1 year after the end of the current teaching year')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_01', N'E', N'The Outcome type and code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_02', N'E', N'There must not be more than one record with the same start date and an Outcome type of EMP, NPE, VOL, GAP, SDE, or OTH')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_03', N'E', N'There must not be more than two records with the same start date and an Outcome type of EDU')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_04', N'E', N'There must not be DPOutcome records of both In Paid Employment and Not in paid Employment with the same Outcome start date')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_05', N'E', N'The Outcome start date must not be after the ''valid to'' date in the OutType Code table');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutULN_01', N'E', N'The Unique learner number does not pass the checksum calculation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutULN_02', N'E', N'The Unique learner number is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_01', N'E', N'The Subcontracted or partnership UKPRN is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_02', N'E', N'The Subcontracted or partnership UKPRN must not be on programme aims');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_03', N'E', N'The Subcontracted or partnership UKPRN must not be the same as the Learning provider UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_01', N'E', N'The total of the three Percentage taught in LDCS subject fields must equal 100%');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_02', N'E', N'The Percentage taught in first LDCS subject must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_03', N'E', N'The Percentage taught in first LDCS subject must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCOLAB_01', N'E', N'The Percentage not taught by this institution must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCSLDCS_01', N'E', N'The Percentage taught in second LDCS subject must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCSLDCS_02', N'E', N'The Percentage taught in second LDCS subject must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCTLDCS_01', N'E', N'The Percentage taught in third LDCS subject must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCTLDCS_02', N'E', N'The Percentage taught in third LDCS subject must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PHours_01', N'E', N'Planned hours must be returned for this funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PHours_02', N'E', N'Planned hours must not be less than 278 hours');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanEEPHours_01', N'E', N'The Planned employability, enrichment and pastoral hours have not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_01', N'E', N'The Planned learning hours have not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_02', N'W', N' ''Planned learning hours'' may be wrong. In most cases, we''d expect a figure in ''planned learning hours''. Please check that zero for ''planned learning hours'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_03', N'E', N'The sum of the Planned learning hours and the Planned employability, enrichment and pastoral hours must not be zero');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_04', N'W', N' ''Planned learning hours'' or ''Planned employability, enrichment and pastoral hours'' may be wrong. The total of ''planned learning hours'' and ''planned employability, enrichment and pastoral hours'' shouldn''t be more than 1,000. Check ''planned learning hours'' and ''planned employability, enrichment and pastoral hours'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_05', N'E', N'The sum of the Planned learning hours and the Planned employability, enrichment and pastoral hours must not be greater than 4,000 hours');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PMUKPRN_01', N'E', N'The UKPRN is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Postcode_14', N'W', N' ''Postcode prior to enrolment'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''postcode prior to enrolment'' is complete and correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Postcode_15', N'E', N'The Postcode is not in the correct format');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PostcodePrior_01', N'W', N' ''Postcode prior to enrolment'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''postcode prior to enrolment'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PostcodePrior_02', N'E', N'The Postcode prior to enrolment is not in the correct format');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrevUKPRN_01', N'E', N'The UKPRN is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_01', N'E', N'The Primary LLDD and health problem is not recorded on one of the LLDD and health problem records');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_02', N'E', N'The Primary LLDD and health problem is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_03', N'E', N'There must only be one Primary LLDD and Health problem record');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_04', N'E', N'The Primary LLDD and health problem is not recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_01', N'E', N'The Prior attainment has not been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_03', N'E', N'The Prior attainment is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_04', N'E', N'The Prior attainment is not valid if the programme is a funded intermediate or advanced level apprenticeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_06', N'E', N'''Prior attainment'' is wrong. It''s either above or below the attainment needed. Please check your ESF Tender Specification for the attainment limits and check ''prior attainment'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_07', N'E', N'The Prior attainment is not valid for a traineeship programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorLearnFundAdj_01', N'E', N'The Funding adjustment for prior learning must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_01', N'E', N'The Programme type must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_02', N'E', N'The Programme type must not be returned for this Aim type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_03', N'E', N'The Programme type is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_06', N'E', N'The Programme type is not a valid code for this Funding model');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_07', N'E', N'The planned duration for the programme exceeds the maximum allowed duration for a traineeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_08', N'E', N'The actual duration of the programme exceeds the maximum allowed duration for a traineeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_12', N'E', N'The learning aim is not valid for this framework');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_13', N'E', N'The current duration of the programme exceeds the maximum allowed duration for a traineeship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_14', N'E', N'This programme type cannot be used for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProvSpecDelMonOccur_01', N'E', N'The Provider specified delivery monitoring occurrence is not ''A'' , ''B'', ''C'' or ''D''');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProvSpecLearnMonOccur_01', N'E', N'The Provider specified learner monitoring occurrence is not ''A'' or ''B''');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PwayCode_02', N'E', N'The Apprenticeship pathway must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PwayCode_03', N'E', N'The Apprenticeship pathway must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_01', N'E', N'The Qualification on entry must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_02', N'E', N'The Qualification on entry is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_03', N'E', N'The Qualification on entry is not a valid code for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R06', N'E', N'There must not be more than one Learner record with the same Learner reference number');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R07', N'E', N'There must not be more than one Learning Delivery record with the same Learner reference number and Aim sequence number combination');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R100', N'E', N'There must be an assessment price recorded');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R101', N'E', N'The learning aim must not have more than one Apprenticeship contract type record at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R102', N'E', N'The aim must have an Apprenticeship contract type in the first day');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R104', N'E', N'There must be an apprenticeship contract type for the full duration of the aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R105', N'E', N'The learner must not have different Apprenticeship contract types recorded at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R106', N'E', N'There must not be more than one LSF record at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R107', N'W', N' ''Learner destination and progression record'' is missing. You must return the ''learner destination and progression'' record within two months of the ''learning actual end date''. Make sure the ''learner destination and progression'' information is included within two months of the ''learning actual end date''.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R108', N'E', N' ''Learner destination and progression'' record is missing. As the funding learning aims are now complete, ''learner detsination and progression'' must be entered within 2 months of the actual end date of the last aim to be completed. Check ''learner destination and progression'' is recorded.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R110', N'E', N'The employment status is not valid for this apprenticeship contract type');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R112', N'E', N'There must be a Date applies to that matches the Learning actual end date for this aim.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R113', N'E', N'The Learning actual end date is not known, therefore the Date applies to record must not be returned.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R114', N'E', N'The learner is currently apprenticeship funded and cannot start an Adult skills funded English/maths aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R117', N'E', N'All component aims with LDM357 must have a corresponding programme aim with the same learning delivery monitoring type and code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R118', N'E', N'All programme aims with LDM357 must have a corresponding component aim with the same learning delivery monitoring type and code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R119', N'E', N'The apprenticeship financial record cannot be before the Learning start date when the total negotiated price has been returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R121', N'E', N'There must be a Date applies to that matches the achievement date for this aim.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R122', N'W', N'The achievement date is not known, therefore the Date applies to record must not be returned.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R20', N'E', N'The learner must not have more than one competency aim at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R30', N'E', N'All aims that are part of a programme must have a corresponding programme aim with the same Programme type, Framework code and Apprenticeship pathway (if returned)');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R31', N'E', N'A learning aim is missing. You''ve got an open programme aim in your file, but there''s no learning aim with the same ''programme type'', ''framework code'', ''apprenticeship pathway'' and ''standard code''. Make sure all programme aims have at least one associated learning aim with the same ''programme type'', ''framework code'', ''apprenticeship pathway'' and ''standard code''.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R43', N'E', N'The learner must not have more than one Learner Employment status record with the same Date employment status applies');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R45', N'E', N'The learner must not have more than one LLDD and Health Problem record with the same LLDD and health problem category');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R47', N'E', N'The learner must not have more than one Learner Contact Preference record with the same Contact preference type and Contact preference code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R49', N'E', N'The learner must not have more than one Learner Provider Specified Monitoring record with the same occurrence code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R50', N'E', N'The learning aim must not have more than one Learning Delivery Provider Specified Monitoring record with the same occurrence code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R51', N'E', N'The learner must not have more than one Learner Funding and Monitoring record with the same FAM type and code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R52', N'E', N'The learning aim must not have more than one Learning Delivery FAM record with the same FAM type and code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R56', N'E', N'An SFA or EFA funded component aim must not have a non-funded programme aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R58', N'E', N'The learner must not have more than one core aim at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R59', N'W', N'There is more than one record for this ULN. There mustn''t be multiple records with the same ULN. Check each record has a different ULN.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R61', N'E', N'The learning aim must not have more than one Learning Support Funding record at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R63', N'E', N'A core aim is missing. It''s required for this type of funding model. Check you''ve recorded the learner''s core aim by recording code ''5'' in the AimType field against one of the learning aims.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R64', N'E', N'The learner must not have more than one competency aim with the same Programme type, Framework code and Apprenticeship pathway where an earlier competency aim has been achieved');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R66', N'E', N'All funded component aims must have a corresponding programme aim with the same Programme type, Framework code, Pathway code or Standard code (where applicable)');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R67', N'E', N'The learner must not have more than one Learning Delivery Work Placement record with the same Work placement start date and Work placement employer identifier');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R68', N'E', N'The learner must not have more than one Apprenticeship Financial Record with the same Apprenticeship financial type, code and date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R69', N'E', N'The learner must not have more than one DPOutcome record with the same Outcome type, code and start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R71', N'E', N'There must not be more than one Learner Destination and Progression record with the same Learner reference number');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R72', N'E', N'The payment amounts must not exceed the employer contribution proportion of the total negotiated price');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R73', N'E', N'The payment amounts must not exceed the employer contribution proportion of the total negotiated price');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R85', N'E', N'The ULN for this learner must match between the Learner entity and the Learner Destination and Progression entity');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R89', N'E', N'The Learning actual end date for the latest programme aim must not be before the Learning actual end date of the latest component aim (not including English and maths)');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R90', N'E', N'The Learning actual end date of the component aims must be returned for this programme');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R91', N'E', N'There must be a completed ZESF0001 learning aim for this learner');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutType_05', N'E', N'The Outcome start date must not be after the ''valid to'' date in the OutType Code table')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutULN_01', N'E', N'The Unique learner number does not pass the checksum calculation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'OutULN_02', N'E', N'The Unique learner number is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_01', N'E', N'The Subcontracted or partnership UKPRN is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_02', N'E', N'The Subcontracted or partnership UKPRN must not be on programme aims')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PartnerUKPRN_03', N'E', N'The Subcontracted or partnership UKPRN must not be the same as the Learning provider UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_01', N'E', N'The total of the three Percentage taught in LDCS subject fields must equal 100%')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_02', N'E', N'The Percentage taught in first LDCS subject must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCFLDCS_03', N'E', N'The Percentage taught in first LDCS subject must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCOLAB_01', N'E', N'The Percentage not taught by this institution must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCSLDCS_01', N'E', N'The Percentage taught in second LDCS subject must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCSLDCS_02', N'E', N'The Percentage taught in second LDCS subject must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCTLDCS_01', N'E', N'The Percentage taught in third LDCS subject must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PCTLDCS_02', N'E', N'The Percentage taught in third LDCS subject must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PHours_01', N'E', N'Planned hours must be returned for this funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PHours_02', N'E', N'Planned hours must not be less than 278 hours')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanEEPHours_01', N'E', N'The Planned employability, enrichment and pastoral hours have not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_01', N'E', N'The Planned learning hours have not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_02', N'W', N' ''Planned learning hours'' may be wrong. In most cases, we''d expect a figure in ''planned learning hours''. Please check that zero for ''planned learning hours'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_03', N'E', N'The sum of the Planned learning hours and the Planned employability, enrichment and pastoral hours must not be zero')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_04', N'W', N' ''Planned learning hours'' or ''Planned employability, enrichment and pastoral hours'' may be wrong. The total of ''planned learning hours'' and ''planned employability, enrichment and pastoral hours'' shouldn''t be more than 1,000. Check ''planned learning hours'' and ''planned employability, enrichment and pastoral hours'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PlanLearnHours_05', N'E', N'The sum of the Planned learning hours and the Planned employability, enrichment and pastoral hours must not be greater than 4,000 hours')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PMUKPRN_01', N'E', N'The UKPRN is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Postcode_14', N'W', N' ''Postcode prior to enrolment'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''postcode prior to enrolment'' is complete and correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Postcode_15', N'E', N'The Postcode is not in the correct format')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PostcodePrior_01', N'W', N' ''Postcode prior to enrolment'' is wrong. You must enter a valid UK postcode. If the system isn''t recognising your postcode because it''s a new build, you can temporarily use ZZ99 9ZZ. Check ''postcode prior to enrolment'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PostcodePrior_02', N'E', N'The Postcode prior to enrolment is not in the correct format')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrevUKPRN_01', N'E', N'The UKPRN is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_01', N'E', N'The Primary LLDD and health problem is not recorded on one of the LLDD and health problem records')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_02', N'E', N'The Primary LLDD and health problem is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_03', N'E', N'There must only be one Primary LLDD and Health problem record')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PrimaryLLDD_04', N'E', N'The Primary LLDD and health problem is not recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_01', N'E', N'The Prior attainment has not been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_03', N'E', N'The Prior attainment is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_04', N'E', N'The Prior attainment is not valid if the programme is a funded intermediate or advanced level apprenticeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_06', N'E', N'''Prior attainment'' is wrong. It''s either above or below the attainment needed. Please check your ESF Tender Specification for the attainment limits and check ''prior attainment'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorAttain_07', N'E', N'The Prior attainment is not valid for a traineeship programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PriorLearnFundAdj_01', N'E', N'The Funding adjustment for prior learning must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_01', N'E', N'The Programme type must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_02', N'E', N'The Programme type must not be returned for this Aim type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_03', N'E', N'The Programme type is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_06', N'E', N'The Programme type is not a valid code for this Funding model')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_07', N'E', N'The planned duration for the programme exceeds the maximum allowed duration for a traineeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_08', N'E', N'The actual duration of the programme exceeds the maximum allowed duration for a traineeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_12', N'E', N'The learning aim is not valid for this framework')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_13', N'E', N'The current duration of the programme exceeds the maximum allowed duration for a traineeship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProgType_14', N'E', N'This programme type cannot be used for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProvSpecDelMonOccur_01', N'E', N'The Provider specified delivery monitoring occurrence is not ''A'' , ''B'', ''C'' or ''D''')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ProvSpecLearnMonOccur_01', N'E', N'The Provider specified learner monitoring occurrence is not ''A'' or ''B''')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PwayCode_02', N'E', N'The Apprenticeship pathway must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'PwayCode_03', N'E', N'The Apprenticeship pathway must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_01', N'E', N'The Qualification on entry must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_02', N'E', N'The Qualification on entry is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'QUALENT3_03', N'E', N'The Qualification on entry is not a valid code for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R06', N'E', N'There must not be more than one Learner record with the same Learner reference number')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R07', N'E', N'There must not be more than one Learning Delivery record with the same Learner reference number and Aim sequence number combination')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R100', N'E', N'There must be an assessment price recorded')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R101', N'E', N'The learning aim must not have more than one Apprenticeship contract type record at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R102', N'E', N'The aim must have an Apprenticeship contract type in the first day')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R104', N'E', N'There must be an apprenticeship contract type for the full duration of the aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R105', N'E', N'The learner must not have different Apprenticeship contract types recorded at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R106', N'E', N'There must not be more than one LSF record at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R107', N'W', N' ''Learner destination and progression record'' is missing. You must return the ''learner destination and progression'' record within two months of the ''learning actual end date''. Make sure the ''learner destination and progression'' information is included within two months of the ''learning actual end date''.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R108', N'E', N' ''Learner destination and progression'' record is missing. As the funding learning aims are now complete, ''learner detsination and progression'' must be entered within 2 months of the actual end date of the last aim to be completed. Check ''learner destination and progression'' is recorded.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R110', N'E', N'The employment status is not valid for this apprenticeship contract type')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R112', N'E', N'There must be a Date applies to that matches the Learning actual end date for this aim.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R113', N'E', N'The Learning actual end date is not known, therefore the Date applies to record must not be returned.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R114', N'E', N'The learner is currently apprenticeship funded and cannot start an Adult skills funded English/maths aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R117', N'E', N'All component aims with LDM357 must have a corresponding programme aim with the same learning delivery monitoring type and code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R118', N'E', N'All programme aims with LDM357 must have a corresponding component aim with the same learning delivery monitoring type and code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R119', N'E', N'The apprenticeship financial record cannot be before the Learning start date when the total negotiated price has been returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R121', N'E', N'There must be a Date applies to that matches the achievement date for this aim.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R122', N'W', N'The achievement date is not known, therefore the Date applies to record must not be returned.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R20', N'E', N'The learner must not have more than one competency aim at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R30', N'E', N'All aims that are part of a programme must have a corresponding programme aim with the same Programme type, Framework code and Apprenticeship pathway (if returned)')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R31', N'E', N'A learning aim is missing. You''ve got an open programme aim in your file, but there''s no learning aim with the same ''programme type'', ''framework code'', ''apprenticeship pathway'' and ''standard code''. Make sure all programme aims have at least one associated learning aim with the same ''programme type'', ''framework code'', ''apprenticeship pathway'' and ''standard code''.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R43', N'E', N'The learner must not have more than one Learner Employment status record with the same Date employment status applies')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R45', N'E', N'The learner must not have more than one LLDD and Health Problem record with the same LLDD and health problem category')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R47', N'E', N'The learner must not have more than one Learner Contact Preference record with the same Contact preference type and Contact preference code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R49', N'E', N'The learner must not have more than one Learner Provider Specified Monitoring record with the same occurrence code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R50', N'E', N'The learning aim must not have more than one Learning Delivery Provider Specified Monitoring record with the same occurrence code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R51', N'E', N'The learner must not have more than one Learner Funding and Monitoring record with the same FAM type and code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R52', N'E', N'The learning aim must not have more than one Learning Delivery FAM record with the same FAM type and code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R56', N'E', N'An SFA or EFA funded component aim must not have a non-funded programme aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R58', N'E', N'The learner must not have more than one core aim at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R59', N'W', N'There is more than one record for this ULN. There mustn''t be multiple records with the same ULN. Check each record has a different ULN.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R61', N'E', N'The learning aim must not have more than one Learning Support Funding record at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R63', N'E', N'A core aim is missing. It''s required for this type of funding model. Check you''ve recorded the learner''s core aim by recording code ''5'' in the AimType field against one of the learning aims.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R64', N'E', N'The learner must not have more than one competency aim with the same Programme type, Framework code and Apprenticeship pathway where an earlier competency aim has been achieved')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R66', N'E', N'All funded component aims must have a corresponding programme aim with the same Programme type, Framework code, Pathway code or Standard code (where applicable)')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R67', N'E', N'The learner must not have more than one Learning Delivery Work Placement record with the same Work placement start date and Work placement employer identifier')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R68', N'E', N'The learner must not have more than one Apprenticeship Financial Record with the same Apprenticeship financial type, code and date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R69', N'E', N'The learner must not have more than one DPOutcome record with the same Outcome type, code and start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R71', N'E', N'There must not be more than one Learner Destination and Progression record with the same Learner reference number')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R72', N'E', N'The payment amounts must not exceed the employer contribution proportion of the total negotiated price')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R73', N'E', N'The payment amounts must not exceed the employer contribution proportion of the total negotiated price')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R85', N'E', N'The ULN for this learner must match between the Learner entity and the Learner Destination and Progression entity')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R89', N'E', N'The Learning actual end date for the latest programme aim must not be before the Learning actual end date of the latest component aim (not including English and maths)')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R90', N'E', N'The Learning actual end date of the component aims must be returned for this programme')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R91', N'E', N'There must be a completed ZESF0001 learning aim for this learner')
 GO
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R92', N'E', N'There must not be more than one ZESF0001 learning aim for this contract');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R96', N'E', N'The learner must not have more than one Learning Delivery Work Placement record with the same Work placement start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R97', N'E', N' ''Learner employment status'' records are wrong. The learner can''t have a record that features the same ''employment status'', ''employer identifier'', ''agreement identifier'' and ''employment status monitoring'' as the record before it. Check ''learner employment status'' records are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R99', N'E', N'The learner must not have more than one programme aim at the same time');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Schema', N'F', N'The XML is not well formed');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SEC_01', N'E', N'The Socio-economic indicator is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SEC_02', N'E', N'The Socio-economic indicator must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Sex_01', N'E', N'The Sex is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_02', N'E', N'The Occupation code must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_03', N'E', N'The Occupation code is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_04', N'E', N'The Occupation code is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SPECFEE_01', N'E', N'This Special fee indicator is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SPECFEE_02', N'E', N'The Special fee indicator is not valid for this Mode of study');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SSN_02', N'E', N'The Student support number does not pass the checksum calculation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_01', N'E', N'The Apprenticeship standard code must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_02', N'E', N'The Apprenticeship standard code is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_03', N'E', N'The Apprenticeship standard code must not be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'STULOAD_04', N'E', N'The Student instance FTE must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SWSupAimId_01', N'W', N'''Software supplier aim identifier'' is wrong. It needs to be in the UUID standard format. As this is a software problem, please speak to your software vendors to resolve the problem with the identifier.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_01', N'E', N'The Term time accommodation is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_02', N'E', N'The Term time accommodation is not a valid code for this Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_04', N'E', N'The Term time accommodation must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_01', N'E', N'The Type of instance year is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_02', N'E', N'The Type of instance year is not valid for this Completion of year of instance');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UCASAPPID_01', N'E', N'The UCAS application code must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_03', N'F', N'The UKPRN is not the same as recorded in the Header');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_05', N'E', N'There is no ESF funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_06', N'W', N'There is no Adult skills funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_08', N'E', N'There is no Advanced Learner Loans Bursary funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_09', N'E', N'You do not have a contract for apprenticeships.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_10', N'E', N'There is no apprenticeship funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_11', N'E', N'There is no apprenticeship funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_12', N'E', N'There is no Adult skills funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_13', N'E', N'There is no apprenticeship funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_14', N'E', N'There is no apprenticeship funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_15', N'E', N'There is no apprenticeship funding relationship for this UKPRN');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_16', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_17', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_18', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_19', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_20', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_02', N'W', N' ''Unique learner number'' (ULN) may be wrong. The unique learner number shouldn''t be 9999999999 for learners who are non-funded or community learning funded. Check ''unique learner number'' and ''funding type'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_03', N'W', N'This Unique learner number should not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_04', N'E', N'The Unique learner number does not pass the checksum calculation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_05', N'E', N' ''Unique learner number'' (ULN) is wrong. The ''unique learner number'' (ULN) must exist in the Learner Register or be the default learner number (9999999999) if you''re waiting for the learner''s ULN registration. Check ''unique learner number'' is correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_06', N'W', N' ''Unique learner number'' (ULN) may be wrong. In most cases the default learner number (9999999999) should not be used after 1 January, as the learner''s actual ULN should be registered by now. Please return their real ULN. Check ''unique learner number'', ''learning aim duration (planned or actual)'' and ''learning start date'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_07', N'E', N'This Unique learner number must not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_09', N'W', N'''Unique learner number'' (ULN) may be wrong. In most cases the default learner number (9999999999) should only be used until 1 January, while you wait for the learner''s ULN registration to happen. If there are exceptional circumstances why one can''t be issued, you should contact the Learning Records Service (LRS) on LRS.Support@education.gov.uk. Check ''unique learner number'', learning aim duration (planned or actual) and ''learning start date'' are correct.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_10', N'W', N'This Unique learner number should not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_11', N'E', N'This Unique learner number must not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_12', N'E', N'This Unique learner number must not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_02', N'E', N'The Withdrawal reason is not a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_03', N'E', N'The Withdrawal reason must be returned for this Completion status');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_04', N'E', N'The Withdrawal reason must not be returned for this Completion status');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_05', N'E', N'The Withdrawal reason is only valid for OLASS - Offenders in custody');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_06', N'E', N'The Withdrawal reason is only valid for Industrial placements');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_01', N'E', N'The Work placement employer identifier is not valid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_02', N'E', N'The Work placement employer identifier does not pass the checksum calculation');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_03', N'W', N'Work placement employer identifier'' needs updating soon. You can use 999999999 for 60 days from the start of the work placement, at which point you must provide the real identifier for this learner to be funded. Update the ''work placement employer identifier'' as soon as you can.');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_04', N'E', N'The Work placement employer identifier must not be used');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_05', N'E', N'The Work placement employer identifier must be returned');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEndDate_01', N'E', N'The Work placement end date must be after the Work placement start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEndDate_02', N'E', N'The Work placement end date must be before the Learning actual end date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceMode_01', N'E', N'The Work placement mode must be a valid code');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_01', N'E', N'The Work Placement record must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_02', N'E', N'The Work placement start date must be after the Learning start date');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_03', N'E', N'A Work placement record must not be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_04', N'E', N'16-19 Funding model must be returned for this learning aim');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ZIP_CORRUPT', N'F', N'Zip folder is corrupt or invalid');
-INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ZIP_EMPTY', N'F', N'Zip folder must contain only one XML file');
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R92', N'E', N'There must not be more than one ZESF0001 learning aim for this contract')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R96', N'E', N'The learner must not have more than one Learning Delivery Work Placement record with the same Work placement start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R97', N'E', N' ''Learner employment status'' records are wrong. The learner can''t have a record that features the same ''employment status'', ''employer identifier'', ''agreement identifier'' and ''employment status monitoring'' as the record before it. Check ''learner employment status'' records are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'R99', N'E', N'The learner must not have more than one programme aim at the same time')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Schema', N'F', N'The XML is not well formed')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SEC_01', N'E', N'The Socio-economic indicator is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SEC_02', N'E', N'The Socio-economic indicator must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'Sex_01', N'E', N'The Sex is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_02', N'E', N'The Occupation code must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_03', N'E', N'The Occupation code is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SOC2000_04', N'E', N'The Occupation code is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SPECFEE_01', N'E', N'This Special fee indicator is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SPECFEE_02', N'E', N'The Special fee indicator is not valid for this Mode of study')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SSN_02', N'E', N'The Student support number does not pass the checksum calculation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_01', N'E', N'The Apprenticeship standard code must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_02', N'E', N'The Apprenticeship standard code is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'StdCode_03', N'E', N'The Apprenticeship standard code must not be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'STULOAD_04', N'E', N'The Student instance FTE must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'SWSupAimId_01', N'W', N'''Software supplier aim identifier'' is wrong. It needs to be in the UUID standard format. As this is a software problem, please speak to your software vendors to resolve the problem with the identifier.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_01', N'E', N'The Term time accommodation is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_02', N'E', N'The Term time accommodation is not a valid code for this Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TTACCOM_04', N'E', N'The Term time accommodation must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_01', N'E', N'The Type of instance year is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'TYPEYR_02', N'E', N'The Type of instance year is not valid for this Completion of year of instance')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UCASAPPID_01', N'E', N'The UCAS application code must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_03', N'F', N'The UKPRN is not the same as recorded in the Header')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_05', N'E', N'There is no ESF funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_06', N'E', N'There is no Adult skills funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_08', N'E', N'There is no Advanced Learner Loans Bursary funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_09', N'E', N'You do not have a contract for apprenticeships.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_10', N'E', N'There is no apprenticeship funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_11', N'E', N'There is no apprenticeship funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_12', N'E', N'There is no Adult skills funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_13', N'E', N'There is no apprenticeship funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_14', N'E', N'There is no apprenticeship funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_15', N'E', N'There is no apprenticeship funding relationship for this UKPRN')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_16', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_17', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_18', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_19', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'UKPRN_20', N'E', N'This learning aim cannot be started after the Stop New Starts date for this funding relationship')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_02', N'W', N' ''Unique learner number'' (ULN) may be wrong. The unique learner number shouldn''t be 9999999999 for learners who are non-funded or community learning funded. Check ''unique learner number'' and ''funding type'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_03', N'W', N'This Unique learner number should not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_04', N'E', N'The Unique learner number does not pass the checksum calculation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_05', N'E', N' ''Unique learner number'' (ULN) is wrong. The ''unique learner number'' (ULN) must exist in the Learner Register or be the default learner number (9999999999) if you''re waiting for the learner''s ULN registration. Check ''unique learner number'' is correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_06', N'W', N' ''Unique learner number'' (ULN) may be wrong. In most cases the default learner number (9999999999) should not be used after 1 January, as the learner''s actual ULN should be registered by now. Please return their real ULN. Check ''unique learner number'', ''learning aim duration (planned or actual)'' and ''learning start date'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_07', N'E', N'This Unique learner number must not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_09', N'W', N'''Unique learner number'' (ULN) may be wrong. In most cases the default learner number (9999999999) should only be used until 1 January, while you wait for the learner''s ULN registration to happen. If there are exceptional circumstances why one can''t be issued, you should contact the Learning Records Service (LRS) on LRS.Support@education.gov.uk. Check ''unique learner number'', learning aim duration (planned or actual) and ''learning start date'' are correct.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_10', N'W', N'This Unique learner number should not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_11', N'E', N'This Unique learner number must not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ULN_12', N'E', N'This Unique learner number must not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_02', N'E', N'The Withdrawal reason is not a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_03', N'E', N'The Withdrawal reason must be returned for this Completion status')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_04', N'E', N'The Withdrawal reason must not be returned for this Completion status')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_05', N'E', N'The Withdrawal reason is only valid for OLASS - Offenders in custody')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WithdrawReason_06', N'E', N'The Withdrawal reason is only valid for Industrial placements')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_01', N'E', N'The Work placement employer identifier is not valid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_02', N'E', N'The Work placement employer identifier does not pass the checksum calculation')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_03', N'W', N'Work placement employer identifier'' needs updating soon. You can use 999999999 for 60 days from the start of the work placement, at which point you must provide the real identifier for this learner to be funded. Update the ''work placement employer identifier'' as soon as you can.')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_04', N'E', N'The Work placement employer identifier must not be used')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEmpId_05', N'E', N'The Work placement employer identifier must be returned')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEndDate_01', N'E', N'The Work placement end date must be after the Work placement start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceEndDate_02', N'E', N'The Work placement end date must be before the Learning actual end date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceMode_01', N'E', N'The Work placement mode must be a valid code')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_01', N'E', N'The Work Placement record must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_02', N'E', N'The Work placement start date must be after the Learning start date')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_03', N'E', N'A Work placement record must not be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'WorkPlaceStartDate_04', N'E', N'16-19 Funding model must be returned for this learning aim')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ZIP_CORRUPT', N'F', N'Zip folder is corrupt or invalid')
+INSERT [dbo].[Rules] ([Rulename], [Severity], [Message]) VALUES (N'ZIP_EMPTY', N'F', N'Zip folder must contain only one XML file')
 GO
 
 RAISERROR('Rules Completed',10,1) WITH NOWAIT;
