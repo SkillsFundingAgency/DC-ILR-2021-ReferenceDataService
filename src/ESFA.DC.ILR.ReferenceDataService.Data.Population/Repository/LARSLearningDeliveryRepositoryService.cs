@@ -79,7 +79,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
                     if (framework != null)
                     {
-                        framework.LARSFrameworkAim = frameworkAimDictionary.TryGetValue(key.LearnAimRef, out var frameworkAim) ? frameworkAim : null;
+                        framework.LARSFrameworkAim = frameworkAimDictionary.TryGetValue(key, out var frameworkAim) ? frameworkAim : null;
 
                         larsFrameworks.Add(new LARSFrameworkKey(key.LearnAimRef, framework));
                     }
@@ -229,25 +229,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task<Dictionary<string, LARSFrameworkAim>> BuildLARSFrameworkAimDictionary(
-            IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
+        private async Task<Dictionary<LARSLearningDeliveryKey, LARSFrameworkAim>> BuildLARSFrameworkAimDictionary(
+           IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
-            var larsFrameworkAimList = await context.LARS_FrameworkAims
-                 .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
-                 .Select(lfa => new LARSFrameworkAim
-                 {
-                     LearnAimRef = lfa.LearnAimRef,
-                     EffectiveFrom = lfa.EffectiveFrom,
-                     EffectiveTo = lfa.EffectiveTo,
-                     FrameworkComponentType = lfa.FrameworkComponentType,
-                 }).ToListAsync(cancellationToken);
-
-            return larsFrameworkAimList
-                .GroupBy(l => l.LearnAimRef, StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(
+            return await context.LARS_FrameworkAims
+                .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
+                .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef, ld.FworkCode, ld.ProgType, ld.PwayCode))
+               .ToDictionaryAsync(
                 k => k.Key,
-                v => v.Select(l => l).FirstOrDefault(),
-                StringComparer.OrdinalIgnoreCase);
+                v => v.Select(fa => new LARSFrameworkAim
+                {
+                    LearnAimRef = fa.LearnAimRef.ToUpper(),
+                    FrameworkComponentType = fa.FrameworkComponentType,
+                    EffectiveFrom = fa.EffectiveFrom,
+                    EffectiveTo = fa.EffectiveTo,
+                }).FirstOrDefault());
         }
     }
 }
