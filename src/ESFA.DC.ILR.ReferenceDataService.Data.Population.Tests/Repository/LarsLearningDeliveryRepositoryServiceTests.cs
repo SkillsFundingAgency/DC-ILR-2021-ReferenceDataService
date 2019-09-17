@@ -144,6 +144,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new LarsFrameworkAim
                 {
                     EffectiveFrom = new DateTime(2018, 8, 1),
+                    FworkCode = 1,
+                    ProgType = 2,
+                    PwayCode = 3,
                     FrameworkComponentType = 1,
                     LearnAimRef = "LearnAimRef1",
                 },
@@ -270,7 +273,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             },
                             LARSFrameworkAim = new LARSFrameworkAim
                             {
-                                LearnAimRef = "LearnAimRef1",
+                                LearnAimRef = "LEARNAIMREF1",
                                 FrameworkComponentType = 1,
                                 EffectiveFrom = new DateTime(2018, 8, 1),
                                 EffectiveTo = null,
