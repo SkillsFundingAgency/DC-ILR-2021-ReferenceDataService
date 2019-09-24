@@ -31,9 +31,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 return new MetaData
                 {
-                    ValidationErrors = await RetrieveValidationErrorsAsync(context, cancellationToken),
-                    ValidationRules = await RetrieveValidationRulesAsync(context, cancellationToken),
-                    Lookups = await RetrieveLookupsAsync(context, cancellationToken),
+                    ValidationErrors = await RetrieveValidationErrorsAsync(context, cancellationToken) ?? Array.Empty<ValidationError>(),
+                    ValidationRules = await RetrieveValidationRulesAsync(context, cancellationToken) ?? Array.Empty<ValidationRule>(),
+                    Lookups = await RetrieveLookupsAsync(context, cancellationToken) ?? Array.Empty<Lookup>(),
                     CollectionDates = RetrieveCollectionDates()
                 };
             }
@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .ToListAsync(cancellationToken);
         }
 
-        private async Task<List<Lookup>> RetrieveLookupsAsync(IIlrReferenceDataContext context, CancellationToken cancellationToken)
+        private async Task<IReadOnlyCollection<Lookup>> RetrieveLookupsAsync(IIlrReferenceDataContext context, CancellationToken cancellationToken)
         {
             return await context.Lookups
                 .Include(l => l.LookupSubCategories)
