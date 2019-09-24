@@ -163,6 +163,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             serviceResult.DateGenerated.Should().Be(utcDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
+            serviceResult.ReferenceDataVersions.CoFVersion.Version.Should().BeNull();
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
