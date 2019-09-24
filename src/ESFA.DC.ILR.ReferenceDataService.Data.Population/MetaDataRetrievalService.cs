@@ -60,11 +60,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             metaData.DateGenerated = _dateTimeProvider.GetNowUtc();
             metaData.ReferenceDataVersions = new ReferenceDataVersion
             {
+                CoFVersion = await RetrieveCofVersionAsync(cancellationToken),
                 Employers = await RetrieveEmployersVersionAsync(cancellationToken),
                 LarsVersion = await RetrieveLarsVersionAsync(cancellationToken),
                 OrganisationsVersion = await RetrieveOrganisationsVersionAsync(cancellationToken),
                 PostcodesVersion = await RetrievePostcodesVersionAsync(cancellationToken),
-                EasUploadDateTime = new EasUploadDateTime(latestEAS?.UpdatedOn),
+                EasUploadDateTime = new EasUploadDateTime { UploadDateTime = latestEAS?.UpdatedOn },
             };
 
             return Validate(metaData);
@@ -78,14 +79,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             }
         }
 
+        private async Task<CoFVersion> RetrieveCofVersionAsync(CancellationToken cancellationToken)
+        {
+            // ToDo: populate from DB
+            return new CoFVersion();
+        }
+
         private async Task<EmployersVersion> RetrieveEmployersVersionAsync(CancellationToken cancellationToken)
         {
             using (var context = _employersContextFactory.Create())
             {
                 return await context.LargeEmployerSourceFiles
                         .OrderByDescending(v => v.Id)
-                        .Select(v => new EmployersVersion(v.Id.ToString()))
-                        .FirstOrDefaultAsync(cancellationToken);
+                        .Select(v => new EmployersVersion { Version = v.Id.ToString() })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new EmployersVersion();
             }
         }
 
@@ -95,8 +102,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 return await context.LARS_Versions
                         .OrderByDescending(v => v.MainDataSchemaName)
-                        .Select(v => new LarsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(cancellationToken);
+                        .Select(v => new LarsVersion { Version = v.MainDataSchemaName })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new LarsVersion();
             }
         }
 
@@ -106,8 +113,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 return await context.OrgVersions
                         .OrderByDescending(v => v.MainDataSchemaName)
-                        .Select(v => new OrganisationsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(cancellationToken);
+                        .Select(v => new OrganisationsVersion { Version = v.MainDataSchemaName })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new OrganisationsVersion();
             }
         }
 
@@ -117,8 +124,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 return await context.VersionInfos
                         .OrderByDescending(v => v.VersionNumber)
-                        .Select(v => new PostcodesVersion(v.VersionNumber))
-                        .FirstOrDefaultAsync(cancellationToken);
+                        .Select(v => new PostcodesVersion { Version = v.VersionNumber })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new PostcodesVersion();
             }
         }
 
