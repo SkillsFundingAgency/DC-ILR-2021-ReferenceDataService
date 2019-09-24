@@ -134,18 +134,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             return new List<CensusDate>
             {
-                new CensusDate { Period = 01, Start = new DateTime(2019, 08, 01) },
-                new CensusDate { Period = 02, Start = new DateTime(2019, 09, 01) },
-                new CensusDate { Period = 03, Start = new DateTime(2019, 10, 01) },
-                new CensusDate { Period = 04, Start = new DateTime(2019, 11, 01) },
-                new CensusDate { Period = 05, Start = new DateTime(2019, 12, 01) },
-                new CensusDate { Period = 06, Start = new DateTime(2020, 01, 01) },
-                new CensusDate { Period = 07, Start = new DateTime(2020, 02, 01) },
-                new CensusDate { Period = 08, Start = new DateTime(2020, 03, 01) },
-                new CensusDate { Period = 09, Start = new DateTime(2020, 04, 01) },
-                new CensusDate { Period = 10, Start = new DateTime(2020, 05, 01) },
-                new CensusDate { Period = 11, Start = new DateTime(2020, 06, 01) },
-                new CensusDate { Period = 12, Start = new DateTime(2020, 07, 01) },
+                new CensusDate { Period = 01, Start = new DateTime(2019, 08, 01), End = new DateTime(2019, 08, 31, 23, 59, 59) },
+                new CensusDate { Period = 02, Start = new DateTime(2019, 09, 01), End = new DateTime(2019, 09, 30, 23, 59, 59) },
+                new CensusDate { Period = 03, Start = new DateTime(2019, 10, 01), End = new DateTime(2019, 10, 31, 23, 59, 59) },
+                new CensusDate { Period = 04, Start = new DateTime(2019, 11, 01), End = new DateTime(2019, 11, 30, 23, 59, 59) },
+                new CensusDate { Period = 05, Start = new DateTime(2019, 12, 01), End = new DateTime(2019, 12, 31, 23, 59, 59) },
+                new CensusDate { Period = 06, Start = new DateTime(2020, 01, 01), End = new DateTime(2020, 01, 31, 23, 59, 59) },
+                new CensusDate { Period = 07, Start = new DateTime(2020, 02, 01), End = new DateTime(2020, 02, 29, 23, 59, 59) },
+                new CensusDate { Period = 08, Start = new DateTime(2020, 03, 01), End = new DateTime(2020, 03, 31, 23, 59, 59) },
+                new CensusDate { Period = 09, Start = new DateTime(2020, 04, 01), End = new DateTime(2020, 04, 30, 23, 59, 59) },
+                new CensusDate { Period = 10, Start = new DateTime(2020, 05, 01), End = new DateTime(2020, 05, 31, 23, 59, 59) },
+                new CensusDate { Period = 11, Start = new DateTime(2020, 06, 01), End = new DateTime(2020, 06, 30, 23, 59, 59) },
+                new CensusDate { Period = 12, Start = new DateTime(2020, 07, 01), End = new DateTime(2020, 07, 31, 23, 59, 59) },
             };
         }
     }
