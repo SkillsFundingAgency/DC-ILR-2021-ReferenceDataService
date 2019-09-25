@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             {
                 ReferenceDataVersions = new ReferenceDataVersion()
                 {
-                    LarsVersion = new LarsVersion("LARS"),
+                    LarsVersion = new LarsVersion { Version = "LARS" },
                 },
                 Lookups = new List<Lookup>
                     {

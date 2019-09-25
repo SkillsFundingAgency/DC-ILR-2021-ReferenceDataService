@@ -163,6 +163,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             serviceResult.DateGenerated.Should().Be(utcDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
+            serviceResult.ReferenceDataVersions.CoFVersion.Version.Should().BeNull();
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
@@ -188,7 +189,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new LargeEmployerSourceFile { Id = 2 },
             };
 
-            IEnumerable<LarsVersion> larsList = new List<LarsVersion>();
+            IEnumerable<LarsVersion> larsList = new List<LarsVersion>
+            {
+                new LarsVersion { MainDataSchemaName = "Version0" },
+                new LarsVersion { MainDataSchemaName = "Version1" },
+                new LarsVersion { MainDataSchemaName = "Version2" },
+            };
 
             IEnumerable<OrgVersion> orgList = new List<OrgVersion>
             {
@@ -231,6 +237,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 Lookups = lookups,
                 ValidationErrors = validationErrors,
+                ValidationRules = new List<ValidationRule>()
             };
 
             var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();

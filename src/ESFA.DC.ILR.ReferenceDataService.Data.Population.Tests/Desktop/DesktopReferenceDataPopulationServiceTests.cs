@@ -91,10 +91,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         {
             return new ReferenceDataVersion
             {
-                Employers = new EmployersVersion("Version 1"),
-                LarsVersion = new LarsVersion("Version 2"),
-                OrganisationsVersion = new OrganisationsVersion("Version 3"),
-                PostcodesVersion = new PostcodesVersion("Version 4"),
+                Employers = new EmployersVersion { Version = "Version 1" },
+                LarsVersion = new LarsVersion { Version = "Version 2" },
+                OrganisationsVersion = new OrganisationsVersion { Version = "Version 3" },
+                PostcodesVersion = new PostcodesVersion { Version = "Version 4" }
             };
         }
 
