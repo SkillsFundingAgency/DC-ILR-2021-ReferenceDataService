@@ -7,11 +7,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Mappers
     {
         public ValidationMessagesMapper()
         {
-            Map(m => m.RuleName).Index(0).Name("Rule Name");
-            Map(m => m.ErrorMessage).Index(1).Name("Error Message");
-            Map(m => m.Severity).Index(2).Name("Severity");
-            Map(m => m.EnabledSLD).Index(3).Name("Enabled SLD");
-            Map(m => m.EnabledDesktop).Index(4).Name("Enabled Desktop");
+            Map(m => m.RuleName).Name("Rule Name");
+            Map(m => m.ErrorMessage).Name("Error Message");
+            Map(m => m.Severity).Name("Severity");
+            Map(m => m.EnabledSLD).Name("Enabled SLD");
+            Map(m => m.EnabledDesktop).Name("Enabled Desktop");
         }
     }
 }
