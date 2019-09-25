@@ -4,5 +4,6 @@
     {
         IlrMessage,
         DesktopReferenceData,
+        ValidationMessages,
     }
 }

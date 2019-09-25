@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
@@ -192,9 +193,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.CollectionDates.Should().BeEquivalentTo(collectionDates);
         }
 
-        private IlrReferenceDataRepositoryService NewService(IDbContextFactory<IIlrReferenceDataContext> ilrReferenceDataContextFactory = null)
+        private IlrReferenceDataRepositoryService NewService(IDbContextFactory<IIlrReferenceDataContext> ilrReferenceDataContextFactory = null, IBulkInsert bulkInsert = null)
         {
-            return new IlrReferenceDataRepositoryService(ilrReferenceDataContextFactory);
+            return new IlrReferenceDataRepositoryService(ilrReferenceDataContextFactory, bulkInsert);
         }
     }
 }

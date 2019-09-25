@@ -39,5 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             get => int.Parse(_jobContextMessage.KeyValuePairs[JobContextMessageKey.ReturnPeriod].ToString());
             set => _jobContextMessage.KeyValuePairs[JobContextMessageKey.ReturnPeriod] = value;
         }
+
+        public string ValidationMessagesFileReference => _jobContextMessage.KeyValuePairs["ValidationMessagesFileReference"].ToString();
     }
 }
