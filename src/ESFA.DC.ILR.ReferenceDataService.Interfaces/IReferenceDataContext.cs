@@ -15,5 +15,7 @@
         string Task { get; }
 
         int ReturnPeriod { get; set; }
+
+        string ValidationMessagesFileReference { get; }
     }
 }

@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 using Microsoft.EntityFrameworkCore;
 using static ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
+using Lookup = ESFA.DC.ILR.ReferenceDataService.Model.MetaData.Lookup;
+using LookupSubCategory = ESFA.DC.ILR.ReferenceDataService.Model.MetaData.LookupSubCategory;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
@@ -19,10 +24,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         private const string Warning = "W";
         private const string Fail = "F";
         private readonly IDbContextFactory<IIlrReferenceDataContext> _ilrReferenceDataContextFactory;
+        private readonly IBulkInsert _bulkInsert;
 
-        public IlrReferenceDataRepositoryService(IDbContextFactory<IIlrReferenceDataContext> ilrReferenceDataContextFactory)
+        public IlrReferenceDataRepositoryService(IDbContextFactory<IIlrReferenceDataContext> ilrReferenceDataContextFactory, IBulkInsert bulkInsert)
         {
             _ilrReferenceDataContextFactory = ilrReferenceDataContextFactory;
+            _bulkInsert = bulkInsert;
         }
 
         public async Task<MetaData> RetrieveIlrReferenceDataAsync(CancellationToken cancellationToken)
@@ -37,6 +44,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     CollectionDates = RetrieveCollectionDates()
                 };
             }
+        }
+
+        public async Task ClearValidationRules(SqlConnection sqlConnection, SqlTransaction sqlTransaction, CancellationToken cancellationToken)
+        {
+            const string sqlCommand = "DELETE FROM [dbo].[Rules]";
+
+            using (SqlCommand command = new SqlCommand(sqlCommand, sqlConnection, sqlTransaction))
+            {
+                await command.ExecuteNonQueryAsync(cancellationToken);
+            }
+        }
+
+        public async Task WriteValidationRules(IEnumerable<Rule> rules, SqlConnection sqlConnection, SqlTransaction sqlTransaction, CancellationToken cancellationToken)
+        {
+            await _bulkInsert.Insert("Rules", rules, sqlConnection, sqlTransaction, cancellationToken);
         }
 
         private async Task<IReadOnlyCollection<ValidationError>> RetrieveValidationErrorsAsync(IIlrReferenceDataContext context, CancellationToken cancellationToken)

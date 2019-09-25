@@ -39,5 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
             get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod].ToString());
             set => _desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod] = value;
         }
+
+        public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs["ValidationMessagesFileReference"].ToString();
     }
 }
