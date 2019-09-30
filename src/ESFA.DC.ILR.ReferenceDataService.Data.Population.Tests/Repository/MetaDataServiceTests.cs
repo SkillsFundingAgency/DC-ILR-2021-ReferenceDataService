@@ -23,6 +23,7 @@ using Moq;
 using Xunit;
 using static ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
 using ValidationError = ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
+using Version = ESFA.DC.ReferenceData.Organisations.Model.Version;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
@@ -34,6 +35,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsVersion = "Version1";
             var employersVersion = "2";
             var orgVersion = "Version3";
+            var cofVersion = "1.1.1.1";
+            var campusIdVersion = "2.2.2.2";
             var postcodesVersion = "Version4";
             var utcDateTime = new DateTime(2019, 8, 1);
             var easDateTime = new DateTime(2019, 8, 1);
@@ -61,6 +64,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new OrgVersion { MainDataSchemaName = "Version0" },
                 new OrgVersion { MainDataSchemaName = "Version1" },
                 new OrgVersion { MainDataSchemaName = "Version3" },
+            };
+
+            IEnumerable<Version> versions = new List<Version>
+            {
+                new Version { Source = "ConditionOfFunding", VersionNumber = cofVersion },
+                new Version { Source = "CampusIdentifier", VersionNumber = campusIdVersion },
+                new Version { Source = "Org", VersionNumber = orgVersion }
             };
 
             IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
@@ -118,6 +128,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
+            var versionsDbMock = versions.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
             var easMock = new Mock<IEasdbContext>();
@@ -141,6 +152,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
+            orgMock.Setup(o => o.Versions).Returns(versionsDbMock.Object);
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
 
             easContextFactoryMock.Setup(c => c.Create()).Returns(easMock.Object);
@@ -163,7 +175,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             serviceResult.DateGenerated.Should().Be(utcDateTime);
             serviceResult.ReferenceDataVersions.LarsVersion.Version.Should().BeEquivalentTo(larsVersion);
-            serviceResult.ReferenceDataVersions.CoFVersion.Version.Should().BeNull();
+            serviceResult.ReferenceDataVersions.CoFVersion.Version.Should().Be(cofVersion);
+            serviceResult.ReferenceDataVersions.CampusIdentifierVersion.Version.Should().Be(campusIdVersion);
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
@@ -176,6 +189,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync_ThrowsException()
         {
             var easDateTime = new DateTime(2019, 8, 1);
+            var orgVersion = "Version3";
+            var cofVersion = "1.1.1.1";
+            var campusIdVersion = "2.2.2.2";
 
             IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
             {
@@ -201,6 +217,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new OrgVersion { MainDataSchemaName = "Version0" },
                 new OrgVersion { MainDataSchemaName = "Version1" },
                 new OrgVersion { MainDataSchemaName = "Version3" },
+            };
+
+            IEnumerable<Version> versions = new List<Version>
+            {
+                new Version { Source = "ConditionOfFunding", VersionNumber = cofVersion },
+                new Version { Source = "CampusIdentifier", VersionNumber = campusIdVersion },
+                new Version { Source = "Org", VersionNumber = orgVersion }
             };
 
             IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
@@ -244,6 +267,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
+            var versionsDbMock = versions.AsQueryable().BuildMockDbSet();
             var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
 
             var easMock = new Mock<IEasdbContext>();
@@ -267,6 +291,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
+            orgMock.Setup(o => o.Versions).Returns(versionsDbMock.Object);
             postcodesMock.Setup(p => p.VersionInfos).Returns(postcodesDbMock.Object);
 
             easContextFactoryMock.Setup(c => c.Create()).Returns(easMock.Object);
