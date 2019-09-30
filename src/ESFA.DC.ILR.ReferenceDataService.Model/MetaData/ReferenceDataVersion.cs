@@ -6,6 +6,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
     {
         public CoFVersion CoFVersion { get; set; }
 
+        public CampusIdentifierVersion CampusIdentifierVersion { get; set; }
+
         public EmployersVersion Employers { get; set; }
 
         public LarsVersion LarsVersion { get; set; }

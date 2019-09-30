@@ -4,12 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
+using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +25,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         private const string LarsVersionName = "LARS Version";
         private const string OrganisationsVersionName = "Organisations Version";
         private const string PostcodesVersionName = "Potcodes Version";
-
         private readonly IDbContextFactory<IEmployersContext> _employersContextFactory;
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
         private readonly IDbContextFactory<IOrganisationsContext> _organisationsContextFactory;
@@ -54,6 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             metaData.ReferenceDataVersions = new ReferenceDataVersion
             {
                 CoFVersion = await RetrieveCofVersionAsync(cancellationToken),
+                CampusIdentifierVersion = await RetrieveCampusIdentifierVersionAsync(cancellationToken),
                 Employers = await RetrieveEmployersVersionAsync(cancellationToken),
                 LarsVersion = await RetrieveLarsVersionAsync(cancellationToken),
                 OrganisationsVersion = await RetrieveOrganisationsVersionAsync(cancellationToken),
@@ -66,8 +69,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
         private async Task<CoFVersion> RetrieveCofVersionAsync(CancellationToken cancellationToken)
         {
-            // ToDo: populate from DB
-            return new CoFVersion();
+            using (var context = _organisationsContextFactory.Create())
+            {
+                return await context.Versions
+                           .Where(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.ConditionOfFunding))
+                           .Select(v => new CoFVersion { Version = v.VersionNumber })
+                           .FirstOrDefaultAsync(cancellationToken) ?? new CoFVersion();
+            }
+        }
+
+        private async Task<CampusIdentifierVersion> RetrieveCampusIdentifierVersionAsync(CancellationToken cancellationToken)
+        {
+            using (var context = _organisationsContextFactory.Create())
+            {
+                return await context.Versions
+                           .Where(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.CampusIdentifier))
+                           .Select(v => new CampusIdentifierVersion { Version = v.VersionNumber })
+                           .FirstOrDefaultAsync(cancellationToken) ?? new CampusIdentifierVersion();
+            }
         }
 
         private async Task<EmployersVersion> RetrieveEmployersVersionAsync(CancellationToken cancellationToken)
@@ -96,10 +115,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
         {
             using (var context = _organisationsContextFactory.Create())
             {
-                return await context.OrgVersions
-                        .OrderByDescending(v => v.MainDataSchemaName)
-                        .Select(v => new OrganisationsVersion { Version = v.MainDataSchemaName })
-                        .FirstOrDefaultAsync(cancellationToken) ?? new OrganisationsVersion();
+                return await context.Versions
+                           .Where(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.Organisation))
+                           .Select(v => new OrganisationsVersion { Version = v.VersionNumber })
+                           .FirstOrDefaultAsync(cancellationToken) ?? new OrganisationsVersion();
             }
         }
 
