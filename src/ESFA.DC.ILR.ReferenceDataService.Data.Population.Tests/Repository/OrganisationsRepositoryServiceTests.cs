@@ -31,7 +31,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 1,
                         LegalOrgType = "LegalType1",
-                        Name = "Name1"
+                        Name = "Name1",
+                        LongTermResid = 1
                     },
                     OrgPartnerUkprns = new List<OrgPartnerUkprn>
                     {
@@ -66,7 +67,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 2,
                         LegalOrgType = "LegalType2",
-                        Name = "Name2"
+                        Name = "Name2",
+                        LongTermResid = 0
                     },
                 },
             };
@@ -128,20 +130,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.Select(o => o.UKPRN).Should().Contain(2);
             organisations.Select(o => o.UKPRN).Should().NotContain(3);
 
-            organisations.Where(o => o.UKPRN == 1).Select(o => o.UKPRN).Should().BeEquivalentTo(1);
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType1");
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.Name).Should().BeEquivalentTo("Name1");
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().CampusIdentifier.Should().BeEquivalentTo("CampId_01");
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().Be(true);
-            organisations.Where(o => o.UKPRN == 1).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(true);
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.OrganisationFundings).Should().HaveCount(2);
+            organisations.First(o => o.UKPRN == 1).UKPRN.Should().Be(1);
+            organisations.First(o => o.UKPRN == 1).LegalOrgType.Should().Be("LegalType1");
+            organisations.First(o => o.UKPRN == 1).Name.Should().Be("Name1");
+            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().CampusIdentifier.Should().Be("CampId_01");
+            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).PartnerUKPRN.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).LongTermResid.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).OrganisationFundings.Should().HaveCount(2);
 
-            organisations.Where(o => o.UKPRN == 2).Select(o => o.UKPRN).Should().BeEquivalentTo(2);
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType2");
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.Name).Should().BeEquivalentTo("Name2");
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.CampusIdentifers).Should().BeNullOrEmpty();
-            organisations.Where(o => o.UKPRN == 2).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(false);
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.OrganisationFundings).Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).UKPRN.Should().Be(2);
+            organisations.First(o => o.UKPRN == 2).LegalOrgType.Should().Be("LegalType2");
+            organisations.First(o => o.UKPRN == 2).Name.Should().Be("Name2");
+            organisations.First(o => o.UKPRN == 2).CampusIdentifers.Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).PartnerUKPRN.Should().BeFalse();
+            organisations.First(o => o.UKPRN == 2).LongTermResid.Should().BeFalse();
+            organisations.First(o => o.UKPRN == 2).OrganisationFundings.Should().BeNullOrEmpty();
         }
 
         [Fact]

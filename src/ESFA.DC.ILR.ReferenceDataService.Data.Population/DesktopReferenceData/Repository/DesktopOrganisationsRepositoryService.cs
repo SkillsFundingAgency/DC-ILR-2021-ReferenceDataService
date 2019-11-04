@@ -12,6 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 {
     public class DesktopOrganisationsRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>
     {
+        private const int LongTermResidValue = 1;
         private readonly IDbContextFactory<IOrganisationsContext> _organisationsFactory;
 
         public DesktopOrganisationsRepositoryService(IDbContextFactory<IOrganisationsContext> organisationsFactory)
@@ -39,6 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                               Name = o.OrgDetail.Name,
                               LegalOrgType = o.OrgDetail.LegalOrgType,
                               PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
+                              LongTermResid = o.OrgDetail.LongTermResid == LongTermResidValue,
                               CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
                               OrganisationFundings = o.OrgFundings.Select(of =>
                               new OrganisationFunding()
