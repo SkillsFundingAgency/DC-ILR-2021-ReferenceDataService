@@ -41,5 +41,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
         }
 
         public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs["ValidationMessagesFileReference"].ToString();
+
+        public int Ukprn
+        {
+            get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.Ukprn] = value;
+        }
     }
 }

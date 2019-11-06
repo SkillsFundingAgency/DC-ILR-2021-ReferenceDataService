@@ -17,5 +17,7 @@
         int ReturnPeriod { get; set; }
 
         string ValidationMessagesFileReference { get; }
+
+        int Ukprn { get; set; }
     }
 }

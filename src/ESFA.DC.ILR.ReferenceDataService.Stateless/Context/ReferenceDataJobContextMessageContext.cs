@@ -41,5 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
         }
 
         public string ValidationMessagesFileReference => _jobContextMessage.KeyValuePairs["ValidationMessagesFileReference"].ToString();
+
+        public int Ukprn { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }
