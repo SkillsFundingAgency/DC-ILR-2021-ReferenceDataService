@@ -54,12 +54,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
             _logger.LogInfo("Finished Reference Data Output");
 
             // set return period
-            _logger.LogInfo("Adding Return Period to Context");
+            _logger.LogInfo("Adding Return Period and Ukprn to Context");
+
             _desktopContextReturnPeriodUpdateService.UpdateCollectionPeriod(
                 referenceDataContext,
                 message.HeaderEntity.CollectionDetailsEntity.FilePreparationDate,
                 referenceData.MetaDatas.CollectionDates.ReturnPeriods);
-            _logger.LogInfo("Finished adding Return Period " + referenceDataContext.ReturnPeriod.ToString() + "to Context");
+
+            var ukprn = message?.HeaderEntity?.SourceEntity?.UKPRN;
+
+            if (ukprn != null)
+            {
+                referenceDataContext.Ukprn = ukprn.Value;
+            }
+
+            _logger.LogInfo($"Finished adding Return Period : {referenceDataContext.ReturnPeriod} and Ukprn : {referenceDataContext.Ukprn} to Context");
 
             return desktopContext;
         }
