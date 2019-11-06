@@ -51,7 +51,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                     { "OriginalFilename", "OriginalFilename" },
                     { "Filename", "Filename" },
                     { "Container", "Container" },
-                    { "ReturnPeriod", 0 }
+                    { "ReturnPeriod", 0 },
+                    { "UkPrn", 12345678 }
                });
 
             IReferenceDataContext referenceDataContext = new ReferenceDataJobContextMessageContext(desktopContextMock.Object);
