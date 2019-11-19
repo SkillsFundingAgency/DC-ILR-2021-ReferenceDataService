@@ -16,10 +16,10 @@ Post-Deployment Script Template
 GO
 SET NOCOUNT ON;
 
-RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
+RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
 RAISERROR('		   Populate Staging [ModifiedServerity] with values from Rule table that are Diffrent from the BAU data. This should be the environment specific changes to serverity.',10,1) WITH NOWAIT;
 
-		-- Load Current Serverity Records form ENV into Staging Tables
+	-- Load Current Serverity Records form ENV into Staging Tables
 	INSERT INTO [Staging].[ModifiedServerity]([Rulename],[Severity])
 	SELECT [Rulename],[Severity]
 	FROM
@@ -61,12 +61,21 @@ REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataProcessor];
 REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataViewer];
 GO
 
----- This is ONLY to be turned on after at least 1 round of deployments to PRODUCTION
----- DROP TABEL IF EXISTS [Staging].[ModifiedMessages];
-----
+-- Drop Objects from Staging schema as not used any more.
+
+DROP PROCEDURE IF EXISTS [Staging].[usp_Process];
 GO
-RAISERROR('		Process Records',10,1) WITH NOWAIT;
---EXEC [Staging].[usp_Process]
+DROP PROCEDURE IF EXISTS [Staging].[usp_Process_Rules];
+GO
+DROP TABLE IF EXISTS [Staging].[FileRules];
+GO
+DROP TABLE IF EXISTS [Staging].[ModifiedMessages];
+GO
+DROP TABLE IF EXISTS [Staging].[ModifiedServerity];
+GO
+DROP TABLE IF EXISTS [Staging].[Rules];
+GO
+DROP SCHEMA IF EXISTS [Staging]
 GO
 
 DELETE FROM [dbo].[Lookup]

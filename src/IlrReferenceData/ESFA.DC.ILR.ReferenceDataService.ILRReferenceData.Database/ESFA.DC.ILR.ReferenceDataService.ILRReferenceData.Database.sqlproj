@@ -62,9 +62,6 @@
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Tables" />
     <Folder Include="zzDeploymentProfiles" />
-    <Folder Include="Staging" />
-    <Folder Include="Staging\Stored Procedures" />
-    <Folder Include="Staging\Tables" />
     <Folder Include="zReferenceData" />
     <Folder Include="Security" />
   </ItemGroup>
@@ -76,18 +73,11 @@
     <Build Include="Security\Role_DataProcessor.sql" />
     <Build Include="Security\Role_DataViewer.sql" />
     <Build Include="Security\RoleMemberships.sql" />
-    <Build Include="Security\Staging.sql" />
     <Build Include="Security\User_DsciUser.sql" />
-    <Build Include="Staging\Tables\FileRules.sql" />
-    <Build Include="Staging\Tables\ModifiedMessages.sql" />
-    <Build Include="Staging\Tables\Rules.sql" />
-    <Build Include="Staging\Stored Procedures\usp_Process.sql" />
-    <Build Include="Staging\Stored Procedures\usp_Process_Rules.sql" />
     <None Include="zReferenceData\Validation.File.Rules.sql" />
     <None Include="zReferenceData\Validation.Modified.Serverity.sql" />
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\LookupSubCategory.sql" />
-    <Build Include="Staging\Tables\ModifiedServerity.sql" />
     <None Include="zReferenceData\Validation.Modified.Messages.sql" />
     <None Include="z.ExtendedProperties.sql" />
   </ItemGroup>
