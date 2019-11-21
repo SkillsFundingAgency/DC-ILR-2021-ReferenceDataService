@@ -74,11 +74,8 @@
     <Build Include="Security\Role_DataViewer.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\User_DsciUser.sql" />
-    <None Include="zReferenceData\Validation.File.Rules.sql" />
-    <None Include="zReferenceData\Validation.Modified.Serverity.sql" />
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\LookupSubCategory.sql" />
-    <None Include="zReferenceData\Validation.Modified.Messages.sql" />
     <None Include="z.ExtendedProperties.sql" />
   </ItemGroup>
   <ItemGroup>
