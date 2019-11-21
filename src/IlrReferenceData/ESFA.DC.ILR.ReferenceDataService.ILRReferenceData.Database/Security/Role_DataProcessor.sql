@@ -11,17 +11,5 @@ GRANT
 	SELECT, 
 	UPDATE, 
 	VIEW DEFINITION 
-ON SCHEMA::[dbo]
-	TO [DataProcessor]
-GO
-GRANT 
-	DELETE, 
-	EXECUTE, 
-	INSERT, 
-	--REFERENCES, 
-	SELECT, 
-	UPDATE, 
-	VIEW DEFINITION 
-ON SCHEMA::[Staging]
-	TO [DataProcessor]
+ON SCHEMA::[dbo] TO [DataProcessor]
 GO

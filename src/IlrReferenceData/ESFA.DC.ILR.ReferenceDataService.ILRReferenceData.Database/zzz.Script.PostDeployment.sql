@@ -15,34 +15,7 @@ Post-Deployment Script Template
 
 GO
 SET NOCOUNT ON;
-
-RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
-RAISERROR('		   Populate Staging [ModifiedServerity] with values from Rule table that are Diffrent from the BAU data. This should be the environment specific changes to serverity.',10,1) WITH NOWAIT;
-
-		-- Load Current Serverity Records form ENV into Staging Tables
-	INSERT INTO [Staging].[ModifiedServerity]([Rulename],[Severity])
-	SELECT [Rulename],[Severity]
-	FROM
-	(
-		SELECT TOP 100 PERCENT 
-			'UNION SELECT ''' + MR.[Rulename] + ''' as [Rulename],''' + R.[Severity] + ''' as [Severity]' as [Value], MR.[Rulename], R.[Severity]
-		FROM [Staging].[Rules] MR
-		INNER JOIN [dbo].[Rules] R
-		ON R.[Rulename] = MR.[Rulename]
-		WHERE MR.[Severity] <> R.[Severity]
-		ORDER BY  MR.[Rulename]
-	) as CurrentAmendments
-	WHERE [Rulename] NOT IN (SELECT [Rulename] FROM [Staging].[ModifiedServerity])
-
 GO
-RAISERROR('----------------------------------------------------------------------------------------------------------------------------------------',10,1) WITH NOWAIT;
-
-GO
-
-RAISERROR('		   Ref Data',10,1) WITH NOWAIT;
-	:r .\zReferenceData\Validation.File.Rules.sql
-	:r .\zReferenceData\Validation.Modified.Messages.sql
-	:r .\zReferenceData\Validation.Modified.Serverity.sql
 
 RAISERROR('		   Update User Account Passwords',10,1) WITH NOWAIT;
 GO
@@ -61,12 +34,21 @@ REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataProcessor];
 REVOKE REFERENCES ON SCHEMA::[dbo] FROM [DataViewer];
 GO
 
----- This is ONLY to be turned on after at least 1 round of deployments to PRODUCTION
----- DROP TABEL IF EXISTS [Staging].[ModifiedMessages];
-----
+-- Drop Objects from Staging schema as not used any more.
+
+DROP PROCEDURE IF EXISTS [Staging].[usp_Process];
 GO
-RAISERROR('		Process Records',10,1) WITH NOWAIT;
---EXEC [Staging].[usp_Process]
+DROP PROCEDURE IF EXISTS [Staging].[usp_Process_Rules];
+GO
+DROP TABLE IF EXISTS [Staging].[FileRules];
+GO
+DROP TABLE IF EXISTS [Staging].[ModifiedMessages];
+GO
+DROP TABLE IF EXISTS [Staging].[ModifiedServerity];
+GO
+DROP TABLE IF EXISTS [Staging].[Rules];
+GO
+DROP SCHEMA IF EXISTS [Staging]
 GO
 
 DELETE FROM [dbo].[Lookup]
