@@ -38,6 +38,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var cofVersion = "1.1.1.1";
             var campusIdVersion = "2.2.2.2";
             var postcodesVersion = "Version4";
+            var devolvedPostcodesVersion = "Version5";
+            var hmppPostcodesVersion = "Version6";
+            var postcodeFactorsVersion = "Version7";
             var utcDateTime = new DateTime(2019, 8, 1);
             var easDateTime = new DateTime(2019, 8, 1);
 
@@ -66,20 +69,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new OrgVersion { MainDataSchemaName = "Version3" },
             };
 
-            IEnumerable<Version> versions = new List<Version>
+            IEnumerable<Version> orgVersions = new List<Version>
             {
                 new Version { Source = "ConditionOfFunding", VersionNumber = cofVersion },
                 new Version { Source = "CampusIdentifier", VersionNumber = campusIdVersion },
                 new Version { Source = "Org", VersionNumber = orgVersion }
             };
 
-            IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
+            IEnumerable<VersionInfo> postcoesVersions = new List<VersionInfo>
             {
-                new VersionInfo { VersionNumber = "Version0" },
-                new VersionInfo { VersionNumber = "Version1" },
-                new VersionInfo { VersionNumber = "Version2" },
-                new VersionInfo { VersionNumber = "Version3" },
-                new VersionInfo { VersionNumber = "Version4" },
+                new VersionInfo { DataSource = "OnsPostcodes", VersionNumber = "Version4" },
+                new VersionInfo { DataSource = "DevolvedPostcodes", VersionNumber = "Version5" },
+                new VersionInfo { DataSource = "HmppPostcodes", VersionNumber = "Version6" },
+                new VersionInfo { DataSource = "PostcodeFactors", VersionNumber = "Version7" }
             };
 
             IReadOnlyCollection<ValidationError> validationErrors = new List<ValidationError>
@@ -128,8 +130,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
-            var versionsDbMock = versions.AsQueryable().BuildMockDbSet();
-            var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
+            var versionsDbMock = orgVersions.AsQueryable().BuildMockDbSet();
+            var postcodesDbMock = postcoesVersions.AsQueryable().BuildMockDbSet();
 
             var easMock = new Mock<IEasdbContext>();
             var employersMock = new Mock<IEmployersContext>();
@@ -180,6 +182,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ReferenceDataVersions.Employers.Version.Should().BeEquivalentTo(employersVersion);
             serviceResult.ReferenceDataVersions.OrganisationsVersion.Version.Should().BeEquivalentTo(orgVersion);
             serviceResult.ReferenceDataVersions.PostcodesVersion.Version.Should().BeEquivalentTo(postcodesVersion);
+            serviceResult.ReferenceDataVersions.DevolvedPostcodesVersion.Version.Should().BeEquivalentTo(devolvedPostcodesVersion);
+            serviceResult.ReferenceDataVersions.HmppPostcodesVersion.Version.Should().BeEquivalentTo(hmppPostcodesVersion);
+            serviceResult.ReferenceDataVersions.PostcodeFactorsVersion.Version.Should().BeEquivalentTo(postcodeFactorsVersion);
             serviceResult.ReferenceDataVersions.EasUploadDateTime.UploadDateTime.Should().BeSameDateAs(easDateTime);
             serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
             serviceResult.ValidationRules.Should().BeEquivalentTo(validationRules);
@@ -226,13 +231,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new Version { Source = "Org", VersionNumber = orgVersion }
             };
 
-            IEnumerable<VersionInfo> postcoesList = new List<VersionInfo>
+            IEnumerable<VersionInfo> postcoesVersions = new List<VersionInfo>
             {
-                new VersionInfo { VersionNumber = "Version0" },
-                new VersionInfo { VersionNumber = "Version1" },
-                new VersionInfo { VersionNumber = "Version2" },
-                new VersionInfo { VersionNumber = "Version3" },
-                new VersionInfo { VersionNumber = "Version4" },
+                new VersionInfo { DataSource = "OnsPostcodes", VersionNumber = "Version4" },
+                new VersionInfo { DataSource = "DevolvedPostcodes", VersionNumber = "Version5" },
+                new VersionInfo { DataSource = "HmppPostcodes", VersionNumber = "Version6" },
+                new VersionInfo { DataSource = "PostcodeFactors", VersionNumber = "Version7" }
             };
 
             IReadOnlyCollection<ValidationError> validationErrors = new List<ValidationError>
@@ -268,7 +272,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
             var versionsDbMock = versions.AsQueryable().BuildMockDbSet();
-            var postcodesDbMock = postcoesList.AsQueryable().BuildMockDbSet();
+            var postcodesDbMock = postcoesVersions.AsQueryable().BuildMockDbSet();
 
             var easMock = new Mock<IEasdbContext>();
             var employersMock = new Mock<IEmployersContext>();

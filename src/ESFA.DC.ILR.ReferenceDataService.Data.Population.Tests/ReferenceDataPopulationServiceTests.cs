@@ -111,7 +111,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 Employers = new EmployersVersion { Version = "Version 1" },
                 LarsVersion = new LarsVersion { Version = "Version 2" },
                 OrganisationsVersion = new OrganisationsVersion { Version = "Version 3" },
-                PostcodesVersion = new PostcodesVersion { Version = "Version 4" }
+                PostcodesVersion = new PostcodesVersion { Version = "Version 4" },
+                CampusIdentifierVersion = new CampusIdentifierVersion { Version = "Version 5" },
+                CoFVersion = new CoFVersion { Version = "Version 6" },
+                DevolvedPostcodesVersion = new DevolvedPostcodesVersion { Version = "Version 7" },
+                HmppPostcodesVersion = new HmppPostcodesVersion { Version = "Version 8" },
+                PostcodeFactorsVersion = new PostcodeFactorsVersion { Version = "Version 9" }
             };
         }
 
