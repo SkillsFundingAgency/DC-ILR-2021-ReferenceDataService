@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -141,25 +142,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
         private MetaData Validate(MetaData metaData)
         {
-            if (
-                  metaData.ReferenceDataVersions.Employers.Version != null
-               && metaData.ReferenceDataVersions.LarsVersion.Version != null
-               && metaData.ReferenceDataVersions.OrganisationsVersion.Version != null
-               && metaData.ReferenceDataVersions.PostcodeFactorsVersion.Version != null
-               && metaData.ReferenceDataVersions.PostcodesVersion.Version != null
-               && metaData.ReferenceDataVersions.DevolvedPostcodesVersion.Version != null
-               && metaData.ReferenceDataVersions.HmppPostcodesVersion.Version != null
-               && metaData.ReferenceDataVersions.CampusIdentifierVersion.Version != null
-               && metaData.ReferenceDataVersions.CoFVersion.Version != null
-               && metaData.ValidationErrors.Any()
-               && metaData.ValidationRules.Any()
-               && metaData.Lookups.Any())
+            var referenceDataSources = new List<(string, bool)>
+            {
+                (DataSourceConstants.Employers, metaData.ReferenceDataVersions.Employers.Version != null),
+                (DataSourceConstants.Lars, metaData.ReferenceDataVersions.LarsVersion.Version != null),
+                (DataSourceConstants.Organisations, metaData.ReferenceDataVersions.OrganisationsVersion.Version != null),
+                (DataSourceConstants.Postcodes, metaData.ReferenceDataVersions.PostcodesVersion.Version != null),
+                (DataSourceConstants.DevolvedPostcodes, metaData.ReferenceDataVersions.DevolvedPostcodesVersion.Version != null),
+                (DataSourceConstants.PostcodeFactors, metaData.ReferenceDataVersions.PostcodeFactorsVersion.Version != null),
+                (DataSourceConstants.HmppPostcodes, metaData.ReferenceDataVersions.HmppPostcodesVersion.Version != null),
+                (DataSourceConstants.CampusIdentifiers, metaData.ReferenceDataVersions.CampusIdentifierVersion.Version != null),
+                (DataSourceConstants.CoF, metaData.ReferenceDataVersions.CoFVersion.Version != null),
+                (DataSourceConstants.ValidationErrors, metaData.ValidationErrors.Any()),
+                (DataSourceConstants.ValidationRules, metaData.ValidationRules.Any()),
+                (DataSourceConstants.ValidationLookups, metaData.Lookups.Any()),
+            };
+
+            if (!referenceDataSources.Any(x => x.Item2 == false))
             {
                 return metaData;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("MetaData Retrieval Error - Reference Dataset incomplete");
+                var sources = referenceDataSources.Where(x => x.Item2 == false).Select(x => x.Item1).Aggregate((x, y) => x + ", " + y);
+
+                throw new ArgumentOutOfRangeException("MetaData Retrieval Error - Reference Dataset incomplete. Cannot find version information for dataset specified. The dataset may be incomplete. Please check the following data sources: " + sources);
             }
         }
     }

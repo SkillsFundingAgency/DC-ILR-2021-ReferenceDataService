@@ -1,6 +1,6 @@
 ﻿namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants
 {
-    public class PopulationConstants
+    public static class PopulationConstants
     {
         public const int Period1 = 1;
         public const int Period2 = 2;
