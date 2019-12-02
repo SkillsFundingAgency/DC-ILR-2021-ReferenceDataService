@@ -16,6 +16,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 
         public PostcodesVersion PostcodesVersion { get; set; }
 
+        public DevolvedPostcodesVersion DevolvedPostcodesVersion { get; set; }
+
+        public HmppPostcodesVersion HmppPostcodesVersion { get; set; }
+
+        public PostcodeFactorsVersion PostcodeFactorsVersion { get; set; }
+
         public EasUploadDateTime EasUploadDateTime { get; set; }
     }
 }
