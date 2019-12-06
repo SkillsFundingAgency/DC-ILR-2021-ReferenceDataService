@@ -80,7 +80,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new VersionInfo { DataSource = "OnsPostcodes", VersionNumber = "Version4" },
                 new VersionInfo { DataSource = "DevolvedPostcodes", VersionNumber = "Version5" },
-                new VersionInfo { DataSource = "HmppPostcodes", VersionNumber = "Version6" },
+                new VersionInfo { DataSource = "HmppPostcode", VersionNumber = "Version6" },
                 new VersionInfo { DataSource = "PostcodeFactors", VersionNumber = "Version7" }
             };
 
@@ -233,7 +233,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new VersionInfo { DataSource = "OnsPostcodes", VersionNumber = "Version4" },
                 new VersionInfo { DataSource = "DevolvedPostcodes", VersionNumber = "Version5" },
-                new VersionInfo { DataSource = "HmppPostcodes", VersionNumber = "Version6" },
+                new VersionInfo { DataSource = "HmppPostcode", VersionNumber = "Version6" },
                 new VersionInfo { DataSource = "PostcodeFactors", VersionNumber = "Version7" }
             };
 
@@ -366,7 +366,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new VersionInfo { DataSource = "OnsPostcodes", VersionNumber = "Version4" },
                 new VersionInfo { DataSource = "DevolvedPostcodes", VersionNumber = "Version5" },
-                new VersionInfo { DataSource = "HmppPostcodes", VersionNumber = "Version6" },
+                new VersionInfo { DataSource = "HmppPostcode", VersionNumber = "Version6" },
                 new VersionInfo { DataSource = "PostcodeFactors", VersionNumber = "Version7" }
             };
 
