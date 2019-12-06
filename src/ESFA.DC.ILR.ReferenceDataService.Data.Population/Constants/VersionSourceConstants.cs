@@ -9,6 +9,6 @@
         public const string OnsPostcodes = "OnsPostcodes";
         public const string DevolvedPostcodes = "DevolvedPostcodes";
         public const string PostcodeFactors = "PostcodeFactors";
-        public const string HmppPostcodes = "HmppPostcodes";
+        public const string HmppPostcodes = "HmppPostcode";
     }
 }
