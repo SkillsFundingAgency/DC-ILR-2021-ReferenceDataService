@@ -210,6 +210,7 @@
     <Compile Include="ReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Repository\AppEarningsHistoryRepositoryServiceTests.cs" />
     <Compile Include="Repository\EasRepositoryServiceTests.cs" />
+    <Compile Include="Repository\McaDevolvedContractsRepositoryServiceTests.cs" />
     <Compile Include="Repository\MetaDataServiceTests.cs" />
     <Compile Include="Repository\FcsRepositoryServiceTests.cs" />
     <Compile Include="Repository\EpaOrganisationsRepositoryServiceTests.cs" />

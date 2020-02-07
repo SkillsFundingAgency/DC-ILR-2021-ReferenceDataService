@@ -5,6 +5,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.McaContracts;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
@@ -28,6 +29,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model
         public IReadOnlyCollection<LARSLearningDelivery> LARSLearningDeliveries { get; set; }
 
         public IReadOnlyCollection<LARSStandard> LARSStandards { get; set; }
+
+        public IReadOnlyCollection<McaDevolvedContract> McaDevolvedContracts { get; set; }
 
         public IReadOnlyCollection<Organisation> Organisations { get; set; }
 
