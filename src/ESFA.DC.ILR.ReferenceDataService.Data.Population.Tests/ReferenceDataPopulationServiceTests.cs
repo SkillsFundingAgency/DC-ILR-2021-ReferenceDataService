@@ -13,6 +13,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.McaContracts;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
@@ -44,6 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var fcsContractAllocations = TestFcs();
             var larsLearningDeliveries = TestLarsLearningDeliveries();
             var larsStandards = TestLarsStandards();
+            var mcaContracts = TestMcaDevolvedContract();
             var organisations = TestOrganisations();
             var postcodes = TestPostcodes();
             var ulns = TestUlnCollection();
@@ -59,6 +61,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var fcsRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>>>();
             var larsLearningDeliveryRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
             var larsStandardRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
+            var mcaDevolvedContractRSMock = new Mock<IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>>>();
             var orgRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
             var postcodesRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
             var ulnRSMock = new Mock<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
@@ -73,6 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             fcsRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(fcsContractAllocations));
             larsLearningDeliveryRSMock.Setup(s => s.RetrieveAsync(mapperData.LARSLearningDeliveryKeys, cancellationToken)).Returns(Task.FromResult(larsLearningDeliveries));
             larsStandardRSMock.Setup(s => s.RetrieveAsync(mapperData.StandardCodes, cancellationToken)).Returns(Task.FromResult(larsStandards));
+            mcaDevolvedContractRSMock.Setup(s => s.RetrieveAsync(mapperData.LearningProviderUKPRN, cancellationToken)).Returns(Task.FromResult(mcaContracts));
             orgRSMock.Setup(s => s.RetrieveAsync(mapperData.UKPRNs, cancellationToken)).Returns(Task.FromResult(organisations));
             postcodesRSMock.Setup(s => s.RetrieveAsync(mapperData.Postcodes, cancellationToken)).Returns(Task.FromResult(postcodes));
             ulnRSMock.Setup(s => s.RetrieveAsync(mapperData.ULNs, cancellationToken)).Returns(Task.FromResult(ulns));
@@ -88,6 +92,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 fcsRSMock.Object,
                 larsLearningDeliveryRSMock.Object,
                 larsStandardRSMock.Object,
+                mcaDevolvedContractRSMock.Object,
                 orgRSMock.Object,
                 postcodesRSMock.Object,
                 ulnRSMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None);
@@ -222,6 +227,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             };
         }
 
+        private IReadOnlyCollection<McaDevolvedContract> TestMcaDevolvedContract()
+        {
+            return new List<McaDevolvedContract>
+            {
+                new McaDevolvedContract(),
+                new McaDevolvedContract(),
+            };
+        }
+
         private IReadOnlyCollection<Organisation> TestOrganisations()
         {
             return new List<Organisation>
@@ -259,6 +273,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService = null,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>> mcaDevolvedContractRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService = null,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService = null)
@@ -274,6 +289,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 fcsRepositoryService,
                 larsLearningDeliveryRepositoryService,
                 larsStandardRepositoryService,
+                mcaDevolvedContractRepositoryService,
                 organisationsRepositoryService,
                 postcodesRepositoryService,
                 ulnRepositoryService);
