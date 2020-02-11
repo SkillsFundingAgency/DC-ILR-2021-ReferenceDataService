@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,8 +23,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var context = _fcsContextFactory.Create())
             {
-                return new List<McaDevolvedContract>();
-                //return await context.McaDevolved
+                return await context.DevolvedContracts
+                    .Where(dc => dc.Ukprn == ukprn)
+                    .Select(dc =>
+                    new McaDevolvedContract
+                    {
+                        Ukprn = dc.Ukprn,
+                        McaGlaShortCode = dc.McaglashortCode,
+                        EffectiveFrom = dc.EffectiveFrom,
+                        EffectiveTo = dc.EffectiveTo
+                    }).ToListAsync(cancellationToken);
             }
         }
     }
