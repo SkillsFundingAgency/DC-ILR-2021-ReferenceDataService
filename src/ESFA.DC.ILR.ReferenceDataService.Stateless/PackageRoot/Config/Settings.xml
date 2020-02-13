@@ -30,5 +30,6 @@
     <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
     <Parameter Name="IlrReferenceDataConnectionString" Value=""/>
     <Parameter Name="EasConnectionString" Value=""/>
+    <Parameter Name="Ilr1819ConnectionString" Value=""/>
   </Section>
 </Settings>
