@@ -12,6 +12,8 @@
 
         string OutputReferenceDataFileKey { get; }
 
+        string FrmReferenceDataFileKey { get; }
+
         string Task { get; }
 
         int ReturnPeriod { get; set; }

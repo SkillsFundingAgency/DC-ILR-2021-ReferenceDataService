@@ -32,6 +32,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
 
+        public string FrmReferenceDataFileKey => _jobContextMessage.KeyValuePairs["FrmReferenceData"].ToString();
+
         public string Task => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks).First();
 
         public int ReturnPeriod

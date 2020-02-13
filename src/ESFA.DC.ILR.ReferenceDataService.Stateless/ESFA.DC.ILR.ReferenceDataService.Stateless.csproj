@@ -392,6 +392,7 @@
     <Compile Include="Config\IOConfiguration.cs" />
     <Compile Include="Constants\StatelessContants.cs" />
     <Compile Include="Context\ReferenceDataJobContextMessageContext.cs" />
+    <Compile Include="Modules\FrmReferenceDataModule.cs" />
     <Compile Include="Modules\IlrMessageReferenceDataRepositoryServicesModule.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Modules\IlrMessageTaskModule.cs" />

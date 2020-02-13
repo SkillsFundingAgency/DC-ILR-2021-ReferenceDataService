@@ -32,6 +32,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string OutputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
+        public string FrmReferenceDataFileKey => throw new NotImplementedException();
+
         public string Task { get; }
 
         public int ReturnPeriod
