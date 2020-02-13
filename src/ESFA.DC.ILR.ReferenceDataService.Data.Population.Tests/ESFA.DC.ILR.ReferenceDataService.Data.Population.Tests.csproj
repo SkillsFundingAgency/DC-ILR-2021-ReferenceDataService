@@ -58,6 +58,18 @@
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Tests.Model.0.1.7-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ILR1819.Database.EF, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.Database.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF.Invalid, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.Invalid.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF.Valid, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.Valid.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.159.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.159\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
     </Reference>
@@ -210,6 +222,7 @@
     <Compile Include="ReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Repository\AppEarningsHistoryRepositoryServiceTests.cs" />
     <Compile Include="Repository\EasRepositoryServiceTests.cs" />
+    <Compile Include="Repository\FrmReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\McaDevolvedContractsRepositoryServiceTests.cs" />
     <Compile Include="Repository\MetaDataServiceTests.cs" />
     <Compile Include="Repository\FcsRepositoryServiceTests.cs" />

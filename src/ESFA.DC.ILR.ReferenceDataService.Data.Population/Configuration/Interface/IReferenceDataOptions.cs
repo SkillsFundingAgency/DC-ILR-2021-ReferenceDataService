@@ -21,5 +21,7 @@
         string IlrReferenceDataConnectionString { get; }
 
         string EasConnectionString { get; }
+
+        string Ilr1819ConnectionString { get; }
     }
 }
