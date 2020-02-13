@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -27,7 +26,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var cancellationToken = CancellationToken.None;
 
             var referenceDataVersions = TestReferenceDataVersions();
-            var appsEarningHistories = TestAppsEarningHistories();
             var devolvedPostcodes = TestDevolvedPostcodes();
             var employers = TestEmployers();
             var epaOrgs = TestEpaOrgs();
@@ -82,6 +80,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             root.LARSFrameworks.Should().HaveCount(2);
             root.LARSFrameworkAims.Should().HaveCount(2);
             root.LARSStandards.Should().HaveCount(2);
+            root.McaDevolvedContracts.Should().HaveCount(0);
             root.Organisations.Should().HaveCount(2);
             root.Postcodes.Should().HaveCount(2);
             root.ULNs.Should().HaveCount(0);
@@ -100,15 +99,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
                 DevolvedPostcodesVersion = new DevolvedPostcodesVersion { Version = "Version 7" },
                 HmppPostcodesVersion = new HmppPostcodesVersion { Version = "Version 8" },
                 PostcodeFactorsVersion = new PostcodeFactorsVersion { Version = "Version 9" }
-            };
-        }
-
-        private IReadOnlyCollection<ApprenticeshipEarningsHistory> TestAppsEarningHistories()
-        {
-            return new List<ApprenticeshipEarningsHistory>
-            {
-                new ApprenticeshipEarningsHistory(),
-                new ApprenticeshipEarningsHistory(),
             };
         }
 

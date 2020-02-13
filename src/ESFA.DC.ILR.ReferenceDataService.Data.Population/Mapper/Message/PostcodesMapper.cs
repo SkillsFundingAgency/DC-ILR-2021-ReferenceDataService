@@ -13,6 +13,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
             var postcodes =
                 UniqueLearnerPostcodesFromMessage(input)
                 .Union(UniqueLearnerPostcodePriorsFromMessage(input))
+                .Union(UniqueLearningDeliveryHEPostcodesFromMessage(input))
                 .Union(UniqueLearningDeliveryLocationPostcodesFromMessage(input))
                 .Union(UniqueLearningDeliveryLSDPostcodesFromMessage(input))
                 .Distinct() ?? new List<string>();
@@ -60,6 +61,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                      .Select(lsd => lsd.LSDPostcode)
                      .Distinct()
                  ?? new List<string>();
+        }
+
+        public virtual IEnumerable<string> UniqueLearningDeliveryHEPostcodesFromMessage(IMessage input)
+        {
+            return input?
+                       .Learners?
+                       .Where(l => l.LearningDeliveries != null)
+                       .SelectMany(l => l.LearningDeliveries)
+                       .Where(ld => ld.LearningDeliveryHEEntity != null)
+                       .Select(ld => ld.LearningDeliveryHEEntity.HEPostCode)
+                       .Distinct()
+                   ?? new List<string>();
         }
     }
 }

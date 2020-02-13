@@ -12,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.McaContracts;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
@@ -30,6 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
         private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> _fcsRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> _larsLearningDeliveryRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> _larsStandardRepositoryService;
+        private readonly IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>> _mcaDevolvedContractRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> _organisationsRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> _postcodesRepositoryService;
         private readonly IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> _ulnRepositoryService;
@@ -45,6 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             IReferenceDataRetrievalService<int, IReadOnlyCollection<FcsContractAllocation>> fcsRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardRepositoryService,
+            IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>> mcaDevolvedContractRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesRepositoryService,
             IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>> ulnRepositoryService)
@@ -59,6 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             _fcsRepositoryService = fcsRepositoryService;
             _larsLearningDeliveryRepositoryService = larsLearningDeliveryRepositoryService;
             _larsStandardRepositoryService = larsStandardRepositoryService;
+            _mcaDevolvedContractRepositoryService = mcaDevolvedContractRepositoryService;
             _organisationsRepositoryService = organisationsRepositoryService;
             _postcodesRepositoryService = postcodesRepositoryService;
             _ulnRepositoryService = ulnRepositoryService;
@@ -79,6 +83,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
                 FCSContractAllocations = await _fcsRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 LARSLearningDeliveries = await _larsLearningDeliveryRepositoryService.RetrieveAsync(messageData.LARSLearningDeliveryKeys, cancellationToken),
                 LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
+                McaDevolvedContracts = await _mcaDevolvedContractRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 Organisations = await _organisationsRepositoryService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
                 Postcodes = await _postcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
                 ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken),
