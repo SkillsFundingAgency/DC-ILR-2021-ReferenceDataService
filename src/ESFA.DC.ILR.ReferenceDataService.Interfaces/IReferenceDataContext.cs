@@ -20,6 +20,8 @@
 
         string ValidationMessagesFileReference { get; }
 
+        string DesktopReferenceDataStoragePath { get; }
+
         int Ukprn { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -10,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 using Moq;
 using Xunit;
@@ -19,19 +22,25 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
     public class DesktopReferenceDataFileServiceTests
     {
         [Fact]
-        public async Task Retrieve()
+        public async Task ProcessAync()
         {
+            var outputFileName = "desktop/1920/referencedata/FISReferenceData_0.1.0.zip";
             var cancellationToken = CancellationToken.None;
-            var jsonString = "json string";
-
             var referenceDataContextMock = new Mock<IReferenceDataContext>();
             var zipFileServiceMock = new Mock<IZipFileService>();
             var loggerMock = new Mock<ILogger>();
+            var fileNameServiceMock = new Mock<IDesktopReferenceDataFileNameService>();
+
+            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(It.IsAny<string>(), It.IsAny<string>())).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 
+          //  var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
+
+          //  referenceDataContextMock.Setup(d => d.DesktopReferenceDataStoragePath).Returns(filePath);
+
             zipFileServiceMock.Setup(s => s.SaveCollectionZipAsync(
-                referenceDataContextMock.Object.OutputReferenceDataFileKey,
+                outputFileName,
                 referenceDataContextMock.Object.Container,
                 It.IsAny<MetaData>(),
                 It.IsAny<DevolvedPostcodes>(),
@@ -45,18 +54,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
                 It.IsAny<IReadOnlyCollection<Postcode>>(),
                 cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(zipFileServiceMock.Object, loggerMock.Object);
+            var service = NewService(fileNameServiceMock.Object, zipFileServiceMock.Object, loggerMock.Object);
 
             await service.ProcessAync(referenceDataContextMock.Object, desktopReferenceDataRoot, cancellationToken);
 
+            fileNameServiceMock.VerifyAll();
             zipFileServiceMock.VerifyAll();
         }
 
         private DesktopReferenceDataFileService NewService(
+            IDesktopReferenceDataFileNameService fileNameService = null,
             IZipFileService zipFileService = null,
             ILogger logger = null)
         {
-            return new DesktopReferenceDataFileService(zipFileService, logger);
+            return new DesktopReferenceDataFileService(fileNameService, zipFileService, logger);
         }
     }
 }

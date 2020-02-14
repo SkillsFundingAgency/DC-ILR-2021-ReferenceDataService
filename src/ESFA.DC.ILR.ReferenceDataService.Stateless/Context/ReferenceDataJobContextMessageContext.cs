@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model;
 
@@ -28,11 +29,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
-        public string InputReferenceDataFileKey => _jobContextMessage.KeyValuePairs["FISReferenceData"].ToString();
+        public string InputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopInputReferenceDataKey].ToString();
 
         public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
 
-        public string FrmReferenceDataFileKey => _jobContextMessage.KeyValuePairs["FrmReferenceData"].ToString();
+        public string FrmReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FrmReferenceDataFileKey].ToString();
 
         public string Task => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks).First();
 
@@ -42,12 +43,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             set => _jobContextMessage.KeyValuePairs[JobContextMessageKey.ReturnPeriod] = value;
         }
 
-        public string ValidationMessagesFileReference => _jobContextMessage.KeyValuePairs["ValidationMessagesFileReference"].ToString();
+        public string ValidationMessagesFileReference => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.ValidationMessagesFileReferenceKey].ToString();
 
         public int Ukprn
         {
             get => int.Parse(_jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn].ToString());
             set => throw new System.NotImplementedException();
         }
+
+        public string DesktopReferenceDataFileName => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopReferenceDataFileNameKey].ToString();
+
+        public string DesktopReferenceDataStoragePath => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopReferenceDataStoragePathKey].ToString();
+
+        public string ReferenceDataModelVersion { get; set; }
     }
 }
