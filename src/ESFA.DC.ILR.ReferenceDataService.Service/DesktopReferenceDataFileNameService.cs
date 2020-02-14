@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger.LogInfo("Builiding Desktop reference data file name.");
             var referenceDataModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
 
-            return string.Concat(Path.Combine(filePath, fileName), "_", referenceDataModelVersion, _referenceDataFileExtension);
+            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, _referenceDataFileExtension);
         }
     }
 }

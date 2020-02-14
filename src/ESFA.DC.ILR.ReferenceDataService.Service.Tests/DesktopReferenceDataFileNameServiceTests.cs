@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         {
             var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
 
-            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName_"), rdsModelVersion, ".zip");
+            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), rdsModelVersion, ".zip");
 
             NewService().BuildFileName("FilePath", "FileName").Should().BeEquivalentTo(expectedFileName);
         }
