@@ -14,6 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
             containerBuilder.RegisterModule<DesktopReferenceDataRepositoryServicesModule>();
             containerBuilder.RegisterType<DesktopReferenceDataPopulationService>().As<IDesktopReferenceDataPopulationService>();
             containerBuilder.RegisterType<DesktopReferenceDataFileService>().As<IDesktopReferenceDataFileService>();
+            containerBuilder.RegisterType<DesktopReferenceDataFileNameService>().As<IDesktopReferenceDataFileNameService>();
             containerBuilder.RegisterType<ZipFileService>().As<IZipFileService>();
             containerBuilder.RegisterType<DesktopReferenceDataTask>().Keyed<ITask>(TaskKeys.DesktopReferenceData);
         }

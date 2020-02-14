@@ -2,6 +2,7 @@
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 {
@@ -42,7 +43,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
             set => _desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod] = value;
         }
 
-        public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs["ValidationMessagesFileReference"].ToString();
+        public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs[ReferenceDataContextKeys.ValidationMessagesFileReferenceKey].ToString();
+
+        public string DesktopReferenceDataStoragePath => throw new NotImplementedException();
 
         public int Ukprn
         {
