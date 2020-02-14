@@ -18,6 +18,7 @@
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.EAS1920.EF" Version="0.0.75" />
     <PackageReference Include="ESFA.DC.ILR1819.Database.EF" Version="0.1.381" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Model" Version="0.1.7" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.159" />
     <PackageReference Include="ESFA.DC.ReferenceData.EPA.Model" Version="0.1.184" />
@@ -37,7 +38,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj" />
-    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj" />
     <ProjectReference Include="..\IlrReferenceData\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model\ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.csproj" />
   </ItemGroup>
 

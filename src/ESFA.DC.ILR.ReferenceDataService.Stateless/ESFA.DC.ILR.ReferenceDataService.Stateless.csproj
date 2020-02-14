@@ -86,6 +86,9 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1920.ReferenceDataService.Model.0.1.7\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ILR1819.Database.EF, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.Database.EF.dll</HintPath>
     </Reference>
@@ -438,10 +441,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj">
       <Project>{6991FF63-4C2C-41E1-9909-53CF6BE74CE1}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj">
-      <Project>{B4E84ADC-C04F-4EF8-98A2-5ADDBF1FEEF1}</Project>
-      <Name>ESFA.DC.ILR.ReferenceDataService.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj">
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>
