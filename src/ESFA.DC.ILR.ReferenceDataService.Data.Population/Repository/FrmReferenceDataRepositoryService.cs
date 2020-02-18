@@ -8,6 +8,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
 using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -37,12 +38,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             var returnList = new List<FrmLearner>();
 
-            using (var orgContext = _orgContextFactory.Create())
-            using (var larsContext = _larsContextFactory.Create())
             using (var context = _ilrContextFactory.Create())
             {
-                var orgName = (await orgContext.OrgDetails.FirstOrDefaultAsync(x => x.Ukprn == ukprn, cancellationToken)).Name;
-
                 var frmLearners = await context.Learners
                     .Where(l => l.UKPRN == ukprn)
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
@@ -53,7 +50,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .Select(ld => new FrmLearner
                     {
                         UKPRN = ld.UKPRN,
-                        OrgName = orgName,
                         ULN = ld.Learner.ULN,
                         AimType = ld.AimType,
                         FundModel = ld.FundModel,
@@ -100,33 +96,60 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             }).ToList()
                     }).ToListAsync(cancellationToken);
 
+                var learnAimRefs = frmLearners.Select(l => l.LearnAimRef).Distinct();
+
+                var larsLearningDeliveries = await RetrieveLarsLearningDeliveries(cancellationToken, learnAimRefs);
+
                 foreach (var learner in frmLearners)
                 {
-                    var excluded = await larsContext.LARS_LearningDeliveries
-                        .Where(x =>
-                            string.Equals(x.LearnAimRef, learner.LearnAimRef, StringComparison.OrdinalIgnoreCase)
-                            && x.LarsLearningDeliveryCategories.Any(ldc => _excludedCategories.Contains(ldc.CategoryRef)))
-                        .AnyAsync(cancellationToken);
+                    var excluded = larsLearningDeliveries
+                        .Any(x => string.Equals(x.LearnAimRef, learner.LearnAimRef, StringComparison.OrdinalIgnoreCase)
+                            && x.LarsLearningDeliveryCategories.Any(ldc => _excludedCategories.Contains(ldc.CategoryRef)));
 
                     if (!excluded)
                     {
-                        learner.LearningAimTitle = (await larsContext.LARS_LearningDeliveries.FirstOrDefaultAsync(
-                            x =>
-                                string.Equals(x.LearnAimRef, learner.LearnAimRef, StringComparison.OrdinalIgnoreCase),
-                            cancellationToken))?.LearnAimRefTitle;
-
-                        if (learner.PartnerUKPRN.HasValue)
-                        {
-                            learner.PartnerOrgName =
-                                (await orgContext.OrgDetails.FirstOrDefaultAsync(x => x.Ukprn == learner.PartnerUKPRN, cancellationToken))?.Name ?? string.Empty;
-                        }
+                        learner.LearningAimTitle = larsLearningDeliveries.FirstOrDefault(
+                            x => string.Equals(x.LearnAimRef, learner.LearnAimRef, StringComparison.OrdinalIgnoreCase))?.LearnAimRefTitle;
 
                         returnList.Add(learner);
                     }
                 }
             }
 
+            await UpdateOrgNames(ukprn, cancellationToken, returnList);
+
             return returnList;
+        }
+
+        private async Task<List<LarsLearningDelivery>> RetrieveLarsLearningDeliveries(CancellationToken cancellationToken, IEnumerable<string> learnAimRefs)
+        {
+            using (var larsContext = _larsContextFactory.Create())
+            {
+                return await larsContext.LARS_LearningDeliveries.Where(ld => learnAimRefs.Contains(ld.LearnAimRef)).ToListAsync(cancellationToken);
+            }
+        }
+
+        private async Task UpdateOrgNames(long ukprn, CancellationToken cancellationToken, List<FrmLearner> returnList)
+        {
+            using (var orgContext = _orgContextFactory.Create())
+            {
+                var partnerUKPRNs = returnList.Where(x => x.PartnerUKPRN.HasValue).Select(x => x.PartnerUKPRN.Value).Distinct()
+                    .Union(new[] { ukprn });
+
+                var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn))
+                    .Select(n => new { UKPRN = n.Ukprn, OrgName = n.Name }).ToListAsync(cancellationToken);
+
+                var orgName = orgNames.SingleOrDefault(o => o.UKPRN == ukprn)?.OrgName ?? string.Empty;
+
+                foreach (var learner in returnList)
+                {
+                    learner.OrgName = orgName;
+                    if (learner.PartnerUKPRN.HasValue)
+                    {
+                        learner.PartnerOrgName = orgNames.SingleOrDefault(o => o.UKPRN == learner.PartnerUKPRN)?.OrgName ?? string.Empty;
+                    }
+                }
+            }
         }
     }
 }

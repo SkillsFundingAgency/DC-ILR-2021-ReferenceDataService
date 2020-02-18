@@ -10,6 +10,7 @@ using ESFA.DC.ILR1819.DataStore.EF.Valid;
 using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
+using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using FluentAssertions;
 using MockQueryable.Moq;
@@ -37,6 +38,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
                             FundModel = 25,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
                         {
@@ -45,6 +54,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
                             FundModel = 99,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
                         {
@@ -53,6 +70,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 3,
                             FundModel = 25,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
                         {
@@ -61,6 +86,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
                             FundModel = 25,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
                         {
@@ -69,6 +102,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
                             FundModel = 25,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
                         {
@@ -77,6 +118,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             LearnPlanEndDate = new DateTime(2019, 07, 31),
                             AimType = 4,
                             FundModel = 25,
+                            Learner = new Learner
+                            {
+                                UKPRN = 1,
+                                ULN = 1,
+                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            },
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         }
                     }
                 }
@@ -108,8 +157,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
+            var orgDetails = new List<OrgDetail>
+            {
+                new OrgDetail
+                {
+                    Ukprn = 1,
+                    Name = "TestOrg"
+                }
+            };
+
             var learnerListDbMock = learnersList.AsQueryable().BuildMockDbSet();
             var larsListDbMock = larsList.AsQueryable().BuildMockDbSet();
+            var orgListDbMock = orgDetails.AsQueryable().BuildMockDbSet();
 
             var ilrContextMock = new Mock<IILR1819_DataStoreEntitiesValid>();
             var ilrContextFactoryMock = new Mock<IDbContextFactory<IILR1819_DataStoreEntitiesValid>>();
@@ -126,6 +185,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var orgContextMock = new Mock<IOrganisationsContext>();
             var orgContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
 
+            orgContextMock.Setup(o => o.OrgDetails).Returns(orgListDbMock.Object);
             orgContextFactoryMock.Setup(c => c.Create()).Returns(orgContextMock.Object);
 
             var academicYearDataServiceMock = new Mock<IAcademicYearDataService>();
