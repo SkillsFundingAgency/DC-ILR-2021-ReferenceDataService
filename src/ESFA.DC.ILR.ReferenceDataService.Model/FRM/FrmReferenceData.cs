@@ -4,6 +4,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 {
     public class FrmReferenceData
     {
-        public IReadOnlyCollection<Frm06Learner> Frm06Learners { get; set; }
+        public IReadOnlyCollection<FrmLearner> Frm06Learners { get; set; }
     }
 }
