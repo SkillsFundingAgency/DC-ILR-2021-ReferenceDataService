@@ -9,6 +9,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
 using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
+using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
@@ -17,26 +18,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     {
         private readonly IDbContextFactory<IILR1819_DataStoreEntitiesValid> _ilrContextFactory;
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IDbContextFactory<IOrganisationsContext> _orgContextFactory;
         private readonly IAcademicYearDataService _academicYearDataService;
 
         private readonly int _excludedAimType = 3;
         private readonly int _excludedFundModel = 99;
         private readonly HashSet<int> _excludedCategories = new HashSet<int> { 23, 24, 27, 28, 29, 34, 35, 36 };
 
-        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IAcademicYearDataService academicYearDataService)
+        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
         {
             _ilrContextFactory = ilrContextFactory;
             _larsContextFactory = larsContextFactory;
+            _orgContextFactory = orgContextFactory;
             _academicYearDataService = academicYearDataService;
         }
 
-        public async Task<IReadOnlyCollection<Frm06Learner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<FrmLearner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken)
         {
-            var returnList = new List<Frm06Learner>();
+            var returnList = new List<FrmLearner>();
 
+            using (var orgContext = _orgContextFactory.Create())
             using (var larsContext = _larsContextFactory.Create())
             using (var context = _ilrContextFactory.Create())
             {
+                var orgName = (await orgContext.OrgDetails.FirstOrDefaultAsync(x => x.Ukprn == ukprn, cancellationToken)).Name;
+
                 var frmLearners = await context.Learners
                     .Where(l => l.UKPRN == ukprn)
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
@@ -44,9 +50,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         && ld.LearnPlanEndDate >= _academicYearDataService.CurrentYearStart
                         && ld.AimType != _excludedAimType
                         && ld.FundModel != _excludedFundModel))
-                    .Select(ld => new Frm06Learner
+                    .Select(ld => new FrmLearner
                     {
                         UKPRN = ld.UKPRN,
+                        OrgName = orgName,
+                        ULN = ld.Learner.ULN,
                         AimType = ld.AimType,
                         FundModel = ld.FundModel,
                         FworkCodeNullable = ld.FworkCode,
@@ -54,7 +62,42 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         LearnRefNumber = ld.LearnRefNumber,
                         LearnStartDate = ld.LearnStartDate,
                         ProgTypeNullable = ld.ProgType,
-                        StdCodeNullable = ld.StdCode
+                        StdCodeNullable = ld.StdCode,
+                        PwayCodeNullable = ld.PwayCode,
+                        AimSeqNumber = ld.AimSeqNumber,
+                        PartnerUKPRN = ld.PartnerUKPRN,
+                        PrevUKPRN = ld.Learner.PrevUKPRN,
+                        PMUKPRN = ld.Learner.PMUKPRN,
+                        PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber,
+                        CompStatus = ld.CompStatus,
+                        Outcome = ld.Outcome,
+                        PriorLearnFundAdj = ld.PriorLearnFundAdj,
+                        OtherFundAdj = ld.OtherFundAdj,
+                        LearnPlanEndDate = ld.LearnPlanEndDate,
+                        LearnActEndDate = ld.LearnActEndDate,
+                        SWSupAimId = ld.SWSupAimId,
+                        LearningDeliveryFAMs = ld.LearningDeliveryFAMs
+                            .Select(x =>
+                                new LearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = x.LearnDelFAMCode,
+                                    LearnDelFAMType = x.LearnDelFAMType,
+                                    LearnDelFAMDateFrom = x.LearnDelFAMDateFrom,
+                                    LearnDelFAMDateTo = x.LearnDelFAMDateTo
+                                }).ToList(),
+                        ProviderSpecLearnerMonitorings = ld.Learner.ProviderSpecLearnerMonitorings
+                            .Select(lm =>
+                                new ProviderSpecLearnerMonitoring
+                                {
+                                    ProvSpecLearnMon = lm.ProvSpecLearnMon,
+                                    ProvSpecLearnMonOccur = lm.ProvSpecLearnMonOccur
+                                }).ToList(),
+                        ProvSpecDeliveryMonitorings = ld.ProviderSpecDeliveryMonitorings
+                            .Select(dm => new ProviderSpecDeliveryMonitoring
+                            {
+                                ProvSpecDelMon = dm.ProvSpecDelMon,
+                                ProvSpecDelMonOccur = dm.ProvSpecDelMonOccur
+                            }).ToList()
                     }).ToListAsync(cancellationToken);
 
                 foreach (var learner in frmLearners)
@@ -67,6 +110,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
                     if (!excluded)
                     {
+                        learner.LearningAimTitle = (await larsContext.LARS_LearningDeliveries.FirstOrDefaultAsync(
+                            x =>
+                                string.Equals(x.LearnAimRef, learner.LearnAimRef, StringComparison.OrdinalIgnoreCase),
+                            cancellationToken))?.LearnAimRefTitle;
+
+                        if (learner.PartnerUKPRN.HasValue)
+                        {
+                            learner.PartnerOrgName =
+                                (await orgContext.OrgDetails.FirstOrDefaultAsync(x => x.Ukprn == learner.PartnerUKPRN, cancellationToken))?.Name ?? string.Empty;
+                        }
+
                         returnList.Add(learner);
                     }
                 }
