@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface
 {
     public interface IFrmReferenceDataRepositoryService
     {
-        Task<IReadOnlyCollection<Frm06Learner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<FrmLearner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken);
     }
 }
