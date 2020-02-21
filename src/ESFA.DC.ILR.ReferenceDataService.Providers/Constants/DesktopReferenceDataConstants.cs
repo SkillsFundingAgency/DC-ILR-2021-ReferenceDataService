@@ -4,6 +4,7 @@
     {
         public const string MetaDataFile = "MetaData.json";
         public const string DevolvedPostcodesFile = "DevolvedPostcodes.json";
+        public const string DevolvedMcaGlaSofFile = "DevolvedMcaGlaSof.json";
         public const string EmployersFile = "Employers.json";
         public const string EPAOrganisationsFile = "EPAOrganisations.json";
         public const string LARSFrameworksFile = "LARSFrameworks.json";

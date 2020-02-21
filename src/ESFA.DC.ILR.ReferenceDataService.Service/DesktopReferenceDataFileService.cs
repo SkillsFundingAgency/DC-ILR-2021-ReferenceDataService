@@ -26,19 +26,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
         {
             var fileName = _desktopReferenceDataFileNameService.BuildFileName(referenceDataContext.DesktopReferenceDataStoragePath, referenceDataContext.OutputReferenceDataFileKey);
 
-            var referenceDataDictionary = new Dictionary<string, object>();
-
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.MetaDataFile, desktopReferenceDataRoot.MetaDatas);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.DevolvedPostcodesFile, desktopReferenceDataRoot.DevolvedPostocdes);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.EmployersFile, desktopReferenceDataRoot.Employers);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.EPAOrganisationsFile, desktopReferenceDataRoot.EPAOrganisations);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSFrameworksFile, desktopReferenceDataRoot.LARSFrameworks);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSFrameworkAimsFile, desktopReferenceDataRoot.LARSFrameworkAims);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSLearningDeliveriesFile, desktopReferenceDataRoot.LARSLearningDeliveries);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.LARSStandardsFile, desktopReferenceDataRoot.LARSStandards);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.OrganisationsFile, desktopReferenceDataRoot.Organisations);
-            referenceDataDictionary.Add(DesktopReferenceDataConstants.PostcodesFile, desktopReferenceDataRoot.Postcodes);
-
             await _zipFileService.SaveCollectionZipAsync(
                 fileName,
                 referenceDataContext.Container,
