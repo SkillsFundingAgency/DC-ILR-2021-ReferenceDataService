@@ -39,16 +39,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             await service.SaveCollectionZipAsync(
                 fileNameKey,
                 containerKey,
-                It.IsAny<MetaData>(),
-                It.IsAny<DevolvedPostcodes>(),
-                It.IsAny<IReadOnlyCollection<Employer>>(),
-                It.IsAny<IReadOnlyCollection<EPAOrganisation>>(),
-                It.IsAny<IReadOnlyCollection<LARSFrameworkDesktop>>(),
-                It.IsAny<IReadOnlyCollection<LARSFrameworkAimDesktop>>(),
-                It.IsAny<IReadOnlyCollection<LARSLearningDelivery>>(),
-                It.IsAny<IReadOnlyCollection<LARSStandard>>(),
-                It.IsAny<IReadOnlyCollection<Organisation>>(),
-                It.IsAny<IReadOnlyCollection<Postcode>>(),
+                new MetaData(),
+                new DevolvedPostcodes(),
+                new List<Employer>(),
+                new List<EPAOrganisation>(),
+                new List<LARSFrameworkDesktop>(),
+                new List<LARSFrameworkAimDesktop>(),
+                new List<LARSLearningDelivery>(),
+                new List<LARSStandard>(),
+                new List<Organisation>(),
+                new List<Postcode>(),
                 cancellationToken);
 
             fileServiceMock.VerifyAll();

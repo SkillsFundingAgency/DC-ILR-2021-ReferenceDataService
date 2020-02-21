@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
@@ -36,20 +37,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var fileServiceMock = new Mock<IFileService>();
             var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
             var referenceDataContext = new Mock<IReferenceDataContext>();
-            
-            var currentPath = System.IO.Directory.GetCurrentDirectory();
+
+            var mapperData = new MapperData
+            {
+                Postcodes = new List<string> { "Postcode1" },
+                EmployerIds = new List<int> { 1 },
+                EpaOrgIds = new List<string> { "1", "2", "3" },
+                UKPRNs = new List<int> { 1, 2, 3 },
+                StandardCodes = new List<int> { 1, 2, 3 },
+                LARSLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
+                {
+                    new LARSLearningDeliveryKey("1", 1, 1, 1)
+                }
+            };
+
+            var currentPath = Directory.GetCurrentDirectory();
             referenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
             referenceDataContext.Setup(r => r.Container).Returns(currentPath);
 
             jsonSerializationServiceMock.Setup(js => js.Deserialize<MetaData>(It.IsAny<Stream>())).Returns(TestNetaData());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<DevolvedPostcodes>(It.IsAny<Stream>())).Returns(TestDevolvedPostcodes());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Employer>>(It.IsAny<Stream>())).Returns(TestEmployers());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<EPAOrganisation>>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSLearningDelivery>>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSFrameworkDesktop>>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<LARSStandard>>(It.IsAny<Stream>())).Returns(TestLarsStandards());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Organisation>>(It.IsAny<Stream>())).Returns(TestOrganisations());
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<List<Postcode>>(It.IsAny<Stream>())).Returns(TestPostcodes());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<DevolvedPostcode>(It.IsAny<Stream>())).Returns(TestDevolvedPostcodes());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<McaGlaSofLookup>(It.IsAny<Stream>())).Returns(TestMcaSofLookups());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Employer>(It.IsAny<Stream>())).Returns(TestEmployers());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<EPAOrganisation>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSLearningDelivery>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSFrameworkDesktop>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSStandard>(It.IsAny<Stream>())).Returns(TestLarsStandards());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Organisation>(It.IsAny<Stream>())).Returns(TestOrganisations());
+            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Postcode>(It.IsAny<Stream>())).Returns(TestPostcodes());
 
             using (Stream stream = new FileStream(currentPath + "\\ReferenceData.zip", FileMode.Open))
             {
@@ -58,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                    referenceDataContext.Object.Container,
                    cancellationToken)).ReturnsAsync(stream);
 
-                var result = await NewService(fileServiceMock.Object, jsonSerializationServiceMock.Object).Retrieve(referenceDataContext.Object, cancellationToken);
+                var result = await NewService(fileServiceMock.Object, jsonSerializationServiceMock.Object).Retrieve(referenceDataContext.Object, mapperData, cancellationToken);
                 result.Should().BeEquivalentTo(expectedReferenceData);
             }
         }
@@ -68,14 +83,108 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             return new DesktopReferenceDataRoot
             {
                 MetaDatas = TestNetaData(),
-                DevolvedPostocdes = TestDevolvedPostcodes(),
-                Employers = TestEmployers(),
-                EPAOrganisations = TestEpaOrgs(),
-                LARSLearningDeliveries = TestLarsLearningDeliveries(),
+                DevolvedPostocdes = new DevolvedPostcodes
+                {
+                    McaGlaSofLookups = TestMcaSofLookups(),
+                    Postcodes = new List<DevolvedPostcode>
+                    {
+                        new DevolvedPostcode
+                        {
+                            Postcode = "Postcode1",
+                            Area = "Area1",
+                            SourceOfFunding = "105",
+                            EffectiveFrom = new DateTime(2019, 9, 1)
+                        }
+                    },
+                },
+                Employers = new List<Employer>
+                {
+                    new Employer
+                    {
+                        ERN = 1,
+                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
+                        {
+                            new LargeEmployerEffectiveDates
+                            {
+                                EffectiveFrom = new DateTime(2018, 8, 1),
+                            },
+                        },
+                    },
+                },
+                EPAOrganisations = new List<EPAOrganisation>
+                {
+                    new EPAOrganisation
+                    {
+                        ID = "1",
+                        Standard = "1",
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                    new EPAOrganisation
+                    {
+                        ID = "2",
+                        Standard = "1",
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                    new EPAOrganisation
+                    {
+                        ID = "3",
+                        Standard = "1",
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                },
+                LARSLearningDeliveries = new List<LARSLearningDelivery>
+                {
+                    new LARSLearningDelivery
+                    {
+                        LearnAimRef = "1",
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                },
                 LARSFrameworks = TestLarsFrameworks(),
-                LARSStandards = TestLarsStandards(),
-                Organisations = TestOrganisations(),
-                Postcodes = TestPostcodes(),
+                LARSFrameworkAims = new List<LARSFrameworkAimDesktop>(),
+                LARSStandards = new List<LARSStandard>
+                {
+                    new LARSStandard
+                    {
+                        StandardCode = 1,
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                    new LARSStandard
+                    {
+                        StandardCode = 2,
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                    new LARSStandard
+                    {
+                        StandardCode = 3,
+                        EffectiveFrom = new DateTime(2018, 8, 1),
+                    },
+                },
+                Organisations = new List<Organisation>
+                {
+                    new Organisation
+                    {
+                        UKPRN = 1,
+                        PartnerUKPRN = true,
+                    },
+                    new Organisation
+                    {
+                        UKPRN = 2,
+                        PartnerUKPRN = true,
+                    },
+                    new Organisation
+                    {
+                        UKPRN = 3,
+                        PartnerUKPRN = false,
+                    },
+                },
+                Postcodes = new List<Postcode>
+                {
+                    new Postcode
+                    {
+                        PostCode = "Postcode1",
+                    },
+                },
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
                 FCSContractAllocations = new List<FcsContractAllocation>(),
                 ULNs = new List<long>(),
@@ -123,19 +232,37 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
         }
 
-        private DevolvedPostcodes TestDevolvedPostcodes()
+        private List<DevolvedPostcode> TestDevolvedPostcodes()
         {
-            return new DevolvedPostcodes
+            return new List<DevolvedPostcode>
             {
-                McaGlaSofLookups = new List<McaGlaSofLookup>
+                new DevolvedPostcode
                 {
-                    new McaGlaSofLookup
-                    {
-                        SofCode = "105",
-                        McaGlaFullName = "Full Name",
-                        McaGlaShortCode = "ShortCode",
-                        EffectiveFrom = new DateTime(2019, 8, 1)
-                    }
+                    Postcode = "Postcode1",
+                    Area = "Area1",
+                    SourceOfFunding = "105",
+                    EffectiveFrom = new DateTime(2019, 9, 1)
+                },
+                new DevolvedPostcode
+                {
+                    Postcode = "Postcode2",
+                    Area = "Area2",
+                    SourceOfFunding = "105",
+                    EffectiveFrom = new DateTime(2019, 9, 1)
+                }
+            };
+        }
+
+        private List<McaGlaSofLookup> TestMcaSofLookups()
+        {
+            return new List<McaGlaSofLookup>
+            {
+                new McaGlaSofLookup
+                {
+                    SofCode = "105",
+                    McaGlaFullName = "Full Name",
+                    McaGlaShortCode = "ShortCode",
+                    EffectiveFrom = new DateTime(2019, 8, 1)
                 }
             };
         }

@@ -50,7 +50,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 using (var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create, true))
                 {
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.MetaDataFile, metaDatas);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostocdes);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostocdes.Postcodes);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, devolvedPostocdes.McaGlaSofLookups);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EmployersFile, employers);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, ePAOrganisations);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworksFile, larsFrameworks);

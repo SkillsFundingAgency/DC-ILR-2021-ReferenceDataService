@@ -62,6 +62,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         Name = "Name2",
                     }
                 },
+                ValidationErrors = new List<ValidationError>
+                {
+                    new ValidationError
+                    {
+                        RuleName = "Rule1",
+                        Severity = SeverityLevel.Error,
+                        Message = "Message",
+                    }
+                },
             };
 
             var devolvedPostcodes = new DevolvedPostcodes
@@ -243,37 +252,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var referenceDataContext = new Mock<IReferenceDataContext>();
             var messageMapperServiceMock = new Mock<IMessageMapperService>();
             var desktopReferenceDataFileRetrievalServiceMock = new Mock<IDesktopReferenceDataFileRetrievalService>();
-            var metaDataMapperMock = new Mock<IDesktopReferenceMetaDataMapper>();
-            var devolvedPostcodesMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes>>();
-            var employersMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>>>();
-            var epaOrganisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>>>();
+     
             var larsLearningDeliveryMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
-            var larsStandardMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>>>();
-            var organisationsMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>>();
-            var postcodesMapperServiceMock = new Mock<IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
 
             messageMapperServiceMock.Setup(sm => sm.MapFromMessage(message)).Returns(mapperData);
-            desktopReferenceDataFileRetrievalServiceMock.Setup(sm => sm.Retrieve(referenceDataContext.Object, CancellationToken.None)).Returns(Task.FromResult(desktopReferenceData));
-            metaDataMapperMock.Setup(sm => sm.Retrieve(desktopReferenceData)).Returns(metaData);
-            devolvedPostcodesMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(devolvedPostcodes);
-            employersMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<int>>(), desktopReferenceData)).Returns(employers);
-            epaOrganisationsMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(epaOrgs);
+            desktopReferenceDataFileRetrievalServiceMock.Setup(sm => sm.Retrieve(referenceDataContext.Object, It.IsAny<MapperData>(), CancellationToken.None)).Returns(Task.FromResult(desktopReferenceData)); 
             larsLearningDeliveryMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<LARSLearningDeliveryKey>>(), desktopReferenceData)).Returns(larsLearningDeliveries);
-            larsStandardMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<int>>(), desktopReferenceData)).Returns(larsStandards);
-            organisationsMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<int>>(), desktopReferenceData)).Returns(organisations);
-            postcodesMapperServiceMock.Setup(sm => sm.Retrieve(It.IsAny<List<string>>(), desktopReferenceData)).Returns(postcodes);
+           
 
             NewService(
                 messageMapperServiceMock.Object,
                 desktopReferenceDataFileRetrievalServiceMock.Object,
-                metaDataMapperMock.Object,
-                devolvedPostcodesMock.Object,
-                employersMapperServiceMock.Object,
-                epaOrganisationsMapperServiceMock.Object,
-                larsLearningDeliveryMapperServiceMock.Object,
-                larsStandardMapperServiceMock.Object,
-                organisationsMapperServiceMock.Object,
-                postcodesMapperServiceMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None).Result.Should().BeEquivalentTo(expectedReferenceDataRoot);
+                larsLearningDeliveryMapperServiceMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None).Result.Should().BeEquivalentTo(expectedReferenceDataRoot);
         }
 
         private DesktopReferenceDataRoot TestReferenceData()
@@ -345,17 +335,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                     },
                     new Employer
                     {
-                        ERN = 10,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
-                        },
-                    },
-                    new Employer
-                    {
                         ERN = 2,
                         LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
                         {
@@ -394,18 +373,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                     new EPAOrganisation
                     {
                         ID = "3",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "33",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "334",
                         Standard = "1",
                         EffectiveFrom = new DateTime(2018, 8, 1),
                     },
@@ -466,16 +433,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         StandardCode = 3,
                         EffectiveFrom = new DateTime(2018, 8, 1),
                     },
-                    new LARSStandard
-                    {
-                        StandardCode = 33,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 34,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
                 },
                 Organisations = new List<Organisation>
                 {
@@ -494,16 +451,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                         UKPRN = 3,
                         PartnerUKPRN = false,
                     },
-                    new Organisation
-                    {
-                        UKPRN = 30,
-                        PartnerUKPRN = false,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 300,
-                        PartnerUKPRN = false,
-                    },
                 },
                 Postcodes = new List<Postcode>
                 {
@@ -519,10 +466,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
                     {
                         PostCode = "Postcode3",
                     },
-                    new Postcode
-                    {
-                        PostCode = "Postcode10",
-                    }
                 }
             };
         }
@@ -530,26 +473,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
         private DesktopReferenceDataMapperService NewService(
             IMessageMapperService messageMapperService = null,
             IDesktopReferenceDataFileRetrievalService desktopReferenceDataFileRetrievalService = null,
-            IDesktopReferenceMetaDataMapper metaDataMapper = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<string>, DevolvedPostcodes> devolvedPostcodesMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Employer>> employersMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<EPAOrganisation>> epaOrganisationsMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<LARSStandard>> larsStandardMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>> organisationsMapperService = null,
-            IDesktopReferenceDataMapper<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>> postcodesMapperService = null)
+            IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>> larsLearningDeliveryMapperService = null)
         {
             return new DesktopReferenceDataMapperService(
                 messageMapperService,
                 desktopReferenceDataFileRetrievalService,
-                metaDataMapper,
-                devolvedPostcodesMapperService,
-                employersMapperService,
-                epaOrganisationsMapperService,
-                larsLearningDeliveryMapperService,
-                larsStandardMapperService,
-                organisationsMapperService,
-                postcodesMapperService);
+                larsLearningDeliveryMapperService);
         }
     }
 }

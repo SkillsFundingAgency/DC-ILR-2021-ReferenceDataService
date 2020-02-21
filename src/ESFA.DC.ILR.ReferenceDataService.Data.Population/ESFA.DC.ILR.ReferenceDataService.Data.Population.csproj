@@ -27,7 +27,7 @@
     <PackageReference Include="ESFA.DC.ReferenceData.Organisations.Model" Version="0.2.210" />
     <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.159" />
     <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.159" />
-    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.30-beta0001" />
     <PackageReference Include="FastMember" Version="1.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
