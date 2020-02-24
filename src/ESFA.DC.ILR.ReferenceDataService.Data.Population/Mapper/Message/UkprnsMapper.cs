@@ -9,12 +9,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
     {
         public IReadOnlyCollection<int> MapUKPRNsFromMessage(IMessage input)
         {
-            return UniqueLearningProviderUKPRNFromMessage(input)
+            var ukprns = UniqueLearningProviderUKPRNFromMessage(input)
                 .Union(UniqueLearnerPrevUKPRNsFromMessage(input))
                 .Union(UniqueLearnerPMUKPRNsFromMessage(input))
                 .Union(UniqueLearningDeliveryPartnerUKPRNsFromMessage(input))
-                .Distinct()
-                .ToList();
+                .Distinct();
+
+            return new HashSet<int>(ukprns);
         }
 
         public virtual IEnumerable<int> UniqueLearningProviderUKPRNFromMessage(IMessage input)
@@ -33,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                        .Where(l => l.PrevUKPRNNullable != null)
                        .Select(l => l.PrevUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<int>();
+                   ?? Enumerable.Empty<int>();
         }
 
         public virtual IEnumerable<int> UniqueLearnerPMUKPRNsFromMessage(IMessage input)
@@ -43,7 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                        .Where(l => l.PMUKPRNNullable != null)
                        .Select(l => l.PMUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<int>();
+                   ?? Enumerable.Empty<int>();
         }
 
         public virtual IEnumerable<int> UniqueLearningDeliveryPartnerUKPRNsFromMessage(IMessage input)
@@ -55,7 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                        .Where(ld => ld.PartnerUKPRNNullable != null)
                        .Select(ld => ld.PartnerUKPRNNullable.Value)
                        .Distinct()
-                   ?? new List<int>();
+                   ?? Enumerable.Empty<int>();
         }
     }
 }

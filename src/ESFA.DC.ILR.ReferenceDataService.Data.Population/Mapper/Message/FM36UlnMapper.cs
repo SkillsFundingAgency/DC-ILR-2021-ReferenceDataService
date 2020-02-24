@@ -18,9 +18,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                 .Learners?
                 .Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel))
                 .Select(u => u.ULN)
-                ?? new List<long>());
+                ?? Enumerable.Empty<long>());
 
-            return ulns.Distinct().ToList();
+            return new HashSet<long>(ulns.Distinct());
         }
     }
 }

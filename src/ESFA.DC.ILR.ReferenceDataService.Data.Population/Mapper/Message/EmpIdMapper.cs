@@ -12,9 +12,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
             var empIds =
                 GetLearnerEmpIdsFromFile(input)
                 .Union(GetWorkplaceEmpIdsFromFile(input))
-                .Distinct() ?? new List<int>();
+                .Distinct() ?? Enumerable.Empty<int>();
 
-            return empIds.ToList();
+            return new HashSet<int>(empIds);
         }
 
         private IEnumerable<int> GetLearnerEmpIdsFromFile(IMessage input)
@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                     .SelectMany(l => l.LearnerEmploymentStatuses)
                     .Where(l => l.EmpIdNullable.HasValue)
                     .Select(l => l.EmpIdNullable.Value)
-                ?? new List<int>();
+                ?? Enumerable.Empty<int>();
         }
 
         private IEnumerable<int> GetWorkplaceEmpIdsFromFile(IMessage input)
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                        .SelectMany(ld => ld.LearningDeliveryWorkPlacements)
                        .Where(wp => wp.WorkPlaceEmpIdNullable.HasValue)
                        .Select(wp => wp.WorkPlaceEmpIdNullable.Value)
-                   ?? new List<int>();
+                   ?? Enumerable.Empty<int>();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
             // Retrieving ILR File
             _logger.LogInfo("Starting ILR File Retrieval");
             var message = await _messageProvider.ProvideAsync(referenceDataContext, cancellationToken);
-            _logger.LogInfo("Finished retirieving ILR File");
+            _logger.LogInfo("Finished ILR File Retrieval");
 
             // get reference data and build model.
             _logger.LogInfo("Starting Reference Data Population");
