@@ -19,6 +19,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.Tests.Model;
+using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -478,7 +479,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             return new DesktopReferenceDataMapperService(
                 messageMapperService,
                 desktopReferenceDataFileRetrievalService,
-                larsLearningDeliveryMapperService);
+                larsLearningDeliveryMapperService,
+                Mock.Of<ILogger>());
         }
     }
 }

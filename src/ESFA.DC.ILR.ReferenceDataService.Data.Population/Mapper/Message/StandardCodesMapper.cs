@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                     .Where(ld => ld.StdCodeNullable != null)
                     .Select(ld => ld.StdCodeNullable.Value)
                     .Distinct()
-                   ?? new List<int>();
+                   ?? Enumerable.Empty<int>();
 
-            return stdCodes.ToList();
+            return new HashSet<int>(stdCodes);
         }
     }
 }

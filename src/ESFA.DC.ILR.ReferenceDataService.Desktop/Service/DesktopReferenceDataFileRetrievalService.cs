@@ -19,6 +19,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Constants;
+using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
@@ -27,11 +28,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
     {
         private readonly IFileService _fileService;
         private readonly IJsonSerializationService _jsonSerializationService;
+        private readonly ILogger _logger;
 
-        public DesktopReferenceDataFileRetrievalService(IFileService fileService, IJsonSerializationService jsonSerializationService)
+        public DesktopReferenceDataFileRetrievalService(IFileService fileService, IJsonSerializationService jsonSerializationService, ILogger logger)
         {
             _fileService = fileService;
             _jsonSerializationService = jsonSerializationService;
+            _logger = logger;
         }
 
         public async Task<DesktopReferenceDataRoot> Retrieve(IReferenceDataContext referenceDataContext, MapperData mapperData, CancellationToken cancellationToken)
@@ -44,18 +47,43 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             {
                 using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {
+                    _logger.LogInfo("Reference Data - Retrieve MetaData");
                     referenceData.MetaDatas = RetrieveModel<MetaData>(zip, DesktopReferenceDataConstants.MetaDataFile);
+
+                    _logger.LogInfo("Reference Data - Retrieve Apps Earnings History");
                     referenceData.AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>();
+
+                    _logger.LogInfo("Reference Data - Retrieve Devolved Postcodes");
                     referenceData.DevolvedPostocdes = GetDevolvedPostcodes(zip, mapperData.Postcodes);
+
+                    _logger.LogInfo("Reference Data - Retrieve Employers");
                     referenceData.Employers = RetrieveModels<Employer>(zip, DesktopReferenceDataConstants.EmployersFile, x => mapperData.EmployerIds.Contains(x.ERN));
-                    referenceData.EPAOrganisations = RetrieveModels<EPAOrganisation>(zip, DesktopReferenceDataConstants.EPAOrganisationsFile, x => mapperData.EpaOrgIds.Contains(x.ID, StringComparer.OrdinalIgnoreCase));
+
+                    _logger.LogInfo("Reference Data - Retrieve Epa Organisations");
+                    referenceData.EPAOrganisations = RetrieveModels<EPAOrganisation>(zip, DesktopReferenceDataConstants.EPAOrganisationsFile, x => mapperData.EpaOrgIds.Contains(x.ID));
+
+                    _logger.LogInfo("Reference Data - Retrieve Fcs Contracts");
                     referenceData.FCSContractAllocations = new List<FcsContractAllocation>();
+
+                    _logger.LogInfo("Reference Data - Retrieve Lars Frameworks");
                     referenceData.LARSFrameworks = RetrieveModels<LARSFrameworkDesktop>(zip, DesktopReferenceDataConstants.LARSFrameworksFile, x => true);
+
+                    _logger.LogInfo("Reference Data - Retrieve Lars Framework Aims");
                     referenceData.LARSFrameworkAims = RetrieveModels<LARSFrameworkAimDesktop>(zip, DesktopReferenceDataConstants.LARSFrameworkAimsFile, x => true);
+
+                    _logger.LogInfo("Reference Data - Retrieve Lars Learning Deliveries");
                     referenceData.LARSLearningDeliveries = RetrieveModels<LARSLearningDelivery>(zip, DesktopReferenceDataConstants.LARSLearningDeliveriesFile, x => mapperData.LARSLearningDeliveryKeys.Select(l => l.LearnAimRef).Contains(x.LearnAimRef, StringComparer.OrdinalIgnoreCase));
+
+                    _logger.LogInfo("Reference Data - Retrieve Lars Standards");
                     referenceData.LARSStandards = RetrieveModels<LARSStandard>(zip, DesktopReferenceDataConstants.LARSStandardsFile, x => mapperData.StandardCodes.Contains(x.StandardCode));
+
+                    _logger.LogInfo("Reference Data - Retrieve Organisations");
                     referenceData.Organisations = RetrieveModels<Organisation>(zip, DesktopReferenceDataConstants.OrganisationsFile, x => mapperData.UKPRNs.Contains(x.UKPRN));
-                    referenceData.Postcodes = RetrieveModels<Postcode>(zip, DesktopReferenceDataConstants.PostcodesFile, x => mapperData.Postcodes.Contains(x.PostCode, StringComparer.OrdinalIgnoreCase));
+
+                    _logger.LogInfo("Reference Data - Retrieve Postcodes");
+                    referenceData.Postcodes = RetrieveModels<Postcode>(zip, DesktopReferenceDataConstants.PostcodesFile, x => mapperData.Postcodes.Contains(x.PostCode));
+
+                    _logger.LogInfo("Reference Data - Retrieve ULNs");
                     referenceData.ULNs = new List<long>();
                 }
             }
@@ -86,7 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         public DevolvedPostcodes GetDevolvedPostcodes(ZipArchive zipArchive, IReadOnlyCollection<string> postcodes)
         {
             var sofs = RetrieveModels<McaGlaSofLookup>(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, x => true);
-            var devolvedPostcodes = RetrieveModels<DevolvedPostcode>(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, x => postcodes.Contains(x.Postcode, StringComparer.OrdinalIgnoreCase));
+            var devolvedPostcodes = RetrieveModels<DevolvedPostcode>(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, x => postcodes.Contains(x.Postcode));
 
             return new DevolvedPostcodes
             {

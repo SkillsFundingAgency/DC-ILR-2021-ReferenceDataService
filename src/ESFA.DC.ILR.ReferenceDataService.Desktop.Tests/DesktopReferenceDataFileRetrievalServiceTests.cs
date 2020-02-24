@@ -19,6 +19,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
+using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -494,7 +495,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             IFileService fileService = null,
             IJsonSerializationService jsonSerializationService = null)
         {
-            return new DesktopReferenceDataFileRetrievalService(fileService, jsonSerializationService);
+            return new DesktopReferenceDataFileRetrievalService(fileService, jsonSerializationService, Mock.Of<ILogger>());
         }
     }
 }

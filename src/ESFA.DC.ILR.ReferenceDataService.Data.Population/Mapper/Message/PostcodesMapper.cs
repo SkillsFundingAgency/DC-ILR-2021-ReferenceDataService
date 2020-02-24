@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                 .Union(UniqueLearningDeliveryHEPostcodesFromMessage(input))
                 .Union(UniqueLearningDeliveryLocationPostcodesFromMessage(input))
                 .Union(UniqueLearningDeliveryLSDPostcodesFromMessage(input))
-                .Distinct() ?? new List<string>();
+                ?? Enumerable.Empty <string>();
 
             return new HashSet<string>(postcodes, StringComparer.OrdinalIgnoreCase);
         }

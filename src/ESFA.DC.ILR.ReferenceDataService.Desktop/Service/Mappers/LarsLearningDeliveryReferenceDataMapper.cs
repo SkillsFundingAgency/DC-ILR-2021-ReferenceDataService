@@ -18,10 +18,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                 .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .ToList();
 
-            var larsFrameworkAims = referenceData.LARSFrameworkAims
-                 .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
-                .ToList();
-
             var larsFrameworkAimsDictionary = referenceData.LARSFrameworkAims
                .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef, ld.FworkCode, ld.ProgType, ld.PwayCode))
                .ToDictionary(

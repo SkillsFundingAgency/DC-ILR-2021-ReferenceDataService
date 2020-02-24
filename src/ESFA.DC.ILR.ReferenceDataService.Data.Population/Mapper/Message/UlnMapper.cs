@@ -14,14 +14,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
             ulns.AddRange(
                 input?
                     .Learners?
-                    .Select(l => l.ULN).Distinct() ?? new List<long>());
+                    .Select(l => l.ULN).Distinct() ?? Enumerable.Empty<long>());
 
             ulns.AddRange(
                input?
                    .LearnerDestinationAndProgressions?
-                   .Select(l => l.ULN).Distinct() ?? new List<long>());
+                   .Select(l => l.ULN).Distinct() ?? Enumerable.Empty<long>());
 
-            return ulns.Distinct().ToList();
+            return new HashSet<long>(ulns.Distinct());
         }
     }
 }
