@@ -15,9 +15,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         {
             var expectedLARSLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
             {
-                new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
-                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 4),
-                new LARSLearningDeliveryKey("LearnAimRef3", 1, null, 3),
+                new LARSLearningDeliveryKey("LEARNAIMREF1", 1, 2, 3),
+                new LARSLearningDeliveryKey("LEARNAIMREF2", 1, 2, 4),
+                new LARSLearningDeliveryKey("LEARNAIMREF3", 1, null, 3),
             };
 
             var message = TestMessage();
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                LearnAimRef = "LearnAimRef1",
+                                LearnAimRef = "LEARNAIMREF1",
                                 FworkCodeNullable = 1,
                                 ProgTypeNullable = 2,
                                 PwayCodeNullable = 3,
@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                         {
                             new TestLearningDelivery
                             {
-                                LearnAimRef = "LearnAimRef3",
+                                LearnAimRef = "learnaimref3",
                                 FworkCodeNullable = 1,
                                 PwayCodeNullable = 3,
                             },

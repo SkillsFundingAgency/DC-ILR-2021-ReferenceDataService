@@ -8,8 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Postcodes
 
         public List<ONSData> ONSData { get; set; }
 
-        public List<CareerLearningPilot> CareerLearningPilots { get; set; }
-
         public List<DasDisadvantage> DasDisadvantages { get; set; }
 
         public List<EfaDisadvantage> EfaDisadvantages { get; set; }

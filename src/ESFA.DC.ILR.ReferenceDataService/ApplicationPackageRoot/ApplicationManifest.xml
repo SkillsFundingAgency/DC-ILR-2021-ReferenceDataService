@@ -24,6 +24,8 @@
     <Parameter Name="OrganisationsConnectionString" DefaultValue="" />
     <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="" />
     <Parameter Name="IlrReferenceDataConnectionString" DefaultValue="" />
+    <Parameter Name="EasConnectionString" DefaultValue="" />
+    <Parameter Name="Ilr1819ConnectionString" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -62,6 +64,8 @@
             <Parameter Name="EmployersConnectionString" Value="[EmployersConnectionString]" />
             <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
             <Parameter Name="IlrReferenceDataConnectionString" Value="[IlrReferenceDataConnectionString]" />
+            <Parameter Name="EasConnectionString" Value="[EasConnectionString]" />
+            <Parameter Name="Ilr1819ConnectionString" Value="[Ilr1819ConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
@@ -11,16 +12,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 {
     public class DesktopEpaOrganisationsRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<EPAOrganisation>>
     {
-        private readonly IEpaContext _epaContext;
+        private readonly IDbContextFactory<IEpaContext> _epaContextFactory;
 
-        public DesktopEpaOrganisationsRepositoryService(IEpaContext epaContext)
+        public DesktopEpaOrganisationsRepositoryService(IDbContextFactory<IEpaContext> epaContextFactory)
         {
-            _epaContext = epaContext;
+            _epaContextFactory = epaContextFactory;
         }
 
         public async Task<IReadOnlyCollection<EPAOrganisation>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            return await _epaContext?
+            using (var context = _epaContextFactory.Create())
+            {
+                return await context?
                         .Periods?
                         .Select(epa => new EPAOrganisation
                         {
@@ -29,6 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                             EffectiveFrom = epa.EffectiveFrom,
                             EffectiveTo = epa.EffectiveTo,
                         }).ToListAsync(cancellationToken);
+            }
         }
     }
 }

@@ -1,7 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.DateTimeProvider.Interface;
+using ESFA.DC.EAS1920.EF;
+using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
@@ -16,78 +23,150 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
     public class MetaDataRetrievalService : IMetaDataRetrievalService
     {
-        private const string EmployersVersionName = "Employers Version";
-        private const string LarsVersionName = "LARS Version";
-        private const string OrganisationsVersionName = "Organisations Version";
-        private const string PostcodesVersionName = "Potcodes Version";
-
-        private readonly IEmployersContext _employersContext;
-        private readonly ILARSContext _larsContext;
-        private readonly IOrganisationsContext _organisationsContext;
-        private readonly IPostcodesContext _postcodesContext;
+        private readonly IDbContextFactory<IEasdbContext> _easContextFactory;
+        private readonly IDbContextFactory<IEmployersContext> _employersContextFactory;
+        private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IDbContextFactory<IOrganisationsContext> _organisationsContextFactory;
+        private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IIlrReferenceDataRepositoryService _ilReferenceDataRepositoryService;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         public MetaDataRetrievalService(
-            IEmployersContext employersContext,
-            ILARSContext larsContext,
-            IOrganisationsContext organisationsContext,
-            IPostcodesContext postcodesContext,
-            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService)
+            IDbContextFactory<IEasdbContext> easContextFactory,
+            IDbContextFactory<IEmployersContext> employersContextFactory,
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IDbContextFactory<IOrganisationsContext> organisationsContextFactory,
+            IDbContextFactory<IPostcodesContext> postcodesContextFactory,
+            IIlrReferenceDataRepositoryService ilReferenceDataRepositoryService,
+            IDateTimeProvider dateTimeProvider)
         {
-            _employersContext = employersContext;
-            _larsContext = larsContext;
-            _organisationsContext = organisationsContext;
-            _postcodesContext = postcodesContext;
+            _easContextFactory = easContextFactory;
+            _employersContextFactory = employersContextFactory;
+            _larsContextFactory = larsContextFactory;
+            _organisationsContextFactory = organisationsContextFactory;
+            _postcodesContextFactory = postcodesContextFactory;
             _ilReferenceDataRepositoryService = ilReferenceDataRepositoryService;
+            _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<MetaData> RetrieveAsync(CancellationToken cancellationToken)
+        public async Task<MetaData> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
         {
-            var metaData = new MetaData
+            var metaData = await _ilReferenceDataRepositoryService.RetrieveIlrReferenceDataAsync(cancellationToken);
+            var latestEAS = await RetrieveLatestEasAsync(ukprn, cancellationToken);
+            var orgRefDataVersions = await RetrieveOrganisationsReferenceDataVersionsAsync(cancellationToken);
+            var postcodeRefDataVersions = await RetrievePostcodesReferenceDataVersionsAsync(cancellationToken);
+
+            metaData.DateGenerated = _dateTimeProvider.GetNowUtc();
+            metaData.ReferenceDataVersions = new ReferenceDataVersion
             {
-                ReferenceDataVersions = new ReferenceDataVersion
-                {
-                    Employers =
-                        await _employersContext.LargeEmployerSourceFiles
-                        .OrderByDescending(v => v.Id)
-                        .Select(v => new EmployersVersion(v.Id.ToString()))
-                        .FirstOrDefaultAsync(cancellationToken),
-                    LarsVersion = await _larsContext.LARS_Versions
-                        .OrderByDescending(v => v.MainDataSchemaName)
-                        .Select(v => new LarsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(cancellationToken),
-                    OrganisationsVersion = await _organisationsContext.OrgVersions
-                        .OrderByDescending(v => v.MainDataSchemaName)
-                        .Select(v => new OrganisationsVersion(v.MainDataSchemaName))
-                        .FirstOrDefaultAsync(cancellationToken),
-                    PostcodesVersion = await _postcodesContext.VersionInfos
-                        .OrderByDescending(v => v.VersionNumber)
-                        .Select(v => new PostcodesVersion(v.VersionNumber))
-                        .FirstOrDefaultAsync(cancellationToken),
-                },
-                ValidationErrors = await _ilReferenceDataRepositoryService.RetrieveValidationErrorsAsync(cancellationToken),
-                ValidationRules = await _ilReferenceDataRepositoryService.RetrieveValidationRulesAsync(cancellationToken),
-                Lookups = await _ilReferenceDataRepositoryService.RetrieveLookupsAsync(cancellationToken),
+                CoFVersion = orgRefDataVersions.CoFVersion,
+                CampusIdentifierVersion = orgRefDataVersions.CampusIdentifierVersion,
+                Employers = await RetrieveEmployersVersionAsync(cancellationToken),
+                LarsVersion = await RetrieveLarsVersionAsync(cancellationToken),
+                OrganisationsVersion = orgRefDataVersions.OrganisationsVersion,
+                PostcodesVersion = postcodeRefDataVersions.PostcodesVersion,
+                DevolvedPostcodesVersion = postcodeRefDataVersions.DevolvedPostcodesVersion,
+                HmppPostcodesVersion = postcodeRefDataVersions.HmppPostcodesVersion,
+                PostcodeFactorsVersion = postcodeRefDataVersions.PostcodeFactorsVersion,
+                EasUploadDateTime = new EasUploadDateTime { UploadDateTime = latestEAS?.UpdatedOn },
             };
 
             return Validate(metaData);
         }
 
+        private async Task<EasSubmission> RetrieveLatestEasAsync(int ukprn, CancellationToken cancellationToken)
+        {
+            using (var context = _easContextFactory.Create())
+            {
+                return await context.EasSubmissions.FirstOrDefaultAsync(v => v.Ukprn == ukprn.ToString(), cancellationToken);
+            }
+        }
+
+        private async Task<EmployersVersion> RetrieveEmployersVersionAsync(CancellationToken cancellationToken)
+        {
+            using (var context = _employersContextFactory.Create())
+            {
+                return await context.LargeEmployerSourceFiles
+                        .OrderByDescending(v => v.Id)
+                        .Select(v => new EmployersVersion { Version = v.Id.ToString() })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new EmployersVersion();
+            }
+        }
+
+        private async Task<LarsVersion> RetrieveLarsVersionAsync(CancellationToken cancellationToken)
+        {
+            using (var context = _larsContextFactory.Create())
+            {
+                return await context.LARS_Versions
+                        .OrderByDescending(v => v.MainDataSchemaName)
+                        .Select(v => new LarsVersion { Version = v.MainDataSchemaName })
+                        .FirstOrDefaultAsync(cancellationToken) ?? new LarsVersion();
+            }
+        }
+
+        private async Task<ReferenceDataVersion> RetrieveOrganisationsReferenceDataVersionsAsync(CancellationToken cancellationToken)
+        {
+            using (var context = _organisationsContextFactory.Create())
+            {
+                var orgVersion = (await context.Versions.FirstOrDefaultAsync(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.Organisation)))?.VersionNumber;
+                var campusIdVersion = (await context.Versions.FirstOrDefaultAsync(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.CampusIdentifier)))?.VersionNumber;
+                var cofVersion = (await context.Versions.FirstOrDefaultAsync(x => x.Source.CaseInsensitiveEquals(VersionSourceConstants.ConditionOfFunding)))?.VersionNumber;
+
+                return new ReferenceDataVersion
+                {
+                    OrganisationsVersion = new OrganisationsVersion { Version = orgVersion },
+                    CampusIdentifierVersion = new CampusIdentifierVersion { Version = campusIdVersion },
+                    CoFVersion = new CoFVersion { Version = cofVersion },
+                };
+            }
+        }
+
+        private async Task<ReferenceDataVersion> RetrievePostcodesReferenceDataVersionsAsync(CancellationToken cancellationToken)
+        {
+            using (var context = _postcodesContextFactory.Create())
+            {
+                var postcodesVersion = (await context.VersionInfos.FirstOrDefaultAsync(x => x.DataSource.CaseInsensitiveEquals(VersionSourceConstants.OnsPostcodes)))?.VersionNumber;
+                var hmppPostcodesVersion = (await context.VersionInfos.FirstOrDefaultAsync(x => x.DataSource.CaseInsensitiveEquals(VersionSourceConstants.HmppPostcodes)))?.VersionNumber;
+                var devolvedPostcodesVersion = (await context.VersionInfos.FirstOrDefaultAsync(x => x.DataSource.CaseInsensitiveEquals(VersionSourceConstants.DevolvedPostcodes)))?.VersionNumber;
+                var postcodeFactorsVersion = (await context.VersionInfos.FirstOrDefaultAsync(x => x.DataSource.CaseInsensitiveEquals(VersionSourceConstants.PostcodeFactors)))?.VersionNumber;
+
+                return new ReferenceDataVersion
+                {
+                    PostcodesVersion = new PostcodesVersion { Version = postcodesVersion },
+                    PostcodeFactorsVersion = new PostcodeFactorsVersion { Version = postcodeFactorsVersion },
+                    HmppPostcodesVersion = new HmppPostcodesVersion { Version = hmppPostcodesVersion },
+                    DevolvedPostcodesVersion = new DevolvedPostcodesVersion { Version = devolvedPostcodesVersion }
+                };
+            }
+        }
+
         private MetaData Validate(MetaData metaData)
         {
-            if (
-                metaData.ReferenceDataVersions.Employers.Version != null
-               && metaData.ReferenceDataVersions.LarsVersion.Version != null
-               && metaData.ReferenceDataVersions.OrganisationsVersion.Version != null
-               && metaData.ValidationErrors.Any()
-               && metaData.ValidationRules.Any()
-               && metaData.Lookups.Any())
+            var referenceDataSources = new List<(string, bool)>
+            {
+                (DataSourceConstants.Employers, metaData.ReferenceDataVersions.Employers.Version != null),
+                (DataSourceConstants.Lars, metaData.ReferenceDataVersions.LarsVersion.Version != null),
+                (DataSourceConstants.Organisations, metaData.ReferenceDataVersions.OrganisationsVersion.Version != null),
+                (DataSourceConstants.Postcodes, metaData.ReferenceDataVersions.PostcodesVersion.Version != null),
+                (DataSourceConstants.DevolvedPostcodes, metaData.ReferenceDataVersions.DevolvedPostcodesVersion.Version != null),
+                (DataSourceConstants.PostcodeFactors, metaData.ReferenceDataVersions.PostcodeFactorsVersion.Version != null),
+                (DataSourceConstants.HmppPostcodes, metaData.ReferenceDataVersions.HmppPostcodesVersion.Version != null),
+                (DataSourceConstants.CampusIdentifiers, metaData.ReferenceDataVersions.CampusIdentifierVersion.Version != null),
+                (DataSourceConstants.CoF, metaData.ReferenceDataVersions.CoFVersion.Version != null),
+                (DataSourceConstants.ValidationErrors, metaData.ValidationErrors.Any()),
+                (DataSourceConstants.ValidationRules, metaData.ValidationRules.Any()),
+                (DataSourceConstants.ValidationLookups, metaData.Lookups.Any()),
+            };
+
+            if (!referenceDataSources.Any(x => x.Item2 == false))
             {
                 return metaData;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("MetaData Retrieval Error - Reference Dataset incomplete");
+                var sources = referenceDataSources.Where(x => x.Item2 == false).Select(x => x.Item1).Aggregate((x, y) => x + ", " + y);
+
+                throw new ArgumentOutOfRangeException("MetaData Retrieval Error - Reference Dataset incomplete. Cannot find version information for dataset specified. The dataset may be incomplete. Please check the following data sources: " + sources);
             }
         }
     }

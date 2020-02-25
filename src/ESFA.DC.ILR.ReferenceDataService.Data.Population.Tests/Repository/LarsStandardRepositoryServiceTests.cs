@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
@@ -22,8 +23,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var expectedLARSStandards = ExpectedLARSStandards();
 
             var stdCodes = new List<int> { 1, 2, 3 };
-
-            var larsMock = new Mock<ILARSContext>();
 
             IEnumerable<LarsStandard> larsStandardList = new List<LarsStandard>
             {
@@ -281,9 +280,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var larsStandardMock = larsStandardList.AsQueryable().BuildMockDbSet();
 
+            var larsMock = new Mock<ILARSContext>();
             larsMock.Setup(l => l.LARS_Standards).Returns(larsStandardMock.Object);
 
-            var larsStandards = await NewService(larsMock.Object).RetrieveAsync(stdCodes, CancellationToken.None);
+            var larsContextFactoryMock = new Mock<IDbContextFactory<ILARSContext>>();
+            larsContextFactoryMock.Setup(c => c.Create()).Returns(larsMock.Object);
+
+            var larsStandards = await NewService(larsContextFactoryMock.Object).RetrieveAsync(stdCodes, CancellationToken.None);
 
             expectedLARSStandards.Should().BeEquivalentTo(larsStandards);
         }
@@ -509,9 +512,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             };
         }
 
-        private LarsStandardRepositoryService NewService(ILARSContext larsContext = null)
+        private LarsStandardRepositoryService NewService(IDbContextFactory<ILARSContext> larsContextFactory = null)
         {
-            return new LarsStandardRepositoryService(larsContext);
+            return new LarsStandardRepositoryService(larsContextFactory);
         }
     }
 }

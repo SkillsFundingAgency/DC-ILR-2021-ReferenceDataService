@@ -15,8 +15,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
             var larsFrameworks = new List<LARSFrameworkKey>();
 
             var larsLearningDeliveries = referenceData.LARSLearningDeliveries
-                .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef))
+                .Where(l => input.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .ToList();
+
+            var larsFrameworkAimsDictionary = referenceData.LARSFrameworkAims
+               .GroupBy(ld => new LARSLearningDeliveryKey(ld.LearnAimRef, ld.FworkCode, ld.ProgType, ld.PwayCode))
+               .ToDictionary(
+                k => k.Key,
+                v => v.Select(fa => new LARSFrameworkAim
+                {
+                    LearnAimRef = fa.LearnAimRef.ToUpper(),
+                    FrameworkComponentType = fa.FrameworkComponentType,
+                    EffectiveFrom = fa.EffectiveFrom,
+                    EffectiveTo = fa.EffectiveTo,
+                }).FirstOrDefault());
 
             foreach (var key in input)
             {
@@ -25,7 +37,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                         lf.FworkCode == key.FworkCode
                     && lf.ProgType == key.ProgType
                     && lf.PwayCode == key.PwayCode)
-                    .FirstOrDefault();
+                    .Select(l => new LARSFramework
+                    {
+                        FworkCode = l.FworkCode,
+                        PwayCode = l.PwayCode,
+                        ProgType = l.ProgType,
+                        EffectiveFromNullable = l.EffectiveFromNullable,
+                        EffectiveTo = l.EffectiveTo,
+                        LARSFrameworkApprenticeshipFundings = l.LARSFrameworkApprenticeshipFundings,
+                        LARSFrameworkCommonComponents = l.LARSFrameworkCommonComponents,
+                        LARSFrameworkAim = larsFrameworkAimsDictionary.TryGetValue(key, out var frameworkAims) ? frameworkAims : null,
+                    }).FirstOrDefault();
 
                 if (framework != null)
                 {

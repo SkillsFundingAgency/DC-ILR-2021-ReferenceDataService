@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ReferenceData.ULN.Model;
 using ESFA.DC.ReferenceData.ULN.Model.Interface;
@@ -18,8 +19,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var ulns = new List<long> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 31, 32, 33, 34, 35 };
-
-            var ulnMock = new Mock<IUlnContext>();
 
             IEnumerable<UniqueLearnerNumber> ulnList = new List<UniqueLearnerNumber>
             {
@@ -48,17 +47,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var ulnDbMock = ulnList.AsQueryable().BuildMockDbSet();
 
+            var ulnMock = new Mock<IUlnContext>();
+
             ulnMock.Setup(u => u.UniqueLearnerNumbers).Returns(ulnDbMock.Object);
 
-            var serviceResult = await NewService(ulnMock.Object).RetrieveAsync(ulns, CancellationToken.None);
+            var ulnContextFactoryMock = new Mock<IDbContextFactory<IUlnContext>>();
+            ulnContextFactoryMock.Setup(c => c.Create()).Returns(ulnMock.Object);
+
+            var serviceResult = await NewService(ulnContextFactoryMock.Object).RetrieveAsync(ulns, CancellationToken.None);
 
             serviceResult.Count().Should().Be(21);
             serviceResult.Select(u => u).ToList().Should().BeEquivalentTo(ulnList.Select(u => u.Uln).ToList());
         }
 
-        private UlnRepositoryService NewService(IUlnContext uln = null)
+        private UlnRepositoryService NewService(IDbContextFactory<IUlnContext> ulnContextFactory = null)
         {
-            return new UlnRepositoryService(uln);
+            return new UlnRepositoryService(ulnContextFactory);
         }
     }
 }

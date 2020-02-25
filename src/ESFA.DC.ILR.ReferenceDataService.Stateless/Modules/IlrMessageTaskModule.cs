@@ -1,6 +1,6 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {

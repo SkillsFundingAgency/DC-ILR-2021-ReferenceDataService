@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -21,8 +22,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         {
             var ukprns = new List<int> { 1, 2, 3 };
 
-            var organisationsMock = new Mock<IOrganisationsContext>();
-
             IEnumerable<MasterOrganisation> masterOrgList = new List<MasterOrganisation>
             {
                 new MasterOrganisation
@@ -32,6 +31,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 1,
                         LegalOrgType = "LegalType1",
+                        Name = "Name1",
+                        LongTermResid = 1
                     },
                     OrgPartnerUkprns = new List<OrgPartnerUkprn>
                     {
@@ -66,6 +67,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         Ukprn = 2,
                         LegalOrgType = "LegalType2",
+                        Name = "Name2",
+                        LongTermResid = 0
                     },
                 },
             };
@@ -76,47 +79,106 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     MasterUkprn = 1,
                     CampusIdentifier1 = "CampId_01",
+                    CampusIdentifierUkprn = new CampusIdentifierUkprn
+                    {
+                        CampusIdentifierSpecResources = new List<CampusIdentifierSpecResource>
+                        {
+                            new CampusIdentifierSpecResource
+                            {
+                                SpecialistResources = true
+                            }
+                        }
+                    }
+                },
+            };
+
+            IEnumerable<CampusIdentifierSpecResource> campusIdentifiersSpecResources = new List<CampusIdentifierSpecResource>
+            {
+                new CampusIdentifierSpecResource
+                {
+                    MasterUkprn = 1,
+                    CampusIdentifier = "CampId_01",
+                    SpecialistResources = true,
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                },
+                new CampusIdentifierSpecResource
+                {
+                    MasterUkprn = 1,
+                    CampusIdentifier = "CampId_02",
+                    SpecialistResources = true,
+                    EffectiveFrom = new DateTime(2019, 8, 1)
                 },
             };
 
             var masterOrgMock = masterOrgList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersMock = campusIdentifiersList.AsQueryable().BuildMockDbSet();
+            var campusIdentifiersSpecResourcesMock = campusIdentifiersSpecResources.AsQueryable().BuildMockDbSet();
+
+            var organisationsMock = new Mock<IOrganisationsContext>();
 
             organisationsMock.Setup(o => o.MasterOrganisations).Returns(masterOrgMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifiers).Returns(campusIdentifiersMock.Object);
+            organisationsMock.Setup(o => o.CampusIdentifierSpecResources).Returns(campusIdentifiersSpecResourcesMock.Object);
 
-            var organisations = await NewService(organisationsMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
+            var organisationsContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
+            organisationsContextFactoryMock.Setup(c => c.Create()).Returns(organisationsMock.Object);
+
+            var organisations = await NewService(organisationsContextFactoryMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
 
             organisations.Should().HaveCount(2);
             organisations.Select(o => o.UKPRN).Should().Contain(1);
             organisations.Select(o => o.UKPRN).Should().Contain(2);
             organisations.Select(o => o.UKPRN).Should().NotContain(3);
 
-            organisations.Where(o => o.UKPRN == 1).Select(o => o.UKPRN).Should().BeEquivalentTo(1);
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType1");
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.CampusIdentifers).Single().Should().BeEquivalentTo("CampId_01");
-            organisations.Where(o => o.UKPRN == 1).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(true);
-            organisations.Where(o => o.UKPRN == 1).SelectMany(o => o.OrganisationFundings).Should().HaveCount(2);
+            organisations.First(o => o.UKPRN == 1).UKPRN.Should().Be(1);
+            organisations.First(o => o.UKPRN == 1).LegalOrgType.Should().Be("LegalType1");
+            organisations.First(o => o.UKPRN == 1).Name.Should().Be("Name1");
+            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().CampusIdentifier.Should().Be("CampId_01");
+            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).PartnerUKPRN.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).LongTermResid.Should().BeTrue();
+            organisations.First(o => o.UKPRN == 1).OrganisationFundings.Should().HaveCount(2);
 
-            organisations.Where(o => o.UKPRN == 2).Select(o => o.UKPRN).Should().BeEquivalentTo(2);
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.LegalOrgType).Should().BeEquivalentTo("LegalType2");
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.CampusIdentifers).Should().BeNullOrEmpty();
-            organisations.Where(o => o.UKPRN == 2).Select(o => o.PartnerUKPRN).Should().BeEquivalentTo(false);
-            organisations.Where(o => o.UKPRN == 2).SelectMany(o => o.OrganisationFundings).Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).UKPRN.Should().Be(2);
+            organisations.First(o => o.UKPRN == 2).LegalOrgType.Should().Be("LegalType2");
+            organisations.First(o => o.UKPRN == 2).Name.Should().Be("Name2");
+            organisations.First(o => o.UKPRN == 2).CampusIdentifers.Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).PartnerUKPRN.Should().BeFalse();
+            organisations.First(o => o.UKPRN == 2).LongTermResid.Should().BeFalse();
+            organisations.First(o => o.UKPRN == 2).OrganisationFundings.Should().BeNullOrEmpty();
         }
 
         [Fact]
         public void GetCampusIdentifiers()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
+            var campusListOne = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId1"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId2"
+                },
+            };
 
-            var dictionary = new Dictionary<long, List<string>>
+            var campusListTwo = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId3"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId4"
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationCampusIdentifier>>
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(1, dictionary).Should().BeEquivalentTo(campusListOne);
@@ -125,15 +187,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void GetCampusIdentifiers_MisMatch()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
+            var campusListOne = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId1"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId2"
+                },
+            };
 
-            var dictionary = new Dictionary<long, List<string>>
+            var campusListTwo = new List<OrganisationCampusIdentifier>
+            {
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId3"
+                },
+                new OrganisationCampusIdentifier
+                {
+                    CampusIdentifier = "CampisId4"
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationCampusIdentifier>>
             {
                 { 1, campusListOne },
                 { 2, campusListTwo },
-                { 3, campusListThree },
             };
 
             NewService().GetCampusIdentifiers(4, dictionary).Should().BeNullOrEmpty();
@@ -142,23 +223,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public void GetCampusIdentifiers_Null()
         {
-            var campusListOne = new List<string> { "CampisId1", "CampisId2" };
-            var campusListTwo = new List<string> { "CampisId3", "CampisId4" };
-            var campusListThree = new List<string> { "CampisId5", "CampisId6" };
-
-            var dictionary = new Dictionary<long, List<string>>
-            {
-                { 1, campusListOne },
-                { 2, campusListTwo },
-                { 3, campusListThree },
-            };
-
-            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<string>>()).Should().BeNullOrEmpty();
+            NewService().GetCampusIdentifiers(1, new Dictionary<long, List<OrganisationCampusIdentifier>>()).Should().BeNullOrEmpty();
         }
 
-        private OrganisationsRepositoryService NewService(IOrganisationsContext organisations = null)
+        private OrganisationsRepositoryService NewService(IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)
         {
-            return new OrganisationsRepositoryService(organisations);
+            return new OrganisationsRepositoryService(organisationsContextFactory);
         }
     }
 }

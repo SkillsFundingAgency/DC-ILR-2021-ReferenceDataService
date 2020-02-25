@@ -6,6 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
+using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -27,7 +28,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var sfaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeDisadvantage>>();
             var efaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
             var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
-            var careerLearningPilotsTaskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
             var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
             var mcaglaSOFTaskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
 
@@ -139,29 +139,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
-            {
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode1",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code2",
-                    EffectiveFrom = new DateTime(2018, 9, 2)
-                }
-            };
-
             var onsPostcodes = new List<OnsPostcode>
             {
                 new OnsPostcode
@@ -188,52 +165,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var mcaglaSofPostCodes = new List<McaglaSof>
-            {
-                new McaglaSof
-                {
-                    Postcode = "PostCode1",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                },
-                new McaglaSof
-                {
-                    Postcode = "PostCode2",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new McaglaSof
-                 {
-                     Postcode = "PostCode2",
-                     SofCode = "SofCode2",
-                     EffectiveFrom = new DateTime(2018, 8, 1),
-                 },
-            };
-
             masterPostcodeTaskResult.SetResult(masterPostcodes);
             sfaAreaCostTaskResult.SetResult(sfaAreaCost);
             sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
             efaDisadvantageTaskResult.SetResult(efaDisadvantage);
             dasDisadvantageTaskResult.SetResult(dasDisadvantage);
-            careerLearningPilotsTaskResult.SetResult(careerLearningPilotsPostcode);
             onsDataTaskResult.SetResult(onsPostcodes);
-            mcaglaSOFTaskResult.SetResult(mcaglaSofPostCodes);
 
             var jsonSerializationMock = new Mock<IJsonSerializationService>();
 
             jsonSerializationMock.Setup(sm => sm.Serialize(postcodes)).Returns(json);
 
-            var service = NewServiceMock(jsonSerializationService: jsonSerializationMock.Object);
+            var postcodesContextMock = new Mock<IPostcodesContext>();
+            var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
+            postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesContextMock.Object);
+
+            var service = NewServiceMock(postcodesContextFactory: postcodesContextFactoryMock.Object, jsonSerializationService: jsonSerializationMock.Object);
 
             service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(masterPostcodeTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaAreaCostTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<SfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
-            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(careerLearningPilotsTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
-            service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(mcaglaSOFTaskResult.Task);
 
             var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
 
@@ -274,14 +228,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
-                    CareerLearningPilots = new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    },
                     ONSData = new List<ONSData>
                     {
                         new ONSData
@@ -291,14 +237,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
-                    McaglaSOFs = new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
                 },
                 new Postcode
                 {
@@ -359,20 +297,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 9, 2)
                         }
                     },
-                    CareerLearningPilots = new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code2",
-                            EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    },
                     ONSData = new List<ONSData>
                     {
                         new ONSData
@@ -387,20 +311,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             Lep1 = "Lep11",
                             LocalAuthority = "LocalAuthority",
                             EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    },
-                    McaglaSOFs = new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode2",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     }
                 },
@@ -744,78 +654,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public async Task RetrieveCareerLearningPilots()
-        {
-            var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
-
-            var taskResult = new TaskCompletionSource<IEnumerable<CareerLearningPilotPostcode>>();
-
-            var careerLearningPilotsPostcode = new List<CareerLearningPilotPostcode>
-            {
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode1",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new CareerLearningPilotPostcode
-                {
-                    Postcode = "PostCode2",
-                    AreaCode = "Code2",
-                    EffectiveFrom = new DateTime(2018, 9, 2)
-                }
-            };
-
-            taskResult.SetResult(careerLearningPilotsPostcode);
-
-            var careerLearningPilotsDictionary = new Dictionary<string, List<CareerLearningPilot>>
-            {
-                {
-                    "PostCode1", new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
-                },
-                {
-                    "PostCode2", new List<CareerLearningPilot>
-                    {
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new CareerLearningPilot
-                        {
-                            AreaCode = "Code2",
-                            EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    }
-                }
-            };
-
-            var service = NewServiceMock();
-
-            service.Setup(s => s.RetrieveAsync<CareerLearningPilotPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
-
-            var result = await service.Object.RetrieveCareerLearningPilots(json, cancellationToken);
-
-            result.Should().BeEquivalentTo(careerLearningPilotsDictionary);
-        }
-
-        [Fact]
         public async Task RetrieveOnsData()
         {
             var cancellationToken = CancellationToken.None;
@@ -891,76 +729,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var result = await service.Object.RetrieveOnsData(json, cancellationToken);
 
             result.Should().BeEquivalentTo(onsDictionary);
-        }
-
-        [Fact]
-        public async Task RetrieveMcaglaSOFData()
-        {
-            var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
-
-            var taskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
-
-            var mcaglaPostcoeSOF = new List<McaglaSof>
-            {
-               new McaglaSof
-                {
-                    Postcode = "PostCode1",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                },
-               new McaglaSof
-                {
-                    Postcode = "PostCode2",
-                    SofCode = "SofCode1",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-               new McaglaSof
-                 {
-                     Postcode = "PostCode2",
-                     SofCode = "SofCode2",
-                     EffectiveFrom = new DateTime(2018, 8, 1),
-                 }
-            };
-
-            taskResult.SetResult(mcaglaPostcoeSOF);
-
-            var expectedResult = new Dictionary<string, List<McaglaSOF>>
-            {
-                 {
-                    "PostCode1", new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                             SofCode = "SofCode1",
-                             EffectiveFrom = new DateTime(2018, 8, 1),
-                        }
-                    }
-                 },
-                 {
-                    "PostCode2", new List<McaglaSOF>
-                    {
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode1",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new McaglaSOF
-                        {
-                            SofCode = "SofCode2",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    }
-                 }
-            };
-
-            var service = NewServiceMock();
-            service.Setup(s => s.RetrieveAsync<McaglaSof>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
-            var result = await service.Object.RetrieveMcaglaSOFData(json, cancellationToken);
-
-            result.Should().BeEquivalentTo(expectedResult);
         }
 
         [Fact]
@@ -1044,26 +812,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public void CareerLearningPilotsToEntity()
-        {
-            var careerLearningPilotPostcode = new CareerLearningPilotPostcode
-            {
-                AreaCode = "Area1",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            var careerLearningPilot = new CareerLearningPilot
-            {
-                AreaCode = "Area1",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            NewService().CareerLearningPilotsToEntity(careerLearningPilotPostcode).Should().BeEquivalentTo(careerLearningPilot);
-        }
-
-        [Fact]
         public void ONSDataToEntity()
         {
             var onsPostcode = new OnsPostcode
@@ -1089,50 +837,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
         }
 
-        [Fact]
-        public void McaglaSofToEntity()
+        private PostcodesRepositoryService NewService(
+            IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
+            IReferenceDataOptions referenceDataOptions = null,
+            IJsonSerializationService jsonSerializationService = null)
         {
-            var mcaglaSof = new McaglaSof
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var expectedMcaglasSOF = new McaglaSOF
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            NewService().McaglaSofToEntity(mcaglaSof).Should().BeEquivalentTo(expectedMcaglasSOF);
+            return new PostcodesRepositoryService(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
         }
 
-        [Fact]
-        public void McaglaSofToEntity_Should_BeFalse()
+        private Mock<PostcodesRepositoryService> NewServiceMock(
+             IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
+             IReferenceDataOptions referenceDataOptions = null,
+             IJsonSerializationService jsonSerializationService = null)
         {
-            var mcaglaSof = new McaglaSof
-            {
-                SofCode = "SofCode2",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var expectedMcaglasSOF = new McaglaSOF
-            {
-                SofCode = "SofCode1",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            NewService().McaglaSofToEntity(mcaglaSof).Should().NotBeSameAs(expectedMcaglasSOF);
-        }
-
-        private PostcodesRepositoryService NewService(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
-        {
-            return new PostcodesRepositoryService(referenceDataOptions, jsonSerializationService);
-        }
-
-        private Mock<PostcodesRepositoryService> NewServiceMock(IReferenceDataOptions referenceDataOptions = null, IJsonSerializationService jsonSerializationService = null)
-        {
-            return new Mock<PostcodesRepositoryService>(referenceDataOptions, jsonSerializationService);
+            return new Mock<PostcodesRepositoryService>(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
         }
     }
 }

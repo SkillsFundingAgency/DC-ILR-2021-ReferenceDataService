@@ -16,8 +16,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
 
             var mapper = NewMapper().MapPostcodesFromMessage(message);
 
-            mapper.Count().Should().Be(8);
-            mapper.Should().Contain(new List<string> { "Postcode1", "Postcode2", "PostcodePrior1", "PostcodePrior2", "DelLocPostCode1", "DelLocPostCode2", "LSDPostcode1", "LSDPostcode2" });
+            mapper.Count().Should().Be(9);
+            mapper.Should().Contain(new List<string> { "Postcode1", "Postcode2", "PostcodePrior1", "PostcodePrior2", "DelLocPostCode1", "DelLocPostCode2", "LSDPostcode1", "LSDPostcode2", "HEPostcode1" });
         }
 
         [Fact]
@@ -42,6 +42,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
                             {
                                 DelLocPostCode = "DelLocPostCode1",
                                 LSDPostcode = "LSDPostcode1",
+                                LearningDeliveryHEEntity = new TestLearningDeliveryHE
+                                {
+                                    HEPostCode = "HEPostcode1"
+                                }
                             },
                         },
                     },

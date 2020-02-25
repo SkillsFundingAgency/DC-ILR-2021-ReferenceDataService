@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message
                 .SelectMany(l => l.LearningDeliveries)
                 .Where(ld => ld.EPAOrgID != null)
                 .Select(ld => ld.EPAOrgID)
-                .ToList() ?? new List<string>();
+                .ToList() ?? Enumerable.Empty<string>();
 
             return new HashSet<string>(epaOrgIds, StringComparer.OrdinalIgnoreCase);
         }

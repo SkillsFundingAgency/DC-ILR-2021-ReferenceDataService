@@ -1,6 +1,8 @@
-﻿using ESFA.DC.ILR.Constants;
+﻿using System;
+using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 {
@@ -27,8 +29,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string Container => _desktopContext.KeyValuePairs[ILRContextKeys.Container].ToString();
 
+        public string InputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
+
         public string OutputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
+        public string FrmReferenceDataFileKey => throw new NotImplementedException();
+
         public string Task { get; }
+
+        public int ReturnPeriod
+        {
+            get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod].ToString());
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.ReturnPeriod] = value;
+        }
+
+        public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs[ReferenceDataContextKeys.ValidationMessagesFileReferenceKey].ToString();
+
+        public string DesktopReferenceDataStoragePath => throw new NotImplementedException();
+
+        public int Ukprn
+        {
+            get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.Ukprn] = value;
+        }
     }
 }

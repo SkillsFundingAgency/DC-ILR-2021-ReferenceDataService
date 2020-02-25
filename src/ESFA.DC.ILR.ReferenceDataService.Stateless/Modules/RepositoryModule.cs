@@ -1,109 +1,67 @@
 ﻿using Autofac;
-using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
+using ESFA.DC.EAS1920.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
-using ESFA.DC.ReferenceData.Employers.Model;
+using ESFA.DC.ILR.ReferenceDataService.Stateless.Constants;
+using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
-using ESFA.DC.ReferenceData.EPA.Model;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
-using ESFA.DC.ReferenceData.FCS.Model;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
-using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
-using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
-using ESFA.DC.ReferenceData.Postcodes.Model;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
-using ESFA.DC.ReferenceData.ULN.Model;
 using ESFA.DC.ReferenceData.ULN.Model.Interface;
-using ESFA.DC.ServiceFabric.Helpers;
-using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
     public class RepositoryModule : Module
     {
+        private readonly IReferenceDataOptions _referenceDataOptions;
+
+        public RepositoryModule(IReferenceDataOptions referenceDataOptions)
+        {
+            _referenceDataOptions = referenceDataOptions;
+        }
+
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            var configHelper = new ConfigurationHelper();
 
-            var referenceDataOptions = configHelper.GetSectionValues<ReferenceDataOptions>("ReferenceDataSection");
-            containerBuilder.RegisterInstance(referenceDataOptions).As<IReferenceDataOptions>().SingleInstance();
+            containerBuilder.RegisterInstance(_referenceDataOptions).As<IReferenceDataOptions>();
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<AppEarnHistoryContext> options = new DbContextOptionsBuilder<AppEarnHistoryContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().AppsEarningsHistoryConnectionString).Options;
+            containerBuilder.RegisterType<AppsEarningsHistoryDbContextFactory>().As<IDbContextFactory<IAppEarnHistoryContext>>()
+              .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.AppsEarningsHistoryConnectionString);
 
-                return new AppEarnHistoryContext(options);
-            }).As<IAppEarnHistoryContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<EasDbContextFactory>().As<IDbContextFactory<IEasdbContext>>()
+              .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.EasConnectionString);
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<EmployersContext> options = new DbContextOptionsBuilder<EmployersContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EmployersConnectionString).Options;
+            containerBuilder.RegisterType<EmployersDbContextFactory>().As<IDbContextFactory<IEmployersContext>>()
+              .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.EmployersConnectionString);
 
-                return new EmployersContext(options);
-            }).As<IEmployersContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<EpaDbContextFactory>().As<IDbContextFactory<IEpaContext>>()
+             .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.EPAConnectionString);
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<EpaContext> options = new DbContextOptionsBuilder<EpaContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().EPAConnectionString).Options;
+            containerBuilder.RegisterType<FcsDbContextFactory>().As<IDbContextFactory<IFcsContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.FCSConnectionString);
 
-                return new EpaContext(options);
-            }).As<IEpaContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<IlrReferenceDataDbContextFactory>().As<IDbContextFactory<IIlrReferenceDataContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.IlrReferenceDataConnectionString);
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<FcsContext> options = new DbContextOptionsBuilder<FcsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().FCSConnectionString).Options;
+            containerBuilder.RegisterType<LarsDbContextFactory>().As<IDbContextFactory<ILARSContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.LARSConnectionString);
 
-                return new FcsContext(options);
-            }).As<IFcsContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<OrganisationsDbContextFactory>().As<IDbContextFactory<IOrganisationsContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.OrganisationsConnectionString);
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<LarsContext> options = new DbContextOptionsBuilder<LarsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().LARSConnectionString).Options;
+            containerBuilder.RegisterType<PostcodesDbContextFactory>().As<IDbContextFactory<IPostcodesContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.PostcodesConnectionString);
 
-                return new LarsContext(options);
-            }).As<ILARSContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<UlnDbContextFactory>().As<IDbContextFactory<IUlnContext>>()
+               .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.ULNConnectionstring);
 
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<OrganisationsContext> options = new DbContextOptionsBuilder<OrganisationsContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().OrganisationsConnectionString).Options;
-
-                return new OrganisationsContext(options);
-            }).As<IOrganisationsContext>().InstancePerLifetimeScope();
-
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<PostcodesContext> options = new DbContextOptionsBuilder<PostcodesContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().PostcodesConnectionString).Options;
-
-                return new PostcodesContext(options);
-            }).As<IPostcodesContext>().InstancePerLifetimeScope();
-
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<UlnContext> options = new DbContextOptionsBuilder<UlnContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().ULNConnectionstring).Options;
-
-                return new UlnContext(options);
-            }).As<IUlnContext>().InstancePerLifetimeScope();
-
-            containerBuilder.Register(c =>
-            {
-                DbContextOptions<IlrReferenceDataContext> options = new DbContextOptionsBuilder<IlrReferenceDataContext>()
-                    .UseSqlServer(c.Resolve<IReferenceDataOptions>().IlrReferenceDataConnectionString).Options;
-
-                return new IlrReferenceDataContext(options);
-            }).As<IIlrReferenceDataContext>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<IlrDbContextFactory>().As<IDbContextFactory<IILR1819_DataStoreEntitiesValid>>()
+                .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.Ilr1819ConnectionString);
         }
     }
 }

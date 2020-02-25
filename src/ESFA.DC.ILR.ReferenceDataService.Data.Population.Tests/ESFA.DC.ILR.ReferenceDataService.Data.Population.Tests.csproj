@@ -46,35 +46,53 @@
     <Reference Include="ESFA.DC.Data.AppsEarningsHistory.Model, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.AppsEarningsHistory.Model.0.2.0-alpha0009\lib\netstandard2.0\ESFA.DC.Data.AppsEarningsHistory.Model.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.DateTimeProvider.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.DateTimeProvider.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.DateTimeProvider.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.EAS1920.EF, Version=0.0.75.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.EAS1920.EF.0.0.75\lib\netstandard2.0\ESFA.DC.EAS1920.EF.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Tests.Model.0.1.7-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR1819.Database.EF, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.Database.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF.Invalid, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.Invalid.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR1819.DataStore.EF.Valid, Version=0.1.381.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR1819.Database.EF.0.1.381\lib\netstandard2.0\ESFA.DC.ILR1819.DataStore.EF.Valid.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.159.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.159\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ReferenceData.EPA.Model, Version=0.1.184.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.EPA.Model.0.1.184\lib\netstandard2.0\ESFA.DC.ReferenceData.EPA.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.FCS.Model, Version=0.2.586.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.FCS.Model.0.2.586\lib\netstandard2.0\ESFA.DC.ReferenceData.FCS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.LARS.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.LARS.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.LARS.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.LARS.Model, Version=0.2.159.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.LARS.Model.0.2.159\lib\netstandard2.0\ESFA.DC.ReferenceData.LARS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Organisations.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Organisations.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.Organisations.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.Organisations.Model, Version=0.2.210.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Organisations.Model.0.2.210\lib\netstandard2.0\ESFA.DC.ReferenceData.Organisations.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.Postcodes.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.Postcodes.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.Postcodes.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.Postcodes.Model, Version=0.2.159.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.Postcodes.Model.0.2.159\lib\netstandard2.0\ESFA.DC.ReferenceData.Postcodes.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ReferenceData.ULN.Model, Version=0.2.97.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ReferenceData.ULN.Model.0.2.97\lib\netstandard2.0\ESFA.DC.ReferenceData.ULN.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ReferenceData.ULN.Model, Version=0.2.159.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ReferenceData.ULN.Model.0.2.159\lib\netstandard2.0\ESFA.DC.ReferenceData.ULN.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
+    <Reference Include="ESFA.DC.Serialization.Interfaces, Version=0.1.30.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Serialization.Interfaces.0.1.30-beta0001\lib\netstandard2.0\ESFA.DC.Serialization.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=5.6.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.6.0\lib\net45\FluentAssertions.dll</HintPath>
@@ -203,6 +221,9 @@
     <Compile Include="MessageMapperServiceTests.cs" />
     <Compile Include="ReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Repository\AppEarningsHistoryRepositoryServiceTests.cs" />
+    <Compile Include="Repository\EasRepositoryServiceTests.cs" />
+    <Compile Include="Repository\FrmReferenceDataRepositoryServiceTests.cs" />
+    <Compile Include="Repository\McaDevolvedContractsRepositoryServiceTests.cs" />
     <Compile Include="Repository\MetaDataServiceTests.cs" />
     <Compile Include="Repository\FcsRepositoryServiceTests.cs" />
     <Compile Include="Repository\EpaOrganisationsRepositoryServiceTests.cs" />
@@ -219,6 +240,7 @@
     <Compile Include="Repository\OrganisationsRepositoryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EmployersRepositoryServiceTests.cs" />
+    <Compile Include="Repository\DevolvedPostcodesRepositoryServiceTests.cs" />
     <Compile Include="Repository\PostcodesRepositoryServiceTests.cs" />
     <Compile Include="Repository\IlrReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\UlnRepositoryServiceTests.cs" />
@@ -232,6 +254,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Data.Population\ESFA.DC.ILR.ReferenceDataService.Data.Population.csproj">
       <Project>{FD34401D-E3BB-4954-B4AE-CAF41EE82882}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Data.Population</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj">
+      <Project>{6991FF63-4C2C-41E1-9909-53CF6BE74CE1}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj">
       <Project>{B4E84ADC-C04F-4EF8-98A2-5ADDBF1FEEF1}</Project>

@@ -4,5 +4,7 @@
     {
         IlrMessage,
         DesktopReferenceData,
+        ValidationMessages,
+        FrmReferenceData,
     }
 }

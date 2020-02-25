@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +8,7 @@ using Autofac;
 using Autofac.Features.Indexed;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Exception;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Service.Tasks.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Context;
 using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
@@ -39,9 +41,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
 
                 try
                 {
-                    var task = GetTask(message);
-
-                    await _taskIndex[task].ExecuteAsync(referenceDataContext, cancellationToken);
+                    foreach (var task in GetTasks(message))
+                    {
+                        await _taskIndex[task].ExecuteAsync(referenceDataContext, cancellationToken);
+                    }
                 }
                 catch (ReferenceDataServiceFailureException exception)
                 {
@@ -52,10 +55,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             }
         }
 
-        private TaskKeys GetTask(JobContextMessage message)
+        private IEnumerable<TaskKeys> GetTasks(JobContextMessage message)
         {
-            return (TaskKeys)Enum.Parse(typeof(TaskKeys),
-                message.Topics[message.TopicPointer].Tasks.SelectMany(x => x.Tasks).First());
+            var tasks = message.Topics[message.TopicPointer].Tasks.SelectMany(x => x.Tasks);
+
+            foreach (var task in tasks)
+            {
+                yield return (TaskKeys)Enum.Parse(typeof(TaskKeys), task);
+            }
         }
     }
 }

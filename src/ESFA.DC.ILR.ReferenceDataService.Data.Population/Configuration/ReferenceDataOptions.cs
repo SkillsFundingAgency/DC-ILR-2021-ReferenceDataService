@@ -21,5 +21,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration
         public string AppsEarningsHistoryConnectionString { get; set; }
 
         public string IlrReferenceDataConnectionString { get; set; }
+
+        public string EasConnectionString { get; set; }
+
+        public string Ilr1819ConnectionString { get; set; }
     }
 }
