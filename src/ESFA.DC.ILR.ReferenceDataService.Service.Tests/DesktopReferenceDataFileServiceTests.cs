@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         [Fact]
         public async Task ProcessAync()
         {
-            var outputFileName = "desktop/1920/referencedata/FISReferenceData_0.1.0.zip";
+            var outputFileName = "desktop/2021/referencedata/FISReferenceData_0.1.0.zip";
             var cancellationToken = CancellationToken.None;
             var referenceDataContextMock = new Mock<IReferenceDataContext>();
             var zipFileServiceMock = new Mock<IZipFileService>();
@@ -34,10 +34,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             fileNameServiceMock.Setup(fsm => fsm.BuildFileName(It.IsAny<string>(), It.IsAny<string>())).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
-
-          //  var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
-
-          //  referenceDataContextMock.Setup(d => d.DesktopReferenceDataStoragePath).Returns(filePath);
 
             zipFileServiceMock.Setup(s => s.SaveCollectionZipAsync(
                 outputFileName,

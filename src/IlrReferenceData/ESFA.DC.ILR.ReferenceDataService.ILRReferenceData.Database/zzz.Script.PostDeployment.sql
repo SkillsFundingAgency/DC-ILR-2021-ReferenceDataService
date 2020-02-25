@@ -21,10 +21,10 @@ RAISERROR('		   Update User Account Passwords',10,1) WITH NOWAIT;
 GO
 
 RAISERROR('		       RO User',10,1) WITH NOWAIT;
-ALTER USER [ILR1920ReferenceData_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
+ALTER USER [ILR2021ReferenceData_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
 GO
 RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
-ALTER USER [ILR1920ReferenceData_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
+ALTER USER [ILR2021ReferenceData_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
 GO
 RAISERROR('		       DSCI User',10,1) WITH NOWAIT;
 ALTER USER [User_DSCI] WITH PASSWORD = N'$(DsciUserPassword)';

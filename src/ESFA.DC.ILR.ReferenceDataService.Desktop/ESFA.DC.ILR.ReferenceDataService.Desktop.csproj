@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ESFA.DC.ILR.ReferenceDataService.Desktop</RootNamespace>
-    <Version>0.1.6</Version>
+    <Version>0.1.0</Version>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
-    <Product>ESFA.DC.ILR1920.ReferenceDataService.Desktop</Product>
+    <Product>ESFA.DC.ILR.2021.ReferenceDataService.Desktop</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>ESFA.DC.ILR1920.ReferenceDataService.Desktop</PackageId>
+    <PackageId>ESFA.DC.ILR.2021.ReferenceDataService.Desktop</PackageId>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
