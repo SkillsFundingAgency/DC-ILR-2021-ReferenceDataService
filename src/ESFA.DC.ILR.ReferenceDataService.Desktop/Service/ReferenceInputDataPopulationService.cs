@@ -10,13 +10,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
     public class ReferenceInputDataPopulationService : IReferenceInputDataPopulationService
     {
         private readonly IReferenceInputDataMapperService _desktopReferenceDataRootMapperService;
+        private readonly IReferenceInputEFMapper _referenceInputEFMapper;
+        private readonly IReferenceInputPersistanceService _referenceInputPersistanceService;
         private readonly ILogger _logger;
 
         public ReferenceInputDataPopulationService(
             IReferenceInputDataMapperService desktopReferenceDataRootMapperService,
+            IReferenceInputEFMapper referenceInputEFMapper,
+            IReferenceInputPersistanceService referenceInputPersistanceService,
             ILogger logger)
         {
             _desktopReferenceDataRootMapperService = desktopReferenceDataRootMapperService;
+            _referenceInputEFMapper = referenceInputEFMapper;
+            _referenceInputPersistanceService = referenceInputPersistanceService;
             _logger = logger;
         }
 
@@ -25,6 +31,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger.LogInfo("Starting Reference Data Retrieval from sources");
             var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(referenceDataContext, cancellationToken);
             _logger.LogInfo("Finished Reference Data Retrieval from sources");
+
+            var efmodels = _referenceInputEFMapper.Map(referenceDataContext, desktopReferenceData, cancellationToken);
+
+            _referenceInputPersistanceService.PersistModels(referenceDataContext, efmodels, cancellationToken);
 
             return desktopReferenceData;
         }

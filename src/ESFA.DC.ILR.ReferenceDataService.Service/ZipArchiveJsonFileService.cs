@@ -32,12 +32,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
         {
             using (var stream = zipArchive.GetEntry(fileName).Open())
             {
-                if (predicate == null)
+                var enumerable = _jsonSerializationService.DeserializeCollection<T>(stream);
+
+                if (predicate != null)
                 {
-                    return _jsonSerializationService.DeserializeCollection<T>(stream).ToList();
+                    enumerable = enumerable.Where(predicate);
                 }
 
-                return _jsonSerializationService.DeserializeCollection<T>(stream).Where(predicate).ToList();
+                return enumerable.ToList();
             }
         }
     }

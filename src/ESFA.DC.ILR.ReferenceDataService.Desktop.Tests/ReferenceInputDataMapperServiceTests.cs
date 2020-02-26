@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<Organisation>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestOrganisations());
             zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<Postcode>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestPostcodes());
 
-            using (Stream stream = new FileStream(currentPath + "\\ReferenceData.zip", FileMode.Open))
+            using (Stream stream = new FileStream(currentPath + "\\TestFiles\\ReferenceInputReferenceData.zip", FileMode.Open))
             {
                 fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
                    referenceDataContext.Object.InputReferenceDataFileKey,

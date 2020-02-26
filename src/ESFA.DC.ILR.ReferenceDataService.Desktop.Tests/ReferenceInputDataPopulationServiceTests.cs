@@ -31,6 +31,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
         {
             return new ReferenceInputDataPopulationService(
                 mapperService,
+                Mock.Of<IReferenceInputEFMapper>(),
+                Mock.Of<IReferenceInputPersistanceService>(),
                 Mock.Of<ILogger>());
         }
     }

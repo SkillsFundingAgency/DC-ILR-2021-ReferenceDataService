@@ -125,7 +125,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             larsLearningDeliveryMapperServiceMock.Setup(sm => sm.Map(It.IsAny<List<LARSLearningDeliveryKey>>(), It.IsAny<DesktopReferenceDataRoot>())).Returns(larsLearningDeliveries);
 
-            using (Stream stream = new FileStream(currentPath + "\\ReferenceData.zip", FileMode.Open))
+            using (Stream stream = new FileStream(currentPath + "\\TestFiles\\ReferenceData.zip", FileMode.Open))
             {
                 fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
                    referenceDataContext.Object.InputReferenceDataFileKey,
