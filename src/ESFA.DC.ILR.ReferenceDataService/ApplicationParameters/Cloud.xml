@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/ESFA.DC.ILR1920.ReferenceDataService" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+<Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/ESFA.DC.ILR2021.ReferenceDataService" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="ESFA.DC.ILR.ReferenceDataService.Stateless_InstanceCount" Value="-1" />
     <Parameter Name="ProcessingServicePlacementConstraints" Value="__ProcessingServicePlacementConstraints__" />
@@ -26,5 +26,6 @@
     <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RW__" />
     <Parameter Name="EasConnectionString" Value="__EasConnectionStringRO__" />
     <Parameter Name="Ilr1819ConnectionString" Value="__Ilr1819ConnectionStringRO__" />
+    <Parameter Name="Ilr1920ConnectionString" Value="__Ilr1920ConnectionStringRO__" />
   </Parameters>
 </Application>

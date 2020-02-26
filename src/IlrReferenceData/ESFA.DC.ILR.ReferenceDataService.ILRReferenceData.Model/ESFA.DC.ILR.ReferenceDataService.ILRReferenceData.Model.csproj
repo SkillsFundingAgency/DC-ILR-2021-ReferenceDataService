@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>ESFA.DC.ILR1920.ReferenceDataService.ILRReferenceData.EF</PackageId>
+    <PackageId>ESFA.DC.ILR.2021.ReferenceDataService.ILRReferenceData.EF</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
-    <Product>ESFA.DC.ILR1920.ReferenceDataService.ILRReferenceData.EF</Product>
+    <Product>ESFA.DC.ILR.2021.ReferenceDataService.ILRReferenceData.EF</Product>
   </PropertyGroup>
 
   <ItemGroup>

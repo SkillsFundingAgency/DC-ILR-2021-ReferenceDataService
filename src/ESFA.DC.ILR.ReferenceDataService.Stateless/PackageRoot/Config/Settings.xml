@@ -31,5 +31,6 @@
     <Parameter Name="IlrReferenceDataConnectionString" Value=""/>
     <Parameter Name="EasConnectionString" Value=""/>
     <Parameter Name="Ilr1819ConnectionString" Value=""/>
+    <Parameter Name="Ilr1920ConnectionString" Value=""/>
   </Section>
 </Settings>

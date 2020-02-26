@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>ESFA.DC.ILR1920.ReferenceDataService.Model</PackageId>
+    <PackageId>ESFA.DC.ILR.2021.ReferenceDataService.Model</PackageId>
     <Authors>DC</Authors>
     <Company>ESFA</Company>
-    <Product>ESFA.DC.ILR1920.ReferenceDataService.Model</Product>
-    <Description>ILR1920 Reference Data Service Model</Description>
+    <Product>ESFA.DC.ILR.2021.ReferenceDataService.Model</Product>
+    <Description>ILR2021 Reference Data Service Model</Description>
     <Version>0.1.0</Version>
   </PropertyGroup>
 
