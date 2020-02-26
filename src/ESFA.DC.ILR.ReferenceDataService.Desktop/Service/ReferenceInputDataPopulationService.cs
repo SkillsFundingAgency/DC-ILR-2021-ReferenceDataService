@@ -32,9 +32,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(referenceDataContext, cancellationToken);
             _logger.LogInfo("Finished Reference Data Retrieval from sources");
 
-            var efmodels = _referenceInputEFMapper.Map(referenceDataContext, desktopReferenceData, cancellationToken);
+            var efmodels = _referenceInputEFMapper.Map<object>(referenceDataContext, desktopReferenceData, cancellationToken);
 
-            _referenceInputPersistanceService.PersistModels(referenceDataContext, efmodels, cancellationToken);
+            await _referenceInputPersistanceService.PersistModels<object>(referenceDataContext, efmodels, cancellationToken);
 
             return desktopReferenceData;
         }
