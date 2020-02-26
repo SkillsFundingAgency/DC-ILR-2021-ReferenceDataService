@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Model;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
-using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
-using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
-using ESFA.DC.Serialization.Interfaces;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -28,168 +25,65 @@ using static ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ValidationError;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 {
-    public class DesktopReferenceDataFileRetrievalServiceTests
+    public class ReferenceInputDataMapperServiceTests
     {
         [Fact]
         public async Task Retrieve()
         {
             var cancellationToken = CancellationToken.None;
-            var expectedReferenceData = TestReferenceData();
             var fileServiceMock = new Mock<IFileService>();
-            var jsonSerializationServiceMock = new Mock<IJsonSerializationService>();
+            var zipArchiveFileServiceMock = new Mock<IZipArchiveFileService>();
             var referenceDataContext = new Mock<IReferenceDataContext>();
 
-            var mapperData = new MapperData
+            var expectedReferenceData = new DesktopReferenceDataRoot
             {
-                Postcodes = new List<string> { "Postcode1" },
-                EmployerIds = new List<int> { 1 },
-                EpaOrgIds = new List<string> { "1", "2", "3" },
-                UKPRNs = new List<int> { 1, 2, 3 },
-                StandardCodes = new List<int> { 1, 2, 3 },
-                LARSLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
+                MetaDatas = TestNetaData(),
+                DevolvedPostocdes = new DevolvedPostcodes
                 {
-                    new LARSLearningDeliveryKey("1", 1, 1, 1)
-                }
+                    McaGlaSofLookups = TestMcaSofLookups(),
+                    Postcodes = TestDevolvedPostcodes(),
+                },
+                Employers = TestEmployers(),
+                EPAOrganisations = TestEpaOrgs(),
+                LARSLearningDeliveries = TestLarsLearningDeliveries(),
+                LARSFrameworkAims = TestLarsFrameworkAims(),
+                LARSFrameworks = TestLarsFrameworks(),
+                LARSStandards = TestLarsStandards(),
+                Organisations = TestOrganisations(),
+                Postcodes = TestPostcodes()
             };
 
             var currentPath = Directory.GetCurrentDirectory();
             referenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
             referenceDataContext.Setup(r => r.Container).Returns(currentPath);
 
-            jsonSerializationServiceMock.Setup(js => js.Deserialize<MetaData>(It.IsAny<Stream>())).Returns(TestNetaData());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<DevolvedPostcode>(It.IsAny<Stream>())).Returns(TestDevolvedPostcodes());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<McaGlaSofLookup>(It.IsAny<Stream>())).Returns(TestMcaSofLookups());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Employer>(It.IsAny<Stream>())).Returns(TestEmployers());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<EPAOrganisation>(It.IsAny<Stream>())).Returns(TestEpaOrgs());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSLearningDelivery>(It.IsAny<Stream>())).Returns(TestLarsLearningDeliveries());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSFrameworkDesktop>(It.IsAny<Stream>())).Returns(TestLarsFrameworks());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<LARSStandard>(It.IsAny<Stream>())).Returns(TestLarsStandards());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Organisation>(It.IsAny<Stream>())).Returns(TestOrganisations());
-            jsonSerializationServiceMock.Setup(js => js.DeserializeCollection<Postcode>(It.IsAny<Stream>())).Returns(TestPostcodes());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModel<MetaData>(It.IsAny<ZipArchive>(), It.IsAny<string>())).Returns(TestNetaData());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<DevolvedPostcode>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestDevolvedPostcodes());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<McaGlaSofLookup>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestMcaSofLookups());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<McaGlaSofLookup>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestMcaSofLookups());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<Employer>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestEmployers());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<EPAOrganisation>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestEpaOrgs());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<LARSLearningDelivery>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestLarsLearningDeliveries());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<LARSFrameworkDesktop>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestLarsFrameworks());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<LARSFrameworkAimDesktop>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestLarsFrameworkAims());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<LARSStandard>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestLarsStandards());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<Organisation>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestOrganisations());
+            zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<Postcode>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestPostcodes());
 
-            using (Stream stream = new FileStream(currentPath + "\\ReferenceData.zip", FileMode.Open))
+            using (Stream stream = new FileStream(currentPath + "\\TestFiles\\ReferenceInputReferenceData.zip", FileMode.Open))
             {
                 fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
                    referenceDataContext.Object.InputReferenceDataFileKey,
                    referenceDataContext.Object.Container,
                    cancellationToken)).ReturnsAsync(stream);
 
-                var result = await NewService(fileServiceMock.Object, jsonSerializationServiceMock.Object).Retrieve(referenceDataContext.Object, mapperData, cancellationToken);
+                var result = await NewService(
+                    zipArchiveFileServiceMock.Object,
+                    fileServiceMock.Object)
+                    .MapReferenceData(referenceDataContext.Object, cancellationToken);
+
                 result.Should().BeEquivalentTo(expectedReferenceData);
             }
-        }
-
-        private DesktopReferenceDataRoot TestReferenceData()
-        {
-            return new DesktopReferenceDataRoot
-            {
-                MetaDatas = TestNetaData(),
-                DevolvedPostocdes = new DevolvedPostcodes
-                {
-                    McaGlaSofLookups = TestMcaSofLookups(),
-                    Postcodes = new List<DevolvedPostcode>
-                    {
-                        new DevolvedPostcode
-                        {
-                            Postcode = "Postcode1",
-                            Area = "Area1",
-                            SourceOfFunding = "105",
-                            EffectiveFrom = new DateTime(2019, 9, 1)
-                        }
-                    },
-                },
-                Employers = new List<Employer>
-                {
-                    new Employer
-                    {
-                        ERN = 1,
-                        LargeEmployerEffectiveDates = new List<LargeEmployerEffectiveDates>
-                        {
-                            new LargeEmployerEffectiveDates
-                            {
-                                EffectiveFrom = new DateTime(2018, 8, 1),
-                            },
-                        },
-                    },
-                },
-                EPAOrganisations = new List<EPAOrganisation>
-                {
-                    new EPAOrganisation
-                    {
-                        ID = "1",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "2",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new EPAOrganisation
-                    {
-                        ID = "3",
-                        Standard = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                },
-                LARSLearningDeliveries = new List<LARSLearningDelivery>
-                {
-                    new LARSLearningDelivery
-                    {
-                        LearnAimRef = "1",
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                },
-                LARSFrameworks = TestLarsFrameworks(),
-                LARSFrameworkAims = new List<LARSFrameworkAimDesktop>(),
-                LARSStandards = new List<LARSStandard>
-                {
-                    new LARSStandard
-                    {
-                        StandardCode = 1,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 2,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                    new LARSStandard
-                    {
-                        StandardCode = 3,
-                        EffectiveFrom = new DateTime(2018, 8, 1),
-                    },
-                },
-                Organisations = new List<Organisation>
-                {
-                    new Organisation
-                    {
-                        UKPRN = 1,
-                        PartnerUKPRN = true,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 2,
-                        PartnerUKPRN = true,
-                    },
-                    new Organisation
-                    {
-                        UKPRN = 3,
-                        PartnerUKPRN = false,
-                    },
-                },
-                Postcodes = new List<Postcode>
-                {
-                    new Postcode
-                    {
-                        PostCode = "Postcode1",
-                    },
-                },
-                AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
-                FCSContractAllocations = new List<FcsContractAllocation>(),
-                ULNs = new List<long>(),
-            };
         }
 
         private MetaData TestNetaData()
@@ -410,6 +304,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
         }
 
+        private List<LARSFrameworkAimDesktop> TestLarsFrameworkAims()
+        {
+            return new List<LARSFrameworkAimDesktop>
+            {
+                new LARSFrameworkAimDesktop
+                {
+                    FworkCode = 1,
+                    ProgType = 2,
+                    PwayCode = 3,
+                },
+                new LARSFrameworkAimDesktop
+                {
+                    FworkCode = 2,
+                    ProgType = 2,
+                    PwayCode = 3,
+                },
+                new LARSFrameworkAimDesktop
+                {
+                    FworkCode = 2,
+                    ProgType = 2,
+                    PwayCode = 2,
+                }
+            };
+        }
 
         private List<LARSFrameworkDesktop> TestLarsFrameworks()
         {
@@ -491,11 +409,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
         }
 
-        private DesktopReferenceDataFileRetrievalService NewService(
-            IFileService fileService = null,
-            IJsonSerializationService jsonSerializationService = null)
+        private ReferenceInputDataMapperService NewService(
+            IZipArchiveFileService zipArchiveFileService = null,
+            IFileService fileService = null)
         {
-            return new DesktopReferenceDataFileRetrievalService(fileService, jsonSerializationService, Mock.Of<ILogger>());
+            return new ReferenceInputDataMapperService(
+                zipArchiveFileService,
+                fileService,
+                Mock.Of<ILogger>());
         }
     }
 }

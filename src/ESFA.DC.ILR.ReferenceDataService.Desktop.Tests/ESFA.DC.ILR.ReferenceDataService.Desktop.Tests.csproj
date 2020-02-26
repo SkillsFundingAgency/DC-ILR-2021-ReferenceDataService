@@ -47,8 +47,8 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.19.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR1920.ReferenceDataService.Model.0.1.19\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.1.15\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Tests.Model.0.1.7-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
@@ -98,15 +98,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesktopContextReturnPeriodUpdateServiceTests.cs" />
-    <Compile Include="DesktopReferenceDataFileRetrievalServiceTests.cs" />
-    <Compile Include="MapperTests.cs" />
+    <Compile Include="ReferenceInputDataMapperServiceTests.cs" />
     <Compile Include="DesktopReferenceDataMapperServiceTests.cs" />
+    <Compile Include="ReferenceInputDataPopulationServiceTests.cs" />
+    <Compile Include="DesktopReferenceDataPopulationServiceTests.cs" />
+    <Compile Include="MapperTests.cs" />
     <Compile Include="DesktopTaskTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="ReferenceData.zip">
+    <Content Include="TestFiles\ReferenceData.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\ReferenceInputReferenceData.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -129,6 +134,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj">
       <Project>{4127C037-0DE3-408C-9D62-F9FFB3FA0540}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Providers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
+      <Project>{522D563B-9412-4748-B7CE-21CAD291331E}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,8 +6,8 @@ using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
-    public interface IDesktopReferenceDataFileRetrievalService
+    public interface IDesktopReferenceDataMapperService
     {
-        Task<DesktopReferenceDataRoot> Retrieve(IReferenceDataContext referenceDataContext, MapperData mapperData, CancellationToken cancellationToken);
+        Task<ReferenceDataRoot> MapReferenceData(IReferenceDataContext referenceDataContext, MapperData mapperData, CancellationToken cancellationToken);
     }
 }

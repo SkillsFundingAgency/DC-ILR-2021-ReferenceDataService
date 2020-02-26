@@ -7,6 +7,8 @@ using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
+using ESFA.DC.ILR.ReferenceDataService.Service;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
 {
@@ -17,8 +19,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
             containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule<MapperModule>();
             containerBuilder.RegisterType<DesktopContextReturnPeriodUpdateService>().As<IDesktopContextReturnPeriodUpdateService>();
-            containerBuilder.RegisterType<DesktopReferenceDataFileRetrievalService>().As<IDesktopReferenceDataFileRetrievalService>();
-            containerBuilder.RegisterType<DesktopReferenceDataMapperService>().As<IReferenceDataPopulationService>();
+            containerBuilder.RegisterType<ZipArchiveJsonFileService>().As<IZipArchiveFileService>();
+            containerBuilder.RegisterType<DesktopReferenceDataPopulationService>().As<IReferenceDataPopulationService>();
+            containerBuilder.RegisterType<DesktopReferenceDataMapperService>().As<IDesktopReferenceDataMapperService>();
             containerBuilder.RegisterType<LarsLearningDeliveryReferenceDataMapper>().As<IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>>();
         }
     }

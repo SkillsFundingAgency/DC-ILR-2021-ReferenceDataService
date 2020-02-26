@@ -52,8 +52,8 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.19.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR1920.ReferenceDataService.Model.0.1.19\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.1.15\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Tests.Model.0.1.7-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
@@ -148,6 +148,7 @@
     <Compile Include="Mappers\TestMapper.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="ValidationMessagesTaskTests.cs" />
+    <Compile Include="ZipArchiveJsonFileServiceTests.cs" />
     <Compile Include="ZipFileServiceTests.cs" />
     <Compile Include="DesktopReferenceDataFileServiceTests.cs" />
     <Compile Include="DesktopReferenceDataTaskTests.cs" />
@@ -160,6 +161,9 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="TestFiles\ZipArchive.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Data.Population\ESFA.DC.ILR.ReferenceDataService.Data.Population.csproj">

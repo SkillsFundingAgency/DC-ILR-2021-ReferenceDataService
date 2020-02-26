@@ -2,10 +2,10 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseName>ILR1920ReferenceData</TargetDatabaseName>
+    <TargetDatabaseName>ILR2021ReferenceData</TargetDatabaseName>
     <TargetConnectionString>Data Source=.;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <DeployScriptFileName>ESFA.DC.ILR.ReferenceDataService.ILR1920ReferenceData.Database.sql</DeployScriptFileName>
+    <DeployScriptFileName>ESFA.DC.ILR.ReferenceDataService.ILR2021ReferenceData.Database.sql</DeployScriptFileName>
   </PropertyGroup>
   <ItemGroup>
     <SqlCmdVariable Include="BUILD_BRANCHNAME">
