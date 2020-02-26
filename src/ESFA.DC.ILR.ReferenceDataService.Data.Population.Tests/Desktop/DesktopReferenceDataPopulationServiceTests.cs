@@ -72,7 +72,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
 
             root.MetaDatas.ReferenceDataVersions.Should().BeEquivalentTo(referenceDataVersions);
             root.AppsEarningsHistories.Should().HaveCount(0);
-            root.DevolvedPostocdes.Postcodes.Should().HaveCount(2);
+            root.DevolvedPostcodes.Postcodes.Should().HaveCount(2);
             root.Employers.Should().HaveCount(3);
             root.EPAOrganisations.Should().HaveCount(3);
             root.FCSContractAllocations.Should().HaveCount(0);
