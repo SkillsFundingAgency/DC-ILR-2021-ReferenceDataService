@@ -148,6 +148,7 @@
     <Compile Include="Mappers\TestMapper.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="ValidationMessagesTaskTests.cs" />
+    <Compile Include="ZipArchiveJsonFileServiceTests.cs" />
     <Compile Include="ZipFileServiceTests.cs" />
     <Compile Include="DesktopReferenceDataFileServiceTests.cs" />
     <Compile Include="DesktopReferenceDataTaskTests.cs" />
@@ -160,6 +161,9 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="TestFiles\ZipArchive.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Data.Population\ESFA.DC.ILR.ReferenceDataService.Data.Population.csproj">
