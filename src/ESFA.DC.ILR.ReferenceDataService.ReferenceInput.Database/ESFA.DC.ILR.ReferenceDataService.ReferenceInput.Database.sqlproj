@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{745d3105-2993-4fd1-a221-aed2f9a8879e}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Security" />
+    <Folder Include="ReferenceInput" />
+    <Folder Include="ReferenceInput\Tables" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Security\ReferenceInput.sql" />
+    <Build Include="ReferenceInput\Tables\AppsEarningHistory_ApprenticeshipEarningsHistory.sql" />
+    <Build Include="ReferenceInput\Tables\Employers_Employer.sql" />
+    <Build Include="ReferenceInput\Tables\Employers_LargeEmployerEffectiveDates.sql" />
+    <Build Include="ReferenceInput\Tables\Employers_LargeEmployerVersion.sql" />
+    <Build Include="ReferenceInput\Tables\EPAOrganisations_EPAOrganisation.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRule.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRuleEmploymentStatus.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRuleLocalAuthority.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRuleLocalEnterprisePartnership.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRuleSectorSubjectAreaLevel.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_FcsContractAllocation.sql" />
+    <Build Include="ReferenceInput\Tables\FCS_FcsContractDeliverable.sql" />
+    <Build Include="ReferenceInput\Tables\FRM_FrmLearner.sql" />
+    <Build Include="ReferenceInput\Tables\FRM_FrmReferenceData.sql" />
+    <Build Include="ReferenceInput\Tables\FRM_LearningDeliveryFAM.sql" />
+    <Build Include="ReferenceInput\Tables\FRM_ProviderSpecDeliveryMonitoring.sql" />
+    <Build Include="ReferenceInput\Tables\FRM_ProviderSpecLearnerMonitoring.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSAnnualValue.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFramework.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkAim.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkApprenticeshipFunding.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkCommonComponent.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkDesktop.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSFunding.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSLearningDelivery.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSLearningDeliveryCategory.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSStandard.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSStandardApprenticeshipFunding.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSStandardCommonComponent.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSStandardFunding.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSStandardValidity.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSValidity.sql" />
+    <Build Include="ReferenceInput\Tables\LARS_LARSVersion.sql" />
+    <Build Include="ReferenceInput\Tables\McaContracts_McaDevolvedContract.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_CampusIdentifierVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_CensusDate.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_CoFVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_DevolvedPostcodesVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_EasUploadDateTime.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_EmployersVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_HmppPostcodesVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_IlrCollectionDates.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_LarsVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_Lookup.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_LookupSubCategory.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_MetaData.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_OrganisationsVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_PostcodeFactorsVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_PostcodesVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_ReferenceDataVersion.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_ValidationError.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_ValidationRule.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_Organisation.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_OrganisationCampusIdentifier.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_OrganisationCoFRemoval.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_OrganisationFunding.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_OrganisationVersion.sql" />
+    <Build Include="ReferenceInput\Tables\Organisations_SpecialistResource.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_DasDisadvantage.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_EfaDisadvantage.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_McaglaSOF.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_ONSData.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_Postcode.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_PostCodeVersion.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_SfaAreaCost.sql" />
+    <Build Include="ReferenceInput\Tables\Postcodes_SfaDisadvantage.sql" />
+    <Build Include="ReferenceInput\Tables\PostcodesDevolution_DevolvedPostcode.sql" />
+    <Build Include="ReferenceInput\Tables\PostcodesDevolution_DevolvedPostcodes.sql" />
+    <Build Include="ReferenceInput\Tables\PostcodesDevolution_McaGlaSofLookup.sql" />
+    <Build Include="ReferenceInput\Tables\ULNs.sql" />
+  </ItemGroup>
+</Project>
