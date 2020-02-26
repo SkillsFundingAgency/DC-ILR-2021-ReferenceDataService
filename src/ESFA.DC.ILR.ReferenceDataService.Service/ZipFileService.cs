@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             string zipFileName,
             string container,
             MetaData metaDatas,
-            DevolvedPostcodes DevolvedPostcodes,
+            DevolvedPostcodes devolvedPostcodes,
             IReadOnlyCollection<Employer> employers,
             IReadOnlyCollection<EPAOrganisation> ePAOrganisations,
             IReadOnlyCollection<LARSFrameworkDesktop> larsFrameworks,
@@ -50,8 +50,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 using (var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create, true))
                 {
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.MetaDataFile, metaDatas);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, DevolvedPostcodes.Postcodes);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, DevolvedPostcodes.McaGlaSofLookups);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostcodes.Postcodes);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, devolvedPostcodes.McaGlaSofLookups);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EmployersFile, employers);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, ePAOrganisations);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworksFile, larsFrameworks);
