@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             messageMapperServiceMock.Setup(sm => sm.MapFromMessage(message)).Returns(mapperData);
             desktopReferenceDataMapperServiceMock.Setup(sm => sm.MapReferenceData(referenceDataContext.Object, It.IsAny<MapperData>(), CancellationToken.None)).Returns(Task.FromResult(desktopReferenceData));
 
-            var result = await NewService(messageMapperServiceMock.Object,desktopReferenceDataMapperServiceMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None);
+            var result = await NewService(messageMapperServiceMock.Object, desktopReferenceDataMapperServiceMock.Object).PopulateAsync(referenceDataContext.Object, message, CancellationToken.None);
 
             result.Should().BeEquivalentTo(desktopReferenceData);
         }

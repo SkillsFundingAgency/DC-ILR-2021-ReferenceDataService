@@ -8,8 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
     {
         T RetrieveModel<T>(ZipArchive zipArchive, string fileName);
 
-        IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName);
-
-        IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName, Func<T, bool> predicate);
+        IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName, Func<T, bool> predicate = null);
     }
 }

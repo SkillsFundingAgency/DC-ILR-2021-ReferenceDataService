@@ -28,18 +28,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             return model;
         }
 
-        public IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName)
+        public IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName, Func<T, bool> predicate = null)
         {
             using (var stream = zipArchive.GetEntry(fileName).Open())
             {
-                return _jsonSerializationService.DeserializeCollection<T>(stream).ToList();
-            }
-        }
+                if (predicate == null)
+                {
+                    return _jsonSerializationService.DeserializeCollection<T>(stream).ToList();
+                }
 
-        public IReadOnlyCollection<T> RetrieveModels<T>(ZipArchive zipArchive, string fileName, Func<T, bool> predicate)
-        {
-            using (var stream = zipArchive.GetEntry(fileName).Open())
-            {
                 return _jsonSerializationService.DeserializeCollection<T>(stream).Where(predicate).ToList();
             }
         }
