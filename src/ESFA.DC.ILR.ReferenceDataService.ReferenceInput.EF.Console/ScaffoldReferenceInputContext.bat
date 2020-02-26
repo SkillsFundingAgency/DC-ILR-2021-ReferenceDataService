@@ -1,0 +1,1 @@
+dotnet.exe ef dbcontext scaffold "Server=.\;Database=ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -c ReferenceInputDataContext --schema ReferenceInput --force --startup-project . --project ..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model --verbose
