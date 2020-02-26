@@ -4,6 +4,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IDesktopReferenceDataMapper<TIn, TOut>
     {
-        TOut Retrieve(TIn input, DesktopReferenceDataRoot referenceData);
+        TOut Map(TIn input, DesktopReferenceDataRoot referenceData);
     }
 }
