@@ -7,10 +7,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
     {
         public int Id { get; set; }
         public DateTime DateGenerated { get; set; }
-        public int? CollectionDatesId { get; set; }
-        public int? ReferenceDataVersionsId { get; set; }
+        public int? CollectionDates_Id { get; set; }
+        public int? ReferenceDataVersions_Id { get; set; }
 
-        public virtual MetaDataIlrCollectionDate CollectionDates { get; set; }
-        public virtual MetaDataReferenceDataVersion ReferenceDataVersions { get; set; }
+        public virtual MetaDataIlrCollectionDate CollectionDates_ { get; set; }
+        public virtual MetaDataReferenceDataVersion ReferenceDataVersions_ { get; set; }
     }
 }

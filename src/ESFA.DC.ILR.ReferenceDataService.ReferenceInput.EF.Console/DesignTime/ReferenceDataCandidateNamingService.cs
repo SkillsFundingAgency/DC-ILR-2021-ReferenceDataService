@@ -5,10 +5,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console.DesignTime
 {
     public class ReferenceDataCandidateNamingService : CandidateNamingService
     {
-        public override string GenerateCandidateIdentifier(DatabaseTable originalTable)
-        {
-            return originalTable.Name;
-        }
+        //public override string GenerateCandidateIdentifier(DatabaseTable originalTable)
+        //{
+        //    return originalTable.Name;
+        //}
 
         public override string GenerateCandidateIdentifier(DatabaseColumn originalColumn)
         {

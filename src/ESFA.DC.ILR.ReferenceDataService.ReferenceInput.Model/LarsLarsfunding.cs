@@ -13,8 +13,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string WeightingFactor { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? LarsLarslearningDeliveryId { get; set; }
+        public int? LARS_LARSLearningDelivery_Id { get; set; }
 
-        public virtual LarsLarslearningDelivery LarsLarslearningDelivery { get; set; }
+        public virtual LarsLarslearningDelivery LARS_LARSLearningDelivery_ { get; set; }
     }
 }

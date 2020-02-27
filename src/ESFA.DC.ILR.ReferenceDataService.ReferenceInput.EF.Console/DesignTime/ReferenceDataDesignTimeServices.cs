@@ -9,7 +9,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console.DesignTime
         public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IPluralizer, ReferenceDataPluralizer>();
-            //serviceCollection.AddSingleton<ICandidateNamingService, ReferenceDataCandidateNamingService>();
+            serviceCollection.AddSingleton<ICandidateNamingService, ReferenceDataCandidateNamingService>();
         }
     }
 }

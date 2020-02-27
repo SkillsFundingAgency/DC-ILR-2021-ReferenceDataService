@@ -13,8 +13,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string Nuts { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? PostcodesPostcodeId { get; set; }
+        public int? Postcodes_Postcode_Id { get; set; }
 
-        public virtual PostcodesPostcode PostcodesPostcode { get; set; }
+        public virtual PostcodesPostcode Postcodes_Postcode_ { get; set; }
     }
 }

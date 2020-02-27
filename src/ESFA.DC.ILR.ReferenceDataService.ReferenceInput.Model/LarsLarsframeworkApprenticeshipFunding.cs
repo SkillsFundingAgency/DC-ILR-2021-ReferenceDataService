@@ -21,10 +21,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string FundableWithoutEmployer { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? LarsLarsframeworkDesktopId { get; set; }
-        public int? LarsLarsframeworkId { get; set; }
+        public int? LARS_LARSFrameworkDesktop_Id { get; set; }
+        public int? LARS_LARSFramework_Id { get; set; }
 
-        public virtual LarsLarsframework LarsLarsframework { get; set; }
-        public virtual LarsLarsframeworkDesktop LarsLarsframeworkDesktop { get; set; }
+        public virtual LarsLarsframeworkDesktop LARS_LARSFrameworkDesktop_ { get; set; }
+        public virtual LarsLarsframework LARS_LARSFramework_ { get; set; }
     }
 }

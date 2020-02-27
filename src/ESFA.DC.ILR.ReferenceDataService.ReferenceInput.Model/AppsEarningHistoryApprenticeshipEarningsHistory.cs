@@ -12,29 +12,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string CollectionReturnCode { get; set; }
         public int? DaysInYear { get; set; }
         public int? FworkCode { get; set; }
-        public DateTime? HistoricEffectiveTnpstartDateInput { get; set; }
+        public DateTime? HistoricEffectiveTNPStartDateInput { get; set; }
         public long? HistoricEmpIdEndWithinYear { get; set; }
         public long? HistoricEmpIdStartWithinYear { get; set; }
         public bool? HistoricLearner1618StartInput { get; set; }
-        public decimal? HistoricPmramount { get; set; }
-        public decimal? HistoricTnp1input { get; set; }
-        public decimal? HistoricTnp2input { get; set; }
-        public decimal? HistoricTnp3input { get; set; }
-        public decimal? HistoricTnp4input { get; set; }
+        public decimal? HistoricPMRAmount { get; set; }
+        public decimal? HistoricTNP1Input { get; set; }
+        public decimal? HistoricTNP2Input { get; set; }
+        public decimal? HistoricTNP3Input { get; set; }
+        public decimal? HistoricTNP4Input { get; set; }
         public decimal? HistoricTotal1618UpliftPaymentsInTheYearInput { get; set; }
-        public decimal? HistoricVirtualTnp3endOfTheYearInput { get; set; }
-        public decimal? HistoricVirtualTnp4endOfTheYearInput { get; set; }
-        public DateTime? HistoricLearnDelProgEarliestAct2dateInput { get; set; }
+        public decimal? HistoricVirtualTNP3EndOfTheYearInput { get; set; }
+        public decimal? HistoricVirtualTNP4EndOfTheYearInput { get; set; }
+        public DateTime? HistoricLearnDelProgEarliestACT2DateInput { get; set; }
         public bool LatestInYear { get; set; }
         public string LearnRefNumber { get; set; }
         public DateTime? ProgrammeStartDateIgnorePathway { get; set; }
         public DateTime? ProgrammeStartDateMatchPathway { get; set; }
         public int? ProgType { get; set; }
         public int? PwayCode { get; set; }
-        public int? Stdcode { get; set; }
+        public int? STDCode { get; set; }
         public decimal? TotalProgAimPaymentsInTheYear { get; set; }
         public DateTime? UptoEndDate { get; set; }
-        public int Ukprn { get; set; }
-        public long Uln { get; set; }
+        public int UKPRN { get; set; }
+        public long ULN { get; set; }
     }
 }

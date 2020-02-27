@@ -11,8 +11,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string SourceOfFunding { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? PostcodesDevolutionDevolvedPostcodesId { get; set; }
+        public int? PostcodesDevolution_DevolvedPostcodes_Id { get; set; }
 
-        public virtual PostcodesDevolutionDevolvedPostcode PostcodesDevolutionDevolvedPostcodes { get; set; }
+        public virtual PostcodesDevolutionDevolvedPostcode PostcodesDevolution_DevolvedPostcodes_ { get; set; }
     }
 }

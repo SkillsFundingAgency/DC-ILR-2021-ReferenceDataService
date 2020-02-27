@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         }
 
         public int Id { get; set; }
-        public int Ern { get; set; }
+        public int ERN { get; set; }
 
         public virtual ICollection<EmployersLargeEmployerEffectiveDate> EmployersLargeEmployerEffectiveDates { get; set; }
     }

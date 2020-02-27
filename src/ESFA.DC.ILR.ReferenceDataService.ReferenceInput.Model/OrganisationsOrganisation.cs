@@ -13,9 +13,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         }
 
         public int Id { get; set; }
-        public int Ukprn { get; set; }
+        public int UKPRN { get; set; }
         public string Name { get; set; }
-        public bool? PartnerUkprn { get; set; }
+        public bool? PartnerUKPRN { get; set; }
         public string LegalOrgType { get; set; }
         public bool? LongTermResid { get; set; }
 

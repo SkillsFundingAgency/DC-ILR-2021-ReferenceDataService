@@ -12,8 +12,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public decimal? UnitCost { get; set; }
         public int? PlannedVolume { get; set; }
         public decimal? PlannedValue { get; set; }
-        public int? FcsFcsContractAllocationId { get; set; }
+        public int? FCS_FcsContractAllocation_Id { get; set; }
 
-        public virtual FcsFcsContractAllocation FcsFcsContractAllocation { get; set; }
+        public virtual FcsFcsContractAllocation FCS_FcsContractAllocation_ { get; set; }
     }
 }

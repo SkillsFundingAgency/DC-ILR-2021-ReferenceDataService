@@ -9,8 +9,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public int CommonComponent { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? LarsLarsstandardId { get; set; }
+        public int? LARS_LARSStandard_Id { get; set; }
 
-        public virtual LarsLarsstandard LarsLarsstandard { get; set; }
+        public virtual LarsLarsstandard LARS_LARSStandard_ { get; set; }
     }
 }

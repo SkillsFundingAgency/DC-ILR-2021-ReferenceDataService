@@ -9,8 +9,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string Code { get; set; }
         public DateTime? EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? MetaDataLookupId { get; set; }
+        public int? MetaData_Lookup_Id { get; set; }
 
-        public virtual MetaDataLookup MetaDataLookup { get; set; }
+        public virtual MetaDataLookup MetaData_Lookup_ { get; set; }
     }
 }

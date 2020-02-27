@@ -18,9 +18,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string LearnAimRef { get; set; }
         public string LearnAimRefType { get; set; }
         public string LearnAimRefTitle { get; set; }
-        public int? EnglPrscId { get; set; }
-        public string NotionalNvqlevel { get; set; }
-        public string NotionalNvqlevelv2 { get; set; }
+        public int? EnglPrscID { get; set; }
+        public string NotionalNVQLevel { get; set; }
+        public string NotionalNVQLevelv2 { get; set; }
         public int? FrameworkCommonComponent { get; set; }
         public string LearnDirectClassSystemCode1 { get; set; }
         public string LearnDirectClassSystemCode2 { get; set; }
@@ -29,9 +29,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public decimal? SectorSubjectAreaTier2 { get; set; }
         public string LearningDeliveryGenre { get; set; }
         public int? RegulatedCreditValue { get; set; }
-        public string EnglandFehestatus { get; set; }
+        public string EnglandFEHEStatus { get; set; }
         public string AwardOrgCode { get; set; }
-        public int? Efacoftype { get; set; }
+        public int? EFACOFType { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
 

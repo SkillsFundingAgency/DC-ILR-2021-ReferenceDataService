@@ -8,8 +8,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public int Id { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? EmployersEmployerId { get; set; }
+        public int? Employers_Employer_Id { get; set; }
 
-        public virtual EmployersEmployer EmployersEmployer { get; set; }
+        public virtual EmployersEmployer Employers_Employer_ { get; set; }
     }
 }

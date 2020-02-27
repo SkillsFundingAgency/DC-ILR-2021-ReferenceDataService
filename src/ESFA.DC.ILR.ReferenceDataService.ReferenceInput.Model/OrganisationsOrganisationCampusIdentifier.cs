@@ -11,13 +11,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         }
 
         public int Id { get; set; }
-        public long Ukprn { get; set; }
+        public long UKPRN { get; set; }
         public string CampusIdentifier { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
-        public int? OrganisationsOrganisationId { get; set; }
+        public int? Organisations_Organisation_Id { get; set; }
 
-        public virtual OrganisationsOrganisation OrganisationsOrganisation { get; set; }
+        public virtual OrganisationsOrganisation Organisations_Organisation_ { get; set; }
         public virtual ICollection<OrganisationsSpecialistResource> OrganisationsSpecialistResources { get; set; }
     }
 }
