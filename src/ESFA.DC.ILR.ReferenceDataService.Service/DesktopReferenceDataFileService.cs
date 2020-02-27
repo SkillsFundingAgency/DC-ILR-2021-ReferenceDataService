@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 fileName,
                 referenceDataContext.Container,
                 desktopReferenceDataRoot.MetaDatas,
-                desktopReferenceDataRoot.DevolvedPostocdes,
+                desktopReferenceDataRoot.DevolvedPostcodes,
                 desktopReferenceDataRoot.Employers,
                 desktopReferenceDataRoot.EPAOrganisations,
                 desktopReferenceDataRoot.LARSFrameworks,

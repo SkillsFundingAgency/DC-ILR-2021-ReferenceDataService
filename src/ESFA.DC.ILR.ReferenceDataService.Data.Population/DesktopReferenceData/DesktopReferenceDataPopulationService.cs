@@ -87,7 +87,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             {
                 MetaDatas = metaDatas.Result,
                 AppsEarningsHistories = new List<ApprenticeshipEarningsHistory>(),
-                DevolvedPostocdes = devolvedPostcodes.Result,
+                DevolvedPostcodes = devolvedPostcodes.Result,
                 EasFundingLines = new List<EasFundingLine>(),
                 Employers = employers.Result,
                 EPAOrganisations = epaOrganisations.Result,

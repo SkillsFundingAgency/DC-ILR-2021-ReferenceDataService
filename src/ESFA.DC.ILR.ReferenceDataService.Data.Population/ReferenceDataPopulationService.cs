@@ -76,7 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             {
                 MetaDatas = await _metaDataRetrievalService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
-                DevolvedPostocdes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
+                DevolvedPostcodes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
                 EasFundingLines = await _easRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 Employers = await _employersRepositoryService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
                 EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),

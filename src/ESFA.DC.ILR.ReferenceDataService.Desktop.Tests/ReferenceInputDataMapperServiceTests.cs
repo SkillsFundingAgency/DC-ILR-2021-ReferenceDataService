@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var expectedReferenceData = new DesktopReferenceDataRoot
             {
                 MetaDatas = TestNetaData(),
-                DevolvedPostocdes = new DevolvedPostcodes
+                DevolvedPostcodes = new DevolvedPostcodes
                 {
                     McaGlaSofLookups = TestMcaSofLookups(),
                     Postcodes = TestDevolvedPostcodes(),
