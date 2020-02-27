@@ -15,76 +15,76 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         {
         }
 
-        public virtual DbSet<AppsEarningHistoryApprenticeshipEarningsHistory> AppsEarningHistoryApprenticeshipEarningsHistories { get; set; }
-        public virtual DbSet<EmployersEmployer> EmployersEmployers { get; set; }
-        public virtual DbSet<EmployersLargeEmployerEffectiveDate> EmployersLargeEmployerEffectiveDates { get; set; }
-        public virtual DbSet<EmployersLargeEmployerVersion> EmployersLargeEmployerVersions { get; set; }
-        public virtual DbSet<EpaorganisationsEpaorganisation> EpaorganisationsEpaorganisations { get; set; }
-        public virtual DbSet<FcsEsfEligibilityRule> FcsEsfEligibilityRules { get; set; }
-        public virtual DbSet<FcsEsfEligibilityRuleEmploymentStatus> FcsEsfEligibilityRuleEmploymentStatuses { get; set; }
-        public virtual DbSet<FcsEsfEligibilityRuleLocalAuthority> FcsEsfEligibilityRuleLocalAuthorities { get; set; }
-        public virtual DbSet<FcsEsfEligibilityRuleLocalEnterprisePartnership> FcsEsfEligibilityRuleLocalEnterprisePartnerships { get; set; }
-        public virtual DbSet<FcsEsfEligibilityRuleSectorSubjectAreaLevel> FcsEsfEligibilityRuleSectorSubjectAreaLevels { get; set; }
-        public virtual DbSet<FcsFcsContractAllocation> FcsFcsContractAllocations { get; set; }
-        public virtual DbSet<FcsFcsContractDeliverable> FcsFcsContractDeliverables { get; set; }
-        public virtual DbSet<FrmFrmLearner> FrmFrmLearners { get; set; }
-        public virtual DbSet<FrmFrmReferenceData> FrmFrmReferenceDatas { get; set; }
-        public virtual DbSet<FrmLearningDeliveryFam> FrmLearningDeliveryFams { get; set; }
-        public virtual DbSet<FrmProviderSpecDeliveryMonitoring> FrmProviderSpecDeliveryMonitorings { get; set; }
-        public virtual DbSet<FrmProviderSpecLearnerMonitoring> FrmProviderSpecLearnerMonitorings { get; set; }
-        public virtual DbSet<LarsLarsannualValue> LarsLarsannualValues { get; set; }
-        public virtual DbSet<LarsLarsframework> LarsLarsframeworks { get; set; }
-        public virtual DbSet<LarsLarsframeworkAim> LarsLarsframeworkAims { get; set; }
-        public virtual DbSet<LarsLarsframeworkApprenticeshipFunding> LarsLarsframeworkApprenticeshipFundings { get; set; }
-        public virtual DbSet<LarsLarsframeworkCommonComponent> LarsLarsframeworkCommonComponents { get; set; }
-        public virtual DbSet<LarsLarsframeworkDesktop> LarsLarsframeworkDesktops { get; set; }
-        public virtual DbSet<LarsLarsfunding> LarsLarsfundings { get; set; }
-        public virtual DbSet<LarsLarslearningDelivery> LarsLarslearningDeliveries { get; set; }
-        public virtual DbSet<LarsLarslearningDeliveryCategory> LarsLarslearningDeliveryCategories { get; set; }
-        public virtual DbSet<LarsLarsstandard> LarsLarsstandards { get; set; }
-        public virtual DbSet<LarsLarsstandardApprenticeshipFunding> LarsLarsstandardApprenticeshipFundings { get; set; }
-        public virtual DbSet<LarsLarsstandardCommonComponent> LarsLarsstandardCommonComponents { get; set; }
-        public virtual DbSet<LarsLarsstandardFunding> LarsLarsstandardFundings { get; set; }
-        public virtual DbSet<LarsLarsstandardValidity> LarsLarsstandardValidities { get; set; }
-        public virtual DbSet<LarsLarsvalidity> LarsLarsvalidities { get; set; }
-        public virtual DbSet<LarsLarsversion> LarsLarsversions { get; set; }
-        public virtual DbSet<McaContractsMcaDevolvedContract> McaContractsMcaDevolvedContracts { get; set; }
-        public virtual DbSet<MetaDataCampusIdentifierVersion> MetaDataCampusIdentifierVersions { get; set; }
-        public virtual DbSet<MetaDataCensusDate> MetaDataCensusDates { get; set; }
-        public virtual DbSet<MetaDataCoFversion> MetaDataCoFversions { get; set; }
-        public virtual DbSet<MetaDataDevolvedPostcodesVersion> MetaDataDevolvedPostcodesVersions { get; set; }
-        public virtual DbSet<MetaDataEasUploadDateTime> MetaDataEasUploadDateTimes { get; set; }
-        public virtual DbSet<MetaDataEmployersVersion> MetaDataEmployersVersions { get; set; }
-        public virtual DbSet<MetaDataHmppPostcodesVersion> MetaDataHmppPostcodesVersions { get; set; }
-        public virtual DbSet<MetaDataIlrCollectionDate> MetaDataIlrCollectionDates { get; set; }
-        public virtual DbSet<MetaDataLarsVersion> MetaDataLarsVersions { get; set; }
-        public virtual DbSet<MetaDataLookup> MetaDataLookups { get; set; }
-        public virtual DbSet<MetaDataLookupSubCategory> MetaDataLookupSubCategories { get; set; }
-        public virtual DbSet<MetaDataMetaData> MetaDataMetaDatas { get; set; }
-        public virtual DbSet<MetaDataOrganisationsVersion> MetaDataOrganisationsVersions { get; set; }
-        public virtual DbSet<MetaDataPostcodeFactorsVersion> MetaDataPostcodeFactorsVersions { get; set; }
-        public virtual DbSet<MetaDataPostcodesVersion> MetaDataPostcodesVersions { get; set; }
-        public virtual DbSet<MetaDataReferenceDataVersion> MetaDataReferenceDataVersions { get; set; }
-        public virtual DbSet<MetaDataValidationError> MetaDataValidationErrors { get; set; }
-        public virtual DbSet<MetaDataValidationRule> MetaDataValidationRules { get; set; }
-        public virtual DbSet<OrganisationsOrganisation> OrganisationsOrganisations { get; set; }
-        public virtual DbSet<OrganisationsOrganisationCampusIdentifier> OrganisationsOrganisationCampusIdentifiers { get; set; }
-        public virtual DbSet<OrganisationsOrganisationCoFremoval> OrganisationsOrganisationCoFremovals { get; set; }
-        public virtual DbSet<OrganisationsOrganisationFunding> OrganisationsOrganisationFundings { get; set; }
-        public virtual DbSet<OrganisationsOrganisationVersion> OrganisationsOrganisationVersions { get; set; }
-        public virtual DbSet<OrganisationsSpecialistResource> OrganisationsSpecialistResources { get; set; }
-        public virtual DbSet<PostcodesDasDisadvantage> PostcodesDasDisadvantages { get; set; }
-        public virtual DbSet<PostcodesDevolutionDevolvedPostcode> PostcodesDevolutionDevolvedPostcodes { get; set; }
-        public virtual DbSet<PostcodesDevolutionMcaGlaSofLookup> PostcodesDevolutionMcaGlaSofLookups { get; set; }
-        public virtual DbSet<PostcodesDevolutionPostcode> PostcodesDevolutionPostcodes { get; set; }
-        public virtual DbSet<PostcodesEfaDisadvantage> PostcodesEfaDisadvantages { get; set; }
-        public virtual DbSet<PostcodesMcaglaSof> PostcodesMcaglaSofs { get; set; }
-        public virtual DbSet<PostcodesOnsdata> PostcodesOnsdatas { get; set; }
-        public virtual DbSet<PostcodesPostCodeVersion> PostcodesPostCodeVersions { get; set; }
-        public virtual DbSet<PostcodesPostcode> PostcodesPostcodes { get; set; }
-        public virtual DbSet<PostcodesSfaAreaCost> PostcodesSfaAreaCosts { get; set; }
-        public virtual DbSet<PostcodesSfaDisadvantage> PostcodesSfaDisadvantages { get; set; }
-        public virtual DbSet<Uln> Ulns { get; set; }
+        public virtual DbSet<AppsEarningHistory_ApprenticeshipEarningsHistory> AppsEarningHistory_ApprenticeshipEarningsHistories { get; set; }
+        public virtual DbSet<EPAOrganisations_EPAOrganisation> EPAOrganisations_EPAOrganisations { get; set; }
+        public virtual DbSet<Employers_Employer> Employers_Employers { get; set; }
+        public virtual DbSet<Employers_LargeEmployerEffectiveDate> Employers_LargeEmployerEffectiveDates { get; set; }
+        public virtual DbSet<Employers_LargeEmployerVersion> Employers_LargeEmployerVersions { get; set; }
+        public virtual DbSet<FCS_EsfEligibilityRule> FCS_EsfEligibilityRules { get; set; }
+        public virtual DbSet<FCS_EsfEligibilityRuleEmploymentStatus> FCS_EsfEligibilityRuleEmploymentStatuses { get; set; }
+        public virtual DbSet<FCS_EsfEligibilityRuleLocalAuthority> FCS_EsfEligibilityRuleLocalAuthorities { get; set; }
+        public virtual DbSet<FCS_EsfEligibilityRuleLocalEnterprisePartnership> FCS_EsfEligibilityRuleLocalEnterprisePartnerships { get; set; }
+        public virtual DbSet<FCS_EsfEligibilityRuleSectorSubjectAreaLevel> FCS_EsfEligibilityRuleSectorSubjectAreaLevels { get; set; }
+        public virtual DbSet<FCS_FcsContractAllocation> FCS_FcsContractAllocations { get; set; }
+        public virtual DbSet<FCS_FcsContractDeliverable> FCS_FcsContractDeliverables { get; set; }
+        public virtual DbSet<FRM_FrmLearner> FRM_FrmLearners { get; set; }
+        public virtual DbSet<FRM_FrmReferenceData> FRM_FrmReferenceDatas { get; set; }
+        public virtual DbSet<FRM_LearningDeliveryFAM> FRM_LearningDeliveryFAMs { get; set; }
+        public virtual DbSet<FRM_ProviderSpecDeliveryMonitoring> FRM_ProviderSpecDeliveryMonitorings { get; set; }
+        public virtual DbSet<FRM_ProviderSpecLearnerMonitoring> FRM_ProviderSpecLearnerMonitorings { get; set; }
+        public virtual DbSet<LARS_LARSAnnualValue> LARS_LARSAnnualValues { get; set; }
+        public virtual DbSet<LARS_LARSFramework> LARS_LARSFrameworks { get; set; }
+        public virtual DbSet<LARS_LARSFrameworkAim> LARS_LARSFrameworkAims { get; set; }
+        public virtual DbSet<LARS_LARSFrameworkApprenticeshipFunding> LARS_LARSFrameworkApprenticeshipFundings { get; set; }
+        public virtual DbSet<LARS_LARSFrameworkCommonComponent> LARS_LARSFrameworkCommonComponents { get; set; }
+        public virtual DbSet<LARS_LARSFrameworkDesktop> LARS_LARSFrameworkDesktops { get; set; }
+        public virtual DbSet<LARS_LARSFunding> LARS_LARSFundings { get; set; }
+        public virtual DbSet<LARS_LARSLearningDelivery> LARS_LARSLearningDeliveries { get; set; }
+        public virtual DbSet<LARS_LARSLearningDeliveryCategory> LARS_LARSLearningDeliveryCategories { get; set; }
+        public virtual DbSet<LARS_LARSStandard> LARS_LARSStandards { get; set; }
+        public virtual DbSet<LARS_LARSStandardApprenticeshipFunding> LARS_LARSStandardApprenticeshipFundings { get; set; }
+        public virtual DbSet<LARS_LARSStandardCommonComponent> LARS_LARSStandardCommonComponents { get; set; }
+        public virtual DbSet<LARS_LARSStandardFunding> LARS_LARSStandardFundings { get; set; }
+        public virtual DbSet<LARS_LARSStandardValidity> LARS_LARSStandardValidities { get; set; }
+        public virtual DbSet<LARS_LARSValidity> LARS_LARSValidities { get; set; }
+        public virtual DbSet<LARS_LARSVersion> LARS_LARSVersions { get; set; }
+        public virtual DbSet<McaContracts_McaDevolvedContract> McaContracts_McaDevolvedContracts { get; set; }
+        public virtual DbSet<MetaData_CampusIdentifierVersion> MetaData_CampusIdentifierVersions { get; set; }
+        public virtual DbSet<MetaData_CensusDate> MetaData_CensusDates { get; set; }
+        public virtual DbSet<MetaData_CoFVersion> MetaData_CoFVersions { get; set; }
+        public virtual DbSet<MetaData_DevolvedPostcodesVersion> MetaData_DevolvedPostcodesVersions { get; set; }
+        public virtual DbSet<MetaData_EasUploadDateTime> MetaData_EasUploadDateTimes { get; set; }
+        public virtual DbSet<MetaData_EmployersVersion> MetaData_EmployersVersions { get; set; }
+        public virtual DbSet<MetaData_HmppPostcodesVersion> MetaData_HmppPostcodesVersions { get; set; }
+        public virtual DbSet<MetaData_IlrCollectionDate> MetaData_IlrCollectionDates { get; set; }
+        public virtual DbSet<MetaData_LarsVersion> MetaData_LarsVersions { get; set; }
+        public virtual DbSet<MetaData_Lookup> MetaData_Lookups { get; set; }
+        public virtual DbSet<MetaData_LookupSubCategory> MetaData_LookupSubCategories { get; set; }
+        public virtual DbSet<MetaData_MetaData> MetaData_MetaDatas { get; set; }
+        public virtual DbSet<MetaData_OrganisationsVersion> MetaData_OrganisationsVersions { get; set; }
+        public virtual DbSet<MetaData_PostcodeFactorsVersion> MetaData_PostcodeFactorsVersions { get; set; }
+        public virtual DbSet<MetaData_PostcodesVersion> MetaData_PostcodesVersions { get; set; }
+        public virtual DbSet<MetaData_ReferenceDataVersion> MetaData_ReferenceDataVersions { get; set; }
+        public virtual DbSet<MetaData_ValidationError> MetaData_ValidationErrors { get; set; }
+        public virtual DbSet<MetaData_ValidationRule> MetaData_ValidationRules { get; set; }
+        public virtual DbSet<Organisations_Organisation> Organisations_Organisations { get; set; }
+        public virtual DbSet<Organisations_OrganisationCampusIdentifier> Organisations_OrganisationCampusIdentifiers { get; set; }
+        public virtual DbSet<Organisations_OrganisationCoFRemoval> Organisations_OrganisationCoFRemovals { get; set; }
+        public virtual DbSet<Organisations_OrganisationFunding> Organisations_OrganisationFundings { get; set; }
+        public virtual DbSet<Organisations_OrganisationVersion> Organisations_OrganisationVersions { get; set; }
+        public virtual DbSet<Organisations_SpecialistResource> Organisations_SpecialistResources { get; set; }
+        public virtual DbSet<PostcodesDevolution_DevolvedPostcode> PostcodesDevolution_DevolvedPostcodes { get; set; }
+        public virtual DbSet<PostcodesDevolution_McaGlaSofLookup> PostcodesDevolution_McaGlaSofLookups { get; set; }
+        public virtual DbSet<PostcodesDevolution_Postcode> PostcodesDevolution_Postcodes { get; set; }
+        public virtual DbSet<Postcodes_DasDisadvantage> Postcodes_DasDisadvantages { get; set; }
+        public virtual DbSet<Postcodes_EfaDisadvantage> Postcodes_EfaDisadvantages { get; set; }
+        public virtual DbSet<Postcodes_McaglaSOF> Postcodes_McaglaSOFs { get; set; }
+        public virtual DbSet<Postcodes_ONSData> Postcodes_ONSDatas { get; set; }
+        public virtual DbSet<Postcodes_PostCodeVersion> Postcodes_PostCodeVersions { get; set; }
+        public virtual DbSet<Postcodes_Postcode> Postcodes_Postcodes { get; set; }
+        public virtual DbSet<Postcodes_SfaAreaCost> Postcodes_SfaAreaCosts { get; set; }
+        public virtual DbSet<Postcodes_SfaDisadvantage> Postcodes_SfaDisadvantages { get; set; }
+        public virtual DbSet<ULN> ULNs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -99,7 +99,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
-            modelBuilder.Entity<AppsEarningHistoryApprenticeshipEarningsHistory>(entity =>
+            modelBuilder.Entity<AppsEarningHistory_ApprenticeshipEarningsHistory>(entity =>
             {
                 entity.ToTable("AppsEarningHistory_ApprenticeshipEarningsHistory", "ReferenceInput");
 
@@ -140,33 +140,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.UptoEndDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<EmployersEmployer>(entity =>
-            {
-                entity.ToTable("Employers_Employer", "ReferenceInput");
-            });
-
-            modelBuilder.Entity<EmployersLargeEmployerEffectiveDate>(entity =>
-            {
-                entity.ToTable("Employers_LargeEmployerEffectiveDates", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Employers_Employer_)
-                    .WithMany(p => p.EmployersLargeEmployerEffectiveDates)
-                    .HasForeignKey(d => d.Employers_Employer_Id)
-                    .HasConstraintName("FK_ReferenceInput.Employers_LargeEmployerEffectiveDates_ReferenceInput.Employers_Employer_Employer_Id");
-            });
-
-            modelBuilder.Entity<EmployersLargeEmployerVersion>(entity =>
-            {
-                entity.ToTable("Employers_LargeEmployerVersion", "ReferenceInput");
-
-                entity.Property(e => e.Version).HasMaxLength(2000);
-            });
-
-            modelBuilder.Entity<EpaorganisationsEpaorganisation>(entity =>
+            modelBuilder.Entity<EPAOrganisations_EPAOrganisation>(entity =>
             {
                 entity.ToTable("EPAOrganisations_EPAOrganisation", "ReferenceInput");
 
@@ -177,7 +151,33 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Standard).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<FcsEsfEligibilityRule>(entity =>
+            modelBuilder.Entity<Employers_Employer>(entity =>
+            {
+                entity.ToTable("Employers_Employer", "ReferenceInput");
+            });
+
+            modelBuilder.Entity<Employers_LargeEmployerEffectiveDate>(entity =>
+            {
+                entity.ToTable("Employers_LargeEmployerEffectiveDates", "ReferenceInput");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Employers_Employer_)
+                    .WithMany(p => p.Employers_LargeEmployerEffectiveDates)
+                    .HasForeignKey(d => d.Employers_Employer_Id)
+                    .HasConstraintName("FK_ReferenceInput.Employers_LargeEmployerEffectiveDates_ReferenceInput.Employers_Employer_Employer_Id");
+            });
+
+            modelBuilder.Entity<Employers_LargeEmployerVersion>(entity =>
+            {
+                entity.ToTable("Employers_LargeEmployerVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
+            });
+
+            modelBuilder.Entity<FCS_EsfEligibilityRule>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRule", "ReferenceInput");
 
@@ -190,49 +190,49 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.TenderSpecReference).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<FcsEsfEligibilityRuleEmploymentStatus>(entity =>
+            modelBuilder.Entity<FCS_EsfEligibilityRuleEmploymentStatus>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRuleEmploymentStatus", "ReferenceInput");
 
                 entity.HasOne(d => d.FCS_EsfEligibilityRule_)
-                    .WithMany(p => p.FcsEsfEligibilityRuleEmploymentStatuses)
+                    .WithMany(p => p.FCS_EsfEligibilityRuleEmploymentStatuses)
                     .HasForeignKey(d => d.FCS_EsfEligibilityRule_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_EsfEligibilityRuleEmploymentStatus_ReferenceInput.FCS_EsfEligibilityRule_EsfEligibilityRule_Id");
             });
 
-            modelBuilder.Entity<FcsEsfEligibilityRuleLocalAuthority>(entity =>
+            modelBuilder.Entity<FCS_EsfEligibilityRuleLocalAuthority>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRuleLocalAuthority", "ReferenceInput");
 
                 entity.HasOne(d => d.FCS_EsfEligibilityRule_)
-                    .WithMany(p => p.FcsEsfEligibilityRuleLocalAuthorities)
+                    .WithMany(p => p.FCS_EsfEligibilityRuleLocalAuthorities)
                     .HasForeignKey(d => d.FCS_EsfEligibilityRule_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_EsfEligibilityRuleLocalAuthority_ReferenceInput.FCS_EsfEligibilityRule_EsfEligibilityRule_Id");
             });
 
-            modelBuilder.Entity<FcsEsfEligibilityRuleLocalEnterprisePartnership>(entity =>
+            modelBuilder.Entity<FCS_EsfEligibilityRuleLocalEnterprisePartnership>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRuleLocalEnterprisePartnership", "ReferenceInput");
 
                 entity.HasOne(d => d.FCS_EsfEligibilityRule_)
-                    .WithMany(p => p.FcsEsfEligibilityRuleLocalEnterprisePartnerships)
+                    .WithMany(p => p.FCS_EsfEligibilityRuleLocalEnterprisePartnerships)
                     .HasForeignKey(d => d.FCS_EsfEligibilityRule_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_EsfEligibilityRuleLocalEnterprisePartnership_ReferenceInput.FCS_EsfEligibilityRule_EsfEligibilityRule_Id");
             });
 
-            modelBuilder.Entity<FcsEsfEligibilityRuleSectorSubjectAreaLevel>(entity =>
+            modelBuilder.Entity<FCS_EsfEligibilityRuleSectorSubjectAreaLevel>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRuleSectorSubjectAreaLevel", "ReferenceInput");
 
                 entity.Property(e => e.SectorSubjectAreaCode).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.FCS_EsfEligibilityRule_)
-                    .WithMany(p => p.FcsEsfEligibilityRuleSectorSubjectAreaLevels)
+                    .WithMany(p => p.FCS_EsfEligibilityRuleSectorSubjectAreaLevels)
                     .HasForeignKey(d => d.FCS_EsfEligibilityRule_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_EsfEligibilityRuleSectorSubjectAreaLevel_ReferenceInput.FCS_EsfEligibilityRule_EsfEligibilityRule_Id");
             });
 
-            modelBuilder.Entity<FcsFcsContractAllocation>(entity =>
+            modelBuilder.Entity<FCS_FcsContractAllocation>(entity =>
             {
                 entity.ToTable("FCS_FcsContractAllocation", "ReferenceInput");
 
@@ -245,12 +245,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.StopNewStartsFromDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.EsfEligibilityRule_)
-                    .WithMany(p => p.FcsFcsContractAllocations)
+                    .WithMany(p => p.FCS_FcsContractAllocations)
                     .HasForeignKey(d => d.EsfEligibilityRule_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_FcsContractAllocation_ReferenceInput.FCS_EsfEligibilityRule_EsfEligibilityRule_Id");
             });
 
-            modelBuilder.Entity<FcsFcsContractDeliverable>(entity =>
+            modelBuilder.Entity<FCS_FcsContractDeliverable>(entity =>
             {
                 entity.ToTable("FCS_FcsContractDeliverable", "ReferenceInput");
 
@@ -259,12 +259,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.UnitCost).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.FCS_FcsContractAllocation_)
-                    .WithMany(p => p.FcsFcsContractDeliverables)
+                    .WithMany(p => p.FCS_FcsContractDeliverables)
                     .HasForeignKey(d => d.FCS_FcsContractAllocation_Id)
                     .HasConstraintName("FK_ReferenceInput.FCS_FcsContractDeliverable_ReferenceInput.FCS_FcsContractAllocation_FcsContractAllocation_Id");
             });
 
-            modelBuilder.Entity<FrmFrmLearner>(entity =>
+            modelBuilder.Entity<FRM_FrmLearner>(entity =>
             {
                 entity.ToTable("FRM_FrmLearner", "ReferenceInput");
 
@@ -289,12 +289,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.SWSupAimId).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<FrmFrmReferenceData>(entity =>
+            modelBuilder.Entity<FRM_FrmReferenceData>(entity =>
             {
                 entity.ToTable("FRM_FrmReferenceData", "ReferenceInput");
             });
 
-            modelBuilder.Entity<FrmLearningDeliveryFam>(entity =>
+            modelBuilder.Entity<FRM_LearningDeliveryFAM>(entity =>
             {
                 entity.ToTable("FRM_LearningDeliveryFAM", "ReferenceInput");
 
@@ -303,32 +303,32 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.LearnDelFAMDateTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.FRM_FrmLearner_)
-                    .WithMany(p => p.FrmLearningDeliveryFams)
+                    .WithMany(p => p.FRM_LearningDeliveryFAMs)
                     .HasForeignKey(d => d.FRM_FrmLearner_Id)
                     .HasConstraintName("FK_ReferenceInput.FRM_LearningDeliveryFAM_ReferenceInput.FRM_FrmLearner_FrmLearner_Id");
             });
 
-            modelBuilder.Entity<FrmProviderSpecDeliveryMonitoring>(entity =>
+            modelBuilder.Entity<FRM_ProviderSpecDeliveryMonitoring>(entity =>
             {
                 entity.ToTable("FRM_ProviderSpecDeliveryMonitoring", "ReferenceInput");
 
                 entity.HasOne(d => d.FRM_FrmLearner_)
-                    .WithMany(p => p.FrmProviderSpecDeliveryMonitorings)
+                    .WithMany(p => p.FRM_ProviderSpecDeliveryMonitorings)
                     .HasForeignKey(d => d.FRM_FrmLearner_Id)
                     .HasConstraintName("FK_ReferenceInput.FRM_ProviderSpecDeliveryMonitoring_ReferenceInput.FRM_FrmLearner_FrmLearner_Id");
             });
 
-            modelBuilder.Entity<FrmProviderSpecLearnerMonitoring>(entity =>
+            modelBuilder.Entity<FRM_ProviderSpecLearnerMonitoring>(entity =>
             {
                 entity.ToTable("FRM_ProviderSpecLearnerMonitoring", "ReferenceInput");
 
                 entity.HasOne(d => d.FRM_FrmLearner_)
-                    .WithMany(p => p.FrmProviderSpecLearnerMonitorings)
+                    .WithMany(p => p.FRM_ProviderSpecLearnerMonitorings)
                     .HasForeignKey(d => d.FRM_FrmLearner_Id)
                     .HasConstraintName("FK_ReferenceInput.FRM_ProviderSpecLearnerMonitoring_ReferenceInput.FRM_FrmLearner_FrmLearner_Id");
             });
 
-            modelBuilder.Entity<LarsLarsannualValue>(entity =>
+            modelBuilder.Entity<LARS_LARSAnnualValue>(entity =>
             {
                 entity.ToTable("LARS_LARSAnnualValue", "ReferenceInput");
 
@@ -341,12 +341,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.FullLevel3Percent).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LarsLarsannualValues)
+                    .WithMany(p => p.LARS_LARSAnnualValues)
                     .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSAnnualValue_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LarsLarsframework>(entity =>
+            modelBuilder.Entity<LARS_LARSFramework>(entity =>
             {
                 entity.ToTable("LARS_LARSFramework", "ReferenceInput");
 
@@ -355,17 +355,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARSFrameworkAim_)
-                    .WithMany(p => p.LarsLarsframeworks)
+                    .WithMany(p => p.LARS_LARSFrameworks)
                     .HasForeignKey(d => d.LARSFrameworkAim_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFramework_ReferenceInput.LARS_LARSFrameworkAim_LARSFrameworkAim_Id");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LarsLarsframeworks)
+                    .WithMany(p => p.LARS_LARSFrameworks)
                     .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFramework_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LarsLarsframeworkAim>(entity =>
+            modelBuilder.Entity<LARS_LARSFrameworkAim>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkAim", "ReferenceInput");
 
@@ -380,7 +380,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.LearnAimRef).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<LarsLarsframeworkApprenticeshipFunding>(entity =>
+            modelBuilder.Entity<LARS_LARSFrameworkApprenticeshipFunding>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkApprenticeshipFunding", "ReferenceInput");
 
@@ -409,17 +409,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.LARS_LARSFrameworkDesktop_)
-                    .WithMany(p => p.LarsLarsframeworkApprenticeshipFundings)
+                    .WithMany(p => p.LARS_LARSFrameworkApprenticeshipFundings)
                     .HasForeignKey(d => d.LARS_LARSFrameworkDesktop_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkApprenticeshipFunding_ReferenceInput.LARS_LARSFrameworkDesktop_LARSFrameworkDesktop_Id");
 
                 entity.HasOne(d => d.LARS_LARSFramework_)
-                    .WithMany(p => p.LarsLarsframeworkApprenticeshipFundings)
+                    .WithMany(p => p.LARS_LARSFrameworkApprenticeshipFundings)
                     .HasForeignKey(d => d.LARS_LARSFramework_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkApprenticeshipFunding_ReferenceInput.LARS_LARSFramework_LARSFramework_Id");
             });
 
-            modelBuilder.Entity<LarsLarsframeworkCommonComponent>(entity =>
+            modelBuilder.Entity<LARS_LARSFrameworkCommonComponent>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkCommonComponent", "ReferenceInput");
 
@@ -428,17 +428,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARS_LARSFrameworkDesktop_)
-                    .WithMany(p => p.LarsLarsframeworkCommonComponents)
+                    .WithMany(p => p.LARS_LARSFrameworkCommonComponents)
                     .HasForeignKey(d => d.LARS_LARSFrameworkDesktop_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkCommonComponent_ReferenceInput.LARS_LARSFrameworkDesktop_LARSFrameworkDesktop_Id");
 
                 entity.HasOne(d => d.LARS_LARSFramework_)
-                    .WithMany(p => p.LarsLarsframeworkCommonComponents)
+                    .WithMany(p => p.LARS_LARSFrameworkCommonComponents)
                     .HasForeignKey(d => d.LARS_LARSFramework_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkCommonComponent_ReferenceInput.LARS_LARSFramework_LARSFramework_Id");
             });
 
-            modelBuilder.Entity<LarsLarsframeworkDesktop>(entity =>
+            modelBuilder.Entity<LARS_LARSFrameworkDesktop>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkDesktop", "ReferenceInput");
 
@@ -447,7 +447,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<LarsLarsfunding>(entity =>
+            modelBuilder.Entity<LARS_LARSFunding>(entity =>
             {
                 entity.ToTable("LARS_LARSFunding", "ReferenceInput");
 
@@ -460,12 +460,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.RateWeighted).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LarsLarsfundings)
+                    .WithMany(p => p.LARS_LARSFundings)
                     .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFunding_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LarsLarslearningDelivery>(entity =>
+            modelBuilder.Entity<LARS_LARSLearningDelivery>(entity =>
             {
                 entity.ToTable("LARS_LARSLearningDelivery", "ReferenceInput");
 
@@ -500,7 +500,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.SectorSubjectAreaTier2).HasColumnType("decimal(18, 2)");
             });
 
-            modelBuilder.Entity<LarsLarslearningDeliveryCategory>(entity =>
+            modelBuilder.Entity<LARS_LARSLearningDeliveryCategory>(entity =>
             {
                 entity.ToTable("LARS_LARSLearningDeliveryCategory", "ReferenceInput");
 
@@ -509,12 +509,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LarsLarslearningDeliveryCategories)
+                    .WithMany(p => p.LARS_LARSLearningDeliveryCategories)
                     .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSLearningDeliveryCategory_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LarsLarsstandard>(entity =>
+            modelBuilder.Entity<LARS_LARSStandard>(entity =>
             {
                 entity.ToTable("LARS_LARSStandard", "ReferenceInput");
 
@@ -527,7 +527,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.StandardSectorCode).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<LarsLarsstandardApprenticeshipFunding>(entity =>
+            modelBuilder.Entity<LARS_LARSStandardApprenticeshipFunding>(entity =>
             {
                 entity.ToTable("LARS_LARSStandardApprenticeshipFunding", "ReferenceInput");
 
@@ -556,12 +556,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
-                    .WithMany(p => p.LarsLarsstandardApprenticeshipFundings)
+                    .WithMany(p => p.LARS_LARSStandardApprenticeshipFundings)
                     .HasForeignKey(d => d.LARS_LARSStandard_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSStandardApprenticeshipFunding_ReferenceInput.LARS_LARSStandard_LARSStandard_Id");
             });
 
-            modelBuilder.Entity<LarsLarsstandardCommonComponent>(entity =>
+            modelBuilder.Entity<LARS_LARSStandardCommonComponent>(entity =>
             {
                 entity.ToTable("LARS_LARSStandardCommonComponent", "ReferenceInput");
 
@@ -570,12 +570,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
-                    .WithMany(p => p.LarsLarsstandardCommonComponents)
+                    .WithMany(p => p.LARS_LARSStandardCommonComponents)
                     .HasForeignKey(d => d.LARS_LARSStandard_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSStandardCommonComponent_ReferenceInput.LARS_LARSStandard_LARSStandard_Id");
             });
 
-            modelBuilder.Entity<LarsLarsstandardFunding>(entity =>
+            modelBuilder.Entity<LARS_LARSStandardFunding>(entity =>
             {
                 entity.ToTable("LARS_LARSStandardFunding", "ReferenceInput");
 
@@ -592,12 +592,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.SmallBusinessIncentive).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
-                    .WithMany(p => p.LarsLarsstandardFundings)
+                    .WithMany(p => p.LARS_LARSStandardFundings)
                     .HasForeignKey(d => d.LARS_LARSStandard_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSStandardFunding_ReferenceInput.LARS_LARSStandard_LARSStandard_Id");
             });
 
-            modelBuilder.Entity<LarsLarsstandardValidity>(entity =>
+            modelBuilder.Entity<LARS_LARSStandardValidity>(entity =>
             {
                 entity.ToTable("LARS_LARSStandardValidity", "ReferenceInput");
 
@@ -608,12 +608,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.LastNewStartDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
-                    .WithMany(p => p.LarsLarsstandardValidities)
+                    .WithMany(p => p.LARS_LARSStandardValidities)
                     .HasForeignKey(d => d.LARS_LARSStandard_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSStandardValidity_ReferenceInput.LARS_LARSStandard_LARSStandard_Id");
             });
 
-            modelBuilder.Entity<LarsLarsvalidity>(entity =>
+            modelBuilder.Entity<LARS_LARSValidity>(entity =>
             {
                 entity.ToTable("LARS_LARSValidity", "ReferenceInput");
 
@@ -624,19 +624,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.LastNewStartDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LarsLarsvalidities)
+                    .WithMany(p => p.LARS_LARSValidities)
                     .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSValidity_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LarsLarsversion>(entity =>
+            modelBuilder.Entity<LARS_LARSVersion>(entity =>
             {
                 entity.ToTable("LARS_LARSVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<McaContractsMcaDevolvedContract>(entity =>
+            modelBuilder.Entity<McaContracts_McaDevolvedContract>(entity =>
             {
                 entity.ToTable("McaContracts_McaDevolvedContract", "ReferenceInput");
 
@@ -647,14 +647,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.McaGlaShortCode).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataCampusIdentifierVersion>(entity =>
+            modelBuilder.Entity<MetaData_CampusIdentifierVersion>(entity =>
             {
                 entity.ToTable("MetaData_CampusIdentifierVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataCensusDate>(entity =>
+            modelBuilder.Entity<MetaData_CensusDate>(entity =>
             {
                 entity.ToTable("MetaData_CensusDate", "ReferenceInput");
 
@@ -663,54 +663,54 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Start).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MetaDataCoFversion>(entity =>
+            modelBuilder.Entity<MetaData_CoFVersion>(entity =>
             {
                 entity.ToTable("MetaData_CoFVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataDevolvedPostcodesVersion>(entity =>
+            modelBuilder.Entity<MetaData_DevolvedPostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_DevolvedPostcodesVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataEasUploadDateTime>(entity =>
+            modelBuilder.Entity<MetaData_EasUploadDateTime>(entity =>
             {
                 entity.ToTable("MetaData_EasUploadDateTime", "ReferenceInput");
 
                 entity.Property(e => e.UploadDateTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MetaDataEmployersVersion>(entity =>
+            modelBuilder.Entity<MetaData_EmployersVersion>(entity =>
             {
                 entity.ToTable("MetaData_EmployersVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataHmppPostcodesVersion>(entity =>
+            modelBuilder.Entity<MetaData_HmppPostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_HmppPostcodesVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataIlrCollectionDate>(entity =>
+            modelBuilder.Entity<MetaData_IlrCollectionDate>(entity =>
             {
                 entity.ToTable("MetaData_IlrCollectionDates", "ReferenceInput");
             });
 
-            modelBuilder.Entity<MetaDataLarsVersion>(entity =>
+            modelBuilder.Entity<MetaData_LarsVersion>(entity =>
             {
                 entity.ToTable("MetaData_LarsVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataLookup>(entity =>
+            modelBuilder.Entity<MetaData_Lookup>(entity =>
             {
                 entity.ToTable("MetaData_Lookup", "ReferenceInput");
 
@@ -723,7 +723,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Name).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataLookupSubCategory>(entity =>
+            modelBuilder.Entity<MetaData_LookupSubCategory>(entity =>
             {
                 entity.ToTable("MetaData_LookupSubCategory", "ReferenceInput");
 
@@ -732,105 +732,105 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.MetaData_Lookup_)
-                    .WithMany(p => p.MetaDataLookupSubCategories)
+                    .WithMany(p => p.MetaData_LookupSubCategories)
                     .HasForeignKey(d => d.MetaData_Lookup_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_LookupSubCategory_ReferenceInput.MetaData_Lookup_Lookup_Id");
             });
 
-            modelBuilder.Entity<MetaDataMetaData>(entity =>
+            modelBuilder.Entity<MetaData_MetaData>(entity =>
             {
                 entity.ToTable("MetaData_MetaData", "ReferenceInput");
 
                 entity.Property(e => e.DateGenerated).HasColumnType("datetime");
 
                 entity.HasOne(d => d.CollectionDates_)
-                    .WithMany(p => p.MetaDataMetaDatas)
+                    .WithMany(p => p.MetaData_MetaDatas)
                     .HasForeignKey(d => d.CollectionDates_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_MetaData_ReferenceInput.MetaData_IlrCollectionDates_CollectionDates_Id");
 
                 entity.HasOne(d => d.ReferenceDataVersions_)
-                    .WithMany(p => p.MetaDataMetaDatas)
+                    .WithMany(p => p.MetaData_MetaDatas)
                     .HasForeignKey(d => d.ReferenceDataVersions_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_MetaData_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceDataVersions_Id");
             });
 
-            modelBuilder.Entity<MetaDataOrganisationsVersion>(entity =>
+            modelBuilder.Entity<MetaData_OrganisationsVersion>(entity =>
             {
                 entity.ToTable("MetaData_OrganisationsVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataPostcodeFactorsVersion>(entity =>
+            modelBuilder.Entity<MetaData_PostcodeFactorsVersion>(entity =>
             {
                 entity.ToTable("MetaData_PostcodeFactorsVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataPostcodesVersion>(entity =>
+            modelBuilder.Entity<MetaData_PostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_PostcodesVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataReferenceDataVersion>(entity =>
+            modelBuilder.Entity<MetaData_ReferenceDataVersion>(entity =>
             {
                 entity.ToTable("MetaData_ReferenceDataVersion", "ReferenceInput");
 
                 entity.HasOne(d => d.CampusIdentifierVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.CampusIdentifierVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_CampusIdentifierVersion_CampusIdentifierVersion_Id");
 
                 entity.HasOne(d => d.CoFVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.CoFVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_CoFVersion_CoFVersion_Id");
 
                 entity.HasOne(d => d.DevolvedPostcodesVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.DevolvedPostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_DevolvedPostcodesVersion_DevolvedPostcodesVersion_Id");
 
                 entity.HasOne(d => d.EasUploadDateTime_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.EasUploadDateTime_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasUploadDateTime_EasUploadDateTime_Id");
 
                 entity.HasOne(d => d.Employers_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.Employers_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EmployersVersion_Employers_Id");
 
                 entity.HasOne(d => d.HmppPostcodesVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.HmppPostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_HmppPostcodesVersion_HmppPostcodesVersion_Id");
 
                 entity.HasOne(d => d.LarsVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.LarsVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_LarsVersion_LarsVersion_Id");
 
                 entity.HasOne(d => d.OrganisationsVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.OrganisationsVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_OrganisationsVersion_OrganisationsVersion_Id");
 
                 entity.HasOne(d => d.PostcodeFactorsVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.PostcodeFactorsVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_PostcodeFactorsVersion_PostcodeFactorsVersion_Id");
 
                 entity.HasOne(d => d.PostcodesVersion_)
-                    .WithMany(p => p.MetaDataReferenceDataVersions)
+                    .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.PostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_PostcodesVersion_PostcodesVersion_Id");
             });
 
-            modelBuilder.Entity<MetaDataValidationError>(entity =>
+            modelBuilder.Entity<MetaData_ValidationError>(entity =>
             {
                 entity.ToTable("MetaData_ValidationError", "ReferenceInput");
 
@@ -839,14 +839,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.RuleName).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaDataValidationRule>(entity =>
+            modelBuilder.Entity<MetaData_ValidationRule>(entity =>
             {
                 entity.ToTable("MetaData_ValidationRule", "ReferenceInput");
 
                 entity.Property(e => e.RuleName).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<OrganisationsOrganisation>(entity =>
+            modelBuilder.Entity<Organisations_Organisation>(entity =>
             {
                 entity.ToTable("Organisations_Organisation", "ReferenceInput");
 
@@ -855,7 +855,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Name).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<OrganisationsOrganisationCampusIdentifier>(entity =>
+            modelBuilder.Entity<Organisations_OrganisationCampusIdentifier>(entity =>
             {
                 entity.ToTable("Organisations_OrganisationCampusIdentifier", "ReferenceInput");
 
@@ -864,12 +864,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Organisations_Organisation_)
-                    .WithMany(p => p.OrganisationsOrganisationCampusIdentifiers)
+                    .WithMany(p => p.Organisations_OrganisationCampusIdentifiers)
                     .HasForeignKey(d => d.Organisations_Organisation_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationCampusIdentifier_ReferenceInput.Organisations_Organisation_Organisation_Id");
             });
 
-            modelBuilder.Entity<OrganisationsOrganisationCoFremoval>(entity =>
+            modelBuilder.Entity<Organisations_OrganisationCoFRemoval>(entity =>
             {
                 entity.ToTable("Organisations_OrganisationCoFRemoval", "ReferenceInput");
 
@@ -880,12 +880,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Organisations_Organisation_)
-                    .WithMany(p => p.OrganisationsOrganisationCoFremovals)
+                    .WithMany(p => p.Organisations_OrganisationCoFRemovals)
                     .HasForeignKey(d => d.Organisations_Organisation_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationCoFRemoval_ReferenceInput.Organisations_Organisation_Organisation_Id");
             });
 
-            modelBuilder.Entity<OrganisationsOrganisationFunding>(entity =>
+            modelBuilder.Entity<Organisations_OrganisationFunding>(entity =>
             {
                 entity.ToTable("Organisations_OrganisationFunding", "ReferenceInput");
 
@@ -894,19 +894,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Organisations_Organisation_)
-                    .WithMany(p => p.OrganisationsOrganisationFundings)
+                    .WithMany(p => p.Organisations_OrganisationFundings)
                     .HasForeignKey(d => d.Organisations_Organisation_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationFunding_ReferenceInput.Organisations_Organisation_Organisation_Id");
             });
 
-            modelBuilder.Entity<OrganisationsOrganisationVersion>(entity =>
+            modelBuilder.Entity<Organisations_OrganisationVersion>(entity =>
             {
                 entity.ToTable("Organisations_OrganisationVersion", "ReferenceInput");
 
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<OrganisationsSpecialistResource>(entity =>
+            modelBuilder.Entity<Organisations_SpecialistResource>(entity =>
             {
                 entity.ToTable("Organisations_SpecialistResource", "ReferenceInput");
 
@@ -915,12 +915,45 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Organisations_OrganisationCampusIdentifier_)
-                    .WithMany(p => p.OrganisationsSpecialistResources)
+                    .WithMany(p => p.Organisations_SpecialistResources)
                     .HasForeignKey(d => d.Organisations_OrganisationCampusIdentifier_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_SpecialistResource_ReferenceInput.Organisations_OrganisationCampusIdentifier_Id");
             });
 
-            modelBuilder.Entity<PostcodesDasDisadvantage>(entity =>
+            modelBuilder.Entity<PostcodesDevolution_DevolvedPostcode>(entity =>
+            {
+                entity.ToTable("PostcodesDevolution_DevolvedPostcodes", "ReferenceInput");
+            });
+
+            modelBuilder.Entity<PostcodesDevolution_McaGlaSofLookup>(entity =>
+            {
+                entity.ToTable("PostcodesDevolution_McaGlaSofLookup", "ReferenceInput");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
+                    .WithMany(p => p.PostcodesDevolution_McaGlaSofLookups)
+                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
+                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_McaGlaSofLookup_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
+            });
+
+            modelBuilder.Entity<PostcodesDevolution_Postcode>(entity =>
+            {
+                entity.ToTable("PostcodesDevolution_Postcode", "ReferenceInput");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
+                    .WithMany(p => p.PostcodesDevolution_Postcodes)
+                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
+                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_Postcode_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
+            });
+
+            modelBuilder.Entity<Postcodes_DasDisadvantage>(entity =>
             {
                 entity.ToTable("Postcodes_DasDisadvantage", "ReferenceInput");
 
@@ -931,45 +964,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesDasDisadvantages)
+                    .WithMany(p => p.Postcodes_DasDisadvantages)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_DasDisadvantage_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<PostcodesDevolutionDevolvedPostcode>(entity =>
-            {
-                entity.ToTable("PostcodesDevolution_DevolvedPostcodes", "ReferenceInput");
-            });
-
-            modelBuilder.Entity<PostcodesDevolutionMcaGlaSofLookup>(entity =>
-            {
-                entity.ToTable("PostcodesDevolution_McaGlaSofLookup", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
-                    .WithMany(p => p.PostcodesDevolutionMcaGlaSofLookups)
-                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
-                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_McaGlaSofLookup_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
-            });
-
-            modelBuilder.Entity<PostcodesDevolutionPostcode>(entity =>
-            {
-                entity.ToTable("PostcodesDevolution_Postcode", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
-                    .WithMany(p => p.PostcodesDevolutionPostcodes)
-                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
-                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_Postcode_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
-            });
-
-            modelBuilder.Entity<PostcodesEfaDisadvantage>(entity =>
+            modelBuilder.Entity<Postcodes_EfaDisadvantage>(entity =>
             {
                 entity.ToTable("Postcodes_EfaDisadvantage", "ReferenceInput");
 
@@ -980,12 +980,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesEfaDisadvantages)
+                    .WithMany(p => p.Postcodes_EfaDisadvantages)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_EfaDisadvantage_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<PostcodesMcaglaSof>(entity =>
+            modelBuilder.Entity<Postcodes_McaglaSOF>(entity =>
             {
                 entity.ToTable("Postcodes_McaglaSOF", "ReferenceInput");
 
@@ -994,12 +994,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesMcaglaSofs)
+                    .WithMany(p => p.Postcodes_McaglaSOFs)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_McaglaSOF_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<PostcodesOnsdata>(entity =>
+            modelBuilder.Entity<Postcodes_ONSData>(entity =>
             {
                 entity.ToTable("Postcodes_ONSData", "ReferenceInput");
 
@@ -1010,26 +1010,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Termination).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesOnsdatas)
+                    .WithMany(p => p.Postcodes_ONSDatas)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_ONSData_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<PostcodesPostCodeVersion>(entity =>
+            modelBuilder.Entity<Postcodes_PostCodeVersion>(entity =>
             {
                 entity.ToTable("Postcodes_PostCodeVersion", "ReferenceInput");
 
                 entity.Property(e => e.PostcodeCurrentVersion).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<PostcodesPostcode>(entity =>
+            modelBuilder.Entity<Postcodes_Postcode>(entity =>
             {
                 entity.ToTable("Postcodes_Postcode", "ReferenceInput");
 
                 entity.Property(e => e.PostCode).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<PostcodesSfaAreaCost>(entity =>
+            modelBuilder.Entity<Postcodes_SfaAreaCost>(entity =>
             {
                 entity.ToTable("Postcodes_SfaAreaCost", "ReferenceInput");
 
@@ -1040,12 +1040,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesSfaAreaCosts)
+                    .WithMany(p => p.Postcodes_SfaAreaCosts)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_SfaAreaCost_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<PostcodesSfaDisadvantage>(entity =>
+            modelBuilder.Entity<Postcodes_SfaDisadvantage>(entity =>
             {
                 entity.ToTable("Postcodes_SfaDisadvantage", "ReferenceInput");
 
@@ -1056,12 +1056,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.PostcodesSfaDisadvantages)
+                    .WithMany(p => p.Postcodes_SfaDisadvantages)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_SfaDisadvantage_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
-            modelBuilder.Entity<Uln>(entity =>
+            modelBuilder.Entity<ULN>(entity =>
             {
                 entity.ToTable("ULNs", "ReferenceInput");
             });
