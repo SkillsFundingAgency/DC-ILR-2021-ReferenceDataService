@@ -2,9 +2,9 @@
 (
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UKPRN] [int] NOT NULL,
-	[Name] [nvarchar](max) NULL,
+	[Name] [nvarchar](2000) NULL,
 	[PartnerUKPRN] [bit] NULL,
-	[LegalOrgType] [nvarchar](max) NULL,
+	[LegalOrgType] [nvarchar](2000) NULL,
 	[LongTermResid] [bit] NULL,
 	CONSTRAINT [PK_ReferenceInput.Organisations_Organisation] PRIMARY KEY ([Id]),
 )
