@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
-    public partial class PostcodesDevolution_DevolvedPostcode1
+    public partial class PostcodesDevolution_Postcode
     {
         public int Id { get; set; }
         public string Postcode { get; set; }

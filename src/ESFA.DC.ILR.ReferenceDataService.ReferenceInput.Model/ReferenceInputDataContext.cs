@@ -74,8 +74,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<Organisations_OrganisationVersion> Organisations_OrganisationVersions { get; set; }
         public virtual DbSet<Organisations_SpecialistResource> Organisations_SpecialistResources { get; set; }
         public virtual DbSet<PostcodesDevolution_DevolvedPostcode> PostcodesDevolution_DevolvedPostcodes { get; set; }
-        public virtual DbSet<PostcodesDevolution_DevolvedPostcode1> PostcodesDevolution_DevolvedPostcodes1 { get; set; }
         public virtual DbSet<PostcodesDevolution_McaGlaSofLookup> PostcodesDevolution_McaGlaSofLookups { get; set; }
+        public virtual DbSet<PostcodesDevolution_Postcode> PostcodesDevolution_Postcodes { get; set; }
         public virtual DbSet<Postcodes_DasDisadvantage> Postcodes_DasDisadvantages { get; set; }
         public virtual DbSet<Postcodes_EfaDisadvantage> Postcodes_EfaDisadvantages { get; set; }
         public virtual DbSet<Postcodes_McaglaSOF> Postcodes_McaglaSOFs { get; set; }
@@ -103,6 +103,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("AppsEarningHistory_ApprenticeshipEarningsHistory", "ReferenceInput");
 
+                entity.Property(e => e.AppIdentifier).HasMaxLength(2000);
+
+                entity.Property(e => e.CollectionReturnCode).HasMaxLength(2000);
+
+                entity.Property(e => e.CollectionYear).HasMaxLength(2000);
+
                 entity.Property(e => e.HistoricEffectiveTNPStartDateInput).HasColumnType("datetime");
 
                 entity.Property(e => e.HistoricLearnDelProgEarliestACT2DateInput).HasColumnType("datetime");
@@ -123,6 +129,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.HistoricVirtualTNP4EndOfTheYearInput).HasColumnType("decimal(18, 2)");
 
+                entity.Property(e => e.LearnRefNumber).HasMaxLength(2000);
+
                 entity.Property(e => e.ProgrammeStartDateIgnorePathway).HasColumnType("datetime");
 
                 entity.Property(e => e.ProgrammeStartDateMatchPathway).HasColumnType("datetime");
@@ -139,6 +147,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.Standard).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Employers_Employer>(entity =>
@@ -163,11 +173,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<Employers_LargeEmployerVersion>(entity =>
             {
                 entity.ToTable("Employers_LargeEmployerVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<FCS_EsfEligibilityRule>(entity =>
             {
                 entity.ToTable("FCS_EsfEligibilityRule", "ReferenceInput");
+
+                entity.Property(e => e.LotReference).HasMaxLength(2000);
+
+                entity.Property(e => e.MaxPriorAttainment).HasMaxLength(2000);
+
+                entity.Property(e => e.MinPriorAttainment).HasMaxLength(2000);
+
+                entity.Property(e => e.TenderSpecReference).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<FCS_EsfEligibilityRuleEmploymentStatus>(entity =>
@@ -250,9 +270,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.LearnActEndDate).HasColumnType("datetime");
 
+                entity.Property(e => e.LearnAimRef).HasMaxLength(2000);
+
                 entity.Property(e => e.LearnPlanEndDate).HasColumnType("datetime");
 
+                entity.Property(e => e.LearnRefNumber).HasMaxLength(2000);
+
                 entity.Property(e => e.LearnStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LearningAimTitle).HasMaxLength(2000);
+
+                entity.Property(e => e.OrgName).HasMaxLength(2000);
+
+                entity.Property(e => e.PartnerOrgName).HasMaxLength(2000);
+
+                entity.Property(e => e.PrevLearnRefNumber).HasMaxLength(2000);
+
+                entity.Property(e => e.SWSupAimId).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<FRM_FrmReferenceData>(entity =>
@@ -342,6 +376,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.LearnAimRef).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<LARS_LARSFrameworkApprenticeshipFunding>(entity =>
@@ -433,9 +469,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("LARS_LARSLearningDelivery", "ReferenceInput");
 
+                entity.Property(e => e.AwardOrgCode).HasMaxLength(2000);
+
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.EnglandFEHEStatus).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnAimRef).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnAimRefTitle).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnAimRefType).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnDirectClassSystemCode1).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnDirectClassSystemCode2).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnDirectClassSystemCode3).HasMaxLength(2000);
+
+                entity.Property(e => e.LearningDeliveryGenre).HasMaxLength(2000);
+
+                entity.Property(e => e.NotionalNVQLevel).HasMaxLength(2000);
+
+                entity.Property(e => e.NotionalNVQLevelv2).HasMaxLength(2000);
 
                 entity.Property(e => e.SectorSubjectAreaTier1).HasColumnType("decimal(18, 2)");
 
@@ -463,6 +521,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.NotionalEndLevel).HasMaxLength(2000);
+
+                entity.Property(e => e.StandardSectorCode).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<LARS_LARSStandardApprenticeshipFunding>(entity =>
@@ -570,6 +632,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<LARS_LARSVersion>(entity =>
             {
                 entity.ToTable("LARS_LARSVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<McaContracts_McaDevolvedContract>(entity =>
@@ -579,11 +643,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.McaGlaShortCode).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_CampusIdentifierVersion>(entity =>
             {
                 entity.ToTable("MetaData_CampusIdentifierVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_CensusDate>(entity =>
@@ -598,11 +666,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<MetaData_CoFVersion>(entity =>
             {
                 entity.ToTable("MetaData_CoFVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_DevolvedPostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_DevolvedPostcodesVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_EasUploadDateTime>(entity =>
@@ -615,11 +687,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<MetaData_EmployersVersion>(entity =>
             {
                 entity.ToTable("MetaData_EmployersVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_HmppPostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_HmppPostcodesVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_IlrCollectionDate>(entity =>
@@ -630,15 +706,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<MetaData_LarsVersion>(entity =>
             {
                 entity.ToTable("MetaData_LarsVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_Lookup>(entity =>
             {
                 entity.ToTable("MetaData_Lookup", "ReferenceInput");
 
+                entity.Property(e => e.Code).HasMaxLength(2000);
+
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_LookupSubCategory>(entity =>
@@ -675,16 +757,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<MetaData_OrganisationsVersion>(entity =>
             {
                 entity.ToTable("MetaData_OrganisationsVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_PostcodeFactorsVersion>(entity =>
             {
                 entity.ToTable("MetaData_PostcodeFactorsVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_PostcodesVersion>(entity =>
             {
                 entity.ToTable("MetaData_PostcodesVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_ReferenceDataVersion>(entity =>
@@ -745,16 +833,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<MetaData_ValidationError>(entity =>
             {
                 entity.ToTable("MetaData_ValidationError", "ReferenceInput");
+
+                entity.Property(e => e.Message).HasMaxLength(2000);
+
+                entity.Property(e => e.RuleName).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<MetaData_ValidationRule>(entity =>
             {
                 entity.ToTable("MetaData_ValidationRule", "ReferenceInput");
+
+                entity.Property(e => e.RuleName).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Organisations_Organisation>(entity =>
             {
                 entity.ToTable("Organisations_Organisation", "ReferenceInput");
+
+                entity.Property(e => e.LegalOrgType).HasMaxLength(2000);
+
+                entity.Property(e => e.Name).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Organisations_OrganisationCampusIdentifier>(entity =>
@@ -804,6 +902,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<Organisations_OrganisationVersion>(entity =>
             {
                 entity.ToTable("Organisations_OrganisationVersion", "ReferenceInput");
+
+                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Organisations_SpecialistResource>(entity =>
@@ -825,20 +925,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.ToTable("PostcodesDevolution_DevolvedPostcodes", "ReferenceInput");
             });
 
-            modelBuilder.Entity<PostcodesDevolution_DevolvedPostcode1>(entity =>
-            {
-                entity.ToTable("PostcodesDevolution_DevolvedPostcode", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
-                    .WithMany(p => p.PostcodesDevolution_DevolvedPostcode1s)
-                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
-                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_DevolvedPostcode_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
-            });
-
             modelBuilder.Entity<PostcodesDevolution_McaGlaSofLookup>(entity =>
             {
                 entity.ToTable("PostcodesDevolution_McaGlaSofLookup", "ReferenceInput");
@@ -851,6 +937,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.PostcodesDevolution_McaGlaSofLookups)
                     .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
                     .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_McaGlaSofLookup_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
+            });
+
+            modelBuilder.Entity<PostcodesDevolution_Postcode>(entity =>
+            {
+                entity.ToTable("PostcodesDevolution_Postcode", "ReferenceInput");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
+                    .WithMany(p => p.PostcodesDevolution_Postcodes)
+                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
+                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_Postcode_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
             });
 
             modelBuilder.Entity<Postcodes_DasDisadvantage>(entity =>
@@ -918,11 +1018,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<Postcodes_PostCodeVersion>(entity =>
             {
                 entity.ToTable("Postcodes_PostCodeVersion", "ReferenceInput");
+
+                entity.Property(e => e.PostcodeCurrentVersion).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Postcodes_Postcode>(entity =>
             {
                 entity.ToTable("Postcodes_Postcode", "ReferenceInput");
+
+                entity.Property(e => e.PostCode).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Postcodes_SfaAreaCost>(entity =>

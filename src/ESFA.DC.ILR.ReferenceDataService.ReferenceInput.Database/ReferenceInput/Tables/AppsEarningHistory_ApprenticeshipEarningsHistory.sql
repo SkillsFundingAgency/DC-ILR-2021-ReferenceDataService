@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [ReferenceInput].[AppsEarningHistory_ApprenticeshipEarningsHistory]
 (
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[AppIdentifier] [nvarchar](max) NULL,
+	[AppIdentifier] [nvarchar](2000) NULL,
 	[AppProgCompletedInTheYearInput] [bit] NULL,
-	[CollectionYear] [nvarchar](max) NULL,
-	[CollectionReturnCode] [nvarchar](max) NULL,
+	[CollectionYear] [nvarchar](2000) NULL,
+	[CollectionReturnCode] [nvarchar](2000) NULL,
 	[DaysInYear] [int] NULL,
 	[FworkCode] [int] NULL,
 	[HistoricEffectiveTNPStartDateInput] [datetime] NULL,
@@ -21,7 +21,7 @@
 	[HistoricVirtualTNP4EndOfTheYearInput] [decimal](18, 2) NULL,
 	[HistoricLearnDelProgEarliestACT2DateInput] [datetime] NULL,
 	[LatestInYear] [bit] NOT NULL,
-	[LearnRefNumber] [nvarchar](max) NULL,
+	[LearnRefNumber] [nvarchar](2000) NULL,
 	[ProgrammeStartDateIgnorePathway] [datetime] NULL,
 	[ProgrammeStartDateMatchPathway] [datetime] NULL,
 	[ProgType] [int] NULL,

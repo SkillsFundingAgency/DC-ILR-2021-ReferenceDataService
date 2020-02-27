@@ -128,7 +128,7 @@
     <Build Include="ReferenceInput\Tables\Postcodes_PostCodeVersion.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaAreaCost.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaDisadvantage.sql" />
-    <Build Include="ReferenceInput\Tables\PostcodesDevolution_DevolvedPostcode.sql" />
+    <Build Include="ReferenceInput\Tables\PostcodesDevolution_Postcode.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_DevolvedPostcodes.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_McaGlaSofLookup.sql" />
     <Build Include="ReferenceInput\Tables\ULNs.sql" />
