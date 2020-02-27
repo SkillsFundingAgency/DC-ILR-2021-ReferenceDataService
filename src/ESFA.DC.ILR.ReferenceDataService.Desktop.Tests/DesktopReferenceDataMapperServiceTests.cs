@@ -91,7 +91,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var expectedReferenceData = new ReferenceDataRoot
             {
                 MetaDatas = TestNetaData(),
-                DevolvedPostocdes = new DevolvedPostcodes
+                DevolvedPostcodes = new DevolvedPostcodes
                 {
                     McaGlaSofLookups = TestMcaSofLookups(),
                     Postcodes = TestDevolvedPostcodes(),

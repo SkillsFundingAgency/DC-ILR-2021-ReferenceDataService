@@ -56,7 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     desktopReferenceData.MetaDatas = _zipArchiveFileService.RetrieveModel<MetaData>(zip, DesktopReferenceDataConstants.MetaDataFile);
 
                     _logger.LogInfo("Reference Data - Retrieve Devolved Postcodes");
-                    desktopReferenceData.DevolvedPostocdes = GetDevolvedPostcodes(zip, mapperData.Postcodes);
+                    desktopReferenceData.DevolvedPostcodes = GetDevolvedPostcodes(zip, mapperData.Postcodes);
 
                     _logger.LogInfo("Reference Data - Retrieve Employers");
                     desktopReferenceData.Employers = _zipArchiveFileService.RetrieveModels<Employer>(zip, DesktopReferenceDataConstants.EmployersFile, x => mapperData.EmployerIds.Contains(x.ERN));
@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             return new ReferenceDataRoot
             {
                 MetaDatas = desktopReferenceData.MetaDatas,
-                DevolvedPostocdes = desktopReferenceData.DevolvedPostocdes,
+                DevolvedPostcodes = desktopReferenceData.DevolvedPostcodes,
                 Employers = desktopReferenceData.Employers,
                 EPAOrganisations = desktopReferenceData.EPAOrganisations,
                 LARSLearningDeliveries = _larsLearningDeliveryMapperService.Map(mapperData.LARSLearningDeliveryKeys, desktopReferenceData),

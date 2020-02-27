@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     desktopReferenceData.MetaDatas = _zipArchiveFileService.RetrieveModel<MetaData>(zip, DesktopReferenceDataConstants.MetaDataFile);
 
                     _logger.LogInfo("Reference Data - Retrieve Devolved Postcodes");
-                    desktopReferenceData.DevolvedPostocdes = GetDevolvedPostcodes(zip);
+                    desktopReferenceData.DevolvedPostcodes = GetDevolvedPostcodes(zip);
 
                     _logger.LogInfo("Reference Data - Retrieve Employers");
                     desktopReferenceData.Employers = _zipArchiveFileService.RetrieveModels<Employer>(zip, DesktopReferenceDataConstants.EmployersFile);
