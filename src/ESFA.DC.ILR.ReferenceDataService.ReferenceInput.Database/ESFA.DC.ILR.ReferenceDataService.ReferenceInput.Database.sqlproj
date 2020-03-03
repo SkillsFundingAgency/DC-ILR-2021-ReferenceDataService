@@ -80,7 +80,6 @@
     <Build Include="ReferenceInput\Tables\FRM_ProviderSpecDeliveryMonitoring.sql" />
     <Build Include="ReferenceInput\Tables\FRM_ProviderSpecLearnerMonitoring.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSAnnualValue.sql" />
-    <Build Include="ReferenceInput\Tables\LARS_LARSFramework.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkAim.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkApprenticeshipFunding.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSFrameworkCommonComponent.sql" />
