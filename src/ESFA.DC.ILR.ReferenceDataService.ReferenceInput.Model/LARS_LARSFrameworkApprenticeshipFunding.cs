@@ -25,6 +25,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public int? LARS_LARSFramework_Id { get; set; }
 
         public virtual LARS_LARSFrameworkDesktop LARS_LARSFrameworkDesktop_ { get; set; }
-        public virtual LARS_LARSFramework LARS_LARSFramework_ { get; set; }
     }
 }

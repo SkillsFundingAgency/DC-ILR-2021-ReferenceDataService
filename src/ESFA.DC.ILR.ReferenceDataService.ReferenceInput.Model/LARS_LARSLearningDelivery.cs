@@ -8,7 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public LARS_LARSLearningDelivery()
         {
             LARS_LARSAnnualValues = new HashSet<LARS_LARSAnnualValue>();
-            LARS_LARSFrameworks = new HashSet<LARS_LARSFramework>();
             LARS_LARSFundings = new HashSet<LARS_LARSFunding>();
             LARS_LARSLearningDeliveryCategories = new HashSet<LARS_LARSLearningDeliveryCategory>();
             LARS_LARSValidities = new HashSet<LARS_LARSValidity>();
@@ -36,7 +35,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public DateTime? EffectiveTo { get; set; }
 
         public virtual ICollection<LARS_LARSAnnualValue> LARS_LARSAnnualValues { get; set; }
-        public virtual ICollection<LARS_LARSFramework> LARS_LARSFrameworks { get; set; }
         public virtual ICollection<LARS_LARSFunding> LARS_LARSFundings { get; set; }
         public virtual ICollection<LARS_LARSLearningDeliveryCategory> LARS_LARSLearningDeliveryCategories { get; set; }
         public virtual ICollection<LARS_LARSValidity> LARS_LARSValidities { get; set; }

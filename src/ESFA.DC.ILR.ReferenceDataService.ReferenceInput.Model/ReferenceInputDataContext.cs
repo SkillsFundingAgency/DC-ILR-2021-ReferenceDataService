@@ -33,7 +33,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<FRM_ProviderSpecDeliveryMonitoring> FRM_ProviderSpecDeliveryMonitorings { get; set; }
         public virtual DbSet<FRM_ProviderSpecLearnerMonitoring> FRM_ProviderSpecLearnerMonitorings { get; set; }
         public virtual DbSet<LARS_LARSAnnualValue> LARS_LARSAnnualValues { get; set; }
-        public virtual DbSet<LARS_LARSFramework> LARS_LARSFrameworks { get; set; }
         public virtual DbSet<LARS_LARSFrameworkAim> LARS_LARSFrameworkAims { get; set; }
         public virtual DbSet<LARS_LARSFrameworkApprenticeshipFunding> LARS_LARSFrameworkApprenticeshipFundings { get; set; }
         public virtual DbSet<LARS_LARSFrameworkCommonComponent> LARS_LARSFrameworkCommonComponents { get; set; }
@@ -346,25 +345,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSAnnualValue_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LARS_LARSFramework>(entity =>
-            {
-                entity.ToTable("LARS_LARSFramework", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFromNullable).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.LARSFrameworkAim_)
-                    .WithMany(p => p.LARS_LARSFrameworks)
-                    .HasForeignKey(d => d.LARSFrameworkAim_Id)
-                    .HasConstraintName("FK_ReferenceInput.LARS_LARSFramework_ReferenceInput.LARS_LARSFrameworkAim_LARSFrameworkAim_Id");
-
-                entity.HasOne(d => d.LARS_LARSLearningDelivery_)
-                    .WithMany(p => p.LARS_LARSFrameworks)
-                    .HasForeignKey(d => d.LARS_LARSLearningDelivery_Id)
-                    .HasConstraintName("FK_ReferenceInput.LARS_LARSFramework_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
-            });
-
             modelBuilder.Entity<LARS_LARSFrameworkAim>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkAim", "ReferenceInput");
@@ -412,11 +392,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.LARS_LARSFrameworkApprenticeshipFundings)
                     .HasForeignKey(d => d.LARS_LARSFrameworkDesktop_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkApprenticeshipFunding_ReferenceInput.LARS_LARSFrameworkDesktop_LARSFrameworkDesktop_Id");
-
-                entity.HasOne(d => d.LARS_LARSFramework_)
-                    .WithMany(p => p.LARS_LARSFrameworkApprenticeshipFundings)
-                    .HasForeignKey(d => d.LARS_LARSFramework_Id)
-                    .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkApprenticeshipFunding_ReferenceInput.LARS_LARSFramework_LARSFramework_Id");
             });
 
             modelBuilder.Entity<LARS_LARSFrameworkCommonComponent>(entity =>
@@ -431,11 +406,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.LARS_LARSFrameworkCommonComponents)
                     .HasForeignKey(d => d.LARS_LARSFrameworkDesktop_Id)
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkCommonComponent_ReferenceInput.LARS_LARSFrameworkDesktop_LARSFrameworkDesktop_Id");
-
-                entity.HasOne(d => d.LARS_LARSFramework_)
-                    .WithMany(p => p.LARS_LARSFrameworkCommonComponents)
-                    .HasForeignKey(d => d.LARS_LARSFramework_Id)
-                    .HasConstraintName("FK_ReferenceInput.LARS_LARSFrameworkCommonComponent_ReferenceInput.LARS_LARSFramework_LARSFramework_Id");
             });
 
             modelBuilder.Entity<LARS_LARSFrameworkDesktop>(entity =>

@@ -5,11 +5,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
     public partial class LARS_LARSFrameworkAim
     {
-        public LARS_LARSFrameworkAim()
-        {
-            LARS_LARSFrameworks = new HashSet<LARS_LARSFramework>();
-        }
-
         public int Id { get; set; }
         public string LearnAimRef { get; set; }
         public int? FrameworkComponentType { get; set; }
@@ -19,7 +14,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public int? ProgType { get; set; }
         public int? PwayCode { get; set; }
         public string Discriminator { get; set; }
-
-        public virtual ICollection<LARS_LARSFramework> LARS_LARSFrameworks { get; set; }
     }
 }
