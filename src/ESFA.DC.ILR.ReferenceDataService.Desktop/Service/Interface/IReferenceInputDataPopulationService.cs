@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IReferenceInputDataPopulationService
     {
-        Task<DesktopReferenceDataRoot> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken);
+        Task<bool> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken);
     }
 }

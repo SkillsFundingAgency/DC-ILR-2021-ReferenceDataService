@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger = logger;
         }
 
-        public async Task<DesktopReferenceDataRoot> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
+        public async Task<bool> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Reference Data Retrieval from sources");
             var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(inputReferenceDataContext, cancellationToken);
@@ -48,14 +48,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger.LogInfo("Finished assigning ID's to EF models");
 
             _logger.LogInfo("Starting Truncate existing data");
-            await _referenceInputTruncator.TruncateReferenceData(inputReferenceDataContext, cancellationToken);
+            await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
             _logger.LogInfo("Finished Truncate existing data");
 
             _logger.LogInfo("Starting persisting EF Models to Db");
-            await _referenceInputPersistenceService.PersistEFModels(inputReferenceDataContext, efReferenceInputDataRoot, cancellationToken);
+            await _referenceInputPersistenceService.PersistEFModelsAsync(inputReferenceDataContext, efReferenceInputDataRoot, cancellationToken);
             _logger.LogInfo("Finished persisting EF Models to Db");
 
-            return desktopReferenceData;
+            return true;
         }
     }
 }

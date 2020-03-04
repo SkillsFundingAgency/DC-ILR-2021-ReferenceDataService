@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -68,6 +71,9 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.1\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -139,6 +145,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.csproj">
       <Project>{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.csproj">
+      <Project>{9D7C5D20-E68E-4E01-B529-F447264B68A7}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
       <Project>{522D563B-9412-4748-B7CE-21CAD291331E}</Project>

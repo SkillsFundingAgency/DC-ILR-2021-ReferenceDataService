@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface
 {
     public interface IReferenceInputTruncator
     {
-        Task TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken);
+        Task TruncateReferenceDataAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken);
     }
 }

@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IReferenceInputPersistence
     {
-        Task PersistEFModels(IInputReferenceDataContext inputReferenceDataContext, IEFReferenceInputDataRoot efModels, CancellationToken cancellationToken);
+        Task PersistEFModelsAsync(IInputReferenceDataContext inputReferenceDataContext, IEFReferenceInputDataRoot efModels, CancellationToken cancellationToken);
     }
 }

@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class ReferenceInputPersistence : IReferenceInputPersistence
     {
-        public async Task PersistEFModels(IInputReferenceDataContext inputReferenceDataContext,
+        public async Task PersistEFModelsAsync(IInputReferenceDataContext inputReferenceDataContext,
             IEFReferenceInputDataRoot efModels, CancellationToken cancellationToken)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))

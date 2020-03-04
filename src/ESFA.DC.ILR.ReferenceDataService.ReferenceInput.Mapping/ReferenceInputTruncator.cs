@@ -44,7 +44,7 @@ DBCC CHECKIDENT ('[ReferenceInput].[LARS_LARSFrameworkDesktop]', RESEED, 1);";
         private const string ClearLarsFrameworkAims = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSFrameworkAim];";
 
-        public async Task TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext,
+        public async Task TruncateReferenceDataAsync(IInputReferenceDataContext inputReferenceDataContext,
             CancellationToken cancellationToken)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))
