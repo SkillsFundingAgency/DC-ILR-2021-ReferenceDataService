@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             MetaData metaDatas,
             DevolvedPostcodes devolvedPostcodes,
             IReadOnlyCollection<Employer> employers,
-            IReadOnlyCollection<EPAOrganisation> ePAOrganisations,
+            IReadOnlyCollection<EPAOrganisation> epaOrganisations,
             IReadOnlyCollection<LARSFrameworkDesktop> larsFrameworks,
             IReadOnlyCollection<LARSFrameworkAimDesktop> larsFrameworkAims,
             IReadOnlyCollection<LARSLearningDelivery> larsLearningDeliveries,

@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             MetaData metaDatas,
             DevolvedPostcodes devolvedPostcodes,
             IReadOnlyCollection<Employer> employers,
-            IReadOnlyCollection<EPAOrganisation> ePAOrganisations,
+            IReadOnlyCollection<EPAOrganisation> epaOrganisations,
             IReadOnlyCollection<LARSFrameworkDesktop> larsFrameworks,
             IReadOnlyCollection<LARSFrameworkAimDesktop> larsFrameworkAims,
             IReadOnlyCollection<LARSLearningDelivery> larsLearningDeliveries,
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostcodes.Postcodes);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, devolvedPostcodes.McaGlaSofLookups);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EmployersFile, employers);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, ePAOrganisations);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, epaOrganisations);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworksFile, larsFrameworks);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworkAimsFile, larsFrameworkAims);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSLearningDeliveriesFile, larsLearningDeliveries);
