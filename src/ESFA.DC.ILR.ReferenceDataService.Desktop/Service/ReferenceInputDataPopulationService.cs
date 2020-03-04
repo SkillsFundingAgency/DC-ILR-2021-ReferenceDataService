@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
@@ -11,30 +12,48 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
     {
         private readonly IReferenceInputDataMapperService _desktopReferenceDataRootMapperService;
         private readonly IReferenceInputEFMapper _referenceInputEFMapper;
-        private readonly IReferenceInputPersistanceService _referenceInputPersistanceService;
+        private readonly IEFModelIdentityAssigner _efModelIdentityAssigner;
+        private readonly IReferenceInputTruncator _referenceInputTruncator;
+        private readonly IReferenceInputPersistence _referenceInputPersistenceService;
         private readonly ILogger _logger;
 
         public ReferenceInputDataPopulationService(
             IReferenceInputDataMapperService desktopReferenceDataRootMapperService,
             IReferenceInputEFMapper referenceInputEFMapper,
-            IReferenceInputPersistanceService referenceInputPersistanceService,
+            IEFModelIdentityAssigner efModelIdentityAssigner,
+            IReferenceInputTruncator referenceInputTruncator,
+            IReferenceInputPersistence referenceInputPersistenceService,
             ILogger logger)
         {
             _desktopReferenceDataRootMapperService = desktopReferenceDataRootMapperService;
             _referenceInputEFMapper = referenceInputEFMapper;
-            _referenceInputPersistanceService = referenceInputPersistanceService;
+            _efModelIdentityAssigner = efModelIdentityAssigner;
+            _referenceInputTruncator = referenceInputTruncator;
+            _referenceInputPersistenceService = referenceInputPersistenceService;
             _logger = logger;
         }
 
-        public async Task<DesktopReferenceDataRoot> PopulateAsync(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
+        public async Task<DesktopReferenceDataRoot> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Reference Data Retrieval from sources");
-            var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(referenceDataContext, cancellationToken);
+            var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(inputReferenceDataContext, cancellationToken);
             _logger.LogInfo("Finished Reference Data Retrieval from sources");
 
-            var efmodels = _referenceInputEFMapper.Map<object>(referenceDataContext, desktopReferenceData, cancellationToken);
+            _logger.LogInfo("Starting Reference Data mapping from models to EF models");
+            var efReferenceInputDataRoot = _referenceInputEFMapper.Map(desktopReferenceData);
+            _logger.LogInfo("Finished Reference Data mapping from models to EF models");
 
-            await _referenceInputPersistanceService.PersistModels<object>(referenceDataContext, efmodels, cancellationToken);
+            _logger.LogInfo("Starting assigning ID's to EF models");
+            _efModelIdentityAssigner.AssignIds(efReferenceInputDataRoot);
+            _logger.LogInfo("Finished assigning ID's to EF models");
+
+            _logger.LogInfo("Starting Truncate existing data");
+            await _referenceInputTruncator.TruncateReferenceData(inputReferenceDataContext, cancellationToken);
+            _logger.LogInfo("Finished Truncate existing data");
+
+            _logger.LogInfo("Starting persisting EF Models to Db");
+            await _referenceInputPersistenceService.PersistEFModels(inputReferenceDataContext, efReferenceInputDataRoot, cancellationToken);
+            _logger.LogInfo("Finished persisting EF Models to Db");
 
             return desktopReferenceData;
         }

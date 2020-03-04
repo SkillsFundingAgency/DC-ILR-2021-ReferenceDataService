@@ -46,7 +46,11 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.ILR.ReferenceDataSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model", "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.csproj", "{9D7C5D20-E68E-4E01-B529-F447264B68A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console", "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console.csproj", "{09FCE0F0-8761-4555-9D56-4D2997AEDC26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console", "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console.csproj", "{09FCE0F0-8761-4555-9D56-4D2997AEDC26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping", "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.csproj", "{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console", "ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console.csproj", "{589C540B-E782-4B79-AE7A-84BFA5FA93DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -218,6 +222,22 @@ Global
 		{09FCE0F0-8761-4555-9D56-4D2997AEDC26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09FCE0F0-8761-4555-9D56-4D2997AEDC26}.Release|x64.ActiveCfg = Release|Any CPU
 		{09FCE0F0-8761-4555-9D56-4D2997AEDC26}.Release|x64.Build.0 = Release|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Debug|x64.Build.0 = Debug|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Release|x64.ActiveCfg = Release|Any CPU
+		{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}.Release|x64.Build.0 = Release|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{589C540B-E782-4B79-AE7A-84BFA5FA93DE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

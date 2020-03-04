@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesktopContextReturnPeriodUpdateServiceTests.cs" />
+    <Compile Include="IReferenceInputEFMapper.cs" />
     <Compile Include="ReferenceInputDataMapperServiceTests.cs" />
     <Compile Include="DesktopReferenceDataMapperServiceTests.cs" />
     <Compile Include="ReferenceInputDataPopulationServiceTests.cs" />
@@ -134,6 +135,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj">
       <Project>{4127C037-0DE3-408C-9D62-F9FFB3FA0540}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Providers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.csproj">
+      <Project>{CBD4F9EA-FED0-4E40-BA80-3B20C8093829}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Service\ESFA.DC.ILR.ReferenceDataService.Service.csproj">
       <Project>{522D563B-9412-4748-B7CE-21CAD291331E}</Project>

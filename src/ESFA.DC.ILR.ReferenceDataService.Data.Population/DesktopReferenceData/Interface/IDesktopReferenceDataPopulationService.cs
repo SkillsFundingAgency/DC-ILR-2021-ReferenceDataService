@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface
 {
     public interface IDesktopReferenceDataPopulationService
     {

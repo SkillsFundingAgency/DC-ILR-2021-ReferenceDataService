@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 

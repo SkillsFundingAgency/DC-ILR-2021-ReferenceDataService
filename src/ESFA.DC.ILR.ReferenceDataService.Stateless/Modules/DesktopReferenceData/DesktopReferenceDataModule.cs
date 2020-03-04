@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;

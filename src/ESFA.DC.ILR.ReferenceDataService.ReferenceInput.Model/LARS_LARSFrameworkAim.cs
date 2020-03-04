@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
@@ -13,6 +12,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public int? FworkCode { get; set; }
         public int? ProgType { get; set; }
         public int? PwayCode { get; set; }
-        public string Discriminator { get; set; }
     }
 }

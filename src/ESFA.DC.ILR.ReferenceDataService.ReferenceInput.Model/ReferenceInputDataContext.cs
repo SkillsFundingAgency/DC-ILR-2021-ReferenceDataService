@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
@@ -90,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\;Database=ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database;Trusted_Connection=True;");
             }
         }
 
@@ -348,10 +346,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<LARS_LARSFrameworkAim>(entity =>
             {
                 entity.ToTable("LARS_LARSFrameworkAim", "ReferenceInput");
-
-                entity.Property(e => e.Discriminator)
-                    .IsRequired()
-                    .HasMaxLength(128);
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 

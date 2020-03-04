@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IReferenceInputDataMapperService
     {
-        Task<DesktopReferenceDataRoot> MapReferenceData(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken);
+        Task<DesktopReferenceDataRoot> MapReferenceData(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken);
     }
 }
