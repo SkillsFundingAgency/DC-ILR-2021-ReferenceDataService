@@ -44,14 +44,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
         private static async Task BulkInsertLarsVersion(IEFReferenceInputDataRoot efModels,
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
-            await bulkInsert.InsertWithIds("ReferenceInput.LARS_LARSVersion", new List<LARS_LARSVersion> {efModels.Lars_LarsVersion}, connection,
+            await bulkInsert.InsertWithIdsAsync("ReferenceInput.LARS_LARSVersion", new List<LARS_LARSVersion> {efModels.Lars_LarsVersion}, connection,
                 trans, cancellationToken);
         }
 
         private static async Task BulkInsertLarsStandards(IEFReferenceInputDataRoot efModels,
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
-            await bulkInsert.InsertWithIds("ReferenceInput.LARS_LARSStandard", efModels.Lars_LarsStandards, connection,
+            await bulkInsert.InsertWithIdsAsync("ReferenceInput.LARS_LARSStandard", efModels.Lars_LarsStandards, connection,
                 trans, cancellationToken);
 
             await DoSubTableBulkInsert<LARS_LARSStandard, LARS_LARSStandardApprenticeshipFunding>("ReferenceInput.LARS_LARSStandardApprenticeshipFunding",
@@ -71,7 +71,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
         private static async Task BulkInsertLarsLearningDelivery(IEFReferenceInputDataRoot efModels,
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
-            await bulkInsert.InsertWithIds("ReferenceInput.LARS_LARSLearningDelivery",
+            await bulkInsert.InsertWithIdsAsync("ReferenceInput.LARS_LARSLearningDelivery",
                 efModels.Lars_LarsLearningDeliveries, connection, trans, cancellationToken);
 
 
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
         private static async Task BulkInsertLarsFrameworkDesktop(IEFReferenceInputDataRoot efModels,
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
-            await bulkInsert.InsertWithIds("ReferenceInput.LARS_LARSFrameworkDesktop",
+            await bulkInsert.InsertWithIdsAsync("ReferenceInput.LARS_LARSFrameworkDesktop",
                 efModels.Lars_LarsFrameworkDesktops, connection, trans, cancellationToken);
 
             await DoSubTableBulkInsert<LARS_LARSFrameworkDesktop, LARS_LARSFrameworkApprenticeshipFunding>("ReferenceInput.LARS_LARSFrameworkApprenticeshipFunding",
@@ -106,7 +106,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
         private static async Task BulkInsertLarsFrameworkAims(IEFReferenceInputDataRoot efModels,
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
-            await bulkInsert.InsertWithIds("ReferenceInput.LARS_LARSFrameworkAim",
+            await bulkInsert.InsertWithIdsAsync("ReferenceInput.LARS_LARSFrameworkAim",
                 efModels.Lars_LarsFrameworkAims, connection, trans, cancellationToken);
         }
 
@@ -114,7 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
             CancellationToken cancellationToken, BulkInsert bulkInsert, SqlConnection connection, SqlTransaction trans)
         {
             var subCollection = topLevelCollection.SelectMany(func);
-            await bulkInsert.InsertWithIds(tableName, subCollection, connection, trans, cancellationToken);
+            await bulkInsert.InsertWithIdsAsync(tableName, subCollection, connection, trans, cancellationToken);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class BulkInsert
     {
-        public async Task InsertWithIds<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction, CancellationToken cancellationToken)
+        public async Task InsertWithIdsAsync<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction, CancellationToken cancellationToken)
         {
             using (var sqlBulkCopy = BuildSqlBulkCopy(sqlConnection, sqlTransaction))
             {
