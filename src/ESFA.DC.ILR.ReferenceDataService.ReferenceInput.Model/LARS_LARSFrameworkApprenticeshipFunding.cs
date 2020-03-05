@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
@@ -22,7 +21,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
         public int? LARS_LARSFrameworkDesktop_Id { get; set; }
-        public int? LARS_LARSFramework_Id { get; set; }
 
         public virtual LARS_LARSFrameworkDesktop LARS_LARSFrameworkDesktop_ { get; set; }
     }

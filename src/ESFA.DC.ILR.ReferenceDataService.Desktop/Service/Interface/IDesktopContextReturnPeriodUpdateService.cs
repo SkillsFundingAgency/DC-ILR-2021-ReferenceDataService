@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
+namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
 {
     public interface IDesktopContextReturnPeriodUpdateService
     {

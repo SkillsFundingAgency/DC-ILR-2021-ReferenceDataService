@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console
+﻿namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console
 {
     class Program
     {

@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             var cancellationToken = CancellationToken.None;
             var fileServiceMock = new Mock<IFileService>();
             var zipArchiveFileServiceMock = new Mock<IZipArchiveFileService>();
-            var referenceDataContext = new Mock<IReferenceDataContext>();
+            var inputReferenceDataContext = new Mock<IInputReferenceDataContext>();
 
             var expectedReferenceData = new DesktopReferenceDataRoot
             {
@@ -54,8 +54,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
 
             var currentPath = Directory.GetCurrentDirectory();
-            referenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
-            referenceDataContext.Setup(r => r.Container).Returns(currentPath);
+            inputReferenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
+            inputReferenceDataContext.Setup(r => r.Container).Returns(currentPath);
 
             zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModel<MetaData>(It.IsAny<ZipArchive>(), It.IsAny<string>())).Returns(TestNetaData());
             zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModels<DevolvedPostcode>(It.IsAny<ZipArchive>(), It.IsAny<string>(), null)).Returns(TestDevolvedPostcodes());
@@ -73,14 +73,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             using (Stream stream = new FileStream(currentPath + "\\TestFiles\\ReferenceInputReferenceData.zip", FileMode.Open))
             {
                 fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
-                   referenceDataContext.Object.InputReferenceDataFileKey,
-                   referenceDataContext.Object.Container,
+                   inputReferenceDataContext.Object.InputReferenceDataFileKey,
+                   inputReferenceDataContext.Object.Container,
                    cancellationToken)).ReturnsAsync(stream);
 
                 var result = await NewService(
                     zipArchiveFileServiceMock.Object,
                     fileServiceMock.Object)
-                    .MapReferenceData(referenceDataContext.Object, cancellationToken);
+                    .MapReferenceData(inputReferenceDataContext.Object, cancellationToken);
 
                 result.Should().BeEquivalentTo(expectedReferenceData);
             }

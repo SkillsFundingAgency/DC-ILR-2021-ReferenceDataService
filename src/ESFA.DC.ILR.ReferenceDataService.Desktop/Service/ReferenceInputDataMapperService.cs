@@ -35,13 +35,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger = logger;
         }
 
-        public async Task<DesktopReferenceDataRoot> MapReferenceData(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
+        public async Task<DesktopReferenceDataRoot> MapReferenceData(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
             var desktopReferenceData = new DesktopReferenceDataRoot();
 
-            var zipFilePath = referenceDataContext.InputReferenceDataFileKey;
-
-            using (var zipFileStream = await _fileService.OpenReadStreamAsync(referenceDataContext.InputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
+            using (var zipFileStream = await _fileService.OpenReadStreamAsync(inputReferenceDataContext.InputReferenceDataFileKey, inputReferenceDataContext.Container, cancellationToken))
             {
                 using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {

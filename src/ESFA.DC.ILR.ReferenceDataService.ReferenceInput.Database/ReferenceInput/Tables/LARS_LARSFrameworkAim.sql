@@ -8,6 +8,5 @@
 	[FworkCode] [int] NULL,
 	[ProgType] [int] NULL,
 	[PwayCode] [int] NULL,
-	[Discriminator] [nvarchar](128) NOT NULL,
 	CONSTRAINT [PK_ReferenceInput.LARS_LARSFrameworkAim] PRIMARY KEY ([Id]),
 )

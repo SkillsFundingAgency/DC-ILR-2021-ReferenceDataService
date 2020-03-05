@@ -6,13 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopDevolvedPostcodesRepositoryService : IDesktopReferenceDataRepositoryService<DevolvedPostcodes>
     {

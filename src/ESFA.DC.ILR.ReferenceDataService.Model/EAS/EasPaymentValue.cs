@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
+﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.EAS
 {
     public struct EasPaymentValue
     {

@@ -4,6 +4,7 @@ using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Context;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
+using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
 using ESFA.DC.Logging.Interfaces;
