@@ -104,7 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesktopContextReturnPeriodUpdateServiceTests.cs" />
-    <Compile Include="IReferenceInputEFMapper.cs" />
     <Compile Include="ReferenceInputDataMapperServiceTests.cs" />
     <Compile Include="DesktopReferenceDataMapperServiceTests.cs" />
     <Compile Include="ReferenceInputDataPopulationServiceTests.cs" />

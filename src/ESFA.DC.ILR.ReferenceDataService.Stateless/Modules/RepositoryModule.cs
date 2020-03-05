@@ -27,7 +27,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 
         protected override void Load(ContainerBuilder containerBuilder)
         {
-
             containerBuilder.RegisterInstance(_referenceDataOptions).As<IReferenceDataOptions>();
 
             containerBuilder.RegisterType<AppsEarningsHistoryDbContextFactory>().As<IDbContextFactory<IAppEarnHistoryContext>>()
