@@ -40,8 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             var referenceInputPersistence = new Mock<IReferenceInputPersistence>();
             referenceInputPersistence
-                .Setup(s => s.PersistEFModelsAsync(It.IsAny<IInputReferenceDataContext>(), It.IsAny<IEFReferenceInputDataRoot>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+                .Setup(s => s.PersistEFModels(It.IsAny<IInputReferenceDataContext>(), It.IsAny<IEFReferenceInputDataRoot>()));
 
 
             return new ReferenceInputDataPopulationService(

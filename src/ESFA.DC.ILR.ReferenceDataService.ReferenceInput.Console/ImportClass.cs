@@ -48,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                             };
 
 
-                            await referenceInputDataPopulationService.PopulateAsync2(inputReferenceDataContext,
+                            await referenceInputDataPopulationService.PopulateAsyncByType(inputReferenceDataContext,
                                 cancellationToken);
 
                             System.Console.WriteLine("Reference data import completed.");

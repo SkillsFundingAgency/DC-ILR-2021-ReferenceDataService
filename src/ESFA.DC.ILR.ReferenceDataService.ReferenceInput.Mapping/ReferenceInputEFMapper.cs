@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
@@ -44,6 +45,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                     .ForMember(m => m.Lars_LarsLearningDeliveries,opt => opt.MapFrom(src => src.LARSLearningDeliveries))
                     .ForMember(m => m.Lars_LarsFrameworkDesktops, opt => opt.MapFrom(src => src.LARSFrameworks))
                     .ForMember(m => m.Lars_LarsFrameworkAims, opt => opt.MapFrom((src => src.LARSFrameworkAims)));
+
+                // Metadata
+                cfg.CreateMap<MetaData, LARS_LARSVersion>()
+                    .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.LarsVersion.Version));
 
                 // LArsVersion
                 cfg.CreateMap<LarsVersion, LARS_LARSVersion>();

@@ -9,7 +9,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Mapping.Interface
 {
     public interface IReferenceInputPersistence
     {
-        Task PersistEfModelByTypeAsync<T>(SqlConnection connection, SqlTransaction sqlTransaction, CancellationToken cancellationToken, IEnumerable<T> source);
-        Task PersistEFModelsAsync(IInputReferenceDataContext inputReferenceDataContext, IEFReferenceInputDataRoot efModels, CancellationToken cancellationToken);
+        void PersistEfModelByType<T>(SqlConnection connection, SqlTransaction sqlTransaction, IEnumerable<T> source);
+        void PersistEFModels(IInputReferenceDataContext inputReferenceDataContext, IEFReferenceInputDataRoot efModels);
     }
 }

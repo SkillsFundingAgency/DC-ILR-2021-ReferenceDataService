@@ -12,6 +12,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
@@ -27,6 +28,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         private readonly IFileService _fileService;
         private readonly ILogger _logger;
 
+        private readonly Dictionary<Type, string> _fileNameRef;
+
         public ReferenceInputDataMapperService(
             IZipArchiveFileService zipArchiveFileService,
             IFileService fileService,
@@ -35,18 +38,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _zipArchiveFileService = zipArchiveFileService;
             _fileService = fileService;
             _logger = logger;
+
+            _fileNameRef = new Dictionary<Type, string>
+            { // Map from the data type to the filename that stores it in the zip file
+                { typeof(MetaData), DesktopReferenceDataConstants.MetaDataFile },
+                { typeof(LARSStandard), DesktopReferenceDataConstants.LARSStandardsFile },
+                { typeof(LARSLearningDelivery), DesktopReferenceDataConstants.LARSLearningDeliveriesFile },
+                { typeof(LARSFrameworkDesktop), DesktopReferenceDataConstants.LARSFrameworksFile },
+                { typeof(LARSFrameworkAimDesktop), DesktopReferenceDataConstants.LARSFrameworkAimsFile },
+            };
         }
 
         public async Task<IReadOnlyCollection<T>> MapReferenceDataByType<T>(
             IInputReferenceDataContext inputReferenceDataContext,
             CancellationToken cancellationToken)
         {
-            Dictionary<Type, string> fileNameRef = new Dictionary<Type, string>
-            {
-                { typeof(LARSStandard), DesktopReferenceDataConstants.LARSStandardsFile },
-            };
-
-            if (!fileNameRef.TryGetValue(typeof(T), out string referenceFilename))
+            if (!_fileNameRef.TryGetValue(typeof(T), out string referenceFilename))
             {
                 throw new ApplicationException($"type ({typeof(T)}) not recognized.");
             }

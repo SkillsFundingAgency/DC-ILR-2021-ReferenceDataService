@@ -7,6 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.Desktop.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
@@ -39,7 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger = logger;
         }
 
-        public async Task<bool> PopulateAsync2(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
+        public async Task<bool> PopulateAsyncByType(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Truncate existing data");
             await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
@@ -52,9 +53,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 {
                     try
                     {
-                        _logger.LogInfo("Starting population for LarsVersion");
+                        // Lars data structures
+                        await PopulateTopLevelNode<MetaData, LARS_LARSVersion>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        _logger.LogInfo("Finished population for LarsVersion");
+                        await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
 
                         sqlTransaction.Commit();
                     }
@@ -80,6 +84,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             SqlTransaction sqlTransaction,
             CancellationToken cancellationToken)
         {
+            _logger.LogInfo($"Starting population for {typeof(TTarget).Name}");
+
             var dataFromJson =
                 await _desktopReferenceDataRootMapperService.MapReferenceDataByType<TSource>(inputReferenceDataContext, cancellationToken);
 
@@ -92,12 +98,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _efModelIdentityAssigner.AssignIdsByType<TTarget>(dataMappedToEF);
 
             // Need to get it into the Db ...
-            await _referenceInputPersistenceService.PersistEfModelByTypeAsync(sqlConnection, sqlTransaction, cancellationToken, dataMappedToEF);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, dataMappedToEF);
 
             // Release the resources that got mapped into the EF data
             dataMappedToEF = null;
             System.GC.Collect();
 
+            _logger.LogInfo($"Finishing population for {typeof(TTarget).Name} RAM usage {System.GC.GetTotalMemory(false)}");
             return true;
         }
 
@@ -120,7 +127,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger.LogInfo("Finished Truncate existing data");
 
             _logger.LogInfo("Starting persisting EF Models to Db");
-            await _referenceInputPersistenceService.PersistEFModelsAsync(inputReferenceDataContext, efReferenceInputDataRoot, cancellationToken);
+            _referenceInputPersistenceService.PersistEFModels(inputReferenceDataContext, efReferenceInputDataRoot);
             _logger.LogInfo("Finished persisting EF Models to Db");
 
             return true;
