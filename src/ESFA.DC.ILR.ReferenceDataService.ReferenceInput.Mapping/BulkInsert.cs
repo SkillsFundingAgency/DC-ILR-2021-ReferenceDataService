@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using FastMember;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping

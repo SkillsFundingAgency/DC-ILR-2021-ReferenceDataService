@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Desktop.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
-using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using ESFA.DC.Logging.Interfaces;
@@ -43,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         public async Task<bool> PopulateAsyncByType(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Starting Truncate existing data");
-            await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
+            _referenceInputTruncator.TruncateReferenceData(inputReferenceDataContext);
             _logger.LogInfo("Finished Truncate existing data");
 
             using (var sqlConnection = new SqlConnection(inputReferenceDataContext.ConnectionString))
@@ -75,10 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             return false;
         }
 
-        /*Need to do below process a top level node at a time, to reduce the memory overhead in the application.
-         *Processes to be generic driven from the type passed in.
-         */
-        public async Task<bool> PopulateTopLevelNode<TSource, TTarget>(
+        private async Task<bool> PopulateTopLevelNode<TSource, TTarget>(
             IInputReferenceDataContext inputReferenceDataContext,
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
@@ -105,31 +100,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             System.GC.Collect();
 
             _logger.LogInfo($"Finishing population for {typeof(TTarget).Name} RAM usage {System.GC.GetTotalMemory(false)}");
-            return true;
-        }
-
-        public async Task<bool> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
-        {
-            _logger.LogInfo("Starting Reference Data Retrieval from sources");
-            var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(inputReferenceDataContext, cancellationToken);
-            _logger.LogInfo("Finished Reference Data Retrieval from sources");
-
-            _logger.LogInfo("Starting Reference Data mapping from models to EF models");
-            var efReferenceInputDataRoot = _referenceInputEFMapper.Map(desktopReferenceData);
-            _logger.LogInfo("Finished Reference Data mapping from models to EF models");
-
-            _logger.LogInfo("Starting assigning ID's to EF models");
-            _efModelIdentityAssigner.AssignIds(efReferenceInputDataRoot);
-            _logger.LogInfo("Finished assigning ID's to EF models");
-
-            _logger.LogInfo("Starting Truncate existing data");
-            await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
-            _logger.LogInfo("Finished Truncate existing data");
-
-            _logger.LogInfo("Starting persisting EF Models to Db");
-            _referenceInputPersistenceService.PersistEFModels(inputReferenceDataContext, efReferenceInputDataRoot);
-            _logger.LogInfo("Finished persisting EF Models to Db");
-
             return true;
         }
     }

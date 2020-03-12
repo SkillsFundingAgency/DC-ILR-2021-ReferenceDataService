@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Desktop.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping;

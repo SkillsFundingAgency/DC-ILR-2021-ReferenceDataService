@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
-using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.Containers;
-using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.Containers.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
@@ -22,29 +19,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
         }
 
-        public IEFReferenceInputDataRoot Map(DesktopReferenceDataRoot desktopReferenceDataRoot)
-        {
-            var mapper = GetMapper();
-
-            var result = mapper.Map<EFReferenceInputDataRoot>(desktopReferenceDataRoot);
-
-            return result;
-        }
-
         private IMapper GetMapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
                 // The below mappings can be broken out into injectable resources as and when some customisation is required for that specific classes mapping
                 // Until then, just leave then in the list below.
-
-                // Top level DataRoot
-                cfg.CreateMap<DesktopReferenceDataRoot, EFReferenceInputDataRoot>()
-                    .ForMember(m => m.Lars_LarsVersion, opt => opt.MapFrom(src => src.MetaDatas.ReferenceDataVersions.LarsVersion))
-                    .ForMember(m => m.Lars_LarsStandards, opt => opt.MapFrom(src => src.LARSStandards))
-                    .ForMember(m => m.Lars_LarsLearningDeliveries,opt => opt.MapFrom(src => src.LARSLearningDeliveries))
-                    .ForMember(m => m.Lars_LarsFrameworkDesktops, opt => opt.MapFrom(src => src.LARSFrameworks))
-                    .ForMember(m => m.Lars_LarsFrameworkAims, opt => opt.MapFrom((src => src.LARSFrameworkAims)));
 
                 // Metadata
                 cfg.CreateMap<MetaData, LARS_LARSVersion>()

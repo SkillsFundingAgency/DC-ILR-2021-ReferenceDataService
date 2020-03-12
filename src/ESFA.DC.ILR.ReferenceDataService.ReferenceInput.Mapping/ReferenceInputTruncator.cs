@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Threading;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 
@@ -42,8 +40,7 @@ DBCC CHECKIDENT ('[ReferenceInput].[LARS_LARSFrameworkDesktop]', RESEED, 1);";
         private const string ClearLarsFrameworkAims = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSFrameworkAim];";
 
-        public async Task TruncateReferenceDataAsync(IInputReferenceDataContext inputReferenceDataContext,
-            CancellationToken cancellationToken)
+        public void TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))
             {
