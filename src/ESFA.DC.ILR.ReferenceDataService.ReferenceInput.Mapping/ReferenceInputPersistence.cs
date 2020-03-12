@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
                 // Create a generic version from a runtime type to call with this child set of items
                 this.GetType()
-                    .GetMethod("PersistEfModelByTypeAsync")
+                    .GetMethod("PersistEfModelByType")
                     .MakeGenericMethod(childListType)
                     .Invoke(this, new object[] { connection, sqlTransaction, subItems });
             }
