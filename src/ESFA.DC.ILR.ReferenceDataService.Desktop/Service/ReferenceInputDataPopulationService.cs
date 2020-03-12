@@ -1,9 +1,15 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Desktop.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
-using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
@@ -31,6 +37,68 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _referenceInputTruncator = referenceInputTruncator;
             _referenceInputPersistenceService = referenceInputPersistenceService;
             _logger = logger;
+        }
+
+        public async Task<bool> PopulateAsync2(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
+        {
+            _logger.LogInfo("Starting Truncate existing data");
+            await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
+            _logger.LogInfo("Finished Truncate existing data");
+
+            using (var sqlConnection = new SqlConnection(inputReferenceDataContext.ConnectionString))
+            {
+                sqlConnection.Open();
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        _logger.LogInfo("Starting population for LarsVersion");
+                        await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _logger.LogInfo("Finished population for LarsVersion");
+
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        sqlTransaction.Rollback();
+
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /*Need to do below process a top level node at a time, to reduce the memory overhead in the application.
+         *Processes to be generic driven from the type passed in.
+         */
+        public async Task<bool> PopulateTopLevelNode<TSource, TTarget>(
+            IInputReferenceDataContext inputReferenceDataContext,
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            CancellationToken cancellationToken)
+        {
+            var dataFromJson =
+                await _desktopReferenceDataRootMapperService.MapReferenceDataByType<TSource>(inputReferenceDataContext, cancellationToken);
+
+            var dataMappedToEF = _referenceInputEFMapper.MapByType<IReadOnlyCollection<TSource>, List<TTarget>>(dataFromJson);
+
+            // Release the resources that came from the json data.
+            dataFromJson = null;
+            System.GC.Collect();
+
+            _efModelIdentityAssigner.AssignIdsByType<TTarget>(dataMappedToEF);
+
+            // Need to get it into the Db ...
+            await _referenceInputPersistenceService.PersistEfModelByTypeAsync(sqlConnection, sqlTransaction, cancellationToken, dataMappedToEF);
+
+            // Release the resources that got mapped into the EF data
+            dataMappedToEF = null;
+            System.GC.Collect();
+
+            return true;
         }
 
         public async Task<bool> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)

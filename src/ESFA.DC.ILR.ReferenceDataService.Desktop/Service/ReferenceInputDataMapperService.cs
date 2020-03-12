@@ -1,4 +1,6 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +35,31 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _zipArchiveFileService = zipArchiveFileService;
             _fileService = fileService;
             _logger = logger;
+        }
+
+        public async Task<IReadOnlyCollection<T>> MapReferenceDataByType<T>(
+            IInputReferenceDataContext inputReferenceDataContext,
+            CancellationToken cancellationToken)
+        {
+            Dictionary<Type, string> fileNameRef = new Dictionary<Type, string>
+            {
+                { typeof(LARSStandard), DesktopReferenceDataConstants.LARSStandardsFile },
+            };
+
+            if (!fileNameRef.TryGetValue(typeof(T), out string referenceFilename))
+            {
+                throw new ApplicationException($"type ({typeof(T)}) not recognized.");
+            }
+
+            using (var zipFileStream = await _fileService.OpenReadStreamAsync(
+                inputReferenceDataContext.InputReferenceDataFileKey, inputReferenceDataContext.Container, cancellationToken))
+            {
+                using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
+                {
+                    var retrievedData = _zipArchiveFileService.RetrieveModels<T>(zip, referenceFilename);
+                    return retrievedData;
+                }
+            }
         }
 
         public async Task<DesktopReferenceDataRoot> MapReferenceData(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)

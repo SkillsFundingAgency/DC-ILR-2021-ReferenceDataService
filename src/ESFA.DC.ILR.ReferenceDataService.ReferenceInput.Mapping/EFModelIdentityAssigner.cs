@@ -11,6 +11,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class EFModelIdentityAssigner : IEFModelIdentityAssigner
     {
+        public void AssignIdsByType<T>(IEnumerable<T> source)
+        {
+            GenerateIds(source);
+        }
+
         public void AssignIds(IEFReferenceInputDataRoot inputData)
         {
             GenerateIds<LARS_LARSVersion>(inputData.Lars_LarsVersion);

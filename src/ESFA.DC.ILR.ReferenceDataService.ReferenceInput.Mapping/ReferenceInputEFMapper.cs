@@ -11,6 +11,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class ReferenceInputEFMapper : IReferenceInputEFMapper
     {
+        public TTarget MapByType<TSource, TTarget>(TSource source)
+        {
+            var mapper = GetMapper();
+
+            var target = mapper.Map<TTarget>(source);
+
+            return target;
+
+        }
+
         public IEFReferenceInputDataRoot Map(DesktopReferenceDataRoot desktopReferenceDataRoot)
         {
             var mapper = GetMapper();

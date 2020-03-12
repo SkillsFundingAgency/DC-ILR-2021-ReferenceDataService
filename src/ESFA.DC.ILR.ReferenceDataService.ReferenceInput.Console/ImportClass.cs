@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Autofac;
 using CommandLine;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Context;
@@ -52,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                             };
 
 
-                            await referenceInputDataPopulationService.PopulateAsync(inputReferenceDataContext,
+                            await referenceInputDataPopulationService.PopulateAsync2(inputReferenceDataContext,
                                 cancellationToken);
 
                             System.Console.WriteLine("Reference data import completed.");

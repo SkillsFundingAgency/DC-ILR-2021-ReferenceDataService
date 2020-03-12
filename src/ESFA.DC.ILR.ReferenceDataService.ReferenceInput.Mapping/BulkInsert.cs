@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                             sqlBulkCopy.ColumnMappings.Add(name, name);
                         }
 
-                        await sqlBulkCopy.WriteToServerAsync(reader, cancellationToken);
+                        sqlBulkCopy.WriteToServer(reader);
                     }
                 }
                 catch (Exception ex)
