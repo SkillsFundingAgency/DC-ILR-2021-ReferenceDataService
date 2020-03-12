@@ -1,4 +1,6 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
+﻿using CommandLine;
+
+namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
 {
     public class CommandLineArguments
     {

@@ -1,4 +1,7 @@
-﻿using ESFA.DC.Logging.Interfaces;
+﻿using Autofac;
+using ESFA.DC.Logging.Desktop;
+using ESFA.DC.Logging.Desktop.Config.Interfaces;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console.modules
 {
