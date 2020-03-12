@@ -1,9 +1,9 @@
-﻿using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.Containers.Interface;
+﻿using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface
 {
     public interface IEFModelIdentityAssigner
     {
-        void AssignIds(IEFReferenceInputDataRoot inputData);
+        void AssignIdsByType<T>(IEnumerable<T> source);
     }
 }

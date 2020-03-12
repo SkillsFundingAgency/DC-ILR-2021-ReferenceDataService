@@ -106,7 +106,6 @@
     <Compile Include="DesktopContextReturnPeriodUpdateServiceTests.cs" />
     <Compile Include="ReferenceInputDataMapperServiceTests.cs" />
     <Compile Include="DesktopReferenceDataMapperServiceTests.cs" />
-    <Compile Include="ReferenceInputDataPopulationServiceTests.cs" />
     <Compile Include="DesktopReferenceDataPopulationServiceTests.cs" />
     <Compile Include="MapperTests.cs" />
     <Compile Include="DesktopTaskTests.cs" />

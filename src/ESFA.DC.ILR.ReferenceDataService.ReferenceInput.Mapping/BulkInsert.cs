@@ -2,26 +2,19 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using FastMember;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class BulkInsert
     {
-        public async Task InsertWithIdsAsync<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction, CancellationToken cancellationToken)
+        public void InsertWithIds<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             using (var sqlBulkCopy = BuildSqlBulkCopy(sqlConnection, sqlTransaction))
             {
                 try
                 {
                     if (source == null || !source.Any())
-                    {
-                        return;
-                    }
-
-                    if (cancellationToken.IsCancellationRequested)
                     {
                         return;
                     }
@@ -38,7 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                             sqlBulkCopy.ColumnMappings.Add(name, name);
                         }
 
-                        await sqlBulkCopy.WriteToServerAsync(reader, cancellationToken);
+                        sqlBulkCopy.WriteToServer(reader);
                     }
                 }
                 catch (Exception ex)

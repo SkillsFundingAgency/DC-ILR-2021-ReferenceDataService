@@ -1,12 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
-using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.Containers.Interface;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface
+namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface
 {
     public interface IReferenceInputPersistence
     {
-        Task PersistEFModelsAsync(IInputReferenceDataContext inputReferenceDataContext, IEFReferenceInputDataRoot efModels, CancellationToken cancellationToken);
+        void PersistEfModelByType<T>(SqlConnection connection, SqlTransaction sqlTransaction, IEnumerable<T> source);
     }
 }

@@ -4,20 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
-using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
-using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model.Containers.Interface;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class EFModelIdentityAssigner : IEFModelIdentityAssigner
     {
-        public void AssignIds(IEFReferenceInputDataRoot inputData)
+        public void AssignIdsByType<T>(IEnumerable<T> source)
         {
-            GenerateIds<LARS_LARSVersion>(inputData.Lars_LarsVersion);
-            GenerateIds<LARS_LARSStandard>(inputData.Lars_LarsStandards);
-            GenerateIds<LARS_LARSLearningDelivery>(inputData.Lars_LarsLearningDeliveries);
-            GenerateIds<LARS_LARSFrameworkDesktop>(inputData.Lars_LarsFrameworkDesktops);
-            GenerateIds<LARS_LARSFrameworkAim>(inputData.Lars_LarsFrameworkAims);
+            GenerateIds(source);
         }
 
         private static bool GenerateIds<T>(T model)

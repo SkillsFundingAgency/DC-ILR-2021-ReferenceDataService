@@ -1,4 +1,6 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +27,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         private readonly IFileService _fileService;
         private readonly ILogger _logger;
 
+        private readonly Dictionary<Type, string> _fileNameRef;
+
         public ReferenceInputDataMapperService(
             IZipArchiveFileService zipArchiveFileService,
             IFileService fileService,
@@ -33,6 +37,35 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _zipArchiveFileService = zipArchiveFileService;
             _fileService = fileService;
             _logger = logger;
+
+            _fileNameRef = new Dictionary<Type, string>
+            { // Map from the data type to the filename that stores it in the zip file
+                { typeof(MetaData), DesktopReferenceDataConstants.MetaDataFile },
+                { typeof(LARSStandard), DesktopReferenceDataConstants.LARSStandardsFile },
+                { typeof(LARSLearningDelivery), DesktopReferenceDataConstants.LARSLearningDeliveriesFile },
+                { typeof(LARSFrameworkDesktop), DesktopReferenceDataConstants.LARSFrameworksFile },
+                { typeof(LARSFrameworkAimDesktop), DesktopReferenceDataConstants.LARSFrameworkAimsFile },
+            };
+        }
+
+        public async Task<IReadOnlyCollection<T>> MapReferenceDataByType<T>(
+            IInputReferenceDataContext inputReferenceDataContext,
+            CancellationToken cancellationToken)
+        {
+            if (!_fileNameRef.TryGetValue(typeof(T), out string referenceFilename))
+            {
+                throw new ApplicationException($"type ({typeof(T)}) not recognized.");
+            }
+
+            using (var zipFileStream = await _fileService.OpenReadStreamAsync(
+                inputReferenceDataContext.InputReferenceDataFileKey, inputReferenceDataContext.Container, cancellationToken))
+            {
+                using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
+                {
+                    var retrievedData = _zipArchiveFileService.RetrieveModels<T>(zip, referenceFilename);
+                    return retrievedData;
+                }
+            }
         }
 
         public async Task<DesktopReferenceDataRoot> MapReferenceData(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)

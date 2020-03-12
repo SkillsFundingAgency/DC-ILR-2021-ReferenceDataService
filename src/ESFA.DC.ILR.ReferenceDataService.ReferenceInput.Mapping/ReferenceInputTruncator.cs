@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 
@@ -44,40 +40,42 @@ DBCC CHECKIDENT ('[ReferenceInput].[LARS_LARSFrameworkDesktop]', RESEED, 1);";
         private const string ClearLarsFrameworkAims = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSFrameworkAim];";
 
-        public async Task TruncateReferenceDataAsync(IInputReferenceDataContext inputReferenceDataContext,
-            CancellationToken cancellationToken)
+        public void TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))
             {
                 connection.Open();
-                var trans = connection.BeginTransaction();
-                try
+                using (var trans = connection.BeginTransaction())
                 {
-                    var command = connection.CreateCommand();
-                    command.CommandType = CommandType.Text;
-                    command.Transaction = trans;
+                    try
+                    {
+                        var command = trans.Connection.CreateCommand();
+                        //connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.Transaction = trans;
 
-                    command.CommandText = ClearLarsVersion;
-                    await command.ExecuteNonQueryAsync(cancellationToken);
+                        command.CommandText = ClearLarsVersion;
+                        command.ExecuteNonQuery();
 
-                    command.CommandText = ClearLarsStandardsSql;
-                    await command.ExecuteNonQueryAsync(cancellationToken);
+                        command.CommandText = ClearLarsStandardsSql;
+                        command.ExecuteNonQuery();
 
-                    command.CommandText = ClearLarsLearningDelivery;
-                    await command.ExecuteNonQueryAsync(cancellationToken);
+                        command.CommandText = ClearLarsLearningDelivery;
+                        command.ExecuteNonQuery();
 
-                    command.CommandText = ClearLarsFrameworkDesktops;
-                    await command.ExecuteNonQueryAsync(cancellationToken);
+                        command.CommandText = ClearLarsFrameworkDesktops;
+                        command.ExecuteNonQuery();
 
-                    command.CommandText = ClearLarsFrameworkAims;
-                    await command.ExecuteNonQueryAsync(cancellationToken);
+                        command.CommandText = ClearLarsFrameworkAims;
+                        command.ExecuteNonQuery();
 
-                    trans.Commit();
-                }
-                catch (Exception)
-                {
-                    trans.Rollback();
-                    throw;
+                        trans.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
                 }
             }
         }

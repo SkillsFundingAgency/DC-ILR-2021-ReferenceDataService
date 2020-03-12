@@ -1,9 +1,14 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
-using ESFA.DC.ILR.ReferenceDataService.Model;
+using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
@@ -33,28 +38,68 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger = logger;
         }
 
-        public async Task<bool> PopulateAsync(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
+        public async Task<bool> PopulateAsyncByType(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
-            _logger.LogInfo("Starting Reference Data Retrieval from sources");
-            var desktopReferenceData = await _desktopReferenceDataRootMapperService.MapReferenceData(inputReferenceDataContext, cancellationToken);
-            _logger.LogInfo("Finished Reference Data Retrieval from sources");
-
-            _logger.LogInfo("Starting Reference Data mapping from models to EF models");
-            var efReferenceInputDataRoot = _referenceInputEFMapper.Map(desktopReferenceData);
-            _logger.LogInfo("Finished Reference Data mapping from models to EF models");
-
-            _logger.LogInfo("Starting assigning ID's to EF models");
-            _efModelIdentityAssigner.AssignIds(efReferenceInputDataRoot);
-            _logger.LogInfo("Finished assigning ID's to EF models");
-
             _logger.LogInfo("Starting Truncate existing data");
-            await _referenceInputTruncator.TruncateReferenceDataAsync(inputReferenceDataContext, cancellationToken);
+            _referenceInputTruncator.TruncateReferenceData(inputReferenceDataContext);
             _logger.LogInfo("Finished Truncate existing data");
 
-            _logger.LogInfo("Starting persisting EF Models to Db");
-            await _referenceInputPersistenceService.PersistEFModelsAsync(inputReferenceDataContext, efReferenceInputDataRoot, cancellationToken);
-            _logger.LogInfo("Finished persisting EF Models to Db");
+            using (var sqlConnection = new SqlConnection(inputReferenceDataContext.ConnectionString))
+            {
+                sqlConnection.Open();
+                using (var sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Lars data structures
+                        await PopulateTopLevelNode<MetaData, LARS_LARSVersion>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
 
+                        sqlTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        sqlTransaction.Rollback();
+
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private async Task<bool> PopulateTopLevelNode<TSource, TTarget>(
+            IInputReferenceDataContext inputReferenceDataContext,
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            CancellationToken cancellationToken)
+        {
+            _logger.LogInfo($"Starting population for {typeof(TTarget).Name}");
+
+            var dataFromJson =
+                await _desktopReferenceDataRootMapperService.MapReferenceDataByType<TSource>(inputReferenceDataContext, cancellationToken);
+
+            var dataMappedToEF = _referenceInputEFMapper.MapByType<IReadOnlyCollection<TSource>, List<TTarget>>(dataFromJson);
+
+            // Release the resources that came from the json data.
+            dataFromJson = null;
+            System.GC.Collect();
+
+            _efModelIdentityAssigner.AssignIdsByType<TTarget>(dataMappedToEF);
+
+            // Need to get it into the Db ...
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, dataMappedToEF);
+
+            // Release the resources that got mapped into the EF data
+            dataMappedToEF = null;
+            System.GC.Collect();
+
+            _logger.LogInfo($"Finishing population for {typeof(TTarget).Name} RAM usage {System.GC.GetTotalMemory(false)}");
             return true;
         }
     }
