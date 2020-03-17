@@ -45,6 +45,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 { typeof(LARSLearningDelivery), DesktopReferenceDataConstants.LARSLearningDeliveriesFile },
                 { typeof(LARSFrameworkDesktop), DesktopReferenceDataConstants.LARSFrameworksFile },
                 { typeof(LARSFrameworkAimDesktop), DesktopReferenceDataConstants.LARSFrameworkAimsFile },
+                { typeof(Postcode), DesktopReferenceDataConstants.PostcodesFile },
+                { typeof(McaGlaSofLookup), DesktopReferenceDataConstants.DevolvedMcaGlaSofFile },
+                { typeof(DevolvedPostcode), DesktopReferenceDataConstants.DevolvedPostcodesFile },
             };
         }
 

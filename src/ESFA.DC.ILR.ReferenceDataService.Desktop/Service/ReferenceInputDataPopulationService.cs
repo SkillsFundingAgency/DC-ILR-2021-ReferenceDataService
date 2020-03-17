@@ -7,6 +7,8 @@ using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using ESFA.DC.Logging.Interfaces;
@@ -51,12 +53,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 {
                     try
                     {
+                        // Metadata
+                        await PopulateMetaData(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+
                         // Lars data structures
-                        await PopulateTopLevelNode<MetaData, LARS_LARSVersion>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+
+                        // Postcode structures
+                        await PopulateTopLevelNode<Postcode, Postcodes_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<DevolvedPostcode, PostcodesDevolution_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
 
                         sqlTransaction.Commit();
                     }
@@ -69,6 +78,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     }
                 }
             }
+
+            return false;
+        }
+
+        private async Task<bool> PopulateMetaData(
+            IInputReferenceDataContext inputReferenceDataContext,
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            CancellationToken cancellationToken)
+        {
+            var metaDataFromJson =
+                await _desktopReferenceDataRootMapperService.MapReferenceDataByType<MetaData>(inputReferenceDataContext, cancellationToken);
+
+            var larsVersion = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<LARS_LARSVersion>>(metaDataFromJson);
+            _efModelIdentityAssigner.AssignIdsByType<LARS_LARSVersion>(larsVersion);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, larsVersion);
 
             return false;
         }
