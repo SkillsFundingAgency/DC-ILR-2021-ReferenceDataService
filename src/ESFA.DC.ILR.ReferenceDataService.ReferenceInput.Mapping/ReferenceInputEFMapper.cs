@@ -35,9 +35,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 cfg.CreateMap<MetaData, MetaData_PostcodesVersion>()
                     .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.PostcodesVersion.Version));
 
-                // LarsVersion
-                // cfg.CreateMap<LarsVersion, LARS_LARSVersion>();
-
                 // LARSStandards
                 cfg.CreateMap<LARSStandard, LARS_LARSStandard>()
                 .ForMember(m => m.LARS_LARSStandardApprenticeshipFundings, opt => opt.MapFrom(src => src.LARSStandardApprenticeshipFundings))
