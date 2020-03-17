@@ -121,14 +121,12 @@
     <Build Include="ReferenceInput\Tables\Organisations_SpecialistResource.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_DasDisadvantage.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_EfaDisadvantage.sql" />
-    <Build Include="ReferenceInput\Tables\Postcodes_McaglaSOF.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_ONSData.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_Postcode.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_PostCodeVersion.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaAreaCost.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaDisadvantage.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_Postcode.sql" />
-    <Build Include="ReferenceInput\Tables\PostcodesDevolution_DevolvedPostcodes.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_McaGlaSofLookup.sql" />
     <Build Include="ReferenceInput\Tables\ULNs.sql" />
   </ItemGroup>

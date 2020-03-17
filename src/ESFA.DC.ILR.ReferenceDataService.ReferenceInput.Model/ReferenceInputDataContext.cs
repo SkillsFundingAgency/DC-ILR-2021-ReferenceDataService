@@ -70,12 +70,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<Organisations_OrganisationFunding> Organisations_OrganisationFundings { get; set; }
         public virtual DbSet<Organisations_OrganisationVersion> Organisations_OrganisationVersions { get; set; }
         public virtual DbSet<Organisations_SpecialistResource> Organisations_SpecialistResources { get; set; }
-        public virtual DbSet<PostcodesDevolution_DevolvedPostcode> PostcodesDevolution_DevolvedPostcodes { get; set; }
         public virtual DbSet<PostcodesDevolution_McaGlaSofLookup> PostcodesDevolution_McaGlaSofLookups { get; set; }
         public virtual DbSet<PostcodesDevolution_Postcode> PostcodesDevolution_Postcodes { get; set; }
         public virtual DbSet<Postcodes_DasDisadvantage> Postcodes_DasDisadvantages { get; set; }
         public virtual DbSet<Postcodes_EfaDisadvantage> Postcodes_EfaDisadvantages { get; set; }
-        public virtual DbSet<Postcodes_McaglaSOF> Postcodes_McaglaSOFs { get; set; }
         public virtual DbSet<Postcodes_ONSData> Postcodes_ONSDatas { get; set; }
         public virtual DbSet<Postcodes_PostCodeVersion> Postcodes_PostCodeVersions { get; set; }
         public virtual DbSet<Postcodes_Postcode> Postcodes_Postcodes { get; set; }
@@ -884,11 +882,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasConstraintName("FK_ReferenceInput.Organisations_SpecialistResource_ReferenceInput.Organisations_OrganisationCampusIdentifier_Id");
             });
 
-            modelBuilder.Entity<PostcodesDevolution_DevolvedPostcode>(entity =>
-            {
-                entity.ToTable("PostcodesDevolution_DevolvedPostcodes", "ReferenceInput");
-            });
-
             modelBuilder.Entity<PostcodesDevolution_McaGlaSofLookup>(entity =>
             {
                 entity.ToTable("PostcodesDevolution_McaGlaSofLookup", "ReferenceInput");
@@ -896,11 +889,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
-                    .WithMany(p => p.PostcodesDevolution_McaGlaSofLookups)
-                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
-                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_McaGlaSofLookup_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
             });
 
             modelBuilder.Entity<PostcodesDevolution_Postcode>(entity =>
@@ -910,11 +898,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.PostcodesDevolution_DevolvedPostcodes_)
-                    .WithMany(p => p.PostcodesDevolution_Postcodes)
-                    .HasForeignKey(d => d.PostcodesDevolution_DevolvedPostcodes_Id)
-                    .HasConstraintName("FK_ReferenceInput.PostcodesDevolution_Postcode_ReferenceInput.PostcodesDevolution_DevolvedPostcodes_DevolvedPostcodes_Id");
             });
 
             modelBuilder.Entity<Postcodes_DasDisadvantage>(entity =>
@@ -947,20 +930,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.Postcodes_EfaDisadvantages)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_EfaDisadvantage_ReferenceInput.Postcodes_Postcode_Postcode_Id");
-            });
-
-            modelBuilder.Entity<Postcodes_McaglaSOF>(entity =>
-            {
-                entity.ToTable("Postcodes_McaglaSOF", "ReferenceInput");
-
-                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Postcodes_Postcode_)
-                    .WithMany(p => p.Postcodes_McaglaSOFs)
-                    .HasForeignKey(d => d.Postcodes_Postcode_Id)
-                    .HasConstraintName("FK_ReferenceInput.Postcodes_McaglaSOF_ReferenceInput.Postcodes_Postcode_Postcode_Id");
             });
 
             modelBuilder.Entity<Postcodes_ONSData>(entity =>

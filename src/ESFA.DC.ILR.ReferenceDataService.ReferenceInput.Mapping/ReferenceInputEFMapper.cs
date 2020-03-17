@@ -1,7 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Runtime.InteropServices.ComTypes;
+using AutoMapper;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
+using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
+using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 
@@ -29,9 +32,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 // Metadata
                 cfg.CreateMap<MetaData, LARS_LARSVersion>()
                     .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.LarsVersion.Version));
-
-                // LArsVersion
-                cfg.CreateMap<LarsVersion, LARS_LARSVersion>();
+                cfg.CreateMap<MetaData, MetaData_PostcodesVersion>()
+                    .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.PostcodesVersion.Version));
 
                 // LARSStandards
                 cfg.CreateMap<LARSStandard, LARS_LARSStandard>()
@@ -68,6 +70,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 // LarsFrameworkAims
                 cfg.CreateMap<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>();
 
+                // Postcodes
+                cfg.CreateMap<Postcode, Postcodes_Postcode>()
+                    .ForMember(m => m.Postcodes_ONSDatas, opt => opt.MapFrom(src => src.ONSData))
+                    .ForMember(m => m.Postcodes_DasDisadvantages, opt => opt.MapFrom(src => src.DasDisadvantages))
+                    .ForMember(m => m.Postcodes_EfaDisadvantages, opt => opt.MapFrom(src => src.EfaDisadvantages))
+                    .ForMember(m => m.Postcodes_SfaAreaCosts, opt => opt.MapFrom(src => src.SfaAreaCosts))
+                    .ForMember(m => m.Postcodes_SfaDisadvantages, opt => opt.MapFrom(src => src.SfaDisadvantages));
+
+                cfg.CreateMap<ONSData, Postcodes_ONSData>();
+                cfg.CreateMap<DasDisadvantage, Postcodes_DasDisadvantage>();
+                cfg.CreateMap<EfaDisadvantage, Postcodes_EfaDisadvantage>();
+                cfg.CreateMap<SfaAreaCost, Postcodes_SfaAreaCost>();
+                cfg.CreateMap<SfaDisadvantage, Postcodes_SfaDisadvantage>();
+
+                cfg.CreateMap<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>();
+                cfg.CreateMap<DevolvedPostcode, PostcodesDevolution_Postcode>();
             });
 
             return config.CreateMapper();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using CommandLine;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Context;
@@ -23,13 +24,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
             using (var container = BuildContainerBuilder().Build())
             {
                 Parser.Default.ParseArguments<CommandLineArguments>(args)
-                    .WithParsed(async cla =>
+                    .WithParsed(cla =>
                     {
                         var logger = container.Resolve<ILogger>();
 
                         if (!File.Exists((cla.SourceFile)))
                         {
                             System.Console.WriteLine($"Source file does not exist ({cla.SourceFile})");
+                            return;
                         }
 
                         try
@@ -47,9 +49,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                                 ConnectionString = config.GetConnectionString("targetServer")
                             };
 
-
-                            await referenceInputDataPopulationService.PopulateAsyncByType(inputReferenceDataContext,
-                                cancellationToken);
+                            var task = Task.Run(async () => await referenceInputDataPopulationService.PopulateAsyncByType(inputReferenceDataContext, cancellationToken), cancellationToken);
+                            var result = task.Result;
 
                             System.Console.WriteLine("Reference data import completed.");
                         }

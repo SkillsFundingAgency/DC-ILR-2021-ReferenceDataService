@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Permissions;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 
@@ -40,6 +41,20 @@ DBCC CHECKIDENT ('[ReferenceInput].[LARS_LARSFrameworkDesktop]', RESEED, 1);";
         private const string ClearLarsFrameworkAims = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSFrameworkAim];";
 
+        private const string ClearPostcodes = @"
+TRUNCATE TABLE [ReferenceInput].[Postcodes_ONSData];
+TRUNCATE TABLE [ReferenceInput].[Postcodes_DasDisadvantage];
+TRUNCATE TABLE [ReferenceInput].[Postcodes_EfaDisadvantage];
+TRUNCATE TABLE [ReferenceInput].[Postcodes_SfaAreaCost];
+TRUNCATE TABLE [ReferenceInput].[Postcodes_SfaDisadvantage];
+TRUNCATE TABLE [ReferenceInput].[Postcodes_PostCodeVersion];
+
+TRUNCATE TABLE [ReferenceInput].[PostcodesDevolution_McaGlaSofLookup];
+TRUNCATE TABLE [ReferenceInput].[PostcodesDevolution_Postcode];
+
+DELETE FROM [ReferenceInput].[Postcodes_Postcode];
+DBCC CHECKIDENT ('[ReferenceInput].[Postcodes_Postcode]', RESEED, 1);";
+
         public void TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))
@@ -67,6 +82,9 @@ TRUNCATE TABLE [ReferenceInput].[LARS_LARSFrameworkAim];";
                         command.ExecuteNonQuery();
 
                         command.CommandText = ClearLarsFrameworkAims;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = ClearPostcodes;
                         command.ExecuteNonQuery();
 
                         trans.Commit();
