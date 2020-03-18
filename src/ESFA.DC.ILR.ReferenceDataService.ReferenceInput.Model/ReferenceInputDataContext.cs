@@ -17,7 +17,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<EPAOrganisations_EPAOrganisation> EPAOrganisations_EPAOrganisations { get; set; }
         public virtual DbSet<Employers_Employer> Employers_Employers { get; set; }
         public virtual DbSet<Employers_LargeEmployerEffectiveDate> Employers_LargeEmployerEffectiveDates { get; set; }
-        public virtual DbSet<Employers_LargeEmployerVersion> Employers_LargeEmployerVersions { get; set; }
         public virtual DbSet<FCS_EsfEligibilityRule> FCS_EsfEligibilityRules { get; set; }
         public virtual DbSet<FCS_EsfEligibilityRuleEmploymentStatus> FCS_EsfEligibilityRuleEmploymentStatuses { get; set; }
         public virtual DbSet<FCS_EsfEligibilityRuleLocalAuthority> FCS_EsfEligibilityRuleLocalAuthorities { get; set; }
@@ -44,7 +43,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<LARS_LARSStandardFunding> LARS_LARSStandardFundings { get; set; }
         public virtual DbSet<LARS_LARSStandardValidity> LARS_LARSStandardValidities { get; set; }
         public virtual DbSet<LARS_LARSValidity> LARS_LARSValidities { get; set; }
-        public virtual DbSet<LARS_LARSVersion> LARS_LARSVersions { get; set; }
         public virtual DbSet<McaContracts_McaDevolvedContract> McaContracts_McaDevolvedContracts { get; set; }
         public virtual DbSet<MetaData_CampusIdentifierVersion> MetaData_CampusIdentifierVersions { get; set; }
         public virtual DbSet<MetaData_CensusDate> MetaData_CensusDates { get; set; }
@@ -53,7 +51,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<MetaData_EasUploadDateTime> MetaData_EasUploadDateTimes { get; set; }
         public virtual DbSet<MetaData_EmployersVersion> MetaData_EmployersVersions { get; set; }
         public virtual DbSet<MetaData_HmppPostcodesVersion> MetaData_HmppPostcodesVersions { get; set; }
-        public virtual DbSet<MetaData_IlrCollectionDate> MetaData_IlrCollectionDates { get; set; }
         public virtual DbSet<MetaData_LarsVersion> MetaData_LarsVersions { get; set; }
         public virtual DbSet<MetaData_Lookup> MetaData_Lookups { get; set; }
         public virtual DbSet<MetaData_LookupSubCategory> MetaData_LookupSubCategories { get; set; }
@@ -62,20 +59,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<MetaData_PostcodeFactorsVersion> MetaData_PostcodeFactorsVersions { get; set; }
         public virtual DbSet<MetaData_PostcodesVersion> MetaData_PostcodesVersions { get; set; }
         public virtual DbSet<MetaData_ReferenceDataVersion> MetaData_ReferenceDataVersions { get; set; }
+        public virtual DbSet<MetaData_ReturnPeriod> MetaData_ReturnPeriods { get; set; }
         public virtual DbSet<MetaData_ValidationError> MetaData_ValidationErrors { get; set; }
         public virtual DbSet<MetaData_ValidationRule> MetaData_ValidationRules { get; set; }
         public virtual DbSet<Organisations_Organisation> Organisations_Organisations { get; set; }
         public virtual DbSet<Organisations_OrganisationCampusIdentifier> Organisations_OrganisationCampusIdentifiers { get; set; }
         public virtual DbSet<Organisations_OrganisationCoFRemoval> Organisations_OrganisationCoFRemovals { get; set; }
         public virtual DbSet<Organisations_OrganisationFunding> Organisations_OrganisationFundings { get; set; }
-        public virtual DbSet<Organisations_OrganisationVersion> Organisations_OrganisationVersions { get; set; }
         public virtual DbSet<Organisations_SpecialistResource> Organisations_SpecialistResources { get; set; }
         public virtual DbSet<PostcodesDevolution_McaGlaSofLookup> PostcodesDevolution_McaGlaSofLookups { get; set; }
         public virtual DbSet<PostcodesDevolution_Postcode> PostcodesDevolution_Postcodes { get; set; }
         public virtual DbSet<Postcodes_DasDisadvantage> Postcodes_DasDisadvantages { get; set; }
         public virtual DbSet<Postcodes_EfaDisadvantage> Postcodes_EfaDisadvantages { get; set; }
         public virtual DbSet<Postcodes_ONSData> Postcodes_ONSDatas { get; set; }
-        public virtual DbSet<Postcodes_PostCodeVersion> Postcodes_PostCodeVersions { get; set; }
         public virtual DbSet<Postcodes_Postcode> Postcodes_Postcodes { get; set; }
         public virtual DbSet<Postcodes_SfaAreaCost> Postcodes_SfaAreaCosts { get; set; }
         public virtual DbSet<Postcodes_SfaDisadvantage> Postcodes_SfaDisadvantages { get; set; }
@@ -163,13 +159,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.Employers_LargeEmployerEffectiveDates)
                     .HasForeignKey(d => d.Employers_Employer_Id)
                     .HasConstraintName("FK_ReferenceInput.Employers_LargeEmployerEffectiveDates_ReferenceInput.Employers_Employer_Employer_Id");
-            });
-
-            modelBuilder.Entity<Employers_LargeEmployerVersion>(entity =>
-            {
-                entity.ToTable("Employers_LargeEmployerVersion", "ReferenceInput");
-
-                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<FCS_EsfEligibilityRule>(entity =>
@@ -591,13 +580,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasConstraintName("FK_ReferenceInput.LARS_LARSValidity_ReferenceInput.LARS_LARSLearningDelivery_LARSLearningDelivery_Id");
             });
 
-            modelBuilder.Entity<LARS_LARSVersion>(entity =>
-            {
-                entity.ToTable("LARS_LARSVersion", "ReferenceInput");
-
-                entity.Property(e => e.Version).HasMaxLength(2000);
-            });
-
             modelBuilder.Entity<McaContracts_McaDevolvedContract>(entity =>
             {
                 entity.ToTable("McaContracts_McaDevolvedContract", "ReferenceInput");
@@ -660,11 +642,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaData_IlrCollectionDate>(entity =>
-            {
-                entity.ToTable("MetaData_IlrCollectionDates", "ReferenceInput");
-            });
-
             modelBuilder.Entity<MetaData_LarsVersion>(entity =>
             {
                 entity.ToTable("MetaData_LarsVersion", "ReferenceInput");
@@ -704,11 +681,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.ToTable("MetaData_MetaData", "ReferenceInput");
 
                 entity.Property(e => e.DateGenerated).HasColumnType("datetime");
-
-                entity.HasOne(d => d.CollectionDates_)
-                    .WithMany(p => p.MetaData_MetaDatas)
-                    .HasForeignKey(d => d.CollectionDates_Id)
-                    .HasConstraintName("FK_ReferenceInput.MetaData_MetaData_ReferenceInput.MetaData_IlrCollectionDates_CollectionDates_Id");
 
                 entity.HasOne(d => d.ReferenceDataVersions_)
                     .WithMany(p => p.MetaData_MetaDatas)
@@ -761,9 +733,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasForeignKey(d => d.EasUploadDateTime_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasUploadDateTime_EasUploadDateTime_Id");
 
-                entity.HasOne(d => d.Employers_)
+                entity.HasOne(d => d.EmployersVersion_)
                     .WithMany(p => p.MetaData_ReferenceDataVersions)
-                    .HasForeignKey(d => d.Employers_Id)
+                    .HasForeignKey(d => d.EmployersVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EmployersVersion_Employers_Id");
 
                 entity.HasOne(d => d.HmppPostcodesVersion_)
@@ -790,6 +762,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.MetaData_ReferenceDataVersions)
                     .HasForeignKey(d => d.PostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_PostcodesVersion_PostcodesVersion_Id");
+            });
+
+            modelBuilder.Entity<MetaData_ReturnPeriod>(entity =>
+            {
+                entity.ToTable("MetaData_ReturnPeriod", "ReferenceInput");
+
+                entity.Property(e => e.End).HasColumnType("datetime");
+
+                entity.Property(e => e.Start).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MetaData_ValidationError>(entity =>
@@ -859,13 +840,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.Organisations_OrganisationFundings)
                     .HasForeignKey(d => d.Organisations_Organisation_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationFunding_ReferenceInput.Organisations_Organisation_Organisation_Id");
-            });
-
-            modelBuilder.Entity<Organisations_OrganisationVersion>(entity =>
-            {
-                entity.ToTable("Organisations_OrganisationVersion", "ReferenceInput");
-
-                entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Organisations_SpecialistResource>(entity =>
@@ -946,13 +920,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.Postcodes_ONSDatas)
                     .HasForeignKey(d => d.Postcodes_Postcode_Id)
                     .HasConstraintName("FK_ReferenceInput.Postcodes_ONSData_ReferenceInput.Postcodes_Postcode_Postcode_Id");
-            });
-
-            modelBuilder.Entity<Postcodes_PostCodeVersion>(entity =>
-            {
-                entity.ToTable("Postcodes_PostCodeVersion", "ReferenceInput");
-
-                entity.Property(e => e.PostcodeCurrentVersion).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Postcodes_Postcode>(entity =>

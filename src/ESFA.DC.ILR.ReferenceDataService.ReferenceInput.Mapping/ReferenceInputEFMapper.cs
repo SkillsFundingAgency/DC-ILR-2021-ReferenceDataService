@@ -1,7 +1,10 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using AutoMapper;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
@@ -30,17 +33,55 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 // Until then, just leave then in the list below.
 
                 // Metadata
-                cfg.CreateMap<MetaData, LARS_LARSVersion>()
-                    .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.LarsVersion.Version));
-                cfg.CreateMap<MetaData, MetaData_PostcodesVersion>()
-                    .ForMember(m => m.Version, opt => opt.MapFrom(src => src.ReferenceDataVersions.PostcodesVersion.Version));
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_ReferenceDataVersion>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_ReferenceDataVersion>>(source.Select(src => src.ReferenceDataVersions).ToList()));
+                cfg.CreateMap<ReferenceDataVersion, MetaData_ReferenceDataVersion>();
+
+                cfg.CreateMap<MetaData, ReferenceDataVersion>()
+                    .ConvertUsing(source => source.ReferenceDataVersions);
+                cfg.CreateMap<ReferenceDataVersion, MetaData_ReferenceDataVersion>()
+                    .ForMember(m => m.EmployersVersion_, opt => opt.MapFrom(src => src.Employers));
+
+                cfg.CreateMap<CampusIdentifierVersion, MetaData_CampusIdentifierVersion>();
+                cfg.CreateMap<CoFVersion, MetaData_CoFVersion>();
+                cfg.CreateMap<EmployersVersion, MetaData_EmployersVersion>();
+                cfg.CreateMap<LarsVersion, MetaData_LarsVersion>();
+                cfg.CreateMap<OrganisationsVersion, MetaData_OrganisationsVersion>();
+                cfg.CreateMap<PostcodesVersion, MetaData_PostcodesVersion>();
+                cfg.CreateMap<DevolvedPostcodesVersion, MetaData_DevolvedPostcodesVersion>();
+                cfg.CreateMap<HmppPostcodesVersion, MetaData_HmppPostcodesVersion>();
+                cfg.CreateMap<PostcodeFactorsVersion, MetaData_PostcodeFactorsVersion>();
+                cfg.CreateMap<EasUploadDateTime, MetaData_EasUploadDateTime>();
+
+                // Metadata - Collection Dates
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_CensusDate>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_CensusDate>>(source.SelectMany(src => src.CollectionDates.CensusDates).ToList()));
+                cfg.CreateMap<CensusDate, MetaData_CensusDate>();
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_ReturnPeriod>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_ReturnPeriod>>(source.SelectMany(src => src.CollectionDates.ReturnPeriods).ToList()));
+                cfg.CreateMap<ReturnPeriod, MetaData_ReturnPeriod>();
+
+                // Metadata - Validation Errors / Rules
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_ValidationError>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_ValidationError>>(source.SelectMany(src => src.ValidationErrors).ToList()));
+                cfg.CreateMap<ValidationError, MetaData_ValidationError>();
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_ValidationRule>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_ValidationRule>>(source.SelectMany(src => src.ValidationRules).ToList()));
+                cfg.CreateMap<ValidationRule, MetaData_ValidationRule>();
+
+                // Metadata - Lookups and Subcategories
+                cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_Lookup>>()
+                    .ConvertUsing((source, target, c) => c.Mapper.Map<List<MetaData_Lookup>>(source.SelectMany(src => src.Lookups).ToList()));
+                cfg.CreateMap<Lookup, MetaData_Lookup>()
+                    .ForMember(m => m.MetaData_LookupSubCategories, opt => opt.MapFrom(src => src.SubCategories));
+                cfg.CreateMap<LookupSubCategory, MetaData_LookupSubCategory>();
 
                 // LARSStandards
                 cfg.CreateMap<LARSStandard, LARS_LARSStandard>()
-                .ForMember(m => m.LARS_LARSStandardApprenticeshipFundings, opt => opt.MapFrom(src => src.LARSStandardApprenticeshipFundings))
-                .ForMember(m => m.LARS_LARSStandardCommonComponents, opt => opt.MapFrom(src => src.LARSStandardCommonComponents))
-                .ForMember(m => m.LARS_LARSStandardFundings, opt => opt.MapFrom(src => src.LARSStandardFundings))
-                .ForMember(m => m.LARS_LARSStandardValidities, opt => opt.MapFrom(src => src.LARSStandardValidities));
+                    .ForMember(m => m.LARS_LARSStandardApprenticeshipFundings, opt => opt.MapFrom(src => src.LARSStandardApprenticeshipFundings))
+                    .ForMember(m => m.LARS_LARSStandardCommonComponents, opt => opt.MapFrom(src => src.LARSStandardCommonComponents))
+                    .ForMember(m => m.LARS_LARSStandardFundings, opt => opt.MapFrom(src => src.LARSStandardFundings))
+                    .ForMember(m => m.LARS_LARSStandardValidities, opt => opt.MapFrom(src => src.LARSStandardValidities));
 
                 cfg.CreateMap<LARSStandardApprenticeshipFunding, LARS_LARSStandardApprenticeshipFunding>();
                 cfg.CreateMap<LARSStandardCommonComponent, LARS_LARSStandardCommonComponent> ();
