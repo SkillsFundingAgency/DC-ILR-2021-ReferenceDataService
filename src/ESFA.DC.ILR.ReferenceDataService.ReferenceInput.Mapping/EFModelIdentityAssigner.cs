@@ -64,10 +64,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 SetIntProperty(model, properties, $"{parentObjectName}_Id", parentIdValue);
             }
 
-            // Deal with any children
-            var listsOfChildEntitys = properties.Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)).ToList();
+            // Deal with any children in collections
+            var listsOfCollectionChildEntitys = properties.Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>)).ToList();
 
-            foreach (var childEntityList in listsOfChildEntitys)
+            foreach (var childEntityList in listsOfCollectionChildEntitys)
             {
                 object propValue = childEntityList.GetValue(model, null);
                 var elems = propValue as IEnumerable;
@@ -88,6 +88,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
                         UpdateIdForType(idsToAssign, typeName, id);
                     }
+                }
+            }
+
+            // Deal with any children not in a collection
+            var instanceOfChildEntities = properties.Where(p => p.PropertyType.IsClass && p.PropertyType.Assembly.FullName.Contains("ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model")).ToList();
+
+            foreach (var instanceOfChildEntity in instanceOfChildEntities)
+            {
+                object childValue = instanceOfChildEntity.GetValue(model, null);
+
+                if (childValue != null)
+                {
+                    RecurseAndProcessChildProperties(childValue, idsToAssign, null);
                 }
             }
         }

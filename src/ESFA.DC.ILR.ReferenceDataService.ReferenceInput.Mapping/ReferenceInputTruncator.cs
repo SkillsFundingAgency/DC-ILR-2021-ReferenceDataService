@@ -9,9 +9,42 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class ReferenceInputTruncator : IReferenceInputTruncator
     {
+        private const string ClearMetaData = @"
+TRUNCATE TABLE [ReferenceInput].[MetaData_LookupSubCategory]
+DELETE FROM [ReferenceInput].[MetaData_Lookup];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_Lookup]', RESEED, 1);
 
-        private const string ClearLarsVersion = @"
-TRUNCATE TABLE [ReferenceInput].[LARS_LARSVersion];";
+-- ReferenceDataVersion
+DELETE FROM [ReferenceInput].[MetaData_ReferenceDataVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_ReferenceDataVersion]', RESEED, 1);
+
+-- ReferenceDataVersion - child tables
+DELETE FROM [ReferenceInput].[MetaData_CampusIdentifierVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_CampusIdentifierVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_CoFVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_CoFVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_DevolvedPostcodesVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_DevolvedPostcodesVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_EasUploadDateTime];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_EasUploadDateTime]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_EmployersVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_EmployersVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_HmppPostcodesVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_HmppPostcodesVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_LarsVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_LarsVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_OrganisationsVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_OrganisationsVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_PostcodeFactorsVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_PostcodeFactorsVersion]', RESEED, 1);
+DELETE FROM [ReferenceInput].[MetaData_PostcodesVersion];
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_PostcodesVersion]', RESEED, 1);
+
+TRUNCATE TABLE [ReferenceInput].[MetaData_CensusDate]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ReturnPeriod]
+TRUNCATE TABLE [ReferenceInput].[MetaData_MetaData]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationError]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationRule]";
 
         private const string ClearLarsStandardsSql = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSStandardApprenticeshipFunding];
@@ -47,7 +80,6 @@ TRUNCATE TABLE [ReferenceInput].[Postcodes_DasDisadvantage];
 TRUNCATE TABLE [ReferenceInput].[Postcodes_EfaDisadvantage];
 TRUNCATE TABLE [ReferenceInput].[Postcodes_SfaAreaCost];
 TRUNCATE TABLE [ReferenceInput].[Postcodes_SfaDisadvantage];
-TRUNCATE TABLE [ReferenceInput].[Postcodes_PostCodeVersion];
 
 TRUNCATE TABLE [ReferenceInput].[PostcodesDevolution_McaGlaSofLookup];
 TRUNCATE TABLE [ReferenceInput].[PostcodesDevolution_Postcode];
@@ -69,7 +101,7 @@ DBCC CHECKIDENT ('[ReferenceInput].[Postcodes_Postcode]', RESEED, 1);";
                         command.CommandType = CommandType.Text;
                         command.Transaction = trans;
 
-                        command.CommandText = ClearLarsVersion;
+                        command.CommandText = ClearMetaData;
                         command.ExecuteNonQuery();
 
                         command.CommandText = ClearLarsStandardsSql;

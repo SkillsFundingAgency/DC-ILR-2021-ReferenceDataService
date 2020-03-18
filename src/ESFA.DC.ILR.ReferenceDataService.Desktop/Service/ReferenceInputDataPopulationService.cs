@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
@@ -91,9 +92,55 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             var metaDataFromJson =
                 await _desktopReferenceDataRootMapperService.MapReferenceDataByType<MetaData>(inputReferenceDataContext, cancellationToken);
 
-            var larsVersion = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<LARS_LARSVersion>>(metaDataFromJson);
-            _efModelIdentityAssigner.AssignIdsByType<LARS_LARSVersion>(larsVersion);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, larsVersion);
+            // Versions
+            var referenceDataVersion = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ReferenceDataVersion>>(metaDataFromJson);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_ReferenceDataVersion>(referenceDataVersion);
+
+            foreach (var refDataVersion in referenceDataVersion)
+            {
+                refDataVersion.CampusIdentifierVersion_Id = refDataVersion.CampusIdentifierVersion_?.Id;
+                refDataVersion.CoFVersion_Id = refDataVersion.CoFVersion_?.Id;
+                refDataVersion.EmployersVersion_Id = refDataVersion.EmployersVersion_?.Id;
+                refDataVersion.LarsVersion_Id = refDataVersion.LarsVersion_?.Id;
+                refDataVersion.OrganisationsVersion_Id = refDataVersion.OrganisationsVersion_?.Id;
+                refDataVersion.PostcodesVersion_Id = refDataVersion.PostcodesVersion_?.Id;
+                refDataVersion.DevolvedPostcodesVersion_Id = refDataVersion.DevolvedPostcodesVersion_?.Id;
+                refDataVersion.HmppPostcodesVersion_Id = refDataVersion.HmppPostcodesVersion_?.Id;
+                refDataVersion.PostcodeFactorsVersion_Id = refDataVersion.PostcodeFactorsVersion_?.Id;
+                refDataVersion.EasUploadDateTime_Id = refDataVersion.EasUploadDateTime_?.Id;
+            }
+
+            _referenceInputPersistenceService.PersistEfModelByTypeWithoutCollections(sqlConnection, sqlTransaction, referenceDataVersion);
+
+            // Collection Dates
+            var censusDates = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_CensusDate>>(metaDataFromJson);
+            var returnPeriods = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ReturnPeriod>>(metaDataFromJson);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_CensusDate>(censusDates);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_ReturnPeriod>(returnPeriods);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, censusDates);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, returnPeriods);
+
+            // Validation Errors / Rules
+            var validationErrors = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationError>>(metaDataFromJson);
+            var validationRules = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationRule>>(metaDataFromJson);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationError>(validationErrors);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationRule>(validationRules);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, validationErrors);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, validationRules);
+
+            // Lookups and Subcategories
+            var lookups = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_Lookup>>(metaDataFromJson);
+            _efModelIdentityAssigner.AssignIdsByType<MetaData_Lookup>(lookups);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, lookups);
+
+            // Metadata - Metadata
+            var metaData = new MetaData_MetaData
+            {
+                Id = 1,
+                ReferenceDataVersions_Id = referenceDataVersion.First().Id,
+                DateGenerated = metaDataFromJson.First().DateGenerated,
+            };
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, new List<MetaData_MetaData> { metaData });
 
             return false;
         }

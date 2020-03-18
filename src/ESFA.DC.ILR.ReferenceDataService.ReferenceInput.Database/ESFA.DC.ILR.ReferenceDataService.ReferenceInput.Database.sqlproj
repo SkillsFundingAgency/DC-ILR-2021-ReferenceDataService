@@ -65,7 +65,6 @@
     <Build Include="ReferenceInput\Tables\AppsEarningHistory_ApprenticeshipEarningsHistory.sql" />
     <Build Include="ReferenceInput\Tables\Employers_Employer.sql" />
     <Build Include="ReferenceInput\Tables\Employers_LargeEmployerEffectiveDates.sql" />
-    <Build Include="ReferenceInput\Tables\Employers_LargeEmployerVersion.sql" />
     <Build Include="ReferenceInput\Tables\EPAOrganisations_EPAOrganisation.sql" />
     <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRule.sql" />
     <Build Include="ReferenceInput\Tables\FCS_EsfEligibilityRuleEmploymentStatus.sql" />
@@ -93,7 +92,6 @@
     <Build Include="ReferenceInput\Tables\LARS_LARSStandardFunding.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSStandardValidity.sql" />
     <Build Include="ReferenceInput\Tables\LARS_LARSValidity.sql" />
-    <Build Include="ReferenceInput\Tables\LARS_LARSVersion.sql" />
     <Build Include="ReferenceInput\Tables\McaContracts_McaDevolvedContract.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_CampusIdentifierVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_CensusDate.sql" />
@@ -102,7 +100,6 @@
     <Build Include="ReferenceInput\Tables\MetaData_EasUploadDateTime.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_EmployersVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_HmppPostcodesVersion.sql" />
-    <Build Include="ReferenceInput\Tables\MetaData_IlrCollectionDates.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_LarsVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_Lookup.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_LookupSubCategory.sql" />
@@ -117,17 +114,16 @@
     <Build Include="ReferenceInput\Tables\Organisations_OrganisationCampusIdentifier.sql" />
     <Build Include="ReferenceInput\Tables\Organisations_OrganisationCoFRemoval.sql" />
     <Build Include="ReferenceInput\Tables\Organisations_OrganisationFunding.sql" />
-    <Build Include="ReferenceInput\Tables\Organisations_OrganisationVersion.sql" />
     <Build Include="ReferenceInput\Tables\Organisations_SpecialistResource.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_DasDisadvantage.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_EfaDisadvantage.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_ONSData.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_Postcode.sql" />
-    <Build Include="ReferenceInput\Tables\Postcodes_PostCodeVersion.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaAreaCost.sql" />
     <Build Include="ReferenceInput\Tables\Postcodes_SfaDisadvantage.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_Postcode.sql" />
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_McaGlaSofLookup.sql" />
     <Build Include="ReferenceInput\Tables\ULNs.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_ReturnPeriod.sql" />
   </ItemGroup>
 </Project>
