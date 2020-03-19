@@ -6,8 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
+using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
+using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
@@ -67,6 +70,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                         await PopulateTopLevelNode<Postcode, Postcodes_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<DevolvedPostcode, PostcodesDevolution_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+
+                        // Organisations
+                        await PopulateTopLevelNode<Organisation, Organisations_Organisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<EPAOrganisation, EPAOrganisations_EPAOrganisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+
+                        // Employers
+                        await PopulateTopLevelNode<Employer, Employers_Employer>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
 
                         sqlTransaction.Commit();
                     }

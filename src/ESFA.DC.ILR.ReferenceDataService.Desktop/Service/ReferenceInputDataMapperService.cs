@@ -46,8 +46,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 { typeof(LARSFrameworkDesktop), DesktopReferenceDataConstants.LARSFrameworksFile },
                 { typeof(LARSFrameworkAimDesktop), DesktopReferenceDataConstants.LARSFrameworkAimsFile },
                 { typeof(Postcode), DesktopReferenceDataConstants.PostcodesFile },
-                { typeof(McaGlaSofLookup), DesktopReferenceDataConstants.DevolvedMcaGlaSofFile },
                 { typeof(DevolvedPostcode), DesktopReferenceDataConstants.DevolvedPostcodesFile },
+                { typeof(McaGlaSofLookup), DesktopReferenceDataConstants.DevolvedMcaGlaSofFile },
+                { typeof(Organisation), DesktopReferenceDataConstants.OrganisationsFile },
+                { typeof(EPAOrganisation), DesktopReferenceDataConstants.EPAOrganisationsFile },
+                { typeof(Employer), DesktopReferenceDataConstants.EmployersFile },
             };
         }
 

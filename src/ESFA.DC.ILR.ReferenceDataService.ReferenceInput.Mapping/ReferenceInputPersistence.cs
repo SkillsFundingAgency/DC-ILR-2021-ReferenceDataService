@@ -7,6 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using ESFA.DC.Logging.Interfaces;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
@@ -22,7 +23,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
         public void PersistEfModelByType<T>(SqlConnection connection, SqlTransaction sqlTransaction, IEnumerable<T> source)
         {
             // Need to recurse through collections to get child types and also save.
-
             var tableName = GetTableNameFromType<T>();
 
             _logger.LogInfo($"  Starting Bulk insert of {source.Count()} items of type {typeof(T).Name}");
@@ -48,24 +48,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
                 var subItems = Activator.CreateInstance(constructedListType) as IList;
 
-                foreach (T item in source)
+                if (subItems != null)
                 {
-                    object propValue = childEntityList.GetValue(item, null);
-                    var elems = propValue as IEnumerable;
-                    if (elems != null)
+                    foreach (T item in source)
                     {
-                        foreach (var elem in elems)
+                        object propValue = childEntityList.GetValue(item, null);
+                        var elems = propValue as IEnumerable;
+                        if (elems != null)
                         {
-                            subItems.Add(elem);
+                            foreach (var elem in elems)
+                            {
+                                subItems.Add(elem);
+                            }
                         }
                     }
-                }
 
-                // Create a generic version from a runtime type to call with this child set of items
-                this.GetType()
-                    .GetMethod("PersistEfModelByType")
-                    .MakeGenericMethod(childListType)
-                    .Invoke(this, new object[] { connection, sqlTransaction, subItems });
+                    if (subItems.Any())
+                    {
+                        // Create a generic version from a runtime type to call with this child set of items
+                        this.GetType()
+                            .GetMethod("PersistEfModelByType")
+                            .MakeGenericMethod(childListType)
+                            .Invoke(this, new object[] {connection, sqlTransaction, subItems});
+                    }
+                }
             }
         }
 
