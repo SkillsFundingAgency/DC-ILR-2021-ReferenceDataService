@@ -10,6 +10,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
     public class ReferenceInputTruncator : IReferenceInputTruncator
     {
         private const string ClearMetaData = @"
+TRUNCATE TABLE [ReferenceInput].[MetaData_MetaData]
+
+TRUNCATE TABLE [ReferenceInput].[MetaData_CensusDate]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ReturnPeriod]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationError]
+TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationRule]
+
 TRUNCATE TABLE [ReferenceInput].[MetaData_LookupSubCategory]
 DELETE FROM [ReferenceInput].[MetaData_Lookup];
 DBCC CHECKIDENT ('[ReferenceInput].[MetaData_Lookup]', RESEED, 1);
@@ -38,13 +45,7 @@ DBCC CHECKIDENT ('[ReferenceInput].[MetaData_OrganisationsVersion]', RESEED, 1);
 DELETE FROM [ReferenceInput].[MetaData_PostcodeFactorsVersion];
 DBCC CHECKIDENT ('[ReferenceInput].[MetaData_PostcodeFactorsVersion]', RESEED, 1);
 DELETE FROM [ReferenceInput].[MetaData_PostcodesVersion];
-DBCC CHECKIDENT ('[ReferenceInput].[MetaData_PostcodesVersion]', RESEED, 1);
-
-TRUNCATE TABLE [ReferenceInput].[MetaData_CensusDate]
-TRUNCATE TABLE [ReferenceInput].[MetaData_ReturnPeriod]
-TRUNCATE TABLE [ReferenceInput].[MetaData_MetaData]
-TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationError]
-TRUNCATE TABLE [ReferenceInput].[MetaData_ValidationRule]";
+DBCC CHECKIDENT ('[ReferenceInput].[MetaData_PostcodesVersion]', RESEED, 1);";
 
         private const string ClearLarsStandardsSql = @"
 TRUNCATE TABLE [ReferenceInput].[LARS_LARSStandardApprenticeshipFunding];
@@ -87,6 +88,25 @@ TRUNCATE TABLE [ReferenceInput].[PostcodesDevolution_Postcode];
 DELETE FROM [ReferenceInput].[Postcodes_Postcode];
 DBCC CHECKIDENT ('[ReferenceInput].[Postcodes_Postcode]', RESEED, 1);";
 
+        private const string ClearOrganisations = @"
+TRUNCATE TABLE [ReferenceInput].[Organisations_SpecialistResource]
+TRUNCATE TABLE [ReferenceInput].[Organisations_OrganisationFunding]
+TRUNCATE TABLE [ReferenceInput].[Organisations_OrganisationCoFRemoval]
+
+DELETE FROM [ReferenceInput].[Organisations_OrganisationCampusIdentifier]
+DBCC CHECKIDENT ('[ReferenceInput].[Organisations_OrganisationCampusIdentifier]', RESEED, 1);
+
+DELETE FROM [ReferenceInput].[Organisations_Organisation]
+DBCC CHECKIDENT ('[ReferenceInput].[Organisations_Organisation]', RESEED, 1);
+
+TRUNCATE TABLE [ReferenceInput].[EPAOrganisations_EPAOrganisation]";
+
+        private const string ClearEmployers = @"
+TRUNCATE TABLE [ReferenceInput].[Employers_LargeEmployerEffectiveDates]
+
+DELETE FROM [ReferenceInput].[Employers_Employer]
+DBCC CHECKIDENT ('[ReferenceInput].[Employers_Employer]', RESEED, 1);";
+
         public void TruncateReferenceData(IInputReferenceDataContext inputReferenceDataContext)
         {
             using (var connection = new SqlConnection(inputReferenceDataContext.ConnectionString))
@@ -117,6 +137,12 @@ DBCC CHECKIDENT ('[ReferenceInput].[Postcodes_Postcode]', RESEED, 1);";
                         command.ExecuteNonQuery();
 
                         command.CommandText = ClearPostcodes;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = ClearOrganisations;
+                        command.ExecuteNonQuery();
+
+                        command.CommandText = ClearEmployers;
                         command.ExecuteNonQuery();
 
                         trans.Commit();

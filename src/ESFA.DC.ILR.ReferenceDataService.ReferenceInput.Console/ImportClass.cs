@@ -10,7 +10,6 @@ using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console.modules;
 using ESFA.DC.Logging.Desktop.Config;
 using ESFA.DC.Logging.Desktop.Config.Interfaces;
-using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using Microsoft.Extensions.Configuration;
@@ -26,8 +25,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                 Parser.Default.ParseArguments<CommandLineArguments>(args)
                     .WithParsed(cla =>
                     {
-                        var logger = container.Resolve<ILogger>();
-
                         if (!File.Exists((cla.SourceFile)))
                         {
                             System.Console.WriteLine($"Source file does not exist ({cla.SourceFile})");

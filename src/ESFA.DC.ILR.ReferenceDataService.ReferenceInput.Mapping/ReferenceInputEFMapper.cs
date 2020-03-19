@@ -2,10 +2,13 @@
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using AutoMapper;
+using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
+using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.CollectionDates;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData.ReferenceDataVersions;
+using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
@@ -127,6 +130,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
                 cfg.CreateMap<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>();
                 cfg.CreateMap<DevolvedPostcode, PostcodesDevolution_Postcode>();
+
+                // Organisations
+                cfg.CreateMap<Organisation, Organisations_Organisation>()
+                    .ForMember(m => m.Organisations_OrganisationCampusIdentifiers, opt => opt.MapFrom(src => src.CampusIdentifers))
+                    .ForMember(m => m.Organisations_OrganisationCoFRemovals, opt => opt.MapFrom(src => src.OrganisationCoFRemovals))
+                    .ForMember(m => m.Organisations_OrganisationFundings, opt => opt.MapFrom(src => src.OrganisationFundings));
+                cfg.CreateMap<OrganisationCampusIdentifier, Organisations_OrganisationCampusIdentifier>()
+                    .ForMember(m => m.Organisations_SpecialistResources, opt => opt.MapFrom(src => src.SpecialistResources));
+                cfg.CreateMap<OrganisationCoFRemoval, Organisations_OrganisationCoFRemoval>();
+                cfg.CreateMap<OrganisationFunding, Organisations_OrganisationFunding>();
+                cfg.CreateMap<SpecialistResource, Organisations_SpecialistResource>();
+
+                cfg.CreateMap<EPAOrganisation, EPAOrganisations_EPAOrganisation>()
+                    .ForMember(m => m.Id, opt => opt.Ignore())
+                    .ForMember(m => m.EPAID, opt => opt.MapFrom(src => src.ID));
+
+                // Employers
+                cfg.CreateMap<Employer, Employers_Employer>()
+                    .ForMember(m => m.Employers_LargeEmployerEffectiveDates, opt => opt.MapFrom(src => src.LargeEmployerEffectiveDates));
+                cfg.CreateMap<LargeEmployerEffectiveDates, Employers_LargeEmployerEffectiveDate>();
             });
 
             return config.CreateMapper();
