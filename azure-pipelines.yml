@@ -27,7 +27,8 @@ stages:
       "Nuget.Version": '4.8.0'
       "DotnetCore.Version": '2.2.207'
       "Solution": 'src\**\*.sln'
-      "SF.ProjectName": '**\*.sfproj'
+      "SF.ProjectName": '**\*.sfproj'      
+      "ConsoleTool": 'ReferenceInput.Console'
 
     pool:
       name: DCT
@@ -37,6 +38,10 @@ stages:
       #- ServiceFabricSDKVersion -equals 65
 
     steps:
+#********************************************************************************
+# Install and setup tools needed
+#********************************************************************************   
+
     - task: DotNetCoreInstaller@0
       displayName: 'Use .NET Core sdk $(DotnetCore.Version)'
       inputs:
@@ -53,6 +58,9 @@ stages:
         versionSpec: '< $(Nuget.Version)'
         checkLatest: true
     
+#********************************************************************************
+# Restore & Build Projects/Solutiosn
+#********************************************************************************   
     - task: DotNetCoreCLI@2
       enabled: true
       displayName: 'dotnet restore'
@@ -97,7 +105,11 @@ stages:
         maximumCpuCount: true
         logProjectEvents: true
         createLogFile: true
-            
+
+
+#********************************************************************************
+# Copy Files into Aftifact Folder before test.
+#********************************************************************************   
     - task: DeleteFiles@1
       displayName: 'Delete Symbols files from $(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage '
       inputs:
@@ -138,7 +150,6 @@ stages:
         CleanTargetFolder: true
         flattenFolders: true
         
-    
     - task: CopyFiles@2
       displayName: 'Copy Files - $(build.artifactstagingdirectory)\ServiceFabric\PublishProfiles'
       inputs:
@@ -164,6 +175,31 @@ stages:
         applicationPackagePath: '$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage '
         versionBehavior: Replace
        
+    - task: CopyFiles@2
+      displayName: 'Copy Console Application File to Artifact Folder'
+      inputs:
+        SourceFolder: 'src\*$(ConsoleTool)\bin\$(BuildConfiguration)'  
+        Contents: '**\!(*.pdb)'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    
+#********************************************************************************
+# CodeSign Script body
+# Application Signing execution begins here
+#********************************************************************************
+    - task: PowerShell@2
+      displayName: 'CodeSign DfE DesktopApplications'
+      enabled: true  
+      env:
+        CODESIGNPASSWORD: $(CodeSignPwdDfE)
+        CODESIGNCERT: $(CodeSignCertificatePFX)
+      inputs:
+        filePath: 'DFE_Code_Signing.ps1'
+        arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+        workingDirectory: '$(Build.SourcesDirectory)'
+
+#********************************************************************************
+# Run Unit Tests
+#********************************************************************************
     - task: DotNetCoreCLI@2
       displayName: 'Run xUnit Test - Core Framework'
       enabled: true
@@ -182,7 +218,10 @@ stages:
          !**\packages\**
          !**\obj\**
         configuration: '$(Build.Configuration)'
-    
+
+#********************************************************************************
+# Publish Artifacts
+#********************************************************************************    
     - task: PublishSymbols@2
       displayName: 'Publish symbols path'
       enabled: false
