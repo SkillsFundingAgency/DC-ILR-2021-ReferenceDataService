@@ -12,7 +12,7 @@ variables:
 - name: VersionNumberMinor 
   value: '1'
 - name: ConsoleTool 
-  value: 'ReferenceInput.Console'
+  value: 'ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console'
 
 
 stages:
@@ -183,7 +183,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Console Application File to Artifact Folder'
       inputs:
-        SourceFolder: 'src\*$(ConsoleTool)\bin\$(Build.Configuration)'  
+        SourceFolder: 'src\$(ConsoleTool)\bin\$(Build.Configuration)'  
         Contents: '**\!(*.pdb)'
         TargetFolder: '$(build.ArtifactStagingDirectory)\Desktop.Application'
     
