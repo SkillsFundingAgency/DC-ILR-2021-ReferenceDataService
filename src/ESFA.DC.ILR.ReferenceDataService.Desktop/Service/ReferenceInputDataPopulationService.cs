@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
@@ -14,13 +15,16 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Message;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model;
 using ESFA.DC.Logging.Interfaces;
+using Microsoft.SqlServer.Dac;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 {
     public class ReferenceInputDataPopulationService : IReferenceInputDataPopulationService
     {
+        private readonly IMessengerService _messengerService;
         private readonly IReferenceInputDataMapperService _desktopReferenceDataRootMapperService;
         private readonly IReferenceInputEFMapper _referenceInputEFMapper;
         private readonly IEFModelIdentityAssigner _efModelIdentityAssigner;
@@ -29,6 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         private readonly ILogger _logger;
 
         public ReferenceInputDataPopulationService(
+            IMessengerService messengerService,
             IReferenceInputDataMapperService desktopReferenceDataRootMapperService,
             IReferenceInputEFMapper referenceInputEFMapper,
             IEFModelIdentityAssigner efModelIdentityAssigner,
@@ -36,6 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             IReferenceInputPersistence referenceInputPersistenceService,
             ILogger logger)
         {
+            _messengerService = messengerService;
             _desktopReferenceDataRootMapperService = desktopReferenceDataRootMapperService;
             _referenceInputEFMapper = referenceInputEFMapper;
             _efModelIdentityAssigner = efModelIdentityAssigner;
@@ -46,9 +52,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 
         public async Task<bool> PopulateAsyncByType(IInputReferenceDataContext inputReferenceDataContext, CancellationToken cancellationToken)
         {
+            const int taskCount = 9;
+            var currentTask = 0;
+
+            _messengerService.Send(new TaskProgressMessage("Dacpac starting", currentTask++, taskCount));
+            _logger.LogInfo("Starting create from dacpac");
+            CreateDatabaseFromDacPack(inputReferenceDataContext.ConnectionString, cancellationToken);
+            _logger.LogInfo("Finished create from dacpac");
+            _messengerService.Send(new TaskProgressMessage("Dacpac applied", currentTask++, taskCount));
+
             _logger.LogInfo("Starting Truncate existing data");
             _referenceInputTruncator.TruncateReferenceData(inputReferenceDataContext);
             _logger.LogInfo("Finished Truncate existing data");
+            _messengerService.Send(new TaskProgressMessage("Existing data truncated.", currentTask++, taskCount));
 
             using (var sqlConnection = new SqlConnection(inputReferenceDataContext.ConnectionString))
             {
@@ -59,26 +75,32 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     {
                         // Metadata
                         await PopulateMetaData(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _messengerService.Send(new TaskProgressMessage("Meta data applied", currentTask++, taskCount));
 
                         // Lars data structures
                         await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _messengerService.Send(new TaskProgressMessage("Lars data applied", currentTask++, taskCount));
 
                         // Postcode structures
                         await PopulateTopLevelNode<Postcode, Postcodes_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<DevolvedPostcode, PostcodesDevolution_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _messengerService.Send(new TaskProgressMessage("Postcode data applied", currentTask++, taskCount));
 
                         // Organisations
                         await PopulateTopLevelNode<Organisation, Organisations_Organisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
                         await PopulateTopLevelNode<EPAOrganisation, EPAOrganisations_EPAOrganisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _messengerService.Send(new TaskProgressMessage("Organisations data applied", currentTask++, taskCount));
 
                         // Employers
                         await PopulateTopLevelNode<Employer, Employers_Employer>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        _messengerService.Send(new TaskProgressMessage("Employers data applied", currentTask++, taskCount));
 
                         sqlTransaction.Commit();
+                        _messengerService.Send(new TaskProgressMessage("Data committed", currentTask++, taskCount));
                     }
                     catch (Exception e)
                     {
@@ -91,6 +113,49 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             }
 
             return false;
+        }
+
+        private DacDeployOptions BuildDacDeployOptions()
+        {
+            var dacDeployOptions = new DacDeployOptions()
+            {
+                BlockOnPossibleDataLoss = false,
+                CreateNewDatabase = true,
+            };
+
+            var defaultValue = "Default";
+
+            dacDeployOptions.SqlCommandVariableValues.Add("BUILD_BRANCHNAME", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("BUILD_BUILDNUMBER", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("DSCIUserPassword", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("RELEASE_RELEASENAME", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("ROUserPassword", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("RWUserPassword", defaultValue);
+            dacDeployOptions.SqlCommandVariableValues.Add("MatchClaimROPassword", defaultValue);
+
+            return dacDeployOptions;
+        }
+
+        private string GetDatabaseNameFromInitialCatalog(string connectionString)
+        {
+            return new SqlConnectionStringBuilder(connectionString).InitialCatalog;
+        }
+
+        private void CreateDatabaseFromDacPack(string connectionString, CancellationToken cancellationToken)
+        {
+            var dacOptions = BuildDacDeployOptions();
+
+            var databaseName = GetDatabaseNameFromInitialCatalog(connectionString);
+
+            var dacServices = new DacServices(connectionString);
+
+            using (var stream = Assembly.GetEntryAssembly().GetManifestResourceStream("ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console.Resources.ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database.dacpac"))
+            {
+                using (DacPackage dacPackage = DacPackage.Load(stream))
+                {
+                    dacServices.Deploy(dacPackage, databaseName, true, dacOptions, cancellationToken);
+                }
+            }
         }
 
         private async Task<bool> PopulateMetaData(

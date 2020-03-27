@@ -8,6 +8,8 @@ using ESFA.DC.ILR.ReferenceDataService.Desktop.Context;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console.modules;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Interface;
+using ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.Message;
 using ESFA.DC.Logging.Desktop.Config;
 using ESFA.DC.Logging.Desktop.Config.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
@@ -22,6 +24,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
         {
             using (var container = BuildContainerBuilder().Build())
             {
+                var messengerService = container.Resolve<IMessengerService>();
+
                 Parser.Default.ParseArguments<CommandLineArguments>(args)
                     .WithParsed(cla =>
                     {
@@ -33,8 +37,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
 
                         try
                         {
-                            var referenceInputDataPopulationService =
-                                container.Resolve<IReferenceInputDataPopulationService>();
+                            var referenceInputDataPopulationService = container.Resolve<IReferenceInputDataPopulationService>();
                             var config = container.Resolve<IConfiguration>();
 
                             var cancellationToken = new CancellationToken();
@@ -45,6 +48,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                                 Container = Path.GetDirectoryName(cla.SourceFile),
                                 ConnectionString = config.GetConnectionString("targetServer")
                             };
+
+                            messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
+
+                            System.Console.WriteLine("Reference Data Import Console" + Environment.NewLine + Environment.NewLine);
 
                             var task = Task.Run(async () => await referenceInputDataPopulationService.PopulateAsyncByType(inputReferenceDataContext, cancellationToken), cancellationToken);
                             var result = task.Result;
@@ -59,6 +66,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                         }
                     });
             }
+        }
+
+        public static void ClearCurrentConsoleLine()
+        {
+            int currentLineCursor = System.Console.CursorTop;
+            System.Console.SetCursorPosition(0, System.Console.CursorTop);
+            System.Console.Write(new string(' ', System.Console.WindowWidth));
+            System.Console.SetCursorPosition(0, currentLineCursor);
+        }
+
+        public static void OverwriteConsoleText(string newMessage)
+        {
+            System.Console.SetCursorPosition(0, System.Console.CursorTop - 1);
+            ClearCurrentConsoleLine();
+            System.Console.WriteLine(newMessage);
+        }
+
+        public static void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
+        {
+            OverwriteConsoleText(taskProgressMessage.TaskName);
         }
 
         private static ContainerBuilder BuildContainerBuilder()
