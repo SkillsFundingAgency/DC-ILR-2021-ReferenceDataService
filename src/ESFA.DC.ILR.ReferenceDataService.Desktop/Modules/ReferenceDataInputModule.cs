@@ -14,6 +14,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Modules
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<CommandLineMessengerService>().As<IMessengerService>().SingleInstance();
             containerBuilder.RegisterType<EFModelIdentityAssigner>().As<IEFModelIdentityAssigner>();
             containerBuilder.RegisterType<ReferenceInputEFMapper>().As<IReferenceInputEFMapper>();
             containerBuilder.RegisterType<ReferenceInputPersistence>().As<IReferenceInputPersistence>();
