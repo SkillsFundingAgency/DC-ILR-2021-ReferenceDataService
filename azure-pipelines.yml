@@ -1,31 +1,33 @@
 
-name: $(VersionNumber.Major).$(VersionNumber.Minor)$(Rev:.rrrr)
+name: $(VersionNumberMajor).$(VersionNumberMinor)$(Rev:.rrrr)
 
 resources:
 - repo: self
   fetchDepth: 15
 
-variables:
-- name: 'VersionNumber.Major'
+variables: # pipeline-level
+- name: 'VersionNumberMajor'
   value:  '0'
-- name: 'VersionNumber.Minor'
+- name: 'VersionNumberMinor'
   value: '1'
 
 stages:
 - stage: Build
   displayName: Build stage
-  variables:
-    Build.Configuration: 'Release'
-    Build.Platform: 'Any CPU'
-    Build.PlatformX64: 'x64'
-    Build.MSbuildVersion: '16.0'
-    Solution.ToBuild: '**\*.sln'  
-    DotNetCore.Version: '2.2.207'  
-    Nuget.Feed: 'dct-pkg'
-    Nuget.Version: '< 4.8.0'
   jobs:  
   - job: Build
     displayName: Build
+    variables: # job-level
+      Build_Configuration: 'Release'
+      Build_Platform: 'Any CPU'
+      Build_PlatformX64: 'x64'
+      Build_MSbuildVersion: '16.0'
+      Solution_ToBuild: '**\*.sln'  
+	  Solution_ServiceFabricToBuild: '**\*.sfproj'
+      DotNetCore_Version: '2.2.207'  
+      Nuget_Feed: 'dct-pkg'
+      Nuget_Version: '< 4.8.0'
+
     pool:
       name: DCT
       demands:
@@ -35,9 +37,9 @@ stages:
 
     steps:
 	- task: DotNetCoreInstaller@0
-	  displayName: 'Use .NET Core sdk $(DotNetCore.Version)'
+	  displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
 	  inputs:
-		version: $(DotNetCore.Version)
+		version: $(DotNetCoreVersion)
 
 	- task: VisualStudioTestPlatformInstaller@1
 	  displayName: 'Visual Studio Test Platform Installer'
@@ -45,9 +47,9 @@ stages:
 		versionSelector: latestStable
 
 	- task: NuGetToolInstaller@0
-	  displayName: 'Use NuGet < $(Nuget.Version)'
+	  displayName: 'Use NuGet < $(Nuget_Version)'
 	  inputs:
-		versionSpec: '< $(Nuget.Version)'
+		versionSpec: '< $(Nuget_Version)'
 		checkLatest: true
 
 	- task: DotNetCoreCLI@2
@@ -56,7 +58,7 @@ stages:
 	  inputs:
 		command: restore
 		projects: '**\*.csproj'
-		vstsFeed: '$(Nuget.Feed)'
+		vstsFeed: '$(Nuget_Feed)'
 	#    includeNuGetOrg: false
 	#    noCache: true
 
@@ -64,16 +66,16 @@ stages:
 	  displayName: 'NuGet restore'
 	  inputs:
 		restoreSolution: '**/*.sln'
-		vstsFeed: '$(Nuget.Feed)'
+		vstsFeed: '$(Nuget_Feed)'
 		noCache: true
 
 	- task: MSBuild@1
 	  displayName: 'Build solution **/*.sln'
 	  inputs:
-		msbuildVersion: $(Build.MSbuildVersion)
+		msbuildVersion: $(Build_MSbuildVersion)
 		msbuildArchitecture: x64
-		platform: '$(Build.Platform)'
-		configuration: '$(Build.Configuration)'
+		platform: '$(Build_Platform)'
+		configuration: '$(Build_Configuration)'
 		msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
 		clean: true
 		maximumCpuCount: true
@@ -84,10 +86,10 @@ stages:
 	- task: MSBuild@1
 	  displayName: 'Build and Package - Service Fabric Config'
 	  inputs:
-		solution: '**\*.sfproj'
+		solution: '$(Solution_ServiceFabricToBuild)'
 		msbuildArchitecture: x64
-		platform: '$(Build.PlatformX64)'
-		configuration: '$(Build.Configuration)'
+		platform: '$(Build_PlatformX64)'
+		configuration: '$(Build_Configuration)'
 		msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage  /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
 		clean: false
 		maximumCpuCount: true
@@ -105,7 +107,7 @@ stages:
 	  inputs:
 		SourceFolder: '$(build.sourcesdirectory)\src'
 		Contents: |
-		 **\*$(Build.Configuration)*\*Interface.nupkg
+		 **\*$(Build_Configuration)*\*Interface.nupkg
 		 !**\packages\**
 		 !**\bin\x64\**
 		TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
@@ -117,7 +119,7 @@ stages:
 	  inputs:
 		SourceFolder: '$(build.sourcesdirectory)\src'
 		Contents: |
-		 **\*$(Build.Configuration)*\*.nupkg
+		 **\*$(Build_Configuration)*\*.nupkg
 		 !**\packages\**
 		 !**\bin\x64\**
 		TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
@@ -166,7 +168,7 @@ stages:
 	  inputs:
 		command: test
 		projects: 'src/*Tests/*.csproj'
-		arguments: '--configuration $(Build.Configuration) --collect "Code coverage"'
+		arguments: '--configuration $(Build_Configuration) --collect "Code coverage"'
 		
 	- task: VSTest@2
 	  displayName: 'VsTest - testAssemblies'
@@ -177,7 +179,7 @@ stages:
 		 !**\*Database.Tests*\**
 		 !**\packages\**
 		 !**\obj\**
-		configuration: '$(Build.Configuration)'
+		configuration: '$(Build_Configuration)'
 
 	- task: PublishSymbols@2
 	  displayName: 'Publish symbols path'
