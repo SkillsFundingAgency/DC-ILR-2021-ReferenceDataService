@@ -89,7 +89,7 @@ stages:
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: true
         maximumCpuCount: true
-        restoreNugetPackages: true
+        restoreNugetPackages: false
         logProjectEvents: true
         createLogFile: true
     
@@ -103,6 +103,7 @@ stages:
         msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage  /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: false
         maximumCpuCount: true
+        restoreNugetPackages: false
         logProjectEvents: true
         createLogFile: true
 
