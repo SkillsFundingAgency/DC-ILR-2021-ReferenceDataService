@@ -8,16 +8,17 @@ resources:
 variables:
   VersionNumberMajor: '0'
   VersionNumberMinor: '1'
-  BuildConfiguration: 'Release'
-  BuildPlatform: 'Any CPU'
-  BuildPlatformX64: 'x64'  
 
 stages:
 - stage: Build
   displayName: Build stage
   jobs:  
   - job: Build
-    displayName: Build
+    displayName: Build    
+    variables:
+      BuildConfiguration: 'Release'
+      BuildPlatform: 'Any CPU'
+      BuildPlatformX64: 'x64'  
     pool:
       name: DCT
       demands:
