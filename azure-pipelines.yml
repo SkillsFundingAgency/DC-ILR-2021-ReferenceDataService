@@ -83,7 +83,7 @@ stages:
       inputs:
         msbuildVersion: 16.0
         msbuildArchitecture: x64
-        solution: '$(Parameters.solution)'
+        solution: '$(Solution)'
         platform: '$(Build.Platform)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
