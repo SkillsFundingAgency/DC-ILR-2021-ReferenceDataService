@@ -120,18 +120,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             var dacDeployOptions = new DacDeployOptions()
             {
                 BlockOnPossibleDataLoss = false,
-                CreateNewDatabase = true,
+                CreateNewDatabase = false,
             };
-
-            var defaultValue = "Default";
-
-            dacDeployOptions.SqlCommandVariableValues.Add("BUILD_BRANCHNAME", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("BUILD_BUILDNUMBER", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("DSCIUserPassword", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("RELEASE_RELEASENAME", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("ROUserPassword", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("RWUserPassword", defaultValue);
-            dacDeployOptions.SqlCommandVariableValues.Add("MatchClaimROPassword", defaultValue);
 
             return dacDeployOptions;
         }
