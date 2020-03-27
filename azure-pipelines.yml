@@ -16,7 +16,7 @@ stages:
   - job: Build
     displayName: Build    
     variables:
-      BuildConfiguration: 'Release'
+      "Build.Configuration": 'Release'
       BuildPlatform: 'Any CPU'
       BuildPlatformX64: 'x64'  
     pool:
@@ -66,7 +66,7 @@ stages:
         msbuildVersion: 16.0
         msbuildArchitecture: x64
         platform: '$(BuildPlatform)'
-        configuration: '$(BuildConfiguration)'
+        configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: true
         maximumCpuCount: true
@@ -80,7 +80,7 @@ stages:
         solution: '**\*.sfproj'
         msbuildArchitecture: x64
         platform: '$(BuildPlatformX64)'
-        configuration: '$(BuildConfiguration)'
+        configuration: '$(Build.Configuration)'
         msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage  /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: false
         maximumCpuCount: true
@@ -98,7 +98,7 @@ stages:
       inputs:
         SourceFolder: '$(build.sourcesdirectory)\src'
         Contents: |
-         **\*$(BuildConfiguration)*\*Interface.nupkg
+         **\*$(Build.Configuration)*\*Interface.nupkg
          !**\packages\**
          !**\bin\x64\**
         TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
@@ -110,7 +110,7 @@ stages:
       inputs:
         SourceFolder: '$(build.sourcesdirectory)\src'
         Contents: |
-         **\*$(BuildConfiguration)*\*.nupkg
+         **\*$(Build.Configuration)*\*.nupkg
          !**\packages\**
          !**\bin\x64\**
         TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
@@ -159,7 +159,7 @@ stages:
       inputs:
         command: test
         projects: 'src/*Tests/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+        arguments: '--configuration $(Build.Configuration) --collect "Code coverage"'
         
     - task: VSTest@2
       displayName: 'VsTest - testAssemblies'
@@ -170,7 +170,7 @@ stages:
          !**\*Database.Tests*\**
          !**\packages\**
          !**\obj\**
-        configuration: '$(BuildConfiguration)'
+        configuration: '$(Build.Configuration)'
     
     - task: PublishSymbols@2
       displayName: 'Publish symbols path'
