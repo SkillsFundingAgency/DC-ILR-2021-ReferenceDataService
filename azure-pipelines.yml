@@ -17,8 +17,13 @@ stages:
     displayName: Build    
     variables:
       "Build.Configuration": 'Release'
-      BuildPlatform: 'Any CPU'
-      BuildPlatformX64: 'x64'  
+      "Build.Platform": 'Any CPU'
+      "Build.PlatformX64": 'x64'  
+      "Nuget.Feed": 'dct-pkg'  
+      "Nuget.Version": '4.8.0'
+      "DotnetCore.Version": '4.8.0'
+      "SF.ProjectName": ''
+
     pool:
       name: DCT
       demands:
@@ -28,9 +33,9 @@ stages:
 
     steps:
     - task: DotNetCoreInstaller@0
-      displayName: 'Use .NET Core sdk 2.2.203'
+      displayName: 'Use .NET Core sdk $(DotnetCore.Version)'
       inputs:
-        version: 2.2.203
+        version: '$(DotnetCore.Version)'
     
     - task: VisualStudioTestPlatformInstaller@1
       displayName: 'Visual Studio Test Platform Installer'
@@ -38,9 +43,9 @@ stages:
         versionSelector: latestStable
     
     - task: NuGetToolInstaller@0
-      displayName: 'Use NuGet < 4.8.0'
+      displayName: 'Use NuGet : $(Nuget.Version)'
       inputs:
-        versionSpec: '< 4.8.0'
+        versionSpec: '< $(Nuget.Version)'
         checkLatest: true
     
     - task: DotNetCoreCLI@2
@@ -49,7 +54,7 @@ stages:
       inputs:
         command: restore
         projects: '**\*.csproj'
-        vstsFeed: 'dct-pkg'
+        vstsFeed: '$(Nuget.Feed)'
     #    includeNuGetOrg: false
     #    noCache: true
     
@@ -57,7 +62,7 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: '**/*.sln'
-        vstsFeed: 'dct-pkg'
+        vstsFeed: '$(Nuget.Feed)'
         noCache: true
     
     - task: MSBuild@1
@@ -65,7 +70,7 @@ stages:
       inputs:
         msbuildVersion: 16.0
         msbuildArchitecture: x64
-        platform: '$(BuildPlatform)'
+        platform: '$(Build.Platform)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: true
@@ -79,7 +84,7 @@ stages:
       inputs:
         solution: '**\*.sfproj'
         msbuildArchitecture: x64
-        platform: '$(BuildPlatformX64)'
+        platform: '$(Build.PlatformX64)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '/t:Package /p:PackageLocation=$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage  /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
         clean: false
