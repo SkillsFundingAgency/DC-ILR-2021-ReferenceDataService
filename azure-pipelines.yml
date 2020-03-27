@@ -17,11 +17,11 @@ variables:
   value: 'Any CPU'
 - name: 'BuildPlatformX64'
   value: 'x64'   
-- name: 'DotNet>Core.Version'
+- name: 'DotNetCore.Version'
   value: '2.2.207' 
-- name: 'Parameters.solution'
-  value: '**\*.sln' 
-- name: 'Parameters.feedRestore'
+- name: 'Nuget.Version'
+  value: '5.3.1' 
+- name: 'NugetFeed'
   value: 'dct-pkg' 
 - name: ConsoleTool
   value: 'ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console'
@@ -50,9 +50,9 @@ stages:
       displayName: 'Generate Fake Application Parameters Node Config Files'
 
     - task: DotNetCoreInstaller@0
-      displayName: 'Use .NET Core sdk $(DotNet>Core.Version)'
+      displayName: 'Use .NET Core sdk $(DotNetCore.Version)'
       inputs:
-        version: $(DotNet>Core.Version)
+        version: $(DotNetCore.Version)
     
     - task: VisualStudioTestPlatformInstaller@1
       displayName: 'Visual Studio Test Platform Installer'
@@ -60,10 +60,10 @@ stages:
         versionSelector: latestStable
     
     - task: NuGetToolInstaller@0
-      displayName: 'Use NuGet >=5.3.1'
+      displayName: 'Use NuGet >=$(Nuget.Version)'
       enabled: true
       inputs:
-        versionSpec: '>=5.3.1'
+        versionSpec: '>=$(Nuget.Version)'
 
     - task: DotNetCoreCLI@2
       enabled: true
@@ -71,22 +71,23 @@ stages:
       inputs:
         command: restore
         projects: '**\*.csproj'
-        vstsFeed: 'dct-pkg'
+        vstsFeed: '$(Nuget.Feed)'
     #    noCache: true
     
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: '**/*.sln'
-        vstsFeed: 'dct-pkg'
+        restoreSolution: '$(Solution.ToBuild)'
+        vstsFeed: '$(Nuget.Feed)'
     #    noCache: true
     
     - task: MSBuild@1
       enabled: true
-      displayName: 'Build solution **/*.sln'
+      displayName: 'Build solution'
       inputs:
         msbuildVersion: 16.0
         msbuildArchitecture: x64
+        solution: '$(Solution.ToBuild)'
         platform: '$(Build.Platform)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
