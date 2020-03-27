@@ -11,6 +11,8 @@ variables:
   value: '0'
 - name: VersionNumberMinor 
   value: '1'
+- name: ConsoleTool 
+  value: 'ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console'
 
 
 stages:
@@ -28,7 +30,6 @@ stages:
       "DotnetCore.Version": '2.2.207'
       "Solution": 'src\**\*.sln'
       "SF.ProjectName": '**\*.sfproj'      
-      "ConsoleTool": 'ReferenceInput.Console'
 
     pool:
       name: DCT
