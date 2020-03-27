@@ -21,7 +21,7 @@ stages:
       "Build.PlatformX64": 'x64'  
       "Nuget.Feed": 'dct-pkg'  
       "Nuget.Version": '4.8.0'
-      "DotnetCore.Version": '4.8.0'
+      "DotnetCore.Version": '2.2.207'
       "SF.ProjectName": ''
 
     pool:
