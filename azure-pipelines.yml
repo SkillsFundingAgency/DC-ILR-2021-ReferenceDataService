@@ -6,8 +6,12 @@ resources:
   fetchDepth: 15
 
 variables:
-  VersionNumberMajor: '0'
-  VersionNumberMinor: '1'
+- group: 'CodeSign KV'
+- name: VersionNumberMajor 
+  value: '0'
+- name: VersionNumberMinor 
+  value: '1'
+
 
 stages:
 - stage: Build
@@ -22,7 +26,8 @@ stages:
       "Nuget.Feed": 'dct-pkg'  
       "Nuget.Version": '4.8.0'
       "DotnetCore.Version": '2.2.207'
-      "SF.ProjectName": ''
+      "Solution": 'src\**\*.sln'
+      "SF.ProjectName": '**\*.sfproj'
 
     pool:
       name: DCT
@@ -70,6 +75,7 @@ stages:
       inputs:
         msbuildVersion: 16.0
         msbuildArchitecture: x64
+        solution: '$(Parameters.solution)'
         platform: '$(Build.Platform)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
