@@ -176,11 +176,14 @@ stages:
       inputs:
         applicationPackagePath: '$(build.artifactstagingdirectory)\ServiceFabric\ApplicationPackage '
         versionBehavior: Replace
-       
+
+    #********************************************************************************
+    # Copy Desktop Application files
+    #********************************************************************************          
     - task: CopyFiles@2
       displayName: 'Copy Console Application File to Artifact Folder'
       inputs:
-        SourceFolder: 'src\*$(ConsoleTool)\bin\$(BuildConfiguration)'  
+        SourceFolder: 'src\$(ConsoleTool)\bin\$(BuildConfiguration)'  
         Contents: '**\!(*.pdb)'
         TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
     
