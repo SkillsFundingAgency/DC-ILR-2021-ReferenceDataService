@@ -185,7 +185,7 @@ stages:
       inputs:
         SourceFolder: 'src\$(ConsoleTool)\bin\$(Build.Configuration)'  
         Contents: '**\!(*.pdb)'
-        TargetFolder: '$(build.ArtifactStagingDirectory)\Desktop.Application'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
     
 #********************************************************************************
 # CodeSign Script body
