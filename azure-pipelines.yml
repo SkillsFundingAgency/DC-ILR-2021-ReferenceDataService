@@ -235,7 +235,7 @@ stages:
                   Write-Host "##vso[task.setvariable variable=PublishArtifact_ServiceFabric]$(Test-Path '$(build.artifactstagingdirectory)\ServiceFabric' -PathType Any)";
                   Write-Host "##vso[task.setvariable variable=PublishArtifact_NugetPackages]$(Test-Path '$(build.artifactstagingdirectory)\Nuget' -PathType Any)";
                   Write-Host "##vso[task.setvariable variable=PublishArtifact_Databases]$(Test-Path '$(build.artifactstagingdirectory)\Databases' -PathType Any)";
-                  Write-Host "##vso[task.setvariable variable=PublishArtifact_DesktopApplication]$(Test-Path '$(build.artifactstagingdirectory)\DesktopApplication' -PathType Any)";      displayName: Check What to Publish
+                  Write-Host "##vso[task.setvariable variable=PublishArtifact_DesktopApplication]$(Test-Path '$(build.artifactstagingdirectory)\DesktopApplication' -PathType Any)";
       enabled: true
 
 #********************************************************************************
