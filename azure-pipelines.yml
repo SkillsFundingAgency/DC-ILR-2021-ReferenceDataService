@@ -224,6 +224,20 @@ stages:
         configuration: '$(Build.Configuration)'
 
 #********************************************************************************
+# Count Artifact Files to decide what to Publish
+#********************************************************************************    
+   - script: |
+            Write-Output "Hello"
+            Write-Host "##vso[task.setvariable variable=PublishArtifact_ServiceFabric]$(Test-Path '$(build.artifactstagingdirectory)\ServiceFabric' -PathType Any)";
+            Write-Host "##vso[task.setvariable variable=PublishArtifact_NugetPackages]$(Test-Path '$(build.artifactstagingdirectory)\Nuget' -PathType Any)";
+            Write-Host "##vso[task.setvariable variable=PublishArtifact_Databases]$(Test-Path '$(build.artifactstagingdirectory)\Databases' -PathType Any)";
+            Write-Host "##vso[task.setvariable variable=PublishArtifact_DesktopApplication]$(Test-Path '$(build.artifactstagingdirectory)\DesktopApplication' -PathType Any)";
+
+      displayName: Install dotnet-reportgenerator-globaltool
+      continueOnError: true  
+      enabled: false
+
+#********************************************************************************
 # Publish Artifacts
 #********************************************************************************    
     - task: PublishSymbols@2
@@ -237,6 +251,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: ServiceFabric'
       enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_ServiceFabric'], 'True'))
       inputs:
         ArtifactName: ServiceFabric
         PathtoPublish: '$(build.artifactstagingdirectory)\ServiceFabric'
@@ -244,6 +259,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: NugetPackages'
       enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_NugetPackages'], 'True'))
       inputs:
         ArtifactName: NugetPackages
         PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
@@ -251,6 +267,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: Databases'
       enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_Databases'], 'True'))
       inputs:
         ArtifactName: Databases
         PathtoPublish: '$(build.artifactstagingdirectory)\Databases'
@@ -258,6 +275,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: DesktopApplication'
       enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_DesktopApplication'], 'True'))
       inputs:
         ArtifactName: DesktopApplication
         PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
