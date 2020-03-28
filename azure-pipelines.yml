@@ -14,7 +14,6 @@ variables:
 - name: ConsoleTool 
   value: 'ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console'
 
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -255,4 +254,11 @@ stages:
       inputs:
         ArtifactName: Databases
         PathtoPublish: '$(build.artifactstagingdirectory)\Databases'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: DesktopApplication'
+      enabled: true
+      inputs:
+        ArtifactName: DesktopApplication
+        PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
     
