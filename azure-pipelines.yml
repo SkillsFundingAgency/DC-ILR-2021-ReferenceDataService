@@ -46,7 +46,7 @@ stages:
 #********************************************************************************   
 
     - task: DotNetCoreInstaller@0
-      enabled: true
+      enabled: false
       displayName: 'Use .NET Core sdk $(DotnetCore.Version) - (x=latest)'
       inputs:
         version: $(DotnetCore.Version)
