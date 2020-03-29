@@ -25,8 +25,8 @@ stages:
       "Build.Platform": 'Any CPU'
       "Build.PlatformX64": 'x64'  
       "Nuget.Feed": 'dct-pkg'  
-      "Nuget.Version": '4.8.0'
-      "DotnetCore.Version": '2.2.207'
+      "Nuget.Version": '5.3.0'
+      "DotnetCore.Version": '2.2.x'
       "Solution": 'src\**\*.sln'
       "SF.ProjectName": '**\*.sfproj'      
 
@@ -36,6 +36,8 @@ stages:
       - BuildServer
       - ServiceFabricSDK      
       - ServiceFabricSDKVersion -equals 65
+      #- IsBuildServer
+      #- ServiceFabricSDK      
 
     steps:
 #********************************************************************************
@@ -43,7 +45,7 @@ stages:
 #********************************************************************************   
 
     - task: DotNetCoreInstaller@0
-      displayName: 'Use .NET Core sdk $(DotnetCore.Version)'
+      displayName: 'Use .NET Core sdk $(DotnetCore.Version) - (x=latest)'
       inputs:
         version: '$(DotnetCore.Version)'
     
@@ -55,7 +57,7 @@ stages:
     - task: NuGetToolInstaller@0
       displayName: 'Use NuGet : $(Nuget.Version)'
       inputs:
-        versionSpec: '< $(Nuget.Version)'
+        versionSpec: '> $(Nuget.Version)'
         checkLatest: true
     
 #********************************************************************************
@@ -81,7 +83,6 @@ stages:
     - task: MSBuild@1
       displayName: 'Build solution **/*.sln'
       inputs:
-        msbuildVersion: 16.0
         msbuildArchitecture: x64
         solution: '$(Solution)'
         platform: '$(Build.Platform)'
