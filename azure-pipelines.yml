@@ -34,8 +34,8 @@ stages:
       name: DCT
       demands:
       - IsBuildServer
-      - ServiceFabricSDK
-      #- ServiceFabricSDKVersion -equals 65
+      - ServiceFabricSDK      
+      - ServiceFabricSDKVersion -equals 65
 
     steps:
 #********************************************************************************
