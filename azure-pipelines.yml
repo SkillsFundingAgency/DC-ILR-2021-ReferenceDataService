@@ -33,7 +33,7 @@ stages:
     pool:
       name: DCT
       demands:
-      - IsBuildServer
+      - BuildServer
       - ServiceFabricSDK      
       - ServiceFabricSDKVersion -equals 65
 
