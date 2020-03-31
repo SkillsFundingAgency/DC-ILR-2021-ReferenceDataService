@@ -162,7 +162,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 new CensusDate { Period = 04, Start = new DateTime(2020, 11, 01), End = new DateTime(2020, 11, 30, 23, 59, 59) },
                 new CensusDate { Period = 05, Start = new DateTime(2020, 12, 01), End = new DateTime(2020, 12, 31, 23, 59, 59) },
                 new CensusDate { Period = 06, Start = new DateTime(2021, 01, 01), End = new DateTime(2021, 01, 31, 23, 59, 59) },
-                new CensusDate { Period = 07, Start = new DateTime(2021, 02, 01), End = new DateTime(2021, 02, 29, 23, 59, 59) },
+                new CensusDate { Period = 07, Start = new DateTime(2021, 02, 01), End = new DateTime(2021, 02, 28, 23, 59, 59) },
                 new CensusDate { Period = 08, Start = new DateTime(2021, 03, 01), End = new DateTime(2021, 03, 31, 23, 59, 59) },
                 new CensusDate { Period = 09, Start = new DateTime(2021, 04, 01), End = new DateTime(2021, 04, 30, 23, 59, 59) },
                 new CensusDate { Period = 10, Start = new DateTime(2021, 05, 01), End = new DateTime(2021, 05, 31, 23, 59, 59) },
