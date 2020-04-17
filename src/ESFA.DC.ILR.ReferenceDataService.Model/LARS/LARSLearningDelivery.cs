@@ -39,6 +39,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public int? EFACOFType { get; set; }
 
+        public int? GuidedLearningHours { get; set; }
+
         public List<LARSAnnualValue> LARSAnnualValues { get; set; }
 
         public List<LARSFramework> LARSFrameworks { get; set; }
