@@ -68,6 +68,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   EnglandFEHEStatus = ld.EnglandFehestatus,
                   EnglPrscID = ld.EnglPrscId,
                   FrameworkCommonComponent = ld.FrameworkCommonComponent,
+                  GuidedLearningHours = ld.GuidedLearningHours,
                   NotionalNVQLevel = ld.NotionalNvqlevel,
                   NotionalNVQLevelv2 = ld.NotionalNvqlevelv2,
                   RegulatedCreditValue = ld.RegulatedCreditValue,
