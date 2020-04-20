@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
-using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.EAS2021.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;

@@ -1,5 +1,5 @@
-﻿using ESFA.DC.EAS1920.EF;
-using ESFA.DC.EAS1920.EF.Interface;
+﻿using ESFA.DC.EAS2021.EF;
+using ESFA.DC.EAS2021.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using Microsoft.EntityFrameworkCore;
 
