@@ -31,6 +31,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string EnglandFEHEStatus { get; set; }
         public string AwardOrgCode { get; set; }
         public int? EFACOFType { get; set; }
+        public int? GuidedLearningHours { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
 
