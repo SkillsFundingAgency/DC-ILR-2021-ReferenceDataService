@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.ILR.2021.Model" Version="0.1.0-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.53" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.166" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
