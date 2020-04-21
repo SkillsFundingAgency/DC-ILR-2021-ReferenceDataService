@@ -18,6 +18,7 @@
 	[EnglandFEHEStatus] [nvarchar](2000) NULL,
 	[AwardOrgCode] [nvarchar](2000) NULL,
 	[EFACOFType] [int] NULL,
+	[GuidedLearningHours] [int] NULL,
 	[EffectiveFrom] [datetime] NOT NULL,
 	[EffectiveTo] [datetime] NULL,
 	CONSTRAINT [PK_ReferenceInput.LARS_LARSLearningDelivery] PRIMARY KEY ([Id]),

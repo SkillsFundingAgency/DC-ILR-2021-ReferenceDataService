@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.EAS1920.EF;
-using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.EAS2021.EF;
+using ESFA.DC.EAS2021.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
@@ -13,7 +13,7 @@ using MockQueryable.Moq;
 using Moq;
 using Xunit;
 using EasSubmissionValue = ESFA.DC.ILR.ReferenceDataService.Model.EAS.EasSubmissionValue;
-using EasSubmissionValueEF = ESFA.DC.EAS1920.EF.EasSubmissionValue;
+using EasSubmissionValueEF = ESFA.DC.EAS2021.EF.EasSubmissionValue;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 {
