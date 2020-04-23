@@ -42,7 +42,7 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping\ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping.csproj" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
