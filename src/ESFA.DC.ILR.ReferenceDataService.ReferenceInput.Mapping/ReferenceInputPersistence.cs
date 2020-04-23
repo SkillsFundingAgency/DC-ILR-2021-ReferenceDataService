@@ -69,7 +69,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                         this.GetType()
                             .GetMethod("PersistEfModelByType")
                             .MakeGenericMethod(childListType)
-                            .Invoke(this, new object[] {connection, sqlTransaction, subItems});
+                            .Invoke(this, new object[] {connection, sqlTransaction, bulkCopyTimeout, subItems});
                     }
                 }
             }
@@ -115,7 +115,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 this.GetType()
                     .GetMethod("PersistEfModelByType")
                     .MakeGenericMethod(childListType)
-                    .Invoke(this, new object[] { connection, sqlTransaction, subItems });
+                    .Invoke(this, new object[] { connection, sqlTransaction, bulkCopyTimeout, subItems });
             }
         }
 
