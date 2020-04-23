@@ -46,7 +46,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console
                             {
                                 InputReferenceDataFileKey = Path.GetFileName(cla.SourceFile),
                                 Container = Path.GetDirectoryName(cla.SourceFile),
-                                ConnectionString = config.GetConnectionString("targetServer")
+                                ConnectionString = config.GetConnectionString("targetServer"),
+                                TruncateCommandTimeout = config.GetValue<int>("TruncateCommandTimeout"),
+                                InsertCommandTimeout = config.GetValue<int>("InsertCommandTimeout"),
                             };
 
                             messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);

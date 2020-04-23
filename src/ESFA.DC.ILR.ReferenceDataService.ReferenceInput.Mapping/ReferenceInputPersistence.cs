@@ -20,14 +20,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
             _logger = logger;
         }
 
-        public void PersistEfModelByType<T>(SqlConnection connection, SqlTransaction sqlTransaction, IEnumerable<T> source)
+        public void PersistEfModelByType<T>(SqlConnection connection, SqlTransaction sqlTransaction, int bulkCopyTimeout, IEnumerable<T> source)
         {
             // Need to recurse through collections to get child types and also save.
             var tableName = GetTableNameFromType<T>();
 
             _logger.LogInfo($"  Starting Bulk insert of {source.Count()} items of type {typeof(T).Name}");
             var bulkInsert = new BulkInsert();
-            bulkInsert.InsertWithIds(tableName, source, connection, sqlTransaction);
+            bulkInsert.InsertWithIds(tableName, source, connection, sqlTransaction, bulkCopyTimeout);
             _logger.LogInfo($"  Finished Bulk insert of {source.Count()} items of type {typeof(T).Name}");
 
             Type objType = typeof(T);
@@ -75,7 +75,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
             }
         }
 
-        public void PersistEfModelByTypeWithoutCollections<T>(SqlConnection connection, SqlTransaction sqlTransaction, IEnumerable<T> source)
+        public void PersistEfModelByTypeWithoutCollections<T>(SqlConnection connection, SqlTransaction sqlTransaction, int bulkCopyTimeout, IEnumerable<T> source)
         {
             // Need to recurse through collections to get child types and also save.
 
@@ -83,7 +83,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 
             _logger.LogInfo($"  Starting Bulk insert of {source.Count()} items of type {typeof(T).Name}");
             var bulkInsert = new BulkInsert();
-            bulkInsert.InsertWithIds(tableName, source, connection, sqlTransaction);
+            bulkInsert.InsertWithIds(tableName, source, connection, sqlTransaction, bulkCopyTimeout);
             _logger.LogInfo($"  Finished Bulk insert of {source.Count()} items of type {typeof(T).Name}");
 
             Type objType = typeof(T);

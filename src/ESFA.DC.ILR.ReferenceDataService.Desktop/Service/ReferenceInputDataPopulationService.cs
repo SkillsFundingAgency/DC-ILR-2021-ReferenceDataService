@@ -66,6 +66,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _logger.LogInfo("Finished Truncate existing data");
             _messengerService.Send(new TaskProgressMessage("Existing data truncated.", currentTask++, taskCount));
 
+            var insertTimeout = inputReferenceDataContext.InsertCommandTimeout;
+
             using (var sqlConnection = new SqlConnection(inputReferenceDataContext.ConnectionString))
             {
                 sqlConnection.Open();
@@ -74,29 +76,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                     try
                     {
                         // Metadata
-                        await PopulateMetaData(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateMetaData(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
                         _messengerService.Send(new TaskProgressMessage("Meta data applied", currentTask++, taskCount));
 
                         // Lars data structures
-                        await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<LARSStandard, LARS_LARSStandard>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<LARSLearningDelivery, LARS_LARSLearningDelivery>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkDesktop, LARS_LARSFrameworkDesktop>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<LARSFrameworkAimDesktop, LARS_LARSFrameworkAim>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
                         _messengerService.Send(new TaskProgressMessage("Lars data applied", currentTask++, taskCount));
 
                         // Postcode structures
-                        await PopulateTopLevelNode<Postcode, Postcodes_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<DevolvedPostcode, PostcodesDevolution_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<Postcode, Postcodes_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<DevolvedPostcode, PostcodesDevolution_Postcode>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
                         _messengerService.Send(new TaskProgressMessage("Postcode data applied", currentTask++, taskCount));
 
                         // Organisations
-                        await PopulateTopLevelNode<Organisation, Organisations_Organisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
-                        await PopulateTopLevelNode<EPAOrganisation, EPAOrganisations_EPAOrganisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<Organisation, Organisations_Organisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
+                        await PopulateTopLevelNode<EPAOrganisation, EPAOrganisations_EPAOrganisation>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
                         _messengerService.Send(new TaskProgressMessage("Organisations data applied", currentTask++, taskCount));
 
                         // Employers
-                        await PopulateTopLevelNode<Employer, Employers_Employer>(inputReferenceDataContext, sqlConnection, sqlTransaction, cancellationToken);
+                        await PopulateTopLevelNode<Employer, Employers_Employer>(inputReferenceDataContext, sqlConnection, sqlTransaction, insertTimeout, cancellationToken);
                         _messengerService.Send(new TaskProgressMessage("Employers data applied", currentTask++, taskCount));
 
                         sqlTransaction.Commit();
@@ -152,6 +154,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             IInputReferenceDataContext inputReferenceDataContext,
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
+            int bulkCopyTimeout,
             CancellationToken cancellationToken)
         {
             var metaDataFromJson =
@@ -175,28 +178,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 refDataVersion.EasUploadDateTime_Id = refDataVersion.EasUploadDateTime_?.Id;
             }
 
-            _referenceInputPersistenceService.PersistEfModelByTypeWithoutCollections(sqlConnection, sqlTransaction, referenceDataVersion);
+            _referenceInputPersistenceService.PersistEfModelByTypeWithoutCollections(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, referenceDataVersion);
 
             // Collection Dates
             var censusDates = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_CensusDate>>(metaDataFromJson);
             var returnPeriods = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ReturnPeriod>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_CensusDate>(censusDates);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ReturnPeriod>(returnPeriods);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, censusDates);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, returnPeriods);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, censusDates);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, returnPeriods);
 
             // Validation Errors / Rules
             var validationErrors = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationError>>(metaDataFromJson);
             var validationRules = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationRule>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationError>(validationErrors);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationRule>(validationRules);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, validationErrors);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, validationRules);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, validationErrors);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, validationRules);
 
             // Lookups and Subcategories
             var lookups = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_Lookup>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_Lookup>(lookups);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, lookups);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, lookups);
 
             // Metadata - Metadata
             var metaData = new MetaData_MetaData
@@ -205,7 +208,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 ReferenceDataVersions_Id = referenceDataVersion.First().Id,
                 DateGenerated = metaDataFromJson.First().DateGenerated,
             };
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, new List<MetaData_MetaData> { metaData });
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, new List<MetaData_MetaData> { metaData });
 
             return false;
         }
@@ -214,6 +217,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             IInputReferenceDataContext inputReferenceDataContext,
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
+            int bulkCopyTimeout,
             CancellationToken cancellationToken)
         {
             _logger.LogInfo($"Starting population for {typeof(TTarget).Name}");
@@ -230,7 +234,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
             _efModelIdentityAssigner.AssignIdsByType<TTarget>(dataMappedToEF);
 
             // Need to get it into the Db ...
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, dataMappedToEF);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, bulkCopyTimeout, dataMappedToEF);
 
             // Release the resources that got mapped into the EF data
             dataMappedToEF = null;
