@@ -117,7 +117,8 @@ DBCC CHECKIDENT ('[ReferenceInput].[Employers_Employer]', RESEED, 1);";
                     try
                     {
                         var command = trans.Connection.CreateCommand();
-                        //connection.CreateCommand();
+                        command.CommandTimeout = inputReferenceDataContext.TruncateCommandTimeout;
+
                         command.CommandType = CommandType.Text;
                         command.Transaction = trans;
 

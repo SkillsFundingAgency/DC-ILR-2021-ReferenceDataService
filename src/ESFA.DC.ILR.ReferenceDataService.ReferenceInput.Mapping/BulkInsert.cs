@@ -8,9 +8,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
 {
     public class BulkInsert
     {
-        public void InsertWithIds<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public void InsertWithIds<T>(string table, IEnumerable<T> source, SqlConnection sqlConnection, SqlTransaction sqlTransaction, int bulkCopyTimeout)
         {
-            using (var sqlBulkCopy = BuildSqlBulkCopy(sqlConnection, sqlTransaction))
+            using (var sqlBulkCopy = BuildSqlBulkCopy(sqlConnection, sqlTransaction, bulkCopyTimeout))
             {
                 try
                 {
@@ -43,14 +43,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
             }
         }
 
-        private SqlBulkCopy BuildSqlBulkCopy(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        private SqlBulkCopy BuildSqlBulkCopy(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int bulkCopyTimeout)
         {
             var sqlBulkCopyOptions = SqlBulkCopyOptions.KeepIdentity;
 
             return new SqlBulkCopy(sqlConnection, sqlBulkCopyOptions, sqlTransaction)
             {
                 BatchSize = 20_000, // https://stackoverflow.com/questions/779690/what-is-the-recommended-batch-size-for-sqlbulkcopy
-                BulkCopyTimeout = 600
+                BulkCopyTimeout = bulkCopyTimeout
             };
         }
     }
