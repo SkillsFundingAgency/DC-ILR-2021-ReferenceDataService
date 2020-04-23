@@ -180,26 +180,28 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
 
             _referenceInputPersistenceService.PersistEfModelByTypeWithoutCollections(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, referenceDataVersion);
 
+            var insertTimeout = inputReferenceDataContext.InsertCommandTimeout;
+
             // Collection Dates
             var censusDates = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_CensusDate>>(metaDataFromJson);
             var returnPeriods = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ReturnPeriod>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_CensusDate>(censusDates);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ReturnPeriod>(returnPeriods);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, censusDates);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, returnPeriods);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, censusDates);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, returnPeriods);
 
             // Validation Errors / Rules
             var validationErrors = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationError>>(metaDataFromJson);
             var validationRules = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_ValidationRule>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationError>(validationErrors);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_ValidationRule>(validationRules);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, validationErrors);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, validationRules);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, validationErrors);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, validationRules);
 
             // Lookups and Subcategories
             var lookups = _referenceInputEFMapper.MapByType<IReadOnlyCollection<MetaData>, List<MetaData_Lookup>>(metaDataFromJson);
             _efModelIdentityAssigner.AssignIdsByType<MetaData_Lookup>(lookups);
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, lookups);
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, lookups);
 
             // Metadata - Metadata
             var metaData = new MetaData_MetaData
@@ -208,7 +210,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 ReferenceDataVersions_Id = referenceDataVersion.First().Id,
                 DateGenerated = metaDataFromJson.First().DateGenerated,
             };
-            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, new List<MetaData_MetaData> { metaData });
+            _referenceInputPersistenceService.PersistEfModelByType(sqlConnection, sqlTransaction, insertTimeout, new List<MetaData_MetaData> { metaData });
 
             return false;
         }
