@@ -9,6 +9,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public string LearnAimRefType { get; set; }
 
+        public string LearnAimRefTypeDesc { get; set; }
+
         public string LearnAimRefTitle { get; set; }
 
         public int? EnglPrscID { get; set; }
