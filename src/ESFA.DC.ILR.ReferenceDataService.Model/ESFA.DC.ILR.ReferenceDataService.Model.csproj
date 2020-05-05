@@ -8,7 +8,7 @@
     <Company>ESFA</Company>
     <Product>ESFA.DC.ILR.2021.ReferenceDataService.Model</Product>
     <Description>ILR2021 Reference Data Service Model</Description>
-    <Version>0.1.1</Version>
+    <Version>0.2.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
