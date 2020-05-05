@@ -48,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<MetaData_CensusDate> MetaData_CensusDates { get; set; }
         public virtual DbSet<MetaData_CoFVersion> MetaData_CoFVersions { get; set; }
         public virtual DbSet<MetaData_DevolvedPostcodesVersion> MetaData_DevolvedPostcodesVersions { get; set; }
-        public virtual DbSet<MetaData_EasFileDetails> MetaData_EasUploadDateTimes { get; set; }
+        public virtual DbSet<MetaData_EasFileDetails> MetaData_EasFileDetails { get; set; }
         public virtual DbSet<MetaData_EmployersVersion> MetaData_EmployersVersions { get; set; }
         public virtual DbSet<MetaData_HmppPostcodesVersion> MetaData_HmppPostcodesVersions { get; set; }
         public virtual DbSet<MetaData_LarsVersion> MetaData_LarsVersions { get; set; }
@@ -734,10 +734,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasForeignKey(d => d.DevolvedPostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_DevolvedPostcodesVersion_DevolvedPostcodesVersion_Id");
 
-                entity.HasOne(d => d.EasUploadDateTime_)
+                entity.HasOne(d => d.EasFileDetails_)
                     .WithMany(p => p.MetaData_ReferenceDataVersions)
-                    .HasForeignKey(d => d.EasUploadDateTime_Id)
-                    .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasUploadDateTime_EasUploadDateTime_Id");
+                    .HasForeignKey(d => d.EasFileDetails_Id)
+                    .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasFileDetails_EasFileDetails_Id");
 
                 entity.HasOne(d => d.EmployersVersion_)
                     .WithMany(p => p.MetaData_ReferenceDataVersions)

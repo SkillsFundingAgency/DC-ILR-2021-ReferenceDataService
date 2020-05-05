@@ -175,7 +175,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
                 refDataVersion.DevolvedPostcodesVersion_Id = refDataVersion.DevolvedPostcodesVersion_?.Id;
                 refDataVersion.HmppPostcodesVersion_Id = refDataVersion.HmppPostcodesVersion_?.Id;
                 refDataVersion.PostcodeFactorsVersion_Id = refDataVersion.PostcodeFactorsVersion_?.Id;
-                refDataVersion.EasUploadDateTime_Id = refDataVersion.EasUploadDateTime_?.Id;
+                refDataVersion.EasFileDetails_Id = refDataVersion.EasFileDetails_?.Id;
             }
 
             _referenceInputPersistenceService.PersistEfModelByTypeWithoutCollections(sqlConnection, sqlTransaction, inputReferenceDataContext.InsertCommandTimeout, referenceDataVersion);
