@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
             var orgRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>>();
             var postcodesRSMock = new Mock<IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>>();
 
-            metaDataServiceMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
+            metaDataServiceMock.Setup(s => s.RetrieveDesktopMetaDataAsync(cancellationToken)).Returns(Task.FromResult(new MetaData { ReferenceDataVersions = referenceDataVersions }));
             devolvedPostcodesRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(devolvedPostcodes));
             employersRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(employers));
             epaOrgRSMock.Setup(s => s.RetrieveAsync(cancellationToken)).Returns(Task.FromResult(epaOrgs));
@@ -90,6 +90,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests
         {
             return new ReferenceDataVersion
             {
+                EasFileDetails = new EasFileDetails { FileName = "N/A" },
                 Employers = new EmployersVersion { Version = "Version 1" },
                 LarsVersion = new LarsVersion { Version = "Version 2" },
                 OrganisationsVersion = new OrganisationsVersion { Version = "Version 3" },

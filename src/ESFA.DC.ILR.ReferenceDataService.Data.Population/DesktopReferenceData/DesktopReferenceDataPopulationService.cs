@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData
 
         public async Task<DesktopReferenceDataRoot> PopulateAsync(CancellationToken cancellationToken)
         {
-            var metaDatas = _metaDataRetrievalService.RetrieveAsync(cancellationToken);
+            var metaDatas = _metaDataRetrievalService.RetrieveDesktopMetaDataAsync(cancellationToken);
             var devolvedPostcodes = _devolvedPostcodesRepositoryService.RetrieveAsync(cancellationToken);
             var employers = _employersRepositoryService.RetrieveAsync(cancellationToken);
             var epaOrganisations = _epaOrganisationsRepositoryService.RetrieveAsync(cancellationToken);
