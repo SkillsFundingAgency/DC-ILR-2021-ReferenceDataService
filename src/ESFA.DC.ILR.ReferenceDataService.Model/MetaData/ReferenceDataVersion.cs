@@ -22,6 +22,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
 
         public PostcodeFactorsVersion PostcodeFactorsVersion { get; set; }
 
-        public EasUploadDateTime EasUploadDateTime { get; set; }
+        public EasFileDetails EasFileDetails { get; set; }
     }
 }
