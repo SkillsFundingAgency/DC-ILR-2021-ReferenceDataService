@@ -35,11 +35,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
+                    LearnAimRefTypeNavigation = new LarsLearnAimRefTypeLookup
+                    {
+                        LearnAimRefTypeDesc = "LearnAimRefTypeDesc1"
+                    }
                 },
                 new LarsLearningDelivery
                 {
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
+                    LearnAimRefTypeNavigation = new LarsLearnAimRefTypeLookup
+                    {
+                        LearnAimRefTypeDesc = "LearnAimRefTypeDesc2"
+                    }
                 }
             };
 
@@ -234,6 +242,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
+                    LearnAimRefTypeDesc = "LearnAimRefTypeDesc1",
                     LARSFrameworks = new List<LARSFramework>
                     {
                         new LARSFramework
@@ -339,6 +348,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
+                    LearnAimRefTypeDesc = "LearnAimRefTypeDesc2",
                     LARSFrameworks = new List<LARSFramework>
                     {
                         new LARSFramework

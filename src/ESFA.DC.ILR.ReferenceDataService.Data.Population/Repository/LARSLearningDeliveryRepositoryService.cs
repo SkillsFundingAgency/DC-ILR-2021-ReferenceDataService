@@ -117,6 +117,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     LearnAimRef = ld.LearnAimRef,
                     LearnAimRefTitle = ld.LearnAimRefTitle,
                     LearnAimRefType = ld.LearnAimRefType,
+                    LearnAimRefTypeDesc = ld.LearnAimRefTypeNavigation.LearnAimRefTypeDesc,
                     LearningDeliveryGenre = ld.LearningDeliveryGenre,
                     LearnDirectClassSystemCode1 = ld.LearnDirectClassSystemCode1,
                     LearnDirectClassSystemCode2 = ld.LearnDirectClassSystemCode2,
