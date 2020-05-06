@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 cfg.CreateMap<DevolvedPostcodesVersion, MetaData_DevolvedPostcodesVersion>();
                 cfg.CreateMap<HmppPostcodesVersion, MetaData_HmppPostcodesVersion>();
                 cfg.CreateMap<PostcodeFactorsVersion, MetaData_PostcodeFactorsVersion>();
-                cfg.CreateMap<EasUploadDateTime, MetaData_EasUploadDateTime>();
+                cfg.CreateMap<EasFileDetails, MetaData_EasFileDetails>();
 
                 // Metadata - Collection Dates
                 cfg.CreateMap<IReadOnlyCollection<MetaData>, List<MetaData_CensusDate>>()

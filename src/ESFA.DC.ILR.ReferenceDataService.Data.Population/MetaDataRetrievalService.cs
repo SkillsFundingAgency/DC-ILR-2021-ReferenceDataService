@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.EAS2021.EF;
@@ -39,16 +41,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
             var metaData = await RetrieveAsync(cancellationToken);
             var latestEAS = await RetrieveLatestEasAsync(ukprn, cancellationToken);
 
-            metaData.ReferenceDataVersions.EasUploadDateTime = new EasUploadDateTime { UploadDateTime = latestEAS?.UpdatedOn };
+            metaData.ReferenceDataVersions.EasFileDetails = new EasFileDetails
+            {
+                FileName = Path.GetFileName(latestEAS?.FileName),
+                UploadDateTime = latestEAS?.DateTime
+            };
 
             return metaData;
         }
 
-        private async Task<EasSubmission> RetrieveLatestEasAsync(int ukprn, CancellationToken cancellationToken)
+        private async Task<SourceFile> RetrieveLatestEasAsync(int ukprn, CancellationToken cancellationToken)
         {
             using (var context = _easContextFactory.Create())
             {
-                return await context.EasSubmissions.FirstOrDefaultAsync(v => v.Ukprn == ukprn.ToString(), cancellationToken);
+                return await context.SourceFiles.OrderByDescending(x => x.SourceFileId).FirstOrDefaultAsync(v => v.Ukprn == ukprn.ToString(), cancellationToken);
             }
         }
     }

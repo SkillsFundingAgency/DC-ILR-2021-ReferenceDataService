@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 {
     public interface IDesktopMetaDataRetrievalService
     {
-        Task<MetaData> RetrieveAsync(CancellationToken cancellationToken);
+        Task<MetaData> RetrieveDesktopMetaDataAsync(CancellationToken cancellationToken);
     }
 }

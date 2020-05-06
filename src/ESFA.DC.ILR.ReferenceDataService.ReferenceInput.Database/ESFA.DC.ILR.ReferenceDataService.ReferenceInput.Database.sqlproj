@@ -101,7 +101,7 @@
     <Build Include="ReferenceInput\Tables\MetaData_CensusDate.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_CoFVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_DevolvedPostcodesVersion.sql" />
-    <Build Include="ReferenceInput\Tables\MetaData_EasUploadDateTime.sql" />
+    <Build Include="ReferenceInput\Tables\MetaData_EasFileDetails.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_EmployersVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_HmppPostcodesVersion.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_LarsVersion.sql" />

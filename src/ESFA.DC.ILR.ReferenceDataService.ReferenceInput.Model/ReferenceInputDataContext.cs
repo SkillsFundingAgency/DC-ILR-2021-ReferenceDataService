@@ -48,7 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<MetaData_CensusDate> MetaData_CensusDates { get; set; }
         public virtual DbSet<MetaData_CoFVersion> MetaData_CoFVersions { get; set; }
         public virtual DbSet<MetaData_DevolvedPostcodesVersion> MetaData_DevolvedPostcodesVersions { get; set; }
-        public virtual DbSet<MetaData_EasUploadDateTime> MetaData_EasUploadDateTimes { get; set; }
+        public virtual DbSet<MetaData_EasFileDetails> MetaData_EasFileDetails { get; set; }
         public virtual DbSet<MetaData_EmployersVersion> MetaData_EmployersVersions { get; set; }
         public virtual DbSet<MetaData_HmppPostcodesVersion> MetaData_HmppPostcodesVersions { get; set; }
         public virtual DbSet<MetaData_LarsVersion> MetaData_LarsVersions { get; set; }
@@ -82,7 +82,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\;Database=ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Database;Trusted_Connection=True;");
             }
         }
 
@@ -134,6 +134,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             modelBuilder.Entity<EPAOrganisations_EPAOrganisation>(entity =>
             {
                 entity.ToTable("EPAOrganisations_EPAOrganisation", "ReferenceInput");
+
+                entity.Property(e => e.EPAID).HasMaxLength(2000);
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
@@ -621,9 +623,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.Version).HasMaxLength(2000);
             });
 
-            modelBuilder.Entity<MetaData_EasUploadDateTime>(entity =>
+            modelBuilder.Entity<MetaData_EasFileDetails>(entity =>
             {
-                entity.ToTable("MetaData_EasUploadDateTime", "ReferenceInput");
+                entity.ToTable("MetaData_EasFileDetails", "ReferenceInput");
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UploadDateTime).HasColumnType("datetime");
             });
@@ -728,10 +734,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .HasForeignKey(d => d.DevolvedPostcodesVersion_Id)
                     .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_DevolvedPostcodesVersion_DevolvedPostcodesVersion_Id");
 
-                entity.HasOne(d => d.EasUploadDateTime_)
+                entity.HasOne(d => d.EasFileDetails_)
                     .WithMany(p => p.MetaData_ReferenceDataVersions)
-                    .HasForeignKey(d => d.EasUploadDateTime_Id)
-                    .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasUploadDateTime_EasUploadDateTime_Id");
+                    .HasForeignKey(d => d.EasFileDetails_Id)
+                    .HasConstraintName("FK_ReferenceInput.MetaData_ReferenceDataVersion_ReferenceInput.MetaData_EasFileDetails_EasFileDetails_Id");
 
                 entity.HasOne(d => d.EmployersVersion_)
                     .WithMany(p => p.MetaData_ReferenceDataVersions)
@@ -769,6 +775,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.ToTable("MetaData_ReturnPeriod", "ReferenceInput");
 
                 entity.Property(e => e.End).HasColumnType("datetime");
+
+                entity.Property(e => e.Period)
+                    .IsRequired()
+                    .HasMaxLength(2000);
 
                 entity.Property(e => e.Start).HasColumnType("datetime");
             });
