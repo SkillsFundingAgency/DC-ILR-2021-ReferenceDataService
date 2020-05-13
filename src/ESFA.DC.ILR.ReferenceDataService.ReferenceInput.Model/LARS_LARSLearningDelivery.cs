@@ -17,6 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public string LearnAimRef { get; set; }
         public string LearnAimRefType { get; set; }
         public string LearnAimRefTitle { get; set; }
+        public string LearnAimRefTypeDesc { get; set; }
         public int? EnglPrscID { get; set; }
         public string NotionalNVQLevel { get; set; }
         public string NotionalNVQLevelv2 { get; set; }

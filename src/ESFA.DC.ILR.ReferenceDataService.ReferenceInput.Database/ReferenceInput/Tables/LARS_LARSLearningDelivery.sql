@@ -4,6 +4,7 @@
 	[LearnAimRef] [nvarchar](2000) NULL,
 	[LearnAimRefType] [nvarchar](2000) NULL,
 	[LearnAimRefTitle] [nvarchar](2000) NULL,
+	[LearnAimRefTypeDesc] [nvarchar](2000) NULL,
 	[EnglPrscID] [int] NULL,
 	[NotionalNVQLevel] [nvarchar](2000) NULL,
 	[NotionalNVQLevelv2] [nvarchar](2000) NULL,

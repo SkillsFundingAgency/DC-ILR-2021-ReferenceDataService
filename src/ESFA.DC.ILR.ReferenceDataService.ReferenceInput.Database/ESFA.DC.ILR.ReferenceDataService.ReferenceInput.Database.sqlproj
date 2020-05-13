@@ -129,5 +129,6 @@
     <Build Include="ReferenceInput\Tables\PostcodesDevolution_McaGlaSofLookup.sql" />
     <Build Include="ReferenceInput\Tables\ULNs.sql" />
     <Build Include="ReferenceInput\Tables\MetaData_ReturnPeriod.sql" />
+    <Build Include="ReferenceInput\Tables\PostcodesSpecialistResources.sql" />
   </ItemGroup>
 </Project>
