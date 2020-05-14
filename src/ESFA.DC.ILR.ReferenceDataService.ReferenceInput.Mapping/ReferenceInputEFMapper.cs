@@ -120,13 +120,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                     .ForMember(m => m.Postcodes_DasDisadvantages, opt => opt.MapFrom(src => src.DasDisadvantages))
                     .ForMember(m => m.Postcodes_EfaDisadvantages, opt => opt.MapFrom(src => src.EfaDisadvantages))
                     .ForMember(m => m.Postcodes_SfaAreaCosts, opt => opt.MapFrom(src => src.SfaAreaCosts))
-                    .ForMember(m => m.Postcodes_SfaDisadvantages, opt => opt.MapFrom(src => src.SfaDisadvantages));
+                    .ForMember(m => m.Postcodes_SfaDisadvantages, opt => opt.MapFrom(src => src.SfaDisadvantages))
+                    .ForMember(m => m.Postcodes_SpecialistResources, opt => opt.MapFrom(src => src.PostcodeSpecialistResources));
 
                 cfg.CreateMap<ONSData, Postcodes_ONSData>();
                 cfg.CreateMap<DasDisadvantage, Postcodes_DasDisadvantage>();
                 cfg.CreateMap<EfaDisadvantage, Postcodes_EfaDisadvantage>();
                 cfg.CreateMap<SfaAreaCost, Postcodes_SfaAreaCost>();
                 cfg.CreateMap<SfaDisadvantage, Postcodes_SfaDisadvantage>();
+                cfg.CreateMap<PostcodeSpecialistResource, PostcodesSpecialistResource> ();
 
                 cfg.CreateMap<McaGlaSofLookup, PostcodesDevolution_McaGlaSofLookup>();
                 cfg.CreateMap<DevolvedPostcode, PostcodesDevolution_Postcode>();

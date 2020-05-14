@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Entity;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Message;
 
@@ -17,6 +18,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<StandardCodesMapper>().As<IStandardCodesMapper>();
             containerBuilder.RegisterType<UkprnsMapper>().As<IUkprnsMapper>();
             containerBuilder.RegisterType<UlnMapper>().As<IUlnMapper>();
+
+            containerBuilder.RegisterType<PostcodesEntityModelMapper>().As<IPostcodesEntityModelMapper>();
         }
     }
 }

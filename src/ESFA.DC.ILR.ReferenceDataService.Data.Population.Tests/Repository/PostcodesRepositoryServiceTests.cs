@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Entity;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
@@ -30,6 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
             var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
             var mcaglaSOFTaskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
+            var specialistResourcesTaskResult = new TaskCompletionSource<IEnumerable<PostcodesSpecialistResource>>();
 
             var masterPostcodes = new List<MasterPostcode>
             {
@@ -165,12 +168,36 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
+            var specialistResources = new List<PostcodesSpecialistResource>
+            {
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode1",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode2",
+                    SpecialistResources = "N",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode2",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2018, 9, 2)
+                },
+            };
+
             masterPostcodeTaskResult.SetResult(masterPostcodes);
             sfaAreaCostTaskResult.SetResult(sfaAreaCost);
             sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
             efaDisadvantageTaskResult.SetResult(efaDisadvantage);
             dasDisadvantageTaskResult.SetResult(dasDisadvantage);
             onsDataTaskResult.SetResult(onsPostcodes);
+            specialistResourcesTaskResult.SetResult(specialistResources);
 
             var jsonSerializationMock = new Mock<IJsonSerializationService>();
 
@@ -188,6 +215,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
+            service.Setup(s => s.RetrieveAsync<PostcodesSpecialistResource>(json, It.IsAny<string>(), cancellationToken)).Returns(specialistResourcesTaskResult.Task);
 
             var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
 
@@ -237,6 +265,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     },
+                    PostcodeSpecialistResources = new List<PostcodeSpecialistResource>
+                    {
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "Y",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        }
+                    }
                 },
                 new Postcode
                 {
@@ -310,6 +346,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Lep1 = "Lep11",
                             LocalAuthority = "LocalAuthority",
+                            EffectiveFrom = new DateTime(2018, 9, 2)
+                        }
+                    },
+                    PostcodeSpecialistResources = new List<PostcodeSpecialistResource>
+                    {
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "N",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "Y",
                             EffectiveFrom = new DateTime(2018, 9, 2)
                         }
                     }
@@ -732,125 +782,84 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         }
 
         [Fact]
-        public void SfaPostcodeDisadvantagesToEntity()
+        public async Task RetrieveSpecialistResources()
         {
-            var sfaPostcodeDisadvantage = new SfaPostcodeDisadvantage
+            var cancellationToken = CancellationToken.None;
+            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+
+            var taskResult = new TaskCompletionSource<IEnumerable<PostcodesSpecialistResource>>();
+
+            var specialistResources = new List<PostcodesSpecialistResource>
             {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode1",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2018, 8, 1)
+                },
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode1",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2018, 8, 1),
+                    EffectiveTo = new DateTime(2018, 9, 1)
+                },
+                new PostcodesSpecialistResource
+                {
+                    Postcode = "PostCode2",
+                    SpecialistResources = "N",
+                    EffectiveFrom = new DateTime(2019, 9, 2)
+                }
             };
 
-            var sfaDisdvantage = new SfaDisadvantage
+            taskResult.SetResult(specialistResources);
+
+            var specResourcesDictionary = new Dictionary<string, List<PostcodeSpecialistResource>>
             {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
+                {
+                    "PostCode1", new List<PostcodeSpecialistResource>
+                    {
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "Y",
+                            EffectiveFrom = new DateTime(2018, 8, 1)
+                        },
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "Y",
+                            EffectiveFrom = new DateTime(2018, 8, 1),
+                            EffectiveTo = new DateTime(2018, 9, 1)
+                        },
+                    }
+                },
+                {
+                    "PostCode2", new List<PostcodeSpecialistResource>
+                    {
+                        new PostcodeSpecialistResource
+                        {
+                            SpecialistResources = "N",
+                            EffectiveFrom = new DateTime(2019, 9, 2)
+                        }
+                    }
+                }
             };
 
-            NewService().SfaPostcodeDisadvantagesToEntity(sfaPostcodeDisadvantage).Should().BeEquivalentTo(sfaDisdvantage);
-        }
+            var service = NewServiceMock();
 
-        [Fact]
-        public void EfaPostcodeDisadvantagesToEntity()
-        {
-            var efaPostcodeDisadvantage = new EfaPostcodeDisadvantage
-            {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
+            service.Setup(s => s.RetrieveAsync<PostcodesSpecialistResource>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
 
-            var efaDisdvantage = new EfaDisadvantage
-            {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
+            var result = await service.Object.RetrieveSpecialistResources(json, cancellationToken);
 
-            NewService().EfaPostcodeDisadvantagesToEntity(efaPostcodeDisadvantage).Should().BeEquivalentTo(efaDisdvantage);
-        }
-
-        [Fact]
-        public void DasPostcodeDisadvantagesToEntity()
-        {
-            var dasPostcodeDisadvantage = new DasPostcodeDisadvantage
-            {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            var dasDisdvantage = new DasDisadvantage
-            {
-                Uplift = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            NewService().DasPostcodeDisadvantagesToEntity(dasPostcodeDisadvantage).Should().BeEquivalentTo(dasDisdvantage);
-        }
-
-        [Fact]
-        public void SfaPostcodeAreaCostsToEntity()
-        {
-            var sfaPostcodeAreaCost = new SfaPostcodeAreaCost
-            {
-                AreaCostFactor = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            var sfaAreaCost = new SfaAreaCost
-            {
-                AreaCostFactor = 1.0m,
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            NewService().SfaAreaCostsToEntity(sfaPostcodeAreaCost).Should().BeEquivalentTo(sfaAreaCost);
-        }
-
-        [Fact]
-        public void ONSDataToEntity()
-        {
-            var onsPostcode = new OnsPostcode
-            {
-                LocalAuthority = "Authority",
-                Lep1 = "Lep1",
-                Lep2 = "Lep2",
-                Nuts = "Nuts",
-                Termination = "202008",
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            var onsData = new ONSData
-            {
-                LocalAuthority = "Authority",
-                Lep1 = "Lep1",
-                Lep2 = "Lep2",
-                Nuts = "Nuts",
-                Termination = new DateTime(2020, 8, 31),
-                EffectiveFrom = new DateTime(2018, 8, 1)
-            };
-
-            NewService().ONSDataToEntity(onsPostcode).Should().BeEquivalentTo(onsData);
-        }
-
-        private PostcodesRepositoryService NewService(
-            IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
-            IReferenceDataOptions referenceDataOptions = null,
-            IJsonSerializationService jsonSerializationService = null)
-        {
-            return new PostcodesRepositoryService(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
+            result.Should().BeEquivalentTo(specResourcesDictionary);
         }
 
         private Mock<PostcodesRepositoryService> NewServiceMock(
              IDbContextFactory<IPostcodesContext> postcodesContextFactory = null,
              IReferenceDataOptions referenceDataOptions = null,
-             IJsonSerializationService jsonSerializationService = null)
+             IJsonSerializationService jsonSerializationService = null,
+             IPostcodesEntityModelMapper postcodesEntityModelMapper = null)
         {
-            return new Mock<PostcodesRepositoryService>(postcodesContextFactory, referenceDataOptions, jsonSerializationService);
+            return new Mock<PostcodesRepositoryService>(postcodesContextFactory, referenceDataOptions, jsonSerializationService, postcodesEntityModelMapper ?? new PostcodesEntityModelMapper());
         }
     }
 }
