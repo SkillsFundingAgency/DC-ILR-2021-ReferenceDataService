@@ -145,14 +145,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                 INNER JOIN [dbo].[PostcodesSpecialistResources] J ON J.[Postcode] = P.[Postcode]";
 
-            // need Ref data model
-            //var specResources = await RetrieveAsync<PostcodeSpecialistResource>(jsonParams, sqlSpecResources, cancellationToken);
+            var specResources = await RetrieveAsync<PostcodesSpecialistResource>(jsonParams, sqlSpecResources, cancellationToken);
 
-            //return specResources
-            //    .GroupBy(p => p.Postcode)
-            //    .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
-
-            return new Dictionary<string, List<PostcodeSpecialistResource>>();
+            return specResources
+                .GroupBy(p => p.Postcode)
+                .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
         }
 
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string jsonParams, string sql, CancellationToken cancellationToken)

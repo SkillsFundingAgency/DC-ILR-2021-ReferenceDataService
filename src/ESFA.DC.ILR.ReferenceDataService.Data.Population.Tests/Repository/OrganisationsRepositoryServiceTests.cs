@@ -79,16 +79,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     MasterUkprn = 1,
                     CampusIdentifier1 = "CampId_01",
-                    CampusIdentifierUkprn = new CampusIdentifierUkprn
-                    {
-                        CampusIdentifierSpecResources = new List<CampusIdentifierSpecResource>
-                        {
-                            new CampusIdentifierSpecResource
-                            {
-                                SpecialistResources = true
-                            }
-                        }
-                    }
                 },
             };
 

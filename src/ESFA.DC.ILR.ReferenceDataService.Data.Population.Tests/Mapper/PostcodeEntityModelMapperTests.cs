@@ -89,25 +89,25 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
             NewMapper().SfaAreaCostsToEntity(sfaPostcodeAreaCost).Should().BeEquivalentTo(sfaAreaCost);
         }
 
-        //[Fact]
-        //public void SpecResourcesToEntity()
-        //{
-        //    var postcodeSpecResource = new
-        //    {
-        //        SpecialistResources = "Y",
-        //        EffectiveFrom = new DateTime(2018, 8, 1),
-        //        EffectiveTo = new DateTime(2018, 8, 31)
-        //    };
+        [Fact]
+        public void SpecResourcesToEntity()
+        {
+            var postcodeSpecResource = new PostcodesSpecialistResource
+            {
+                SpecialistResources = "Y",
+                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveTo = new DateTime(2018, 8, 31)
+            };
 
-        //    var specResource = new PostcodeSpecialistResource
-        //    {
-        //        SpecialistResources = "Y",
-        //        EffectiveFrom = new DateTime(2018, 8, 1),
-        //        EffectiveTo = new DateTime(2018, 8, 31)
-        //    };
+            var specResource = new PostcodeSpecialistResource
+            {
+                SpecialistResources = "Y",
+                EffectiveFrom = new DateTime(2018, 8, 1),
+                EffectiveTo = new DateTime(2018, 8, 31)
+            };
 
-        //    NewMapper().SpecResourcesToEntity(postcodeSpecResource).Should().BeEquivalentTo(specResource);
-        //}
+            NewMapper().SpecResourcesToEntity(postcodeSpecResource).Should().BeEquivalentTo(specResource);
+        }
 
         [Fact]
         public void ONSDataToEntity()

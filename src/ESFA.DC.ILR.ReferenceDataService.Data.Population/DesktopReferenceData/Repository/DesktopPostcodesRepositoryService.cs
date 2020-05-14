@@ -149,14 +149,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var sqlSpecResources = $@"SELECT P.[Postcode], J.[SpecialistResources], J.[EffectiveFrom], J.[EffectiveTo]
                                                 FROM [dbo].[PostcodesSpecialistResources]";
 
-            // need Ref data model
-            //var specResources = await RetrieveAsync<PostcodeSpecialistResource>(sqlSpecResources, cancellationToken);
+            var specResources = await RetrieveAsync<PostcodesSpecialistResource>(sqlSpecResources, cancellationToken);
 
-            //return specResources
-            //    .GroupBy(p => p.Postcode)
-            //    .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
-
-            return new Dictionary<string, List<PostcodeSpecialistResource>>();
+            return specResources
+                .GroupBy(p => p.Postcode)
+                .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
         }
 
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string sql, CancellationToken cancellationToken)
