@@ -146,7 +146,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         public async Task<IDictionary<string, List<PostcodeSpecialistResource>>> RetrieveSpecialistResources(CancellationToken cancellationToken)
         {
-            var sqlSpecResources = $@"SELECT P.[Postcode], J.[SpecialistResources], J.[EffectiveFrom], J.[EffectiveTo]
+            var sqlSpecResources = $@"SELECT [Postcode], [SpecialistResources], [EffectiveFrom], [EffectiveTo]
                                                 FROM [dbo].[PostcodesSpecialistResources]";
 
             var specResources = await RetrieveAsync<PostcodesSpecialistResource>(sqlSpecResources, cancellationToken);
