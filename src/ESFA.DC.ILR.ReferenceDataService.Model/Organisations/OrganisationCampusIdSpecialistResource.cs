@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
 {
-    public class SpecialistResource : AbstractTimeBoundedEntity
+    public class OrganisationCampusIdSpecialistResource : AbstractTimeBoundedEntity
     {
         public bool IsSpecialistResource { get; set; }
     }
