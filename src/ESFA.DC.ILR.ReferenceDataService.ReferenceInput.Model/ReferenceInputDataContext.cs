@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 {
@@ -66,6 +68,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual DbSet<Organisations_OrganisationCampusIdentifier> Organisations_OrganisationCampusIdentifiers { get; set; }
         public virtual DbSet<Organisations_OrganisationCoFRemoval> Organisations_OrganisationCoFRemovals { get; set; }
         public virtual DbSet<Organisations_OrganisationFunding> Organisations_OrganisationFundings { get; set; }
+        public virtual DbSet<Organisations_PostcodesSpecialistResource> Organisations_PostcodesSpecialistResources { get; set; }
         public virtual DbSet<Organisations_SpecialistResource> Organisations_SpecialistResources { get; set; }
         public virtual DbSet<PostcodesDevolution_McaGlaSofLookup> PostcodesDevolution_McaGlaSofLookups { get; set; }
         public virtual DbSet<PostcodesDevolution_Postcode> PostcodesDevolution_Postcodes { get; set; }
@@ -435,6 +438,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                 entity.Property(e => e.LearnAimRefTitle).HasMaxLength(2000);
 
                 entity.Property(e => e.LearnAimRefType).HasMaxLength(2000);
+
+                entity.Property(e => e.LearnAimRefTypeDesc).HasMaxLength(2000);
 
                 entity.Property(e => e.LearnDirectClassSystemCode1).HasMaxLength(2000);
 
@@ -850,6 +855,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
                     .WithMany(p => p.Organisations_OrganisationFundings)
                     .HasForeignKey(d => d.Organisations_Organisation_Id)
                     .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationFunding_ReferenceInput.Organisations_Organisation_Organisation_Id");
+            });
+
+            modelBuilder.Entity<Organisations_PostcodesSpecialistResource>(entity =>
+            {
+                entity.ToTable("Organisations_PostcodesSpecialistResources", "ReferenceInput");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
+
+                entity.Property(e => e.SpecialistResources)
+                    .IsRequired()
+                    .HasMaxLength(1);
+
+                entity.HasOne(d => d.Organisations_Organisation_)
+                    .WithMany(p => p.Organisations_PostcodesSpecialistResources)
+                    .HasForeignKey(d => d.Organisations_Organisation_Id)
+                    .HasConstraintName("FK_ReferenceInput.Organisations_OrganisationPostcodeSpecResources_ReferenceInput.Organisations_Organisation_Organisation_Id");
             });
 
             modelBuilder.Entity<Organisations_SpecialistResource>(entity =>

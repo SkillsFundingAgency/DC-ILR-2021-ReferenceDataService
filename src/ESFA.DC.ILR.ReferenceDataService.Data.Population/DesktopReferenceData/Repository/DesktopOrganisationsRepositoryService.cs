@@ -13,6 +13,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     public class DesktopOrganisationsRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>
     {
         private const int LongTermResidValue = 1;
+        private readonly List<OrganisationCampusIdentifier> _defaultCampusIdentifiers = new List<OrganisationCampusIdentifier>();
+        private readonly List<OrganisationPostcodeSpecialistResource> _defaultPostcodeSepcialistResources = new List<OrganisationPostcodeSpecialistResource>();
         private readonly IDbContextFactory<IOrganisationsContext> _organisationsFactory;
 
         public DesktopOrganisationsRepositoryService(IDbContextFactory<IOrganisationsContext> organisationsFactory)
@@ -24,8 +26,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         {
             using (var context = _organisationsFactory.Create())
             {
-                var specResourcesForUkprnDictionary = await BuildSpecResourceDictionary(context, cancellationToken);
+                var specResourcesForUkprnDictionary = await BuildCampusIdSpecResourceDictionary(context, cancellationToken);
                 var campusIdentifiersDictionary = await BuildCampusIdentifiersDictionary(specResourcesForUkprnDictionary, context, cancellationToken);
+                var postcodeSpecResourcesDictionary = await BuildPostcodeSpecResDictionary(context, cancellationToken);
 
                 return await context
                     .MasterOrganisations
@@ -42,6 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                               PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
                               LongTermResid = o.OrgDetail.LongTermResid == LongTermResidValue,
                               CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
+                              PostcodeSpecialistResources = GetPostcodeSpecResources(o.Ukprn, postcodeSpecResourcesDictionary),
                               OrganisationFundings = o.OrgFundings.Select(of =>
                               new OrganisationFunding()
                               {
@@ -66,10 +70,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         {
             campusIdentifiers.TryGetValue(ukprn, out var campusIds);
 
-            return campusIds ?? new List<OrganisationCampusIdentifier>();
+            return campusIds ?? _defaultCampusIdentifiers;
         }
 
-        private async Task<Dictionary<long, Dictionary<string, List<SpecialistResource>>>> BuildSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
+        public List<OrganisationPostcodeSpecialistResource> GetPostcodeSpecResources(long ukprn, Dictionary<long, List<OrganisationPostcodeSpecialistResource>> specResourcesDictionary)
+        {
+            specResourcesDictionary.TryGetValue(ukprn, out var specRes);
+
+            return specRes ?? _defaultPostcodeSepcialistResources;
+        }
+
+        private async Task<Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>>> BuildCampusIdSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
         {
             var campusIdentifierSpecResources = await context
              .CampusIdentifierSpecResources?
@@ -82,7 +93,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   v1 => v1.GroupBy(ci => ci.CampusIdentifier)
                   .ToDictionary(
                       k2 => k2.Key,
-                      v2 => v2.Select(sr => new SpecialistResource
+                      v2 => v2.Select(sr => new OrganisationCampusIdSpecialistResource
                       {
                           IsSpecialistResource = sr.SpecialistResources,
                           EffectiveFrom = sr.EffectiveFrom,
@@ -91,7 +102,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         }
 
         private async Task<Dictionary<long, List<OrganisationCampusIdentifier>>> BuildCampusIdentifiersDictionary(
-            Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesForUkprnDictionary,
+            Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary,
             IOrganisationsContext context,
             CancellationToken cancellationToken)
         {
@@ -103,7 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   CampusIdentifier = ci.CampusIdentifier1,
                   EffectiveFrom = ci.EffectiveFrom,
                   EffectiveTo = ci.EffectiveTo,
-                  SpecialistResources = GetSpecialistResources(ci.MasterUkprn, ci.CampusIdentifier1, specResourcesForUkprnDictionary).ToList()
+                  SpecialistResources = GetCampusIdSpecialistResources(ci.MasterUkprn, ci.CampusIdentifier1, specResourcesForUkprnDictionary).ToList()
               })
               .ToListAsync(cancellationToken);
 
@@ -115,12 +126,32 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 v => v.Select(c => c).ToList());
         }
 
-        private IEnumerable<SpecialistResource> GetSpecialistResources(long ukprn, string campusIdentifier, Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesDictionary)
+        private async Task<Dictionary<long, List<OrganisationPostcodeSpecialistResource>>> BuildPostcodeSpecResDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
+        {
+            var specResources = await context
+                .ProviderPostcodeSpecialistResources
+                .ToListAsync(cancellationToken);
+
+            return specResources?
+               .GroupBy(sr => sr.Ukprn)
+               .ToDictionary(
+                  k1 => k1.Key,
+                  v1 => v1.Select(sr => new OrganisationPostcodeSpecialistResource
+                  {
+                      UKPRN = sr.Ukprn,
+                      Postcode = sr.Postcode,
+                      SpecialistResources = sr.SpecialistResources,
+                      EffectiveFrom = sr.EffectiveFrom,
+                      EffectiveTo = sr.EffectiveTo
+                  }).ToList());
+        }
+
+        private IEnumerable<OrganisationCampusIdSpecialistResource> GetCampusIdSpecialistResources(long ukprn, string campusIdentifier, Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesDictionary)
         {
             specResourcesDictionary.TryGetValue(ukprn, out var campusIdSpecResources);
 
             return campusIdSpecResources != null ?
-                  campusIdSpecResources.TryGetValue(campusIdentifier, out var resources) ? resources : Enumerable.Empty<SpecialistResource>() : Enumerable.Empty<SpecialistResource>();
+                  campusIdSpecResources.TryGetValue(campusIdentifier, out var resources) ? resources : Enumerable.Empty<OrganisationCampusIdSpecialistResource>() : Enumerable.Empty<OrganisationCampusIdSpecialistResource>();
         }
     }
 }

@@ -17,16 +17,16 @@
     <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.2.0-alpha0009" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.EAS2021.EF" Version="0.1.12" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.220" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.234" />
     <PackageReference Include="ESFA.DC.ILR1819.Database.EF" Version="0.1.381" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.766" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.789" />
     <PackageReference Include="ESFA.DC.ReferenceData.EPA.Model" Version="0.1.184" />
-    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.2.766" />
-    <PackageReference Include="ESFA.DC.ReferenceData.LARS.Model" Version="0.2.766" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Organisations.Model" Version="0.2.766" />
-    <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.766" />
-    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.766" />
+    <PackageReference Include="ESFA.DC.ReferenceData.FCS.Model" Version="0.2.789" />
+    <PackageReference Include="ESFA.DC.ReferenceData.LARS.Model" Version="0.2.789" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Organisations.Model" Version="0.2.789" />
+    <PackageReference Include="ESFA.DC.ReferenceData.Postcodes.Model" Version="0.2.789" />
+    <PackageReference Include="ESFA.DC.ReferenceData.ULN.Model" Version="0.2.789" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.39-beta0001" />
     <PackageReference Include="FastMember" Version="1.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />

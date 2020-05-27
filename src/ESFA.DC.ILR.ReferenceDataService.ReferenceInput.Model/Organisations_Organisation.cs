@@ -9,6 +9,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             Organisations_OrganisationCampusIdentifiers = new HashSet<Organisations_OrganisationCampusIdentifier>();
             Organisations_OrganisationCoFRemovals = new HashSet<Organisations_OrganisationCoFRemoval>();
             Organisations_OrganisationFundings = new HashSet<Organisations_OrganisationFunding>();
+            Organisations_PostcodesSpecialistResources = new HashSet<Organisations_PostcodesSpecialistResource>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual ICollection<Organisations_OrganisationCampusIdentifier> Organisations_OrganisationCampusIdentifiers { get; set; }
         public virtual ICollection<Organisations_OrganisationCoFRemoval> Organisations_OrganisationCoFRemovals { get; set; }
         public virtual ICollection<Organisations_OrganisationFunding> Organisations_OrganisationFundings { get; set; }
+        public virtual ICollection<Organisations_PostcodesSpecialistResource> Organisations_PostcodesSpecialistResources { get; set; }
     }
 }

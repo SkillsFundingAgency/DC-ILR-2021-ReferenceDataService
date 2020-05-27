@@ -44,7 +44,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 var sfaPostcodeDisadvantages = await RetrieveSfaPostcodeDisadvantages(jsonParams, cancellationToken);
                 var efaPostcodeDisadvantages = await RetrieveEfaPostcodeDisadvantages(jsonParams, cancellationToken);
                 var dasPostcodeDisadvantages = await RetrieveDasPostcodeDisadvantages(jsonParams, cancellationToken);
-                var specialistResources = await RetrieveSpecialistResources(jsonParams, cancellationToken);
                 var onsData = await RetrieveOnsData(jsonParams, cancellationToken);
 
                 return masterPostcodes
@@ -55,7 +54,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         SfaAreaCosts = sfaAreaCosts.TryGetValue(postcode, out var sfaAreaCost) ? sfaAreaCosts[postcode] : null,
                         DasDisadvantages = dasPostcodeDisadvantages.TryGetValue(postcode, out var dasDisad) ? dasPostcodeDisadvantages[postcode] : null,
                         EfaDisadvantages = efaPostcodeDisadvantages.TryGetValue(postcode, out var efaDisad) ? efaPostcodeDisadvantages[postcode] : null,
-                        PostcodeSpecialistResources = specialistResources.TryGetValue(postcode, out var specResource) ? specialistResources[postcode] : null,
                         ONSData = onsData.TryGetValue(postcode, out var ons) ? onsData[postcode] : null,
                     }).ToList();
             }
@@ -137,19 +135,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             return onsData
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.ONSDataToEntity).ToList());
-        }
-
-        public async Task<IDictionary<string, List<PostcodeSpecialistResource>>> RetrieveSpecialistResources(string jsonParams, CancellationToken cancellationToken)
-        {
-            var sqlSpecResources = $@"SELECT P.[Postcode], J.[SpecialistResources], J.[EffectiveFrom], J.[EffectiveTo]
-                                                FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
-                                                INNER JOIN [dbo].[PostcodesSpecialistResources] J ON J.[Postcode] = P.[Postcode]";
-
-            var specResources = await RetrieveAsync<PostcodesSpecialistResource>(jsonParams, sqlSpecResources, cancellationToken);
-
-            return specResources
-                .GroupBy(p => p.Postcode)
-                .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
         }
 
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string jsonParams, string sql, CancellationToken cancellationToken)

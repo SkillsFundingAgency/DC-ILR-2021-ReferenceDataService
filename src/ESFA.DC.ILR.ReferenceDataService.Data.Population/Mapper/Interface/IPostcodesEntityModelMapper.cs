@@ -13,8 +13,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface
 
         EfaDisadvantage EfaPostcodeDisadvantagesToEntity(EfaPostcodeDisadvantage efaPostcodeDisadvantage);
 
-        PostcodeSpecialistResource SpecResourcesToEntity(PostcodesSpecialistResource specResource);
-
         ONSData ONSDataToEntity(OnsPostcode onsPostcode);
     }
 }
