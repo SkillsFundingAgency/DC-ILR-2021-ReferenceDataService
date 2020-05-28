@@ -90,26 +90,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Mapper
         }
 
         [Fact]
-        public void SpecResourcesToEntity()
-        {
-            var postcodeSpecResource = new PostcodesSpecialistResource
-            {
-                SpecialistResources = "Y",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            var specResource = new PostcodeSpecialistResource
-            {
-                SpecialistResources = "Y",
-                EffectiveFrom = new DateTime(2018, 8, 1),
-                EffectiveTo = new DateTime(2018, 8, 31)
-            };
-
-            NewMapper().SpecResourcesToEntity(postcodeSpecResource).Should().BeEquivalentTo(specResource);
-        }
-
-        [Fact]
         public void ONSDataToEntity()
         {
             var onsPostcode = new OnsPostcode

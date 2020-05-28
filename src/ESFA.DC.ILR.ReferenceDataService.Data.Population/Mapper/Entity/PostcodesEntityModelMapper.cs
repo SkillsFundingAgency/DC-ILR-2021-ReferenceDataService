@@ -47,16 +47,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Entity
             };
         }
 
-        public PostcodeSpecialistResource SpecResourcesToEntity(PostcodesSpecialistResource specResource)
-        {
-            return new PostcodeSpecialistResource
-            {
-                SpecialistResources = specResource.SpecialistResources,
-                EffectiveFrom = specResource.EffectiveFrom,
-                EffectiveTo = specResource.EffectiveTo
-            };
-        }
-
         public ONSData ONSDataToEntity(OnsPostcode onsPostcode)
         {
             return new ONSData

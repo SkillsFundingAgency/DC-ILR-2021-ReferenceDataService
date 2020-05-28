@@ -11,7 +11,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             Postcodes_ONSDatas = new HashSet<Postcodes_ONSData>();
             Postcodes_SfaAreaCosts = new HashSet<Postcodes_SfaAreaCost>();
             Postcodes_SfaDisadvantages = new HashSet<Postcodes_SfaDisadvantage>();
-            Postcodes_SpecialistResources = new HashSet<PostcodesSpecialistResource>();
         }
 
         public int Id { get; set; }
@@ -22,6 +21,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
         public virtual ICollection<Postcodes_ONSData> Postcodes_ONSDatas { get; set; }
         public virtual ICollection<Postcodes_SfaAreaCost> Postcodes_SfaAreaCosts { get; set; }
         public virtual ICollection<Postcodes_SfaDisadvantage> Postcodes_SfaDisadvantages { get; set; }
-        public virtual ICollection<PostcodesSpecialistResource> Postcodes_SpecialistResources { get; set; }
     }
 }

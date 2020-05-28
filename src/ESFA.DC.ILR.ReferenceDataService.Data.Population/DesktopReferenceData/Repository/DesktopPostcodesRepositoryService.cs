@@ -42,7 +42,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 var sfaPostcodeDisadvantages = RetrieveSfaPostcodeDisadvantages(cancellationToken);
                 var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
                 var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
-                var specialistResources = RetrieveSpecialistResources(cancellationToken);
                 var onsData = RetrieveOnsData(cancellationToken);
 
                 var taskList = new List<Task>
@@ -52,7 +51,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                     sfaPostcodeDisadvantages,
                     efaPostcodeDisadvantages,
                     dasPostcodeDisadvantages,
-                    specialistResources,
                     onsData
                 };
 
@@ -66,7 +64,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                         SfaAreaCosts = sfaAreaCosts.Result.TryGetValue(postcode, out var sfaAreaCostValue) ? sfaAreaCostValue : null,
                         DasDisadvantages = dasPostcodeDisadvantages.Result.TryGetValue(postcode, out var dasDisadValue) ? dasDisadValue : null,
                         EfaDisadvantages = efaPostcodeDisadvantages.Result.TryGetValue(postcode, out var efaDisadValue) ? efaDisadValue : null,
-                        PostcodeSpecialistResources = specialistResources.Result.TryGetValue(postcode, out var specResValue) ? specResValue : null,
                         ONSData = onsData.Result.TryGetValue(postcode, out var onsValue) ? onsValue : null,
                     }).ToList();
             }
@@ -142,18 +139,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             return onsData
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.ONSDataToEntity).ToList());
-        }
-
-        public async Task<IDictionary<string, List<PostcodeSpecialistResource>>> RetrieveSpecialistResources(CancellationToken cancellationToken)
-        {
-            var sqlSpecResources = $@"SELECT [Postcode], [SpecialistResources], [EffectiveFrom], [EffectiveTo]
-                                                FROM [dbo].[PostcodesSpecialistResources]";
-
-            var specResources = await RetrieveAsync<PostcodesSpecialistResource>(sqlSpecResources, cancellationToken);
-
-            return specResources
-                .GroupBy(p => p.Postcode)
-                .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SpecResourcesToEntity).ToList());
         }
 
         public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string sql, CancellationToken cancellationToken)

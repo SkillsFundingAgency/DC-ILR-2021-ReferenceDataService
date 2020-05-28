@@ -100,15 +100,35 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
+            IEnumerable<ProviderPostcodeSpecialistResource> postcodeSpecResources = new List<ProviderPostcodeSpecialistResource>
+            {
+                new ProviderPostcodeSpecialistResource
+                {
+                    Ukprn = 1,
+                    Postcode = "Postcode_1",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                },
+                new ProviderPostcodeSpecialistResource
+                {
+                    Ukprn = 1,
+                    Postcode = "Postcode_2",
+                    SpecialistResources = "Y",
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                },
+            };
+
             var masterOrgMock = masterOrgList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersMock = campusIdentifiersList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersSpecResourcesMock = campusIdentifiersSpecResources.AsQueryable().BuildMockDbSet();
+            var postcodeSpecResourcesMock = postcodeSpecResources.AsQueryable().BuildMockDbSet();
 
             var organisationsMock = new Mock<IOrganisationsContext>();
 
             organisationsMock.Setup(o => o.MasterOrganisations).Returns(masterOrgMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifiers).Returns(campusIdentifiersMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifierSpecResources).Returns(campusIdentifiersSpecResourcesMock.Object);
+            organisationsMock.Setup(o => o.ProviderPostcodeSpecialistResources).Returns(postcodeSpecResourcesMock.Object);
 
             var organisationsContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
             organisationsContextFactoryMock.Setup(c => c.Create()).Returns(organisationsMock.Object);
@@ -128,6 +148,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 1).PartnerUKPRN.Should().BeTrue();
             organisations.First(o => o.UKPRN == 1).LongTermResid.Should().BeTrue();
             organisations.First(o => o.UKPRN == 1).OrganisationFundings.Should().HaveCount(2);
+            organisations.First(o => o.UKPRN == 1).PostcodeSpecialistResources.Should().HaveCount(2);
 
             organisations.First(o => o.UKPRN == 2).UKPRN.Should().Be(2);
             organisations.First(o => o.UKPRN == 2).LegalOrgType.Should().Be("LegalType2");
@@ -136,6 +157,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 2).PartnerUKPRN.Should().BeFalse();
             organisations.First(o => o.UKPRN == 2).LongTermResid.Should().BeFalse();
             organisations.First(o => o.UKPRN == 2).OrganisationFundings.Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).PostcodeSpecialistResources.Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -214,6 +236,84 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public void GetCampusIdentifiers_Null()
         {
             NewService().GetCampusIdentifiers(1, new Dictionary<long, List<OrganisationCampusIdentifier>>()).Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void GetPostcodeSpecResources()
+        {
+            var specResListOne = new List<OrganisationPostcodeSpecialistResource>
+            {
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 1
+                },
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 1
+                },
+            };
+
+            var specResListTwo = new List<OrganisationPostcodeSpecialistResource>
+            {
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 2,
+                },
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 3
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationPostcodeSpecialistResource>>
+            {
+                { 1, specResListOne },
+                { 2, specResListTwo },
+            };
+
+            NewService().GetPostcodeSpecResources(1, dictionary).Should().BeEquivalentTo(specResListOne);
+        }
+
+        [Fact]
+        public void GetPostcodeSpecResources_MisMatch()
+        {
+            var specResListOne = new List<OrganisationPostcodeSpecialistResource>
+            {
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 1
+                },
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 1
+                },
+            };
+
+            var specResListTwo = new List<OrganisationPostcodeSpecialistResource>
+            {
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 2,
+                },
+                new OrganisationPostcodeSpecialistResource
+                {
+                    UKPRN = 3
+                },
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationPostcodeSpecialistResource>>
+            {
+                { 1, specResListOne },
+                { 2, specResListTwo },
+            };
+
+            NewService().GetPostcodeSpecResources(4, dictionary).Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void GetPostcodeSpecResources_Null()
+        {
+            NewService().GetPostcodeSpecResources(1, new Dictionary<long, List<OrganisationPostcodeSpecialistResource>>()).Should().BeNullOrEmpty();
         }
 
         private OrganisationsRepositoryService NewService(IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)

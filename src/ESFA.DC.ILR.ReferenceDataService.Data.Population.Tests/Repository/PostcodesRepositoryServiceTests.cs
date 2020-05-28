@@ -32,7 +32,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
             var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
             var mcaglaSOFTaskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
-            var specialistResourcesTaskResult = new TaskCompletionSource<IEnumerable<PostcodesSpecialistResource>>();
 
             var masterPostcodes = new List<MasterPostcode>
             {
@@ -168,36 +167,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 }
             };
 
-            var specialistResources = new List<PostcodesSpecialistResource>
-            {
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode1",
-                    SpecialistResources = "Y",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode2",
-                    SpecialistResources = "N",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode2",
-                    SpecialistResources = "Y",
-                    EffectiveFrom = new DateTime(2018, 9, 2)
-                },
-            };
-
             masterPostcodeTaskResult.SetResult(masterPostcodes);
             sfaAreaCostTaskResult.SetResult(sfaAreaCost);
             sfaDisadvantageTaskResult.SetResult(sfaDisadvantage);
             efaDisadvantageTaskResult.SetResult(efaDisadvantage);
             dasDisadvantageTaskResult.SetResult(dasDisadvantage);
             onsDataTaskResult.SetResult(onsPostcodes);
-            specialistResourcesTaskResult.SetResult(specialistResources);
 
             var jsonSerializationMock = new Mock<IJsonSerializationService>();
 
@@ -215,7 +190,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             service.Setup(s => s.RetrieveAsync<EfaPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(efaDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<DasPostcodeDisadvantage>(json, It.IsAny<string>(), cancellationToken)).Returns(dasDisadvantageTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<OnsPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(onsDataTaskResult.Task);
-            service.Setup(s => s.RetrieveAsync<PostcodesSpecialistResource>(json, It.IsAny<string>(), cancellationToken)).Returns(specialistResourcesTaskResult.Task);
 
             var serviceResult = await service.Object.RetrieveAsync(postcodes, cancellationToken);
 
@@ -262,14 +236,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Lep1 = "Lep1",
                             LocalAuthority = "LocalAuthority",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        }
-                    },
-                    PostcodeSpecialistResources = new List<PostcodeSpecialistResource>
-                    {
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "Y",
                             EffectiveFrom = new DateTime(2018, 8, 1)
                         }
                     }
@@ -346,20 +312,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         {
                             Lep1 = "Lep11",
                             LocalAuthority = "LocalAuthority",
-                            EffectiveFrom = new DateTime(2018, 9, 2)
-                        }
-                    },
-                    PostcodeSpecialistResources = new List<PostcodeSpecialistResource>
-                    {
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "N",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "Y",
                             EffectiveFrom = new DateTime(2018, 9, 2)
                         }
                     }
@@ -779,78 +731,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var result = await service.Object.RetrieveOnsData(json, cancellationToken);
 
             result.Should().BeEquivalentTo(onsDictionary);
-        }
-
-        [Fact]
-        public async Task RetrieveSpecialistResources()
-        {
-            var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
-
-            var taskResult = new TaskCompletionSource<IEnumerable<PostcodesSpecialistResource>>();
-
-            var specialistResources = new List<PostcodesSpecialistResource>
-            {
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode1",
-                    SpecialistResources = "Y",
-                    EffectiveFrom = new DateTime(2018, 8, 1)
-                },
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode1",
-                    SpecialistResources = "Y",
-                    EffectiveFrom = new DateTime(2018, 8, 1),
-                    EffectiveTo = new DateTime(2018, 9, 1)
-                },
-                new PostcodesSpecialistResource
-                {
-                    Postcode = "PostCode2",
-                    SpecialistResources = "N",
-                    EffectiveFrom = new DateTime(2019, 9, 2)
-                }
-            };
-
-            taskResult.SetResult(specialistResources);
-
-            var specResourcesDictionary = new Dictionary<string, List<PostcodeSpecialistResource>>
-            {
-                {
-                    "PostCode1", new List<PostcodeSpecialistResource>
-                    {
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "Y",
-                            EffectiveFrom = new DateTime(2018, 8, 1)
-                        },
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "Y",
-                            EffectiveFrom = new DateTime(2018, 8, 1),
-                            EffectiveTo = new DateTime(2018, 9, 1)
-                        },
-                    }
-                },
-                {
-                    "PostCode2", new List<PostcodeSpecialistResource>
-                    {
-                        new PostcodeSpecialistResource
-                        {
-                            SpecialistResources = "N",
-                            EffectiveFrom = new DateTime(2019, 9, 2)
-                        }
-                    }
-                }
-            };
-
-            var service = NewServiceMock();
-
-            service.Setup(s => s.RetrieveAsync<PostcodesSpecialistResource>(json, It.IsAny<string>(), cancellationToken)).Returns(taskResult.Task);
-
-            var result = await service.Object.RetrieveSpecialistResources(json, cancellationToken);
-
-            result.Should().BeEquivalentTo(specResourcesDictionary);
         }
 
         private Mock<PostcodesRepositoryService> NewServiceMock(
