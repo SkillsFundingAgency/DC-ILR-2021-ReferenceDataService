@@ -9,90 +9,85 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Inte
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
-using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
-using ESFA.DC.Serialization.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopPostcodesRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Postcode>>
     {
-        private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IReferenceDataOptions _referenceDataOptions;
-        private readonly IJsonSerializationService _jsonSerializationService;
         private readonly IPostcodesEntityModelMapper _postcodesEntityModelMapper;
 
         public DesktopPostcodesRepositoryService(
-            IDbContextFactory<IPostcodesContext> postcodesContextFactory,
             IReferenceDataOptions referenceDataOptions,
-            IJsonSerializationService jsonSerializationService,
             IPostcodesEntityModelMapper postcodesEntityModelMapper)
         {
-            _postcodesContextFactory = postcodesContextFactory;
             _referenceDataOptions = referenceDataOptions;
-            _jsonSerializationService = jsonSerializationService;
             _postcodesEntityModelMapper = postcodesEntityModelMapper;
         }
 
         public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(CancellationToken cancellationToken)
         {
-            using (var context = _postcodesContextFactory.Create())
+            var masterPostcodes = RetrieveMasterPostcodes(cancellationToken);
+            var sfaAreaCosts = RetrieveSfaAreaCosts(cancellationToken);
+            var sfaPostcodeDisadvantages = RetrieveSfaPostcodeDisadvantages(cancellationToken);
+            var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
+            var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
+            var onsData = RetrieveOnsData(cancellationToken);
+
+            var taskList = new List<Task>
             {
-                var masterPostcodes = RetrieveMasterPostcodes(cancellationToken);
-                var sfaAreaCosts = RetrieveSfaAreaCosts(cancellationToken);
-                var sfaPostcodeDisadvantages = RetrieveSfaPostcodeDisadvantages(cancellationToken);
-                var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
-                var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
-                var onsData = RetrieveOnsData(cancellationToken);
+                masterPostcodes,
+                sfaAreaCosts,
+                sfaPostcodeDisadvantages,
+                efaPostcodeDisadvantages,
+                dasPostcodeDisadvantages,
+                onsData
+            };
 
-                var taskList = new List<Task>
+            await Task.WhenAll(taskList);
+
+            return masterPostcodes.Result
+                .Select(postcode => new Postcode()
                 {
-                    masterPostcodes,
-                    sfaAreaCosts,
-                    sfaPostcodeDisadvantages,
-                    efaPostcodeDisadvantages,
-                    dasPostcodeDisadvantages,
-                    onsData
-                };
-
-                await Task.WhenAll(taskList);
-
-                return masterPostcodes.Result
-                    .Select(postcode => new Postcode()
-                    {
-                        PostCode = postcode,
-                        SfaDisadvantages = sfaPostcodeDisadvantages.Result.TryGetValue(postcode, out var sfaDisaValued) ? sfaDisaValued : null,
-                        SfaAreaCosts = sfaAreaCosts.Result.TryGetValue(postcode, out var sfaAreaCostValue) ? sfaAreaCostValue : null,
-                        DasDisadvantages = dasPostcodeDisadvantages.Result.TryGetValue(postcode, out var dasDisadValue) ? dasDisadValue : null,
-                        EfaDisadvantages = efaPostcodeDisadvantages.Result.TryGetValue(postcode, out var efaDisadValue) ? efaDisadValue : null,
-                        ONSData = onsData.Result.TryGetValue(postcode, out var onsValue) ? onsValue : null,
-                    }).ToList();
-            }
+                    PostCode = postcode,
+                    SfaDisadvantages = sfaPostcodeDisadvantages.Result.TryGetValue(postcode, out var sfaDisadValued)
+                        ? sfaDisadValued
+                        : null,
+                    SfaAreaCosts = sfaAreaCosts.Result.TryGetValue(postcode, out var sfaAreaCostValue)
+                        ? sfaAreaCostValue
+                        : null,
+                    DasDisadvantages = dasPostcodeDisadvantages.Result.TryGetValue(postcode, out var dasDisadValue)
+                        ? dasDisadValue
+                        : null,
+                    EfaDisadvantages = efaPostcodeDisadvantages.Result.TryGetValue(postcode, out var efaDisadValue)
+                        ? efaDisadValue
+                        : null,
+                    ONSData = onsData.Result.TryGetValue(postcode, out var onsValue) ? onsValue : null,
+                }).ToList();
         }
 
-        public async Task<List<string>> RetrieveMasterPostcodes(CancellationToken cancellationToken)
+        private async Task<List<string>> RetrieveMasterPostcodes(CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT [Postcode] FROM [dbo].[MasterPostcodes]";
+            var sqlPostcodes = $@"SELECT [Postcode] FROM [dbo].[MasterPostcodes] order by Postcode";
 
-            var postcodes = await RetrieveAsync<MasterPostcode>(sqlSfaAreaCost, cancellationToken);
+            var postcodes = await RetrieveAsync<string>(sqlPostcodes, cancellationToken);
 
-            return postcodes
-                  .Select(p => p.Postcode)
-                  .ToList();
+            return postcodes.ToList();
         }
 
-        public async Task<IDictionary<string, List<SfaAreaCost>>> RetrieveSfaAreaCosts(CancellationToken cancellationToken)
+        private async Task<IDictionary<string, List<SfaAreaCost>>> RetrieveSfaAreaCosts(CancellationToken cancellationToken)
         {
             var sqlSfaAreaCost = $@"SELECT [Postcode], [AreaCostFactor], [EffectiveFrom], [EffectiveTo] 
                                                     FROM [dbo].[SFA_PostcodeAreaCost]";
 
-            var sfaAReaCosts = await RetrieveAsync<SfaPostcodeAreaCost>(sqlSfaAreaCost, cancellationToken);
+            var sfaAreaCosts = await RetrieveAsync<SfaPostcodeAreaCost>(sqlSfaAreaCost, cancellationToken);
 
-            return sfaAReaCosts
+            return sfaAreaCosts
                 .GroupBy(p => p.Postcode)
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SfaAreaCostsToEntity).ToList());
         }
 
-        public async Task<IDictionary<string, List<SfaDisadvantage>>> RetrieveSfaPostcodeDisadvantages(CancellationToken cancellationToken)
+        private async Task<IDictionary<string, List<SfaDisadvantage>>> RetrieveSfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlSfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[SFA_PostcodeDisadvantage]";
@@ -104,7 +99,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.SfaPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public async Task<IDictionary<string, List<EfaDisadvantage>>> RetrieveEfaPostcodeDisadvantages(CancellationToken cancellationToken)
+        private async Task<IDictionary<string, List<EfaDisadvantage>>> RetrieveEfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlEfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[EFA_PostcodeDisadvantage]";
@@ -116,7 +111,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.EfaPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public async Task<IDictionary<string, List<DasDisadvantage>>> RetrieveDasPostcodeDisadvantages(CancellationToken cancellationToken)
+        private async Task<IDictionary<string, List<DasDisadvantage>>> RetrieveDasPostcodeDisadvantages(CancellationToken cancellationToken)
         {
             var sqlDasPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[DAS_PostcodeDisadvantage]";
@@ -128,7 +123,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.DasPostcodeDisadvantagesToEntity).ToList());
         }
 
-        public async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(CancellationToken cancellationToken)
+        private async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(CancellationToken cancellationToken)
         {
             var sqlOnsData = $@"SELECT [Postcode], [Introduction], [Termination], [LocalAuthority], [Lep1], [Lep2], 
                                                 [EffectiveFrom], [EffectiveTo], [Nuts]
@@ -141,7 +136,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToDictionary(k => k.Key, p => p.Select(_postcodesEntityModelMapper.ONSDataToEntity).ToList());
         }
 
-        public virtual async Task<IEnumerable<T>> RetrieveAsync<T>(string sql, CancellationToken cancellationToken)
+        private async Task<IEnumerable<T>> RetrieveAsync<T>(string sql, CancellationToken cancellationToken)
         {
             using (var sqlConnection = new SqlConnection(_referenceDataOptions.PostcodesConnectionString))
             {
