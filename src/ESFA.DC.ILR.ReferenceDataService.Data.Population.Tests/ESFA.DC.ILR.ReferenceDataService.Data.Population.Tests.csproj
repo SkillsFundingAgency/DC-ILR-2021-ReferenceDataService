@@ -220,6 +220,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Desktop\DesktopReferenceDataPopulationServicePerformanceTests.cs" />
     <Compile Include="Desktop\DesktopReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Mapper\PostcodeEntityModelMapperTests.cs" />
     <Compile Include="MessageMapperServiceTests.cs" />
