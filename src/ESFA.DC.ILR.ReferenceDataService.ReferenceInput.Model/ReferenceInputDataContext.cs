@@ -865,6 +865,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
+                entity.Property(e => e.Postcode)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
                 entity.Property(e => e.SpecialistResources)
                     .IsRequired()
                     .HasMaxLength(1);

@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [ReferenceInput].[Organisations_PostcodesSpecialistResources] (
     [Id]                    INT             IDENTITY (1, 1) NOT NULL,
 	[UKPRN]					BIGINT			NOT NULL,
-    [SpecialistResources]					NVARCHAR(1) NOT NULL,
+    [Postcode]				NVARCHAR(10)	NOT NULL,
+    [SpecialistResources]	NVARCHAR(1)		NOT NULL,
     [EffectiveFrom]         DATETIME        NOT NULL,
     [EffectiveTo]           DATETIME        NULL,
     [Organisations_Organisation_Id] INT            NULL,

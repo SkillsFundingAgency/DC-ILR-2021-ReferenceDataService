@@ -7,6 +7,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
     {
         public int Id { get; set; }
         public long UKPRN { get; set; }
+        public string Postcode { get; set; }
         public string SpecialistResources { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public DateTime? EffectiveTo { get; set; }
