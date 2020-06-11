@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [ReferenceInput].[Postcodes_SfaAreaCost] (
     [Id]                    INT             IDENTITY (1, 1) NOT NULL,
-    [AreaCostFactor]        DECIMAL (18, 2) NOT NULL,
+    [AreaCostFactor]        DECIMAL (10, 5) NOT NULL,
     [EffectiveFrom]         DATETIME        NOT NULL,
     [EffectiveTo]           DATETIME        NULL,
     [Postcodes_Postcode_Id] INT             NULL,

@@ -2,7 +2,7 @@
     [Id]                        INT             IDENTITY (1, 1) NOT NULL,
     [ContractAllocationNumber]  NVARCHAR (MAX)  NULL,
     [DeliveryUKPRN]             INT             NOT NULL,
-    [LearningRatePremiumFactor] DECIMAL (18, 2) NULL,
+    [LearningRatePremiumFactor] DECIMAL (10, 2) NULL,
     [TenderSpecReference]       NVARCHAR (MAX)  NULL,
     [LotReference]              NVARCHAR (MAX)  NULL,
     [FundingStreamPeriodCode]   NVARCHAR (MAX)  NULL,

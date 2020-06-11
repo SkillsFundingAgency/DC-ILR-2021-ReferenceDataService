@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [ReferenceInput].[Postcodes_EfaDisadvantage] (
     [Id]                    INT             IDENTITY (1, 1) NOT NULL,
-    [Uplift]                DECIMAL (18, 2) NULL,
+    [Uplift]                DECIMAL (10, 5) NULL,
     [EffectiveFrom]         DATETIME        NOT NULL,
     [EffectiveTo]           DATETIME        NULL,
     [Postcodes_Postcode_Id] INT             NULL,
