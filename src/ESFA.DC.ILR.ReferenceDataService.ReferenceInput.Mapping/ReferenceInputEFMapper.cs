@@ -135,7 +135,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Mapping
                 cfg.CreateMap<Organisation, Organisations_Organisation>()
                     .ForMember(m => m.Organisations_OrganisationCampusIdentifiers, opt => opt.MapFrom(src => src.CampusIdentifers))
                     .ForMember(m => m.Organisations_OrganisationCoFRemovals, opt => opt.MapFrom(src => src.OrganisationCoFRemovals))
-                    .ForMember(m => m.Organisations_OrganisationFundings, opt => opt.MapFrom(src => src.OrganisationFundings));
+                    .ForMember(m => m.Organisations_OrganisationFundings, opt => opt.MapFrom(src => src.OrganisationFundings))
+                    .ForMember(m => m.Organisations_PostcodesSpecialistResources, opt => opt.MapFrom(src => src.PostcodeSpecialistResources));
                 cfg.CreateMap<OrganisationCampusIdentifier, Organisations_OrganisationCampusIdentifier>()
                     .ForMember(m => m.Organisations_SpecialistResources, opt => opt.MapFrom(src => src.SpecialistResources));
                 cfg.CreateMap<OrganisationCoFRemoval, Organisations_OrganisationCoFRemoval>();

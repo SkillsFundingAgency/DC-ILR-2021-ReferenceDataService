@@ -107,21 +107,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.HistoricLearnDelProgEarliestACT2DateInput).HasColumnType("datetime");
 
-                entity.Property(e => e.HistoricPMRAmount).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricPMRAmount).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricTNP1Input).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricTNP1Input).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricTNP2Input).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricTNP2Input).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricTNP3Input).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricTNP3Input).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricTNP4Input).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricTNP4Input).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricTotal1618UpliftPaymentsInTheYearInput).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricTotal1618UpliftPaymentsInTheYearInput).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricVirtualTNP3EndOfTheYearInput).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricVirtualTNP3EndOfTheYearInput).HasColumnType("decimal(12, 5)");
 
-                entity.Property(e => e.HistoricVirtualTNP4EndOfTheYearInput).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HistoricVirtualTNP4EndOfTheYearInput).HasColumnType("decimal(12, 5)");
 
                 entity.Property(e => e.LearnRefNumber).HasMaxLength(2000);
 
@@ -129,7 +129,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.ProgrammeStartDateMatchPathway).HasColumnType("datetime");
 
-                entity.Property(e => e.TotalProgAimPaymentsInTheYear).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.TotalProgAimPaymentsInTheYear).HasColumnType("decimal(12, 5)");
 
                 entity.Property(e => e.UptoEndDate).HasColumnType("datetime");
             });
@@ -213,7 +213,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("FCS_EsfEligibilityRuleSectorSubjectAreaLevel", "ReferenceInput");
 
-                entity.Property(e => e.SectorSubjectAreaCode).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SectorSubjectAreaCode).HasColumnType("decimal(5, 2)");
 
                 entity.HasOne(d => d.FCS_EsfEligibilityRule_)
                     .WithMany(p => p.FCS_EsfEligibilityRuleSectorSubjectAreaLevels)
@@ -227,7 +227,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.LearningRatePremiumFactor).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.LearningRatePremiumFactor).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
@@ -243,9 +243,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("FCS_FcsContractDeliverable", "ReferenceInput");
 
-                entity.Property(e => e.PlannedValue).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.PlannedValue).HasColumnType("decimal(13, 2)");
 
-                entity.Property(e => e.UnitCost).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.UnitCost).HasColumnType("decimal(13, 2)");
 
                 entity.HasOne(d => d.FCS_FcsContractAllocation_)
                     .WithMany(p => p.FCS_FcsContractDeliverables)
@@ -325,9 +325,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.FullLevel2Percent).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.FullLevel2Percent).HasColumnType("decimal(5, 2)");
 
-                entity.Property(e => e.FullLevel3Percent).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.FullLevel3Percent).HasColumnType("decimal(5, 2)");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
                     .WithMany(p => p.LARS_LARSAnnualValues)
@@ -350,29 +350,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("LARS_LARSFrameworkApprenticeshipFunding", "ReferenceInput");
 
-                entity.Property(e => e.CareLeaverAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CareLeaverAdditionalPayment).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.Duration).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Duration).HasColumnType("decimal(10, 5)");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.MaxEmployerLevyCap).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.MaxEmployerLevyCap).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.ReservedValue2).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.ReservedValue2).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.ReservedValue3).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.ReservedValue3).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenEmployerAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenEmployerAdditionalPayment).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenFrameworkUplift).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenFrameworkUplift).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.LARS_LARSFrameworkDesktop_)
                     .WithMany(p => p.LARS_LARSFrameworkApprenticeshipFundings)
@@ -411,9 +411,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.RateUnWeighted).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.RateUnWeighted).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.RateWeighted).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.RateWeighted).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.LARS_LARSLearningDelivery_)
                     .WithMany(p => p.LARS_LARSFundings)
@@ -453,9 +453,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.NotionalNVQLevelv2).HasMaxLength(2000);
 
-                entity.Property(e => e.SectorSubjectAreaTier1).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SectorSubjectAreaTier1).HasColumnType("decimal(5, 2)");
 
-                entity.Property(e => e.SectorSubjectAreaTier2).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SectorSubjectAreaTier2).HasColumnType("decimal(5, 2)");
             });
 
             modelBuilder.Entity<LARS_LARSLearningDeliveryCategory>(entity =>
@@ -489,29 +489,29 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("LARS_LARSStandardApprenticeshipFunding", "ReferenceInput");
 
-                entity.Property(e => e.CareLeaverAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CareLeaverAdditionalPayment).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.Duration).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Duration).HasColumnType("decimal(10, 5)");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.MaxEmployerLevyCap).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.MaxEmployerLevyCap).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.ReservedValue2).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.ReservedValue2).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.ReservedValue3).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.ReservedValue3).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenEmployerAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenEmployerAdditionalPayment).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenFrameworkUplift).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenFrameworkUplift).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenProviderAdditionalPayment).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
                     .WithMany(p => p.LARS_LARSStandardApprenticeshipFundings)
@@ -537,17 +537,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("LARS_LARSStandardFunding", "ReferenceInput");
 
-                entity.Property(e => e.AchievementIncentive).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.AchievementIncentive).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CoreGovContributionCap).HasColumnType("decimal(10, 5)");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SixteenToEighteenIncentive).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.SmallBusinessIncentive).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SmallBusinessIncentive).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.LARS_LARSStandard_)
                     .WithMany(p => p.LARS_LARSStandardFundings)
@@ -831,7 +831,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("Organisations_OrganisationCoFRemoval", "ReferenceInput");
 
-                entity.Property(e => e.CoFRemoval).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.CoFRemoval).HasColumnType("decimal(9, 2)");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
@@ -919,7 +919,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Uplift).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
                     .WithMany(p => p.Postcodes_DasDisadvantages)
@@ -935,7 +935,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Uplift).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
                     .WithMany(p => p.Postcodes_EfaDisadvantages)
@@ -970,7 +970,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
             {
                 entity.ToTable("Postcodes_SfaAreaCost", "ReferenceInput");
 
-                entity.Property(e => e.AreaCostFactor).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.AreaCostFactor).HasColumnType("decimal(10, 5)");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
 
@@ -990,7 +990,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Model
 
                 entity.Property(e => e.EffectiveTo).HasColumnType("datetime");
 
-                entity.Property(e => e.Uplift).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Uplift).HasColumnType("decimal(10, 5)");
 
                 entity.HasOne(d => d.Postcodes_Postcode_)
                     .WithMany(p => p.Postcodes_SfaDisadvantages)

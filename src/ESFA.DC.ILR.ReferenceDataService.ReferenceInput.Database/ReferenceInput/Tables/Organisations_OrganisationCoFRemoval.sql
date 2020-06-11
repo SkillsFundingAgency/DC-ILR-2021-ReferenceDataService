@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [ReferenceInput].[Organisations_OrganisationCoFRemoval] (
     [Id]                            INT             IDENTITY (1, 1) NOT NULL,
-    [CoFRemoval]                    DECIMAL (18, 2) NOT NULL,
+    [CoFRemoval]                    DECIMAL (9, 2) NOT NULL,
     [EffectiveFrom]                 DATETIME        NOT NULL,
     [EffectiveTo]                   DATETIME        NULL,
     [Organisations_Organisation_Id] INT             NULL,
