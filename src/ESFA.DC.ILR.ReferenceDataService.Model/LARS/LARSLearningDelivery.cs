@@ -31,6 +31,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public decimal? SectorSubjectAreaTier2 { get; set; }
 
+        public string SectorSubjectAreaTier2Desc { get; set; }
+
         public string LearningDeliveryGenre { get; set; }
 
         public int? RegulatedCreditValue { get; set; }
