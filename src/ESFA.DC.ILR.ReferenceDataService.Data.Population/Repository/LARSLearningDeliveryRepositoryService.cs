@@ -97,7 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
                 foreach (var learningDelivery in learningDeliveries)
                 {
-                    learningDelivery.SectorSubjectAreaTier2Desc = larsSectorSubjectAreaTier2Dictionary.TryGetValue(learningDelivery.SectorSubjectAreaTier2.GetValueOrDefault(), out var sectorSubjectAreaTier2) ? sectorSubjectAreaTier2.SectorSubjectAreaTier2Desc : null;
+                    learningDelivery.SectorSubjectAreaTier2Desc = larsSectorSubjectAreaTier2Dictionary.TryGetValue(learningDelivery.SectorSubjectAreaTier2.GetValueOrDefault(), out var sectorSubjectAreaTier2Desc) ? sectorSubjectAreaTier2Desc : string.Empty;
                     learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
                     learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
                     learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
@@ -251,18 +251,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 }).FirstOrDefault());
         }
 
-        private async Task<Dictionary<decimal, LarsSectorSubjectAreaTier2Lookup>> BuildLARSSectorSubjectAreaTier2Dictionary(ILARSContext context, CancellationToken cancellationToken)
+        private async Task<Dictionary<decimal, string>> BuildLARSSectorSubjectAreaTier2Dictionary(ILARSContext context, CancellationToken cancellationToken)
         {
             return await context.LARS_SectorSubjectAreaTier2Lookups.ToDictionaryAsync(
                     x => x.SectorSubjectAreaTier2,
-                    x => new LarsSectorSubjectAreaTier2Lookup
-                    {
-                        SectorSubjectAreaTier2 = x.SectorSubjectAreaTier2,
-                        SectorSubjectAreaTier2Desc = x.SectorSubjectAreaTier2Desc,
-                        SectorSubjectAreaTier2Desc2 = x.SectorSubjectAreaTier2Desc2,
-                        EffectiveFrom = x.EffectiveFrom,
-                        EffectiveTo = x.EffectiveTo
-                    },
+                    x => x.SectorSubjectAreaTier2Desc,
                     cancellationToken);
         }
     }
