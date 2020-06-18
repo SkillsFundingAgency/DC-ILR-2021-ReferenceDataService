@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
+using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(context, cancellationToken);
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(context, cancellationToken);
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(context, cancellationToken);
+                var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 var defaultLarsAnnualValues = new List<LARSAnnualValue>();
                 var defaultLarsLearningDeliveryCategories = new List<LARSLearningDeliveryCategory>();
@@ -38,6 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
                 foreach (var learningDelivery in learningDeliveries)
                 {
+                    learningDelivery.SectorSubjectAreaTier2Desc = larsSectorSubjectAreaTier2Dictionary.TryGetValue(learningDelivery.SectorSubjectAreaTier2.GetValueOrDefault(), out var sectorSubjectAreaTier2) ? sectorSubjectAreaTier2.SectorSubjectAreaTier2Desc : null;
                     learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
                     learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
                     learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
@@ -160,6 +163,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 k => k.Key,
                 v => v.Select(l => l).ToList(),
                 StringComparer.OrdinalIgnoreCase);
+        }
+
+        private async Task<Dictionary<decimal, LarsSectorSubjectAreaTier2Lookup>> BuildLARSSectorSubjectAreaTier2Dictionary(ILARSContext context, CancellationToken cancellationToken)
+        {
+            return await context.LARS_SectorSubjectAreaTier2Lookups.ToDictionaryAsync(
+                x => x.SectorSubjectAreaTier2,
+                x => new LarsSectorSubjectAreaTier2Lookup
+                {
+                    SectorSubjectAreaTier2 = x.SectorSubjectAreaTier2,
+                    SectorSubjectAreaTier2Desc = x.SectorSubjectAreaTier2Desc,
+                    SectorSubjectAreaTier2Desc2 = x.SectorSubjectAreaTier2Desc2,
+                    EffectiveFrom = x.EffectiveFrom,
+                    EffectiveTo = x.EffectiveTo
+                },
+                cancellationToken);
         }
     }
 }

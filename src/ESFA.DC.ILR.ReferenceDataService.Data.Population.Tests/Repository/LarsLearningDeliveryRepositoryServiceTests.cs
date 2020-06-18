@@ -38,7 +38,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     LearnAimRefTypeNavigation = new LarsLearnAimRefTypeLookup
                     {
                         LearnAimRefTypeDesc = "LearnAimRefTypeDesc1"
-                    }
+                    },
+                    SectorSubjectAreaTier2 = 1.1m
                 },
                 new LarsLearningDelivery
                 {
@@ -47,7 +48,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     LearnAimRefTypeNavigation = new LarsLearnAimRefTypeLookup
                     {
                         LearnAimRefTypeDesc = "LearnAimRefTypeDesc2"
-                    }
+                    },
+                    SectorSubjectAreaTier2 = 2.1m
                 }
             };
 
@@ -207,6 +209,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
+            IEnumerable<LarsSectorSubjectAreaTier2Lookup> sectorSubjectAreaTier2 =
+                new List<LarsSectorSubjectAreaTier2Lookup>()
+                {
+                    new LarsSectorSubjectAreaTier2Lookup()
+                    {
+                        SectorSubjectAreaTier2 = 1.1m,
+                        SectorSubjectAreaTier2Desc = "1.1"
+                    },
+                    new LarsSectorSubjectAreaTier2Lookup()
+                    {
+                        SectorSubjectAreaTier2 = 2.1m,
+                        SectorSubjectAreaTier2Desc = "2.1"
+                    },
+                };
+
             var larsLearningDeliveryMock = larsLearningDeliveryList.AsQueryable().BuildMockDbSet();
             var larsAnnualValueMock = larsAnnualValueList.AsQueryable().BuildMockDbSet();
             var larsCategoriesMock = larsLearningDeliveryCategoryList.AsQueryable().BuildMockDbSet();
@@ -215,6 +232,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsFrameworkAimsMock = larsFrameworkAimsList.AsQueryable().BuildMockDbSet();
 
             var larsFrameworkMock = larsFrameworkList.AsQueryable().BuildMockDbSet();
+
+            var larsSectorSubjectAreaTier2Lookup = sectorSubjectAreaTier2.AsQueryable().BuildMockDbSet();
 
             var larsMock = new Mock<ILARSContext>();
 
@@ -225,6 +244,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             larsMock.Setup(l => l.LARS_Validities).Returns(larsValiditiesMock.Object);
             larsMock.Setup(l => l.LARS_FrameworkAims).Returns(larsFrameworkAimsMock.Object);
             larsMock.Setup(l => l.LARS_Frameworks).Returns(larsFrameworkMock.Object);
+            larsMock.Setup(l => l.LARS_SectorSubjectAreaTier2Lookups).Returns(larsSectorSubjectAreaTier2Lookup.Object);
 
             var larsContextFactoryMock = new Mock<IDbContextFactory<ILARSContext>>();
             larsContextFactoryMock.Setup(c => c.Create()).Returns(larsMock.Object);
@@ -243,6 +263,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     LearnAimRef = "LearnAimRef1",
                     LearnAimRefTitle = "AimRefTitle1",
                     LearnAimRefTypeDesc = "LearnAimRefTypeDesc1",
+                    SectorSubjectAreaTier2 = 1.1m,
+                    SectorSubjectAreaTier2Desc = "1.1",
                     LARSFrameworks = new List<LARSFramework>
                     {
                         new LARSFramework
@@ -349,6 +371,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     LearnAimRef = "LearnAimRef2",
                     LearnAimRefTitle = "AimRefTitle2",
                     LearnAimRefTypeDesc = "LearnAimRefTypeDesc2",
+                    SectorSubjectAreaTier2 = 2.1m,
+                    SectorSubjectAreaTier2Desc = "2.1",
                     LARSFrameworks = new List<LARSFramework>
                     {
                         new LARSFramework
