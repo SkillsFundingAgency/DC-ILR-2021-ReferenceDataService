@@ -21,5 +21,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
         public List<OrganisationFunding> OrganisationFundings { get; set; }
 
         public List<OrganisationCoFRemoval> OrganisationCoFRemovals { get; set; }
+
+        public List<OrganisationShortTermFundingInitiative> OrganisationShortTermFundingInitiatives { get; set; }
     }
 }
