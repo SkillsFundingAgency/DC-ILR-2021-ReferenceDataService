@@ -15,6 +15,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         private const int LongTermResidValue = 1;
         private readonly List<OrganisationCampusIdentifier> _defaultCampusIdentifiers = new List<OrganisationCampusIdentifier>();
         private readonly List<OrganisationPostcodeSpecialistResource> _defaultPostcodeSepcialistResources = new List<OrganisationPostcodeSpecialistResource>();
+        private readonly List<OrganisationShortTermFundingInitiative> _defaultShortTermFundingInitiatives = new List<OrganisationShortTermFundingInitiative>();
         private readonly IDbContextFactory<IOrganisationsContext> _organisationsFactory;
 
         public DesktopOrganisationsRepositoryService(IDbContextFactory<IOrganisationsContext> organisationsFactory)
@@ -29,6 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 var specResourcesForUkprnDictionary = await BuildCampusIdSpecResourceDictionary(context, cancellationToken);
                 var campusIdentifiersDictionary = await BuildCampusIdentifiersDictionary(specResourcesForUkprnDictionary, context, cancellationToken);
                 var postcodeSpecResourcesDictionary = await BuildPostcodeSpecResDictionary(context, cancellationToken);
+                var shortTermFundingInitiativesDictionary = await BuildShortTermFundingInitiativesDictionary(context, cancellationToken);
 
                 return await context
                     .MasterOrganisations
@@ -62,6 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                                   EffectiveFrom = c.EffectiveFrom,
                                   EffectiveTo = c.EffectiveTo,
                               }).ToList(),
+                              OrganisationShortTermFundingInitiatives = GetShortTermFundingInitiatives(o.Ukprn, shortTermFundingInitiativesDictionary),
                           }).ToListAsync(cancellationToken);
             }
         }
@@ -78,6 +81,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             specResourcesDictionary.TryGetValue(ukprn, out var specRes);
 
             return specRes ?? _defaultPostcodeSepcialistResources;
+        }
+
+        public List<OrganisationShortTermFundingInitiative> GetShortTermFundingInitiatives(long ukprn, Dictionary<long, List<OrganisationShortTermFundingInitiative>> shortTermFundingDictionary)
+        {
+            shortTermFundingDictionary.TryGetValue(ukprn, out var shortTermFunding);
+
+            return shortTermFunding ?? _defaultShortTermFundingInitiatives;
         }
 
         private async Task<Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>>> BuildCampusIdSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
@@ -152,6 +162,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
             return campusIdSpecResources != null ?
                   campusIdSpecResources.TryGetValue(campusIdentifier, out var resources) ? resources : Enumerable.Empty<OrganisationCampusIdSpecialistResource>() : Enumerable.Empty<OrganisationCampusIdSpecialistResource>();
+        }
+
+        private async Task<Dictionary<long, List<OrganisationShortTermFundingInitiative>>> BuildShortTermFundingInitiativesDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
+        {
+            var stfis = await context
+                .ShortTermFundingInitiatives
+                .ToListAsync(cancellationToken);
+
+            return stfis?
+                .GroupBy(s => s.Ukprn)
+                .ToDictionary(
+                    k1 => k1.Key,
+                    v1 => v1.Select(s => new OrganisationShortTermFundingInitiative()
+                    {
+                        UKPRN = s.Ukprn,
+                        LdmCode = s.Ldmcode,
+                        Reason = s.Reason,
+                        EffectiveFrom = s.EffectiveFrom,
+                        EffectiveTo = s.EffectiveTo
+                    }).ToList());
         }
     }
 }

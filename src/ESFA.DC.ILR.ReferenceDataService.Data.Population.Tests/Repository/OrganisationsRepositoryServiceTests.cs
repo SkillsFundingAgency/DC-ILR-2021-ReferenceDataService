@@ -118,10 +118,22 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
             };
 
+            IEnumerable<ShortTermFundingInitiative> shortTermFundingInitiatives = new List<ShortTermFundingInitiative>()
+            {
+                new ShortTermFundingInitiative()
+                {
+                    Ukprn = 1,
+                    Ldmcode = "ldm_1",
+                    Reason = "reason_1",
+                    EffectiveFrom = new DateTime(2019, 8, 1)
+                }
+            };
+
             var masterOrgMock = masterOrgList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersMock = campusIdentifiersList.AsQueryable().BuildMockDbSet();
             var campusIdentifiersSpecResourcesMock = campusIdentifiersSpecResources.AsQueryable().BuildMockDbSet();
             var postcodeSpecResourcesMock = postcodeSpecResources.AsQueryable().BuildMockDbSet();
+            var shortTermFundingInitMock = shortTermFundingInitiatives.AsQueryable().BuildMockDbSet();
 
             var organisationsMock = new Mock<IOrganisationsContext>();
 
@@ -129,6 +141,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisationsMock.Setup(o => o.CampusIdentifiers).Returns(campusIdentifiersMock.Object);
             organisationsMock.Setup(o => o.CampusIdentifierSpecResources).Returns(campusIdentifiersSpecResourcesMock.Object);
             organisationsMock.Setup(o => o.ProviderPostcodeSpecialistResources).Returns(postcodeSpecResourcesMock.Object);
+            organisationsMock.Setup(o => o.ShortTermFundingInitiatives).Returns(shortTermFundingInitMock.Object);
 
             var organisationsContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
             organisationsContextFactoryMock.Setup(c => c.Create()).Returns(organisationsMock.Object);
@@ -149,6 +162,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 1).LongTermResid.Should().BeTrue();
             organisations.First(o => o.UKPRN == 1).OrganisationFundings.Should().HaveCount(2);
             organisations.First(o => o.UKPRN == 1).PostcodeSpecialistResources.Should().HaveCount(2);
+            organisations.First(o => o.UKPRN == 1).OrganisationShortTermFundingInitiatives.Should().HaveCount(1);
+            organisations.First(o => o.UKPRN == 1).OrganisationShortTermFundingInitiatives.First().LdmCode.Should().Be("ldm_1");
 
             organisations.First(o => o.UKPRN == 2).UKPRN.Should().Be(2);
             organisations.First(o => o.UKPRN == 2).LegalOrgType.Should().Be("LegalType2");
@@ -314,6 +329,84 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public void GetPostcodeSpecResources_Null()
         {
             NewService().GetPostcodeSpecResources(1, new Dictionary<long, List<OrganisationPostcodeSpecialistResource>>()).Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void GetStfi()
+        {
+            var shortTermFundingInitiativesListOne = new List<OrganisationShortTermFundingInitiative>()
+            {
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 1,
+                },
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 1,
+                }
+            };
+
+            var shortTermFundingInitiativesListTwo = new List<OrganisationShortTermFundingInitiative>()
+            {
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 2,
+                },
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 3,
+                }
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationShortTermFundingInitiative>>
+            {
+                { 1, shortTermFundingInitiativesListOne },
+                { 2, shortTermFundingInitiativesListTwo },
+            };
+
+            NewService().GetShortTermFundingInitiatives(1, dictionary).Should().BeEquivalentTo(shortTermFundingInitiativesListOne);
+        }
+
+        [Fact]
+        public void GetStfi_MisMatch()
+        {
+            var shortTermFundingInitiativesListOne = new List<OrganisationShortTermFundingInitiative>()
+            {
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 1,
+                },
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 1,
+                }
+            };
+
+            var shortTermFundingInitiativesListTwo = new List<OrganisationShortTermFundingInitiative>()
+            {
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 2,
+                },
+                new OrganisationShortTermFundingInitiative()
+                {
+                    UKPRN = 3,
+                }
+            };
+
+            var dictionary = new Dictionary<long, List<OrganisationShortTermFundingInitiative>>
+            {
+                { 1, shortTermFundingInitiativesListOne },
+                { 2, shortTermFundingInitiativesListTwo },
+            };
+
+            NewService().GetShortTermFundingInitiatives(4, dictionary).Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void GetStfi_Null()
+        {
+            NewService().GetShortTermFundingInitiatives(1, new Dictionary<long, List<OrganisationShortTermFundingInitiative>>()).Should().BeNullOrEmpty();
         }
 
         private OrganisationsRepositoryService NewService(IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)
