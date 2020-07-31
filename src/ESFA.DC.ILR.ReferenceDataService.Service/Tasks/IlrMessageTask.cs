@@ -51,6 +51,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
             catch (Exception exception)
             {
                 _logger.LogError("Reference Data Service Output Exception", exception);
+                throw;
             }
         }
     }
