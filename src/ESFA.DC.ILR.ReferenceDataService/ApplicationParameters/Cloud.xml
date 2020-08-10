@@ -25,7 +25,6 @@
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryConnectionString_EFCore_RO__" />
     <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RW__" />
     <Parameter Name="EasConnectionString" Value="__EasConnectionStringRO__" />
-    <Parameter Name="Ilr1819ConnectionString" Value="__Ilr1819ConnectionStringRO__" />
     <Parameter Name="Ilr1920ConnectionString" Value="__Ilr1920ConnectionStringRO__" />
   </Parameters>
 </Application>

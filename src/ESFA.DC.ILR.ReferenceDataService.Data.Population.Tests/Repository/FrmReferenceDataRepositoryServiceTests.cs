@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
-using ESFA.DC.ILR1819.DataStore.EF.Valid;
-using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ILR1920.DataStore.EF.Valid;
+using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -170,8 +170,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsListDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgListDbMock = orgDetails.AsQueryable().BuildMockDbSet();
 
-            var ilrContextMock = new Mock<IILR1819_DataStoreEntitiesValid>();
-            var ilrContextFactoryMock = new Mock<IDbContextFactory<IILR1819_DataStoreEntitiesValid>>();
+            var ilrContextMock = new Mock<IILR1920_DataStoreEntitiesValid>();
+            var ilrContextFactoryMock = new Mock<IDbContextFactory<IILR1920_DataStoreEntitiesValid>>();
 
             ilrContextMock.Setup(v => v.Learners).Returns(learnerListDbMock.Object);
             ilrContextFactoryMock.Setup(c => c.Create()).Returns(ilrContextMock.Object);
@@ -202,7 +202,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             learner.FundModel.Should().Be(25);
         }
 
-        private FrmReferenceDataRepositoryService NewService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory = null, IDbContextFactory<ILARSContext> larsContextFactory = null, IDbContextFactory<IOrganisationsContext> orgContextFactory = null, IAcademicYearDataService academicYearDataService = null)
+        private FrmReferenceDataRepositoryService NewService(IDbContextFactory<IILR1920_DataStoreEntitiesValid> ilrContextFactory = null, IDbContextFactory<ILARSContext> larsContextFactory = null, IDbContextFactory<IOrganisationsContext> orgContextFactory = null, IAcademicYearDataService academicYearDataService = null)
         {
             return new FrmReferenceDataRepositoryService(ilrContextFactory, larsContextFactory, orgContextFactory, academicYearDataService);
         }

@@ -22,6 +22,6 @@
 
         string EasConnectionString { get; }
 
-        string Ilr1819ConnectionString { get; }
+        string Ilr1920ConnectionString { get; }
     }
 }
