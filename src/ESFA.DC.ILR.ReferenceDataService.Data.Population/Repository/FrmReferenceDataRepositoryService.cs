@@ -7,7 +7,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
-using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class FrmReferenceDataRepositoryService : IFrmReferenceDataRepositoryService
     {
-        private readonly IDbContextFactory<IILR1819_DataStoreEntitiesValid> _ilrContextFactory;
+        private readonly IDbContextFactory<IILR1920_DataStoreEntitiesValid> _ilrContextFactory;
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
         private readonly IDbContextFactory<IOrganisationsContext> _orgContextFactory;
         private readonly IAcademicYearDataService _academicYearDataService;
@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         private readonly int _excludedFundModel = 99;
         private readonly HashSet<int> _excludedCategories = new HashSet<int> { 23, 24, 27, 28, 29, 34, 35, 36 };
 
-        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
+        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1920_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
         {
             _ilrContextFactory = ilrContextFactory;
             _larsContextFactory = larsContextFactory;
