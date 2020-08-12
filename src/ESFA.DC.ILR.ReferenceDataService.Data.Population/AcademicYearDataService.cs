@@ -5,7 +5,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 {
     public class AcademicYearDataService : IAcademicYearDataService
     {
-        private readonly int academicYearStartYear = 2019;
+        private readonly int academicYearStartYear = 2020;
 
         public DateTime CurrentYearStart => new DateTime(academicYearStartYear, 08, 01);
     }
