@@ -12,7 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public string NotionalEndLevel { get; set; }
 
-        public DateTime LastDateStarts { get; set; }
+        public DateTime? LastDateStarts { get; set; }
 
         public List<LARSStandardApprenticeshipFunding> LARSStandardApprenticeshipFundings { get; set; }
 
