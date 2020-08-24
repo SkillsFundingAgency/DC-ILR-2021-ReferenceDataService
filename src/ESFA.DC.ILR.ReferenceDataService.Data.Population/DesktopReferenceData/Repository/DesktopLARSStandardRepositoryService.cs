@@ -39,6 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                             NotionalEndLevel = ls.NotionalEndLevel,
                             EffectiveFrom = ls.EffectiveFrom.Value,
                             EffectiveTo = ls.EffectiveTo,
+                            LastDateStarts = ls.LastDateStarts,
                             LARSStandardApprenticeshipFundings = ls.LarsApprenticeshipStdFundings.Select(lsa =>
                             new LARSStandardApprenticeshipFunding
                             {
