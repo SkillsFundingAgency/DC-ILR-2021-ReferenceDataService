@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.ReferenceDataService.Model.Abstract;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
@@ -10,6 +11,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
         public string StandardSectorCode { get; set; }
 
         public string NotionalEndLevel { get; set; }
+
+        public DateTime LastDateStarts { get; set; }
 
         public List<LARSStandardApprenticeshipFunding> LARSStandardApprenticeshipFundings { get; set; }
 
