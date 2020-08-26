@@ -1,15 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.Extensions.DependencyInjection;
+﻿using ESFA.DC.Data.EF.DesignTime;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ReferenceInput.EF.Console.DesignTime
 {
-    public class ReferenceDataDesignTimeServices : IDesignTimeServices
+    public class ReferenceDataDesignTimeServices : DefaultDesignTimeServices
     {
-        public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddSingleton<IPluralizer, ReferenceDataPluralizer>();
-            serviceCollection.AddSingleton<ICandidateNamingService, ReferenceDataCandidateNamingService>();
-        }
     }
 }
