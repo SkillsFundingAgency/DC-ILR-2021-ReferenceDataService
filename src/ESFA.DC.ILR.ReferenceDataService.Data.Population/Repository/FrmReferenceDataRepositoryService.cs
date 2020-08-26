@@ -125,7 +125,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var larsContext = _larsContextFactory.Create())
             {
-                return await larsContext.LARS_LearningDeliveries.Where(ld => learnAimRefs.Contains(ld.LearnAimRef)).ToListAsync(cancellationToken);
+                return await larsContext.LARS_LearningDeliveries.Include(ld => ld.LarsLearningDeliveryCategories).Where(ld => learnAimRefs.Contains(ld.LearnAimRef)).ToListAsync(cancellationToken);
             }
         }
 
