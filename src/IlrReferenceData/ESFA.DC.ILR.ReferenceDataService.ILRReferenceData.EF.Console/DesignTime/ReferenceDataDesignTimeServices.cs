@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
+﻿using ESFA.DC.Data.EF.DesignTime;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.EF.Console.DesignTime
@@ -7,7 +8,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.EF.Console.DesignTim
     {
         public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IPluralizer, ReferenceDataPluralizer>();
+            serviceCollection.AddSingleton<IPluralizer, DefaultPluralizer>();
         }
     }
 }
