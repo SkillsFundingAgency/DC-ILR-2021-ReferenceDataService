@@ -10,7 +10,7 @@ variables:
 - name: VersionNumberMajor 
   value: '0'
 - name: VersionNumberMinor 
-  value: '1'
+  value: '3'
 - name: ConsoleTool 
   value: 'ESFA.DC.ILR.ReferenceDataService.ReferenceInput.Console'
 

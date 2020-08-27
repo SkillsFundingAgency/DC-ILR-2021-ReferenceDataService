@@ -13,6 +13,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Modules
             containerBuilder.RegisterType<EpaOrgIdMapper>().As<IEpaOrgIdMapper>();
             containerBuilder.RegisterType<FM36UlnMapper>().As<IFM36UlnMapper>();
             containerBuilder.RegisterType<LARSLearningDeliveryKeyMapper>().As<ILARSLearningDeliveryKeyMapper>();
+            containerBuilder.RegisterType<LearnRefNumberMapper>().As<ILearnRefNumberMapper>();
             containerBuilder.RegisterType<LearningProviderUkprnMapper>().As<ILearningProviderUkprnMapper>();
             containerBuilder.RegisterType<PostcodesMapper>().As<IPostcodesMapper>();
             containerBuilder.RegisterType<StandardCodesMapper>().As<IStandardCodesMapper>();

@@ -35,6 +35,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string FrmReferenceDataFileKey => throw new NotImplementedException();
 
+        public string LearnerReferenceDataFileKey => throw new NotImplementedException();
+
         public string Task { get; }
 
         public int ReturnPeriod

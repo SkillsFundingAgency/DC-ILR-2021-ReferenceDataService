@@ -17,7 +17,7 @@
     <PackageReference Include="ESFA.DC.Data.AppsEarningsHistory.Model" Version="0.2.0-alpha0009" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.EAS2021.EF" Version="0.1.12" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.320" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.339" />
     <PackageReference Include="ESFA.DC.ILR1920.Database.EF" Version="0.0.580" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
     <PackageReference Include="ESFA.DC.ReferenceData.Employers.Model" Version="0.2.789" />
