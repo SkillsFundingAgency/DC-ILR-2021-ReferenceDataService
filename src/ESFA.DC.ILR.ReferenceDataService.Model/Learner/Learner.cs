@@ -1,4 +1,6 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Model.Learner
+﻿using System;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Model.Learner
 {
     public class Learner
     {
