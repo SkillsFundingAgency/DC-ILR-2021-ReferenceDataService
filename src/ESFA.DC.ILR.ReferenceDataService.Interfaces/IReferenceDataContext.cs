@@ -14,6 +14,8 @@
 
         string FrmReferenceDataFileKey { get; }
 
+        string LearnerReferenceDataFileKey { get; }
+
         string Task { get; }
 
         int ReturnPeriod { get; set; }

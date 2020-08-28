@@ -4,6 +4,7 @@
     {
         public const string DesktopInputReferenceDataKey = "FISReferenceData";
         public const string FrmReferenceDataFileKey = "FrmReferenceData";
+        public const string LearnerReferenceDataFileKey = "LearnerReferenceData";
         public const string ValidationMessagesFileReferenceKey = "ValidationMessagesFileReference";
         public const string DesktopReferenceDataFileNameKey = "DesktopReferenceDataFileName";
         public const string DesktopReferenceDataStoragePathKey = "DesktopReferenceDataStoragePath";

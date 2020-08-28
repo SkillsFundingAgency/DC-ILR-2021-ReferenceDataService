@@ -55,8 +55,8 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.2021.Model.Interface.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.320.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.1.320\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.1.339.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.1.339\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Tests.Model, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.2021.Tests.Model.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Tests.Model.dll</HintPath>
@@ -225,7 +225,9 @@
   <ItemGroup>
     <Compile Include="Desktop\DesktopReferenceDataPopulationServicePerformanceTests.cs" />
     <Compile Include="Desktop\DesktopReferenceDataPopulationServiceTests.cs" />
+    <Compile Include="LearnerDataRetrievalServiceTests.cs" />
     <Compile Include="Mapper\PostcodeEntityModelMapperTests.cs" />
+    <Compile Include="Mapper\LearnRefNumberMapperTests.cs" />
     <Compile Include="MessageMapperServiceTests.cs" />
     <Compile Include="ReferenceDataPopulationServiceTests.cs" />
     <Compile Include="Repository\AppEarningsHistoryRepositoryServiceTests.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EmployersRepositoryServiceTests.cs" />
     <Compile Include="Repository\DevolvedPostcodesRepositoryServiceTests.cs" />
+    <Compile Include="Repository\LearnerReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\PostcodesRepositoryServiceTests.cs" />
     <Compile Include="Repository\IlrReferenceDataRepositoryServiceTests.cs" />
     <Compile Include="Repository\UlnRepositoryServiceTests.cs" />

@@ -58,6 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             containerBuilder.RegisterModule<DesktopReferenceDataModule>();
             containerBuilder.RegisterModule<ValidationMessagesTaskModule>();
             containerBuilder.RegisterModule<FrmReferenceDataModule>();
+            containerBuilder.RegisterModule<LearnerReferenceDataModule>();
 
             return containerBuilder;
         }
