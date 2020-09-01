@@ -57,6 +57,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public int? Outcome { get; set; }
 
+        public DateTime? OrigLearnStartDate { get; set; }
+
         public ICollection<LearningDeliveryFAM> LearningDeliveryFAMs { get; set; }
 
         public ICollection<ProviderSpecLearnerMonitoring> ProviderSpecLearnerMonitorings { get; set; }
