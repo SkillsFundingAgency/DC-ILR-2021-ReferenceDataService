@@ -2,21 +2,21 @@
 param (
         [Parameter(Mandatory=$true)][string]$BuildNumber,
 	    [Parameter(Mandatory=$true)][string]$Environment,
-	    [Parameter(Mandatory=$false)][int]$BuildPartToUse=4
+	    [Parameter(Mandatory=$false)][int]$BuildPartToUse=3
       )
 
 
 $BuildNumberParts = $BuildNumber.Split('.')
 if ($BuildNumberParts.Length-ne$BuildPartToUse)
 {
-   Throw "Build Number does not have the right number of Part. MUST be $($BuildPartToUse) parts: 0.0.0.0"
+   Throw "Build Number does not have the right number of Part. MUST be $($BuildPartToUse) parts: 0.0.0"
 }
 
 switch ($Environment.ToUpper()) 
-{		"PP"         {$BuildPartToUse = 3; break}
-		"PD"         {$BuildPartToUse = 3; break}	
+{		"PP"         {$BuildPartToUse = 2; break}
+		"PD"         {$BuildPartToUse = 2; break}	
 
-		default      {$BuildPartToUse = 4; break}
+		default      {$BuildPartToUse = 3; break}
 }
 
 $val=0;
