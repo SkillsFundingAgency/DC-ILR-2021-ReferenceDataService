@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
@@ -23,6 +24,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         private readonly IAcademicYearDataService _academicYearDataService;
 
         private readonly int _excludedFundModel = 99;
+        private readonly string _excludedFAMType = "ADL";
+        private readonly string _excludedFAMCode = "1";
         private readonly HashSet<int> _excludedCategories = new HashSet<int> { 23, 24, 27, 28, 29, 34, 35, 36 };
 
         public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1920_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
@@ -36,6 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyCollection<FrmLearner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken)
         {
             var returnList = new List<FrmLearner>();
+            _
 
             using (var context = _ilrContextFactory.Create())
             {
@@ -44,7 +48,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
                         ld.CompStatus == 1
                         && ld.LearnPlanEndDate >= _academicYearDataService.CurrentYearStart
-                        && ld.FundModel != _excludedFundModel))
+                        && ld.FundModel != _excludedFundModel
+                        && !ld.LearningDeliveryFAMs.Any(ldf => ldf.LearnDelFAMCode == _excludedFAMCode && ldf.LearnDelFAMType == _excludedFAMType)))
                     .Select(ld => new FrmLearner
                     {
                         UKPRN = ld.UKPRN,
@@ -70,6 +75,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         LearnPlanEndDate = ld.LearnPlanEndDate,
                         LearnActEndDate = ld.LearnActEndDate,
                         SWSupAimId = ld.SWSupAimId,
+                        OrigLearnStartDate = ld.OrigLearnStartDate,
                         LearningDeliveryFAMs = ld.LearningDeliveryFAMs
                             .Select(x =>
                                 new LearningDeliveryFAM
