@@ -189,11 +189,20 @@ stages:
     # Copy Desktop Application files
     #********************************************************************************          
     - task: CopyFiles@2
-      displayName: 'Copy Console Application File to Artifact Folder'
+      displayName: 'Copy Console Application File (GenerateZipFilename) to Desktop Artifact Folder'
+      inputs:
+        Contents: '**\GenerateZipFilename.ps1'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication\Scrips'
+
+    #********************************************************************************
+    # Copy Desktop Application files
+    #********************************************************************************          
+    - task: CopyFiles@2
+      displayName: 'Copy Console Application File to Desktop Artifact Folder'
       inputs:
         SourceFolder: 'src\$(ConsoleTool)\bin\$(Build.Configuration)'  
         Contents: '**\!(*.pdb)'
-        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication\Application'
     
 #********************************************************************************
 # CodeSign Script body
