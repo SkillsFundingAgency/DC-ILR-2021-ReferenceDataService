@@ -22,7 +22,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         private readonly IDbContextFactory<IOrganisationsContext> _orgContextFactory;
         private readonly IAcademicYearDataService _academicYearDataService;
 
-        private readonly int _excludedAimType = 3;
         private readonly int _excludedFundModel = 99;
         private readonly HashSet<int> _excludedCategories = new HashSet<int> { 23, 24, 27, 28, 29, 34, 35, 36 };
 
@@ -45,7 +44,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
                         ld.CompStatus == 1
                         && ld.LearnPlanEndDate >= _academicYearDataService.CurrentYearStart
-                        && ld.AimType != _excludedAimType
                         && ld.FundModel != _excludedFundModel))
                     .Select(ld => new FrmLearner
                     {

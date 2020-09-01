@@ -65,22 +65,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LearningDelivery
                         {
-                            LearnAimRef = "ExcludedByProgType",
-                            CompStatus = 1,
-                            LearnPlanEndDate = new DateTime(2020, 01, 01),
-                            AimType = 3,
-                            FundModel = 25,
-                            Learner = new Learner
-                            {
-                                UKPRN = 1,
-                                ULN = 1,
-                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
-                            },
-                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
-                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
-                        },
-                        new LearningDelivery
-                        {
                             LearnAimRef = "ExcludedByLarsCategories",
                             CompStatus = 1,
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
