@@ -8,6 +8,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
+using ESFA.DC.ILR1920.DataStore.EF.Valid;
 using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -39,7 +40,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public async Task<IReadOnlyCollection<FrmLearner>> RetrieveFrm06ReferenceDataAsync(long ukprn, CancellationToken cancellationToken)
         {
             var returnList = new List<FrmLearner>();
-            _
 
             using (var context = _ilrContextFactory.Create())
             {
@@ -48,8 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
                         ld.CompStatus == 1
                         && ld.LearnPlanEndDate >= _academicYearDataService.CurrentYearStart
-                        && ld.FundModel != _excludedFundModel
-                        && !ld.LearningDeliveryFAMs.Any(ldf => ldf.LearnDelFAMCode == _excludedFAMCode && ldf.LearnDelFAMType == _excludedFAMType)))
+                        && !FM99Exclusion(ld)))
                     .Select(ld => new FrmLearner
                     {
                         UKPRN = ld.UKPRN,
@@ -78,7 +77,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         OrigLearnStartDate = ld.OrigLearnStartDate,
                         LearningDeliveryFAMs = ld.LearningDeliveryFAMs
                             .Select(x =>
-                                new LearningDeliveryFAM
+                                new ReferenceDataService.Model.FRM.LearningDeliveryFAM
                                 {
                                     LearnDelFAMCode = x.LearnDelFAMCode,
                                     LearnDelFAMType = x.LearnDelFAMType,
@@ -87,13 +86,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                                 }).ToList(),
                         ProviderSpecLearnerMonitorings = ld.Learner.ProviderSpecLearnerMonitorings
                             .Select(lm =>
-                                new ProviderSpecLearnerMonitoring
+                                new ReferenceDataService.Model.FRM.ProviderSpecLearnerMonitoring
                                 {
                                     ProvSpecLearnMon = lm.ProvSpecLearnMon,
                                     ProvSpecLearnMonOccur = lm.ProvSpecLearnMonOccur
                                 }).ToList(),
                         ProvSpecDeliveryMonitorings = ld.ProviderSpecDeliveryMonitorings
-                            .Select(dm => new ProviderSpecDeliveryMonitoring
+                            .Select(dm => new ReferenceDataService.Model.FRM.ProviderSpecDeliveryMonitoring
                             {
                                 ProvSpecDelMon = dm.ProvSpecDelMon,
                                 ProvSpecDelMonOccur = dm.ProvSpecDelMonOccur
@@ -124,6 +123,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             return returnList;
         }
+
+        private bool FM99Exclusion(LearningDelivery learningDelivery) =>
+            learningDelivery.FundModel == _excludedFundModel && learningDelivery.LearningDeliveryFAMs.Any(ldf => ldf.LearnDelFAMCode == _excludedFAMCode && ldf.LearnDelFAMType == _excludedFAMType);
 
         private async Task<List<LarsLearningDelivery>> RetrieveLarsLearningDeliveries(CancellationToken cancellationToken, IEnumerable<string> learnAimRefs)
         {

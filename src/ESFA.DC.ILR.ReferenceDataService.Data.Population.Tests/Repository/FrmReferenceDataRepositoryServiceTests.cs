@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LearningDelivery
                         {
-                            LearnAimRef = "ExcludedByFundModel",
+                            LearnAimRef = "ExcludedByFM99Exclusion",
                             CompStatus = 1,
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
@@ -60,7 +60,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                 ULN = 1,
                                 ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
                             },
-                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
+                             {
+                                new LearningDeliveryFAM()
+                                {
+                                    LearnDelFAMType = "ADL",
+                                    LearnDelFAMCode = "1"
+                                }
+                            },
                             ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
@@ -110,7 +117,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             },
                             LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
                             ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
-                        }
+                        },
                     }
                 }
             };
