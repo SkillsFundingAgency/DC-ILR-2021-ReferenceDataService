@@ -39,8 +39,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public long? PMUKPRN { get; set; }
 
-        public long? PartnerUKPRN { get; set; }
-
         public string PrevLearnRefNumber { get; set; }
 
         public string SWSupAimId { get; set; }
