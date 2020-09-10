@@ -63,6 +63,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         StdCodeNullable = ld.StdCode,
                         PwayCodeNullable = ld.PwayCode,
                         AimSeqNumber = ld.AimSeqNumber,
+                        PartnerUKPRN = ld.PartnerUKPRN,
                         PrevUKPRN = ld.Learner.PrevUKPRN,
                         PMUKPRN = ld.Learner.PMUKPRN,
                         PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber,
