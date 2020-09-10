@@ -19,6 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public string OrgName { get; set; }
 
+        public string PartnerUKPRN { get; set; }
         public string PartnerOrgName { get; set; }
 
         public int? ProgTypeNullable { get; set; }
