@@ -46,10 +46,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             var stopwatch = new Stopwatch();
             if (Convert.ToBoolean(_featureConfiguration.EDRSAPIEnabled))
             {
-                stopwatch.Start();
-                var invalidErns = new HashSet<int>(await _edrsClientService.ValidateErns(input, cancellationToken));
-                var empIds = input.Except(invalidErns);
-                stopwatch.Stop();
+                try
+                {
+                    stopwatch.Start();
+                    var invalidErns = new HashSet<int>(await _edrsClientService.GetInvalidErns(input, cancellationToken));
+                    var empIds = input.Except(invalidErns);
+                    stopwatch.Stop();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message, ex);
+                }
             }
 
             _logger.LogInfo("EDRS API call took: " + stopwatch.Elapsed.TotalSeconds + " secs");

@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var clientServiceMock = new Mock<IEDRSClientService>();
             clientServiceMock
-                .Setup(m => m.ValidateErns(empIds, CancellationToken.None))
+                .Setup(m => m.GetInvalidErns(empIds, CancellationToken.None))
                 .ReturnsAsync(Enumerable.Empty<int>());
 
             var featureConfiguration = new FeatureConfiguration

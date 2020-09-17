@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
@@ -9,6 +10,7 @@ using ESFA.DC.JobContextManager.Interface;
 using ESFA.DC.JobContextManager.Model;
 using ESFA.DC.ServiceFabric.Common.Config;
 using ESFA.DC.ServiceFabric.Common.Modules;
+using Polly;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
@@ -28,6 +30,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 
             var apiSettings = serviceFabricConfigurationService.GetConfigSectionAs<ApiSettings>("ApiSettings");
             containerBuilder.RegisterInstance(apiSettings).As<ApiSettings>().SingleInstance();
+
+            containerBuilder.Register(c =>
+            {
+                var jitter = new Random();
+
+                return Policy.Handle<Exception>()
+                    .WaitAndRetryAsync(3, retryAttempt =>
+                        TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                        + TimeSpan.FromMilliseconds(jitter.Next(0, 100)));
+            }).As<IAsyncPolicy>().SingleInstance();
 
             containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));

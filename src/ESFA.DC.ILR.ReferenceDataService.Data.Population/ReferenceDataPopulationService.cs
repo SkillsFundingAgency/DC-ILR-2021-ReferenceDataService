@@ -74,19 +74,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population
 
             return new ReferenceDataRoot
             {
-                //MetaDatas = await _metaDataRetrievalService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
-                //AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
-                //DevolvedPostcodes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
-                //EasFundingLines = await _easRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                MetaDatas = await _metaDataRetrievalService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                AppsEarningsHistories = await _appEarningsHistoryRepositoryService.RetrieveAsync(messageData.FM36Ulns, cancellationToken),
+                DevolvedPostcodes = await _devolvedPostcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
+                EasFundingLines = await _easRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
                 Employers = await _employersRepositoryService.RetrieveAsync(messageData.EmployerIds, cancellationToken),
-                //EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
-                //FCSContractAllocations = await _fcsRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
-                //LARSLearningDeliveries = await _larsLearningDeliveryRepositoryService.RetrieveAsync(messageData.LARSLearningDeliveryKeys, cancellationToken),
-                //LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
-                //McaDevolvedContracts = await _mcaDevolvedContractRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
-                //Organisations = await _organisationsRepositoryService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
-                //Postcodes = await _postcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
-                //ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken),
+                EPAOrganisations = await _epaOrganisationsRepositoryService.RetrieveAsync(messageData.EpaOrgIds, cancellationToken),
+                FCSContractAllocations = await _fcsRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                LARSLearningDeliveries = await _larsLearningDeliveryRepositoryService.RetrieveAsync(messageData.LARSLearningDeliveryKeys, cancellationToken),
+                LARSStandards = await _larsStandardRepositoryService.RetrieveAsync(messageData.StandardCodes, cancellationToken),
+                McaDevolvedContracts = await _mcaDevolvedContractRepositoryService.RetrieveAsync(messageData.LearningProviderUKPRN, cancellationToken),
+                Organisations = await _organisationsRepositoryService.RetrieveAsync(messageData.UKPRNs, cancellationToken),
+                Postcodes = await _postcodesRepositoryService.RetrieveAsync(messageData.Postcodes, cancellationToken),
+                ULNs = await _ulnRepositoryService.RetrieveAsync(messageData.ULNs, cancellationToken),
             };
         }
     }
