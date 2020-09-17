@@ -26,6 +26,8 @@
     <Parameter Name="IlrReferenceDataConnectionString" DefaultValue="" />
     <Parameter Name="EasConnectionString" DefaultValue="" />
     <Parameter Name="Ilr1920ConnectionString" DefaultValue="" />
+    <Parameter Name="DesktopReferenceDataFilePreFix" DefaultValue="" />
+    <Parameter Name="DesktopReferenceDataStoragePath" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -53,6 +55,10 @@
           <Section Name="IOConfiguration">
             <Parameter Name="ConnectionString" Value="[AzureStorageConnectionString]" />
             <Parameter Name="ContainerName" Value="[AzureStorageContainerName]" />
+          </Section>
+          <Section Name="DesktopReferenceDataSection">
+            <Parameter Name="DesktopReferenceDataFilePreFix" Value="[DesktopReferenceDataFilePreFix]" />
+            <Parameter Name="DesktopReferenceDataStoragePath" Value="[DesktopReferenceDataStoragePath]" />
           </Section>
           <Section Name="ReferenceDataSection">
             <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />

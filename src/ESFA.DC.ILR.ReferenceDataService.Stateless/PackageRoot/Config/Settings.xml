@@ -19,6 +19,10 @@
     <Parameter Name="ConnectionString" Value="" />
     <Parameter Name="ContainerName" Value="" />
   </Section>
+  <Section Name="DesktopReferenceDataSection">
+    <Parameter Name="DesktopReferenceDataFilePreFix" Value="" />
+    <Parameter Name="DesktopReferenceDataStoragePath" Value="" />
+  </Section>
   <Section  Name="ReferenceDataSection">
     <Parameter Name="LARSConnectionString" Value="" />
     <Parameter Name="PostcodesConnectionString" Value="" />

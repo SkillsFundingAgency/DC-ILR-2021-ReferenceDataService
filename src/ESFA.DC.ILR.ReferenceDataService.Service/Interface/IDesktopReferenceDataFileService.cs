@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
 {
     public interface IDesktopReferenceDataFileService
     {
-        Task ProcessAync(IReferenceDataContext referenceDataContext, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken);
+        Task ProcessAync(string container, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken);
     }
 }

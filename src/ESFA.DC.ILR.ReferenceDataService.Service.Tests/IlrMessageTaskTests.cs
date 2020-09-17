@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(referenceDataContextMock.Object, cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(referenceDataContextMock.Object, message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            filePersisterMock.Setup(s => s.StoreAsync(referenceDataContextMock.Object.OutputReferenceDataFileKey, referenceDataContextMock.Object.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            filePersisterMock.Setup(s => s.StoreAsync(referenceDataContextMock.Object.OutputIlrReferenceDataFileKey, referenceDataContextMock.Object.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
             var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, filePersisterMock.Object, loggerMock.Object);
 

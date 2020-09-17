@@ -2,6 +2,7 @@
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.FileService.Config;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Config;
 using ESFA.DC.ILR.ReferenceDataService.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Config;
 using ESFA.DC.JobContextManager.Interface;
@@ -21,6 +22,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             var azureStorageFileServiceConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<AzureStorageFileServiceConfiguration>("AzureStorageFileServiceConfiguration");
             var ioConfiguration = serviceFabricConfigurationService.GetConfigSectionAs<IOConfiguration>("IOConfiguration");
             var referenceDataOptions = serviceFabricConfigurationService.GetConfigSectionAs<ReferenceDataOptions>("ReferenceDataSection");
+            var desktopRefDataConfig = serviceFabricConfigurationService.GetConfigSectionAs<DesktopReferenceDataConfiguration>("DesktopReferenceDataSection");
+            containerBuilder.RegisterInstance(desktopRefDataConfig).As<IDesktopReferenceDataConfiguration>();
 
             containerBuilder.RegisterModule<BaseModule>();
             containerBuilder.RegisterModule(new StatelessServiceModule(statelessServiceConfiguration));
