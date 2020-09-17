@@ -8,7 +8,7 @@ using Polly;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Clients
 {
-    public class EDRSClientService : ClientService, IEDRSClientService
+    public class EDRSClientService : BaseClientService, IEDRSClientService
     {
         private readonly IAsyncPolicy _retryPolicy;
         protected string Url;

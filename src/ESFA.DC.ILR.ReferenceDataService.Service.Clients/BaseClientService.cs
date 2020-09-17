@@ -7,11 +7,11 @@ using Flurl.Http;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Clients
 {
-    public class ClientService
+    public abstract class BaseClientService
     {
         private readonly ILogger _logger;
 
-        public ClientService(ILogger logger)
+        public BaseClientService(ILogger logger)
         {
             _logger = logger;
         }
