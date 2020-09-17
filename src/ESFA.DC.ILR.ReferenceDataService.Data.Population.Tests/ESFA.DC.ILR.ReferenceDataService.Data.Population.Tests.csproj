@@ -76,6 +76,9 @@
     <Reference Include="ESFA.DC.ILR1920.DataStore.EF.Valid, Version=0.0.580.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR1920.Database.EF.0.0.580\lib\netstandard2.0\ESFA.DC.ILR1920.DataStore.EF.Valid.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ReferenceData.Employers.Model, Version=0.2.789.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ReferenceData.Employers.Model.0.2.789\lib\netstandard2.0\ESFA.DC.ReferenceData.Employers.Model.dll</HintPath>
     </Reference>

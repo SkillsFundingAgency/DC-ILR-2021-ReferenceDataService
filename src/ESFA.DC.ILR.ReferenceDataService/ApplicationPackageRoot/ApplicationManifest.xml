@@ -26,6 +26,8 @@
     <Parameter Name="IlrReferenceDataConnectionString" DefaultValue="" />
     <Parameter Name="EasConnectionString" DefaultValue="" />
     <Parameter Name="Ilr1920ConnectionString" DefaultValue="" />
+    <Parameter Name="EDRSAPIEnabled" DefaultValue="" />
+    <Parameter Name="EDRSApiBaseUrl" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -53,6 +55,12 @@
           <Section Name="IOConfiguration">
             <Parameter Name="ConnectionString" Value="[AzureStorageConnectionString]" />
             <Parameter Name="ContainerName" Value="[AzureStorageContainerName]" />
+          </Section>
+          <Section Name="FeatureConfiguration">
+            <Parameter Name="EDRSAPIEnabled" Value="[EDRSAPIEnabled]" />
+          </Section>
+          <Section Name="ApiSettings">
+            <Parameter Name="EDRSApiBaseUrl" Value="[EDRSApiBaseUrl]" />
           </Section>
           <Section Name="ReferenceDataSection">
             <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />

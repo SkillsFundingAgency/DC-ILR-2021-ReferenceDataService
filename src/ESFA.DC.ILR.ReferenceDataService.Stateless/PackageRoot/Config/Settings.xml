@@ -32,4 +32,10 @@
     <Parameter Name="EasConnectionString" Value=""/>
     <Parameter Name="Ilr1920ConnectionString" Value=""/>
   </Section>
+  <Section Name="FeatureConfiguration">
+    <Parameter Name="EDRSAPIEnabled" Value="" />
+  </Section>
+  <Section Name="ApiSettings">
+    <Parameter Name="EDRSApiBaseUrl" Value="" />
+  </Section>
 </Settings>

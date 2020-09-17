@@ -4,6 +4,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Service.Clients;
 using ESFA.DC.ILR.ReferenceDataService.Model.AppEarningsHistory;
 using ESFA.DC.ILR.ReferenceDataService.Model.EAS;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -14,6 +15,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.McaContracts;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
+using ESFA.DC.ILR.ReferenceDataService.Service.Clients;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 {
@@ -34,6 +36,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.RegisterType<PostcodesRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<string>, IReadOnlyCollection<Postcode>>>();
             containerBuilder.RegisterType<McaDevolvedContractsRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>>>();
             containerBuilder.RegisterType<UlnRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
+
+            containerBuilder.RegisterType<EDRSClientService>().As<IEDRSClientService>();
         }
     }
 }
