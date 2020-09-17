@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces.Service.Clients;
 using ESFA.DC.Logging.Interfaces;
 using Flurl;
 using Flurl.Http;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Clients
 {
-    public class ClientService : IClientService
+    public class ClientService
     {
         private readonly ILogger _logger;
 

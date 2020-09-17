@@ -37,7 +37,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.RegisterType<McaDevolvedContractsRepositoryService>().As<IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>>>();
             containerBuilder.RegisterType<UlnRepositoryService>().As<IReferenceDataRetrievalService<IReadOnlyCollection<long>, IReadOnlyCollection<long>>>();
 
-            containerBuilder.RegisterType<ClientService>().As<IClientService>();
             containerBuilder.RegisterType<EDRSClientService>().As<IEDRSClientService>();
         }
     }
