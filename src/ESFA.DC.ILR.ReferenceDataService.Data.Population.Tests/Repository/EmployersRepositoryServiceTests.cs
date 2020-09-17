@@ -69,10 +69,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var edrsDbMock = edrsList.AsQueryable().BuildMockDbSet();
             var lempDbMock = lempList.AsQueryable().BuildMockDbSet();
 
+            var loggerMock = new Mock<ILogger>();
+
             var clientServiceMock = new Mock<IEDRSClientService>();
             clientServiceMock
                 .Setup(m => m.ValidateErns(empIds, CancellationToken.None))
                 .ReturnsAsync(Enumerable.Empty<int>());
+
+            var featureConfiguration = new FeatureConfiguration
+            {
+                EDRSAPIEnabled = "false"
+            };
 
             var employersMock = new Mock<IEmployersContext>();
             employersMock.Setup(e => e.Employers).Returns(edrsDbMock.Object);
@@ -81,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var employersContextFactoryMock = new Mock<IDbContextFactory<IEmployersContext>>();
             employersContextFactoryMock.Setup(c => c.Create()).Returns(employersMock.Object);
 
-            var serviceResult = await NewService(employersContextFactoryMock.Object, clientServiceMock.Object)
+            var serviceResult = await NewService(employersContextFactoryMock.Object, clientServiceMock.Object, featureConfiguration, loggerMock.Object)
                 .RetrieveAsync(empIds, CancellationToken.None);
 
             serviceResult.Should().HaveCount(21);
