@@ -26,6 +26,8 @@
     <Parameter Name="IlrReferenceDataConnectionString" Value="__IlrReferenceDataConnectionString_EFCore_RW__" />
     <Parameter Name="EasConnectionString" Value="__EasConnectionStringRO__" />
     <Parameter Name="Ilr1920ConnectionString" Value="__Ilr1920ConnectionStringRO__" />
+    <Parameter Name="DesktopReferenceDataStoragePath" Value="__DesktopReferenceDataStoragePath__" />
+    <Parameter Name="DesktopReferenceDataFilePreFix" Value="__FISReferenceDataFilePreFix__" />
     <Parameter Name="EDRSAPIEnabled" Value="__EDRSAPIEnabled__" />
     <Parameter Name="EDRSApiBaseUrl" Value="__EDRSApiBaseUrl__" />
   </Parameters>

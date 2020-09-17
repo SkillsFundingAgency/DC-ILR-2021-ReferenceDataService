@@ -105,7 +105,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             };
 
             var currentPath = Directory.GetCurrentDirectory();
-            referenceDataContext.Setup(r => r.InputReferenceDataFileKey).Returns("ReferenceData.zip");
+            referenceDataContext.Setup(r => r.DesktopInputReferenceDataFileKey).Returns("ReferenceData.zip");
             referenceDataContext.Setup(r => r.Container).Returns(currentPath);
 
             zipArchiveFileServiceMock.Setup(zs => zs.RetrieveModel<MetaData>(It.IsAny<ZipArchive>(), It.IsAny<string>())).Returns(TestNetaData());
@@ -128,7 +128,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
             using (Stream stream = new FileStream(currentPath + "\\TestFiles\\ReferenceData.zip", FileMode.Open))
             {
                 fileServiceMock.Setup(fs => fs.OpenReadStreamAsync(
-                   referenceDataContext.Object.InputReferenceDataFileKey,
+                   referenceDataContext.Object.DesktopInputReferenceDataFileKey,
                    referenceDataContext.Object.Container,
                    cancellationToken)).ReturnsAsync(stream);
 
