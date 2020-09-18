@@ -8,9 +8,9 @@
 
         string Container { get; }
 
-        string InputReferenceDataFileKey { get; }
+        string DesktopInputReferenceDataFileKey { get; }
 
-        string OutputReferenceDataFileKey { get; }
+        string OutputIlrReferenceDataFileKey { get; }
 
         string FrmReferenceDataFileKey { get; }
 
@@ -21,8 +21,6 @@
         int ReturnPeriod { get; set; }
 
         string ValidationMessagesFileReference { get; }
-
-        string DesktopReferenceDataStoragePath { get; }
 
         int Ukprn { get; set; }
     }

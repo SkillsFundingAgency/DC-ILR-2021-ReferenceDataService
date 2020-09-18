@@ -29,9 +29,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string Container => _desktopContext.KeyValuePairs[ILRContextKeys.Container].ToString();
 
-        public string InputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
+        public string DesktopInputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
 
-        public string OutputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
+        public string OutputIlrReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
         public string FrmReferenceDataFileKey => throw new NotImplementedException();
 
@@ -46,8 +46,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
         }
 
         public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs[ReferenceDataContextKeys.ValidationMessagesFileReferenceKey].ToString();
-
-        public string DesktopReferenceDataStoragePath => throw new NotImplementedException();
 
         public int Ukprn
         {

@@ -29,9 +29,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
-        public string InputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopInputReferenceDataKey].ToString();
+        public string DesktopInputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopInputReferenceDataKey].ToString();
 
-        public string OutputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
+        public string OutputIlrReferenceDataFileKey => _jobContextMessage.KeyValuePairs[JobContextMessageKey.IlrReferenceData].ToString();
 
         public string FrmReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FrmReferenceDataFileKey].ToString();
 
@@ -52,11 +52,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             get => int.Parse(_jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn].ToString());
             set => throw new System.NotImplementedException();
         }
-
-        public string DesktopReferenceDataFileName => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopReferenceDataFileNameKey].ToString();
-
-        public string DesktopReferenceDataStoragePath => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopReferenceDataStoragePathKey].ToString();
-
-        public string ReferenceDataModelVersion { get; set; }
     }
 }
