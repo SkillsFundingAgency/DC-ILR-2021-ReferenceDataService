@@ -31,15 +31,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 var postcodeSpecResourcesDictionary = await BuildPostcodeSpecResDictionary(ukprns, context, cancellationToken);
                 var shortTermFundingInitiativesDictionary = await BuildShortTermFundingInitiativesDictionary(ukprns, context, cancellationToken);
 
-                return await context
+                var orgs = await context
                     .MasterOrganisations
                     .Include(mo => mo.OrgDetail)
                     .Include(mo => mo.OrgPartnerUkprns)
                     .Include(mo => mo.OrgFundings)
                     .Include(mo => mo.ConditionOfFundingRemovals)
                     .Where(mo => ukprns.Contains(mo.Ukprn))
-                    .Select(x => BuildOrganisations(x, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary))
                     .ToListAsync(cancellationToken);
+
+                return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }
         }
 

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
-using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
 {
@@ -28,9 +24,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
             AcademicYearEnd = academicYearDataService.CurrentYearEnd;
         }
 
-        protected DateTime AcademicYearStart { get; set; }
+        protected DateTime AcademicYearStart { get; }
 
-        protected DateTime AcademicYearEnd { get; set; }
+        protected DateTime AcademicYearEnd { get; }
 
         public List<OrganisationCampusIdentifier> GetCampusIdentifiers(long ukprn, Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiers)
         {
@@ -132,42 +128,42 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
                             }).ToList()));
         }
 
-        protected Organisation BuildOrganisations(
-           MasterOrganisation org,
-           Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary,
-           Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiersDictionary,
-           Dictionary<long, List<OrganisationPostcodeSpecialistResource>> postcodeSpecResourcesDictionary,
-           Dictionary<long, List<OrganisationShortTermFundingInitiative>> shortTermFundingInitiativesDictionary)
-        {
-            return new Organisation
+        protected IReadOnlyCollection<Organisation> BuildOrganisations(
+         IEnumerable<MasterOrganisation> orgs,
+         Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary,
+         Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiersDictionary,
+         Dictionary<long, List<OrganisationPostcodeSpecialistResource>> postcodeSpecResourcesDictionary,
+         Dictionary<long, List<OrganisationShortTermFundingInitiative>> shortTermFundingInitiativesDictionary)
             {
-                UKPRN = (int)org.Ukprn,
-                Name = org.OrgDetail.Name,
-                LegalOrgType = org.OrgDetail.LegalOrgType,
-                PartnerUKPRN = org.OrgPartnerUkprns.Any(op => op.Ukprn == org.Ukprn),
-                LongTermResid = org.OrgDetail.LongTermResid == LongTermResidValue,
-                CampusIdentifers = GetCampusIdentifiers(org.Ukprn, campusIdentifiersDictionary),
-                PostcodeSpecialistResources = GetPostcodeSpecResources(org.Ukprn, postcodeSpecResourcesDictionary),
-                OrganisationFundings = org.OrgFundings.Select(of =>
-                    new OrganisationFunding()
-                    {
-                        OrgFundFactor = of.FundingFactor,
-                        OrgFundFactType = of.FundingFactorType,
-                        OrgFundFactValue = of.FundingFactorValue,
-                        EffectiveFrom = of.EffectiveFrom,
-                        EffectiveTo = of.EffectiveTo,
-                    }).ToList(),
-                OrganisationCoFRemovals = org.ConditionOfFundingRemovals
-                    .Where(cf => cf.EffectiveFrom >= AcademicYearStart && cf.EffectiveTo <= AcademicYearEnd)
-                    .Select(c =>
-                        new OrganisationCoFRemoval
+                return orgs?.Select(org => new Organisation
+                {
+                    UKPRN = (int)org.Ukprn,
+                    Name = org?.OrgDetail?.Name,
+                    LegalOrgType = org?.OrgDetail?.LegalOrgType,
+                    PartnerUKPRN = org?.OrgPartnerUkprns?.Any(op => op.Ukprn == org.Ukprn),
+                    LongTermResid = org?.OrgDetail?.LongTermResid == LongTermResidValue,
+                    CampusIdentifers = GetCampusIdentifiers(org.Ukprn, campusIdentifiersDictionary),
+                    PostcodeSpecialistResources = GetPostcodeSpecResources(org.Ukprn, postcodeSpecResourcesDictionary),
+                    OrganisationFundings = org?.OrgFundings?.Select(of =>
+                        new OrganisationFunding()
                         {
-                            CoFRemoval = c.CoFremoval,
-                            EffectiveFrom = c.EffectiveFrom,
-                            EffectiveTo = c.EffectiveTo,
+                            OrgFundFactor = of.FundingFactor,
+                            OrgFundFactType = of.FundingFactorType,
+                            OrgFundFactValue = of.FundingFactorValue,
+                            EffectiveFrom = of.EffectiveFrom,
+                            EffectiveTo = of.EffectiveTo,
                         }).ToList(),
-                OrganisationShortTermFundingInitiatives = GetShortTermFundingInitiatives(org.Ukprn, shortTermFundingInitiativesDictionary),
-            };
-        }
+                    OrganisationCoFRemovals = org?.ConditionOfFundingRemovals?
+                        .Where(cf => cf.EffectiveFrom >= AcademicYearStart && cf.EffectiveTo <= AcademicYearEnd)
+                        .Select(c =>
+                            new OrganisationCoFRemoval
+                            {
+                                CoFRemoval = c.CoFremoval,
+                                EffectiveFrom = c.EffectiveFrom,
+                                EffectiveTo = c.EffectiveTo,
+                            }).ToList(),
+                    OrganisationShortTermFundingInitiatives = GetShortTermFundingInitiatives(org.Ukprn, shortTermFundingInitiativesDictionary),
+                }).ToList();
+            }
     }
 }
