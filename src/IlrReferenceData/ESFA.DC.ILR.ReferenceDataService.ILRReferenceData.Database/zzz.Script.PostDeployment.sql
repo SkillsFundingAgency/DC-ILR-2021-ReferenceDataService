@@ -2373,6 +2373,52 @@ INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [
 INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'OutType', N'SDE', N'3', N'Learner returning home', CAST(N'1900-01-01' AS Date), CAST(N'2099-12-31' AS Date))
 INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'OutType', N'SDE', N'4', N'Long term residential placement', CAST(N'1900-01-01' AS Date), CAST(N'2099-12-31' AS Date))
 INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'OutType', N'VOL', N'1', N'Voluntary work', CAST(N'1900-01-01' AS Date), CAST(N'2099-12-31' AS Date))
+GO
+-- Missing codes bug 105224
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'1', N'OutGrade 1 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'1', N'OutGrade 1 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'2', N'OutGrade 2 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'2', N'OutGrade 2 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'3', N'OutGrade 3 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'3', N'OutGrade 3 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'4', N'OutGrade 4 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'4', N'OutGrade 4 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'5', N'OutGrade 5 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'5', N'OutGrade 5 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'6', N'OutGrade 6 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'6', N'OutGrade 6 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'7', N'OutGrade 7 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'7', N'OutGrade 7 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'8', N'OutGrade 8 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'8', N'OutGrade 8 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'9', N'OutGrade 9 for LearningAimType 1422',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'9', N'OutGrade 9 for LearningAimType 2999',NULL,NULL)
+GO
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'11', N'OutGrade 11 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'11', N'OutGrade 11 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'21', N'OutGrade 21 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'21', N'OutGrade 21 for LearningAimType 2999',NULL,NULL)
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'22', N'OutGrade 22 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'22', N'OutGrade 22 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'32', N'OutGrade 32 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'32', N'OutGrade 32 for LearningAimType 2999',NULL,NULL) 
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'33', N'OutGrade 33 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'33', N'OutGrade 33 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'43', N'OutGrade 43 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'44', N'OutGrade 44 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'54', N'OutGrade 54 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'55', N'OutGrade 55 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'65', N'OutGrade 65 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'66', N'OutGrade 66 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'76', N'OutGrade 76 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'77', N'OutGrade 77 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'87', N'OutGrade 87 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'88', N'OutGrade 88 for LearningAimType 2999',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'1422', N'98', N'OutGrade 98 for LearningAimType 1422',NULL,NULL)  
+INSERT [dbo].[LookupSubCategory] ([ParentName], [Name], [Code], [Description], [EffectiveFrom], [EffectiveTo]) VALUES (N'LearningAimType', N'2999', N'99', N'OutGrade 99 for LearningAimType 2999',NULL,NULL)
+GO
+
+
 
 RAISERROR('Lookups Completed',10,1) WITH NOWAIT;
 GO
