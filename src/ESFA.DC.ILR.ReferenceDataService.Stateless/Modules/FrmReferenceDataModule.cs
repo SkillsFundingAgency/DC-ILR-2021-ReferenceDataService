@@ -16,7 +16,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 
             builder.RegisterType<FrmDataRetrievalService>().As<IFrmDataRetrievalService>();
             builder.RegisterType<FrmReferenceDataRepositoryService>().As<IFrmReferenceDataRepositoryService>();
-            builder.RegisterType<AcademicYearDataService>().As<IAcademicYearDataService>();
         }
     }
 }
