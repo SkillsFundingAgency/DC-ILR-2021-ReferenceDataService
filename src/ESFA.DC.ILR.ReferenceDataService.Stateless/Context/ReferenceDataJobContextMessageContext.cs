@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public long JobId => _jobContextMessage.JobId;
 
-        public string CollectionName => _jobContextMessage.KeyValuePairs["CollectionName"].ToString();
+        public string CollectionName => _jobContextMessage.KeyValuePairs[JobContextMessageKey.CollectionName].ToString();
 
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 

@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var service = NewService(desktopRefDataConfigMock.Object, fileNameServiceMock.Object, zipFileServiceMock.Object, loggerMock.Object);
 
-            await service.ProcessAync(context.Object, desktopReferenceDataRoot, cancellationToken);
+            await service.ProcessAsync(context.Object, desktopReferenceDataRoot, cancellationToken);
 
             desktopRefDataConfigMock.VerifyAll();
             fileNameServiceMock.VerifyAll();
