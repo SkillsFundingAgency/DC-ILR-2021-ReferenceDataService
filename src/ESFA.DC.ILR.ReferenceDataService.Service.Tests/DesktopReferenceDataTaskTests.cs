@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(cancellationToken)).Returns(Task.FromResult(desktopReferenceDataRoot)).Verifiable();
-            desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object.Container, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAsync(referenceDataContextMock.Object, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
             var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, loggerMock.Object);
 
