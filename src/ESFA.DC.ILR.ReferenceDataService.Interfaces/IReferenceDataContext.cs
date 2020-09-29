@@ -2,6 +2,8 @@
 {
     public interface IReferenceDataContext
     {
+        long JobId { get; }
+
         string FileReference { get; set; }
 
         string OriginalFileReference { get; set; }
@@ -23,5 +25,7 @@
         string ValidationMessagesFileReference { get; }
 
         int Ukprn { get; set; }
+
+        string CollectionName { get; }
     }
 }

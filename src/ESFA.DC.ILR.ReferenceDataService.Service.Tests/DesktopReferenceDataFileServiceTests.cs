@@ -24,14 +24,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         public async Task ProcessAync()
         {
             var container = "Container";
-            var filePath = "filepath/";
+            var collectionName = "Collection";
             var filePrefix = "FISReferenceData";
-            var outputFileName = "filepath/FISReferenceData_0.1.0.zip";
             var cancellationToken = CancellationToken.None;
             var zipFileServiceMock = new Mock<IZipFileService>();
             var loggerMock = new Mock<ILogger>();
             var fileNameServiceMock = new Mock<IDesktopReferenceDataFileNameService>();
             var desktopRefDataConfigMock = new Mock<IDesktopReferenceDataConfiguration>();
+
+            var context = new Mock<IReferenceDataContext>();
+            context.Setup(x => x.Container).Returns(container);
+            context.Setup(x => x.JobId).Returns(1);
+            context.Setup(x => x.CollectionName).Returns(collectionName);
+
+            var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
+            var outputFileName = $@"{filePath}/FISReferenceData_0.1.0.zip";
 
             fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix)).Returns(outputFileName);
 
@@ -52,12 +59,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
                 It.IsAny<IReadOnlyCollection<Postcode>>(),
                 cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            desktopRefDataConfigMock.Setup(x => x.DesktopReferenceDataStoragePath).Returns(filePath);
             desktopRefDataConfigMock.Setup(x => x.DesktopReferenceDataFilePreFix).Returns(filePrefix);
 
             var service = NewService(desktopRefDataConfigMock.Object, fileNameServiceMock.Object, zipFileServiceMock.Object, loggerMock.Object);
 
-            await service.ProcessAync(container, desktopReferenceDataRoot, cancellationToken);
+            await service.ProcessAync(context.Object, desktopReferenceDataRoot, cancellationToken);
 
             desktopRefDataConfigMock.VerifyAll();
             fileNameServiceMock.VerifyAll();
