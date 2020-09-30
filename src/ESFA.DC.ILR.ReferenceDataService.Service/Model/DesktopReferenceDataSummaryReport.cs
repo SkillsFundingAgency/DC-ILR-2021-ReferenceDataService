@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Model
 {
-    public class DesktopReferenceDataSummaryReport : IDesktopReferenceDataSummaryReport
+    public class DesktopReferenceDataSummaryReport : IReferenceDataSummaryStatistics
     {
         public string DataSource { get; set; }
 

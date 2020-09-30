@@ -17,7 +17,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterModule<DesktopReferenceDataRepositoryServicesModule>();
-            containerBuilder.RegisterType<DesktopReferenceDataSummaryReport>().As<IDesktopReferenceDataSummaryReport>();
             containerBuilder.RegisterType<DesktopReferenceDataPopulationService>().As<IDesktopReferenceDataPopulationService>();
             containerBuilder.RegisterType<DesktopReferenceDataFileService>().As<IDesktopReferenceDataFileService>();
             containerBuilder.RegisterType<DesktopReferenceDataSummaryFileService>().As<IDesktopReferenceDataSummaryFileService>();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
-    public interface IDesktopReferenceDataSummaryReport
+    public interface IReferenceDataSummaryStatistics
     {
         string DataSource { get;  }
 

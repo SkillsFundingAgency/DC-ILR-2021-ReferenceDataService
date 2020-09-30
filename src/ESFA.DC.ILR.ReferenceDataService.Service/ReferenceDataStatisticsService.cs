@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
 {
     public class ReferenceDataStatisticsService : IReferenceDataStatisticsService
     {
-        private List<IDesktopReferenceDataSummaryReport> _desktopReferenceDataSummaryReports = new List<IDesktopReferenceDataSummaryReport>();
+        private List<IReferenceDataSummaryStatistics> _desktopReferenceDataSummaryReports = new List<IReferenceDataSummaryStatistics>();
 
         public void AddRecordCount(string name, int count)
         {
@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             });
         }
 
-        public IEnumerable<IDesktopReferenceDataSummaryReport> GetStatistics()
+        public IEnumerable<IReferenceDataSummaryStatistics> GetStatistics()
         {
             return _desktopReferenceDataSummaryReports;
         }
