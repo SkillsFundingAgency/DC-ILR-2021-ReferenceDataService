@@ -27,6 +27,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             set => _jobContextMessage.KeyValuePairs[JobContextMessageKey.OriginalFilename] = value;
         }
 
+        public long JobId => _jobContextMessage.JobId;
+
+        public string CollectionName => _jobContextMessage.KeyValuePairs[JobContextMessageKey.CollectionName].ToString();
+
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
         public string DesktopInputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopInputReferenceDataKey].ToString();

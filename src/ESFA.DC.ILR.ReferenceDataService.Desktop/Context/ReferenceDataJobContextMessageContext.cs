@@ -52,5 +52,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
             get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
             set => _desktopContext.KeyValuePairs[ILRContextKeys.Ukprn] = value;
         }
+
+        public long JobId => throw new NotImplementedException();
+
+        public string CollectionName => throw new NotImplementedException();
     }
 }

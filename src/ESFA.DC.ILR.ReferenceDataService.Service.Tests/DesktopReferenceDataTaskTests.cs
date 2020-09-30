@@ -22,16 +22,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var referenceDataPopulationServiceMock = new Mock<IDesktopReferenceDataPopulationService>();
             var desktopReferenceDataFileServiceMock = new Mock<IDesktopReferenceDataFileService>();
-            var desktopReferenceDataSummaryFileServiceMock = new Mock<IDesktopReferenceDataSummaryFileService>();
             var loggerMock = new Mock<ILogger>();
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(cancellationToken)).Returns(Task.FromResult(desktopReferenceDataRoot)).Verifiable();
-            desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object.Container, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
-            desktopReferenceDataSummaryFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object.Container, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAsync(referenceDataContextMock.Object, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, desktopReferenceDataSummaryFileServiceMock.Object, loggerMock.Object);
+            var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, loggerMock.Object);
 
             await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
@@ -42,10 +40,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         private DesktopReferenceDataTask NewService(
             IDesktopReferenceDataPopulationService referenceDataPopulationService = null,
             IDesktopReferenceDataFileService desktopReferenceDataFileService = null,
-            IDesktopReferenceDataSummaryFileService desktopReferenceDataSummaryFileService = null,
             ILogger logger = null)
         {
-            return new DesktopReferenceDataTask(referenceDataPopulationService, desktopReferenceDataFileService, desktopReferenceDataSummaryFileService, logger);
+            return new DesktopReferenceDataTask(referenceDataPopulationService, desktopReferenceDataFileService, logger);
         }
     }
 }

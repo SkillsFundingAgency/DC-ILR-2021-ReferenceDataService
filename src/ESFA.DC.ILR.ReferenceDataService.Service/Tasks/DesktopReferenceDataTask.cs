@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _desktopReferenceDataFileService.ProcessAync(referenceDataContext.Container, referenceData, cancellationToken);
+                await _desktopReferenceDataFileService.ProcessAsync(referenceDataContext, referenceData, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
 
                 // output summary.
