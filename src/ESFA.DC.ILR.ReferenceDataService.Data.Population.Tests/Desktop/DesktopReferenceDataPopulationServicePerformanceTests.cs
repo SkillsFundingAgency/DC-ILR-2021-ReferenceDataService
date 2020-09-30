@@ -5,6 +5,7 @@ using System.Threading;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Entity;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using Xunit;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Desktop
@@ -29,7 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Desktop
                 var postcodesEntityModelMapper = new PostcodesEntityModelMapper();
 
                 var desktopPostcodesRepositoryService =
-                    new DesktopPostcodesRepositoryService(referenceDataOptions, postcodesEntityModelMapper);
+                    new DesktopPostcodesRepositoryService(referenceDataOptions, postcodesEntityModelMapper, null);
 
                 currentProc.Refresh();
                 long beforeMemoryUsed = currentProc.PrivateMemorySize64;

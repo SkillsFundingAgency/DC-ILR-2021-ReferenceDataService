@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
         private McaDevolvedContractsRepositoryService NewService(IDbContextFactory<IFcsContext> fcsContextFactory = null)
         {
-            return new McaDevolvedContractsRepositoryService(fcsContextFactory);
+            return new McaDevolvedContractsRepositoryService(fcsContextFactory, null);
         }
     }
 }

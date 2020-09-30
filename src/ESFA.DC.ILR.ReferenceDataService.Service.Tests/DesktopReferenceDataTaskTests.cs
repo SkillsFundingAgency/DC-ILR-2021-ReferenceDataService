@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(cancellationToken)).Returns(Task.FromResult(desktopReferenceDataRoot)).Verifiable();
             desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object.Container, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, loggerMock.Object);
+            var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, logger: loggerMock.Object);
 
             await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
@@ -40,9 +40,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         private DesktopReferenceDataTask NewService(
             IDesktopReferenceDataPopulationService referenceDataPopulationService = null,
             IDesktopReferenceDataFileService desktopReferenceDataFileService = null,
+            IDesktopReferenceDataSummaryFileService desktopReferenceDataSummaryFileService = null,
             ILogger logger = null)
         {
-            return new DesktopReferenceDataTask(referenceDataPopulationService, desktopReferenceDataFileService, logger);
+            return new DesktopReferenceDataTask(referenceDataPopulationService, desktopReferenceDataFileService, desktopReferenceDataSummaryFileService, logger);
         }
     }
 }
