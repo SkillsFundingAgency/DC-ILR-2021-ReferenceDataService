@@ -16,7 +16,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
         private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-
         public DesktopLarsFrameworkAimsRepositoryService(
             IDbContextFactory<ILARSContext> larsContextFactory,
             IReferenceDataStatisticsService referenceDataStatisticsService)
