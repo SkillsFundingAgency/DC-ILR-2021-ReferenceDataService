@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var context = _fcsContextFactory.Create())
             {
-                var contracts = await context.DevolvedContracts
+                return await context.DevolvedContracts
                     .Where(dc => dc.Ukprn == ukprn)
                     .Select(dc =>
                     new McaDevolvedContract
@@ -34,8 +34,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         EffectiveFrom = dc.EffectiveFrom,
                         EffectiveTo = dc.EffectiveTo
                     }).ToListAsync(cancellationToken);
-
-                return contracts;
             }
         }
     }
