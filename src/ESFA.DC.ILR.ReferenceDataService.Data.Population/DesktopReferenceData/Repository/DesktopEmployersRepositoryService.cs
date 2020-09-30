@@ -29,6 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _employersContextFactory.Create())
             {
                 var largeEmployers = await context.LargeEmployers.ToListAsync(cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("Employer IDs", largeEmployers.GroupBy(le => le.Ern).Count());
                 _referenceDataStatisticsService.AddRecordCount("Large Employers", largeEmployers.Count);
 
                 return

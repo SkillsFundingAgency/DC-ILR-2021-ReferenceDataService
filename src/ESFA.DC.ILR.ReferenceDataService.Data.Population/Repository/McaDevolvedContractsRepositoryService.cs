@@ -14,14 +14,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
     public class McaDevolvedContractsRepositoryService : IReferenceDataRetrievalService<int, IReadOnlyCollection<McaDevolvedContract>>
     {
         private readonly IDbContextFactory<IFcsContext> _fcsContextFactory;
-        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public McaDevolvedContractsRepositoryService(
-            IDbContextFactory<IFcsContext> fcsContextFactory,
-            IReferenceDataStatisticsService referenceDataStatisticsService)
+        public McaDevolvedContractsRepositoryService(IDbContextFactory<IFcsContext> fcsContextFactory)
         {
             _fcsContextFactory = fcsContextFactory;
-            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<McaDevolvedContract>> RetrieveAsync(int ukprn, CancellationToken cancellationToken)
@@ -38,8 +34,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         EffectiveFrom = dc.EffectiveFrom,
                         EffectiveTo = dc.EffectiveTo
                     }).ToListAsync(cancellationToken);
-
-                _referenceDataStatisticsService.AddRecordCount("Devolved Contracts", contracts.Count);
 
                 return contracts;
             }

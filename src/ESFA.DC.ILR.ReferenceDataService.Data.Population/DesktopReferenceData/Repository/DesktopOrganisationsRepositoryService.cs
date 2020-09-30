@@ -48,6 +48,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 _referenceDataStatisticsService.AddRecordCount("CoF Removals", orgs.Select(o => o.ConditionOfFundingRemovals).Count());
                 _referenceDataStatisticsService.AddRecordCount("Campus Identifiers", campusIdentifiersDictionary.Count);
                 _referenceDataStatisticsService.AddRecordCount("Short Term Finding Initiatives", shortTermFundingInitiativesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount("Postcode Specialist Resources", specResourcesForUkprnDictionary.Count);
 
                 return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }
