@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ReferenceData.FCS.Model;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
 using FluentAssertions;
@@ -64,16 +65,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var fcsContextFactoryMock = new Mock<IDbContextFactory<IFcsContext>>();
             fcsContextFactoryMock.Setup(c => c.Create()).Returns(fcsMock.Object);
 
-            var service = await NewService(fcsContextFactoryMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
+            var statsServiceMock = new Mock<IReferenceDataStatisticsService>();
+            statsServiceMock.Setup(x => x.AddRecordCount("test", 1)).Verifiable();
+
+            var service = await NewService(fcsContextFactoryMock.Object, statsServiceMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(3);
             service.Select(f => f.Ukprn).FirstOrDefault().Should().Be(1);
             service.Select(f => f.McaGlaShortCode).Should().BeEquivalentTo(new List<string> { "Code1", "Code2", "Code3" });
         }
 
-        private McaDevolvedContractsRepositoryService NewService(IDbContextFactory<IFcsContext> fcsContextFactory = null)
+        private McaDevolvedContractsRepositoryService NewService(
+            IDbContextFactory<IFcsContext> fcsContextFactory = null,
+            IReferenceDataStatisticsService referenceDataStatisticsService = null)
         {
-            return new McaDevolvedContractsRepositoryService(fcsContextFactory, null);
+            return new McaDevolvedContractsRepositoryService(fcsContextFactory, referenceDataStatisticsService);
         }
     }
 }
