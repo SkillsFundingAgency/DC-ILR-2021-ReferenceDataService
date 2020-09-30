@@ -4,19 +4,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopLarsFrameworkRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsFrameworkRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsFrameworkRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSFrameworkDesktop>> RetrieveAsync(CancellationToken cancellationToken)
@@ -27,6 +33,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .Include(l => l.LarsApprenticeshipFworkFundings)
                 .Include(l => l.LarsFrameworkCmnComps)
                 .ToListAsync(cancellationToken);
+
+                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks", larsFrameworks.Count);
+                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks Common Components", larsFrameworks.Select(lf => lf.LarsFrameworkCmnComps).Count());
+                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks Apprenticeship Funding", larsFrameworks.Select(lf => lf.LarsApprenticeshipFworkFundings).Count());
 
                 return larsFrameworks
                     .Select(lf => new LARSFrameworkDesktop

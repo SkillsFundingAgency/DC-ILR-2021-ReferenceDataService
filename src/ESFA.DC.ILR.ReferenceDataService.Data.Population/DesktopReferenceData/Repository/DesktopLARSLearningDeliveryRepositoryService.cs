@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -15,10 +16,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     public class DesktopLarsLearningDeliveryRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsLearningDeliveryRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsLearningDeliveryRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(CancellationToken cancellationToken)
@@ -26,10 +31,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _larsContextFactory.Create())
             {
                 var learningDeliveries = await BuildLARSLearningDelvieries(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("LARS Learning Deliveries", learningDeliveries.Count);
                 var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("LARS Annual Values", larsAnnualValuesDictionary.Count);
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("LARS Learning Delivery Categories", larsLearningDeliveryCategoriesDictionary.Count);
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("LARS Funding", larsFundingsDictionary.Count);
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("LARS Validities", larsValiditiesDictionary.Count);
                 var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 var defaultLarsAnnualValues = new List<LARSAnnualValue>();

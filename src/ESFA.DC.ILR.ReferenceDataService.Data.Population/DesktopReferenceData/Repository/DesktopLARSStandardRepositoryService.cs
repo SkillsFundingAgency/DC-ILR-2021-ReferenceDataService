@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     public class DesktopLarsStandardRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsStandardRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsStandardRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(CancellationToken cancellationToken)
@@ -29,6 +34,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .Include(l => l.LarsStandardFundings)
                 .Include(l => l.LarsStandardValidities)
                 .ToListAsync(cancellationToken);
+
+                _referenceDataStatisticsService.AddRecordCount("LARS Standards", larsStandards.Count);
+                _referenceDataStatisticsService.AddRecordCount("LARS Standard Apprenticeship Funding", larsStandards.Select(ls => ls.LarsApprenticeshipStdFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount("LARS Standard Common Components", larsStandards.Select(ls => ls.LarsStandardCommonComponents).Count());
+                _referenceDataStatisticsService.AddRecordCount("LARS Standard Fundings", larsStandards.Select(ls => ls.LarsStandardFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount("LARS Standard Validities", larsStandards.Select(ls => ls.LarsStandardValidities).Count());
 
                 return larsStandards
                     .Select(

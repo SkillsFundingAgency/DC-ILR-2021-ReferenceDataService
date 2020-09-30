@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
@@ -19,15 +20,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IReferenceDataOptions _referenceDataOptions;
         private readonly IJsonSerializationService _jsonSerializationService;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
         public DesktopDevolvedPostcodesRepositoryService(
             IDbContextFactory<IPostcodesContext> postcodesContextFactory,
             IReferenceDataOptions referenceDataOptions,
-            IJsonSerializationService jsonSerializationService)
+            IJsonSerializationService jsonSerializationService,
+            IReferenceDataStatisticsService referenceDataStatisticService)
         {
             _postcodesContextFactory = postcodesContextFactory;
             _referenceDataOptions = referenceDataOptions;
             _jsonSerializationService = jsonSerializationService;
+            _referenceDataStatisticsService = referenceDataStatisticService;
         }
 
         public async Task<DevolvedPostcodes> RetrieveAsync(CancellationToken cancellationToken)
@@ -35,8 +39,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _postcodesContextFactory.Create())
             {
                 var mcaGlaSofLookups = await RetrieveMcaGlaLookups(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("McaSOf Lookups", mcaGlaSofLookups.Count);
 
                 var devolvedPostcodesList = await RetrieveDevolvedPostcodes(cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount("Devolved Postcodes", devolvedPostcodesList.Count);
 
                 return new DevolvedPostcodes
                 {

@@ -6,6 +6,7 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 {
     public class DesktopOrganisationsRepositoryService : AbstractOrganisationsRepositoryService, IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>
     {
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
+
         public DesktopOrganisationsRepositoryService(
             IDbContextFactory<IOrganisationsContext> organisationsFactory,
-            IAcademicYearDataService academicYearDataService)
+            IAcademicYearDataService academicYearDataService,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
             : base(organisationsFactory, academicYearDataService)
         {
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<Organisation>> RetrieveAsync(CancellationToken cancellationToken)
@@ -37,6 +42,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   .Include(mo => mo.OrgFundings)
                   .Include(mo => mo.ConditionOfFundingRemovals)
                   .ToListAsync(cancellationToken);
+
+                _referenceDataStatisticsService.AddRecordCount("Organisations Details", orgs.Select(o => o.OrgDetail).Count());
+                _referenceDataStatisticsService.AddRecordCount("Organisations Funding", orgs.Select(o => o.OrgFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount("CoF Removals", orgs.Select(o => o.ConditionOfFundingRemovals).Count());
+                _referenceDataStatisticsService.AddRecordCount("Campus Identifiers", campusIdentifiersDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount("Short Term Finding Initiatives", shortTermFundingInitiativesDictionary.Count);
 
                 return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }

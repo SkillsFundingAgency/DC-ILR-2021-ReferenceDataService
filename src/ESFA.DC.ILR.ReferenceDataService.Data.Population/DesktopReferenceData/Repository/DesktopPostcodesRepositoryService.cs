@@ -7,6 +7,7 @@ using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
 
@@ -16,13 +17,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     {
         private readonly IReferenceDataOptions _referenceDataOptions;
         private readonly IPostcodesEntityModelMapper _postcodesEntityModelMapper;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
         public DesktopPostcodesRepositoryService(
             IReferenceDataOptions referenceDataOptions,
-            IPostcodesEntityModelMapper postcodesEntityModelMapper)
+            IPostcodesEntityModelMapper postcodesEntityModelMapper,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _referenceDataOptions = referenceDataOptions;
             _postcodesEntityModelMapper = postcodesEntityModelMapper;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(CancellationToken cancellationToken)
@@ -33,6 +37,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
             var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
+
+            _referenceDataStatisticsService.AddRecordCount("Postcodes ONS Data", onsData.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount("Postcodes DAS Disadvantages", dasPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount("Postcodes EFA Disadvantages", efaPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount("Postcodes SFA Disadvantages", sfaPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount("Postcodes SFA Area Costs", sfaAreaCosts.Result.Count);
 
             var taskList = new List<Task>
             {
