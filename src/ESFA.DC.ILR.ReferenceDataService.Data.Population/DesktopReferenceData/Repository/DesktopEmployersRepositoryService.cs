@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
@@ -29,8 +30,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _employersContextFactory.Create())
             {
                 var largeEmployers = await context.LargeEmployers.ToListAsync(cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("Employer IDs", largeEmployers.GroupBy(le => le.Ern).Count());
-                _referenceDataStatisticsService.AddRecordCount("Large Employers", largeEmployers.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EmployerIDs, largeEmployers.GroupBy(le => le.Ern).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LargeEmployers, largeEmployers.Count);
 
                 return
                     largeEmployers.GroupBy(le => le.Ern)

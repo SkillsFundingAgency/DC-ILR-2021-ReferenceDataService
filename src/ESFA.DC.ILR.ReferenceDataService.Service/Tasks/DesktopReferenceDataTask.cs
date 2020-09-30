@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output summary.
                 _logger.LogInfo("Starting Reference Summary Output");
-                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext.Container, referenceData, cancellationToken);
+                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext.Container, cancellationToken);
                 _logger.LogInfo("Finished Reference Summary Output");
             }
             catch (Exception exception)

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -38,11 +39,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
 
-            _referenceDataStatisticsService.AddRecordCount("Postcodes ONS Data", onsData.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount("Postcodes DAS Disadvantages", dasPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount("Postcodes EFA Disadvantages", efaPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount("Postcodes SFA Disadvantages", sfaPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount("Postcodes SFA Area Costs", sfaAreaCosts.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesONSData, onsData.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesDASDisadvantages, dasPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesEFADisadvantages, efaPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFADisadvantages, sfaPostcodeDisadvantages.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFAAreaCosts, sfaAreaCosts.Result.Count);
 
             var taskList = new List<Task>
             {

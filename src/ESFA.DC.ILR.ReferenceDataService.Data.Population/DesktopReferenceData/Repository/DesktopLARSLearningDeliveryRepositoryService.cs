@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -31,15 +32,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _larsContextFactory.Create())
             {
                 var learningDeliveries = await BuildLARSLearningDelvieries(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("LARS Learning Deliveries", learningDeliveries.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveries, learningDeliveries.Count);
                 var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("LARS Annual Values", larsAnnualValuesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsAnnualValues, larsAnnualValuesDictionary.Count);
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("LARS Learning Delivery Categories", larsLearningDeliveryCategoriesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveryategories, larsLearningDeliveryCategoriesDictionary.Count);
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("LARS Funding", larsFundingsDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFunding, larsFundingsDictionary.Count);
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("LARS Validities", larsValiditiesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsValidities, larsValiditiesDictionary.Count);
                 var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 var defaultLarsAnnualValues = new List<LARSAnnualValue>();

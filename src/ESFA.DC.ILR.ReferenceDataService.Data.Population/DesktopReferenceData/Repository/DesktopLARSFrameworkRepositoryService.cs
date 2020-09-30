@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -34,9 +35,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .Include(l => l.LarsFrameworkCmnComps)
                 .ToListAsync(cancellationToken);
 
-                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks", larsFrameworks.Count);
-                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks Common Components", larsFrameworks.Select(lf => lf.LarsFrameworkCmnComps).Count());
-                _referenceDataStatisticsService.AddRecordCount("LARS Frameworks Apprenticeship Funding", larsFrameworks.Select(lf => lf.LarsApprenticeshipFworkFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworks, larsFrameworks.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksCommonComponents, larsFrameworks.Select(lf => lf.LarsFrameworkCmnComps).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksApprenticeshipFunding, larsFrameworks.Select(lf => lf.LarsApprenticeshipFworkFundings).Count());
 
                 return larsFrameworks
                     .Select(lf => new LARSFrameworkDesktop

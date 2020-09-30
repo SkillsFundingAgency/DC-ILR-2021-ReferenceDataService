@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -43,12 +44,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   .Include(mo => mo.ConditionOfFundingRemovals)
                   .ToListAsync(cancellationToken);
 
-                _referenceDataStatisticsService.AddRecordCount("Organisations Details", orgs.Select(o => o.OrgDetail).Count());
-                _referenceDataStatisticsService.AddRecordCount("Organisations Funding", orgs.Select(o => o.OrgFundings).Count());
-                _referenceDataStatisticsService.AddRecordCount("CoF Removals", orgs.Select(o => o.ConditionOfFundingRemovals).Count());
-                _referenceDataStatisticsService.AddRecordCount("Campus Identifiers", campusIdentifiersDictionary.Count);
-                _referenceDataStatisticsService.AddRecordCount("Short Term Finding Initiatives", shortTermFundingInitiativesDictionary.Count);
-                _referenceDataStatisticsService.AddRecordCount("Postcode Specialist Resources", specResourcesForUkprnDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisationsDetails, orgs.Select(o => o.OrgDetail).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisaitonsFunding, orgs.Select(o => o.OrgFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CoFRemovals, orgs.Select(o => o.ConditionOfFundingRemovals).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CampusIdentifiers, campusIdentifiersDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.ShortTermFundingInitiatives, shortTermFundingInitiativesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodeSpecialistResources, specResourcesForUkprnDictionary.Count);
 
                 return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }

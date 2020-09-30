@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
@@ -39,10 +40,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _postcodesContextFactory.Create())
             {
                 var mcaGlaSofLookups = await RetrieveMcaGlaLookups(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("McaSOf Lookups", mcaGlaSofLookups.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.McaSofLookups, mcaGlaSofLookups.Count);
 
                 var devolvedPostcodesList = await RetrieveDevolvedPostcodes(cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount("Devolved Postcodes", devolvedPostcodesList.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.DevolvedPostcodes, devolvedPostcodesList.Count);
 
                 return new DevolvedPostcodes
                 {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
@@ -28,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         {
             using (var context = _epaContextFactory.Create())
             {
-                _referenceDataStatisticsService.AddRecordCount("EPA Organisations", context.Periods.Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EPAOrganisations, context.Periods.Count());
                 return await context?
                         .Periods?
                         .Select(epa => new EPAOrganisation
