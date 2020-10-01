@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(cancellationToken)).Returns(Task.FromResult(desktopReferenceDataRoot)).Verifiable();
             desktopReferenceDataFileServiceMock.Setup(s => s.ProcessAsync(referenceDataContextMock.Object, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
-            desktopReferenceDataSummaryFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object.Container, desktopReferenceDataRoot, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            desktopReferenceDataSummaryFileServiceMock.Setup(s => s.ProcessAync(referenceDataContextMock.Object, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
             var service = NewService(referenceDataPopulationServiceMock.Object, desktopReferenceDataFileServiceMock.Object, desktopReferenceDataSummaryFileServiceMock.Object, loggerMock.Object);
 

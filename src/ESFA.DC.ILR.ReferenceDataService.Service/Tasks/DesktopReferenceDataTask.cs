@@ -38,12 +38,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _desktopReferenceDataFileService.ProcessAsync(referenceDataContext, referenceData, cancellationToken);
+                //await _desktopReferenceDataFileService.ProcessAsync(referenceDataContext, referenceData, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
 
                 // output summary.
                 _logger.LogInfo("Starting Reference Summary Output");
-                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext.Container, cancellationToken);
+                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext, cancellationToken);
                 _logger.LogInfo("Finished Reference Summary Output");
             }
             catch (Exception exception)

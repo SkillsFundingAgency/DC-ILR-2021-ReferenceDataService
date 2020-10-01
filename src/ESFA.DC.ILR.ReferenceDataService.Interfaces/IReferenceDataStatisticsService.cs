@@ -8,6 +8,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
     {
         void AddRecordCount(string name, int count);
 
-        IEnumerable<IReferenceDataSummaryStatistics> GetStatistics();
+       IEnumerable<IReferenceDataSummaryStatistics> GetStatistics();
     }
 }

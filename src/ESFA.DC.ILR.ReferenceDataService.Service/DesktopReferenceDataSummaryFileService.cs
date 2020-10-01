@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.CsvService.Interface;
@@ -17,8 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
         private readonly ILogger _logger;
         private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        private string filePrefix = "FISReferenceData{0}-SummaryReport-{1}";
-        private string currentYear = "2021";
+        private string filePrefix = "{0}-SummaryReport-{1}.csv";
 
         public DesktopReferenceDataSummaryFileService(
             ICsvFileService csvFileService,
@@ -30,14 +31,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
-        public async Task ProcessAync(string container, CancellationToken cancellationToken)
+        public async Task ProcessAync(IReferenceDataContext context, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Generating Reference Data Report Summary");
-            var statistics = (IEnumerable<DesktopReferenceDataSummaryReport>)_referenceDataStatisticsService.GetStatistics();
-            await _csvFileService.WriteAsync<DesktopReferenceDataSummaryReport, ReferenceDataSummaryFileMapper>(statistics, FileNameBuilder(), container, cancellationToken);
+            var filePath = BuildFilePath(context);
+            var statistics = (List<DesktopReferenceDataSummaryReport>)_referenceDataStatisticsService.GetStatistics();
+            await _csvFileService.WriteAsync<DesktopReferenceDataSummaryReport, ReferenceDataSummaryFileMapper>(statistics, FileNameBuilder(context.CollectionName, filePath), context.Container, cancellationToken);
         }
 
-        private string FileNameBuilder() =>
-            string.Format(filePrefix, currentYear, DateTime.Now.ToString("yyyyMMdd"));
+        private string FileNameBuilder(string prefix, string filePath) =>
+            Path.Combine(filePath, string.Format(filePrefix, prefix, DateTime.Now.ToString("yyyyMMddHHmm")));
+
+        private string BuildFilePath(IReferenceDataContext context)
+        {
+            return $@"{context.CollectionName}\{context.JobId}";
+        }
     }
 }

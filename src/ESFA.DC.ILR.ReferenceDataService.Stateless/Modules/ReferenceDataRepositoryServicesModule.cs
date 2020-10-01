@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<IlrReferenceDataRepositoryService>().As<IIlrReferenceDataRepositoryService>();
-            containerBuilder.RegisterType<ReferenceDataStatisticsService>().As<IReferenceDataStatisticsService>();
+            containerBuilder.RegisterType<ReferenceDataStatisticsService>().As<IReferenceDataStatisticsService>().InstancePerLifetimeScope();
         }
     }
 }
