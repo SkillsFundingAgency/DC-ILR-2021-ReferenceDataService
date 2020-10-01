@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -38,7 +39,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData
         {
             var metaData = await RetrieveAsync(cancellationToken);
 
-            _referenceDataStatisticsService.AddRecordCount("Validation Errors", metaData.ValidationErrors.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.ValidationErrors, metaData.ValidationErrors.Count);
 
             metaData.ReferenceDataVersions.EasFileDetails = new EasFileDetails
             {

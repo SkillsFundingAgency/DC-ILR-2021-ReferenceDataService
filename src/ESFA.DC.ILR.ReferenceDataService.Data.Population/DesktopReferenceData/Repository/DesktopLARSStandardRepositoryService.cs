@@ -37,10 +37,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToListAsync(cancellationToken);
 
                 _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandards, larsStandards.Count);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardApprenticeshipFunding, larsStandards.Select(ls => ls.LarsApprenticeshipStdFundings).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardCommonComponents, larsStandards.Select(ls => ls.LarsStandardCommonComponents).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardFundings, larsStandards.Select(ls => ls.LarsStandardFundings).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardValidities, larsStandards.Select(ls => ls.LarsStandardValidities).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardApprenticeshipFunding, larsStandards.SelectMany(ls => ls.LarsApprenticeshipStdFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardCommonComponents, larsStandards.SelectMany(ls => ls.LarsStandardCommonComponents).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardFundings, larsStandards.SelectMany(ls => ls.LarsStandardFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardValidities, larsStandards.SelectMany(ls => ls.LarsStandardValidities).Count());
 
                 return larsStandards
                     .Select(

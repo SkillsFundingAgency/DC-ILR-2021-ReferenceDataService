@@ -45,11 +45,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                   .ToListAsync(cancellationToken);
 
                 _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisationsDetails, orgs.Select(o => o.OrgDetail).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisaitonsFunding, orgs.Select(o => o.OrgFundings).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CoFRemovals, orgs.Select(o => o.ConditionOfFundingRemovals).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CampusIdentifiers, campusIdentifiersDictionary.Count);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.ShortTermFundingInitiatives, shortTermFundingInitiativesDictionary.Count);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodeSpecialistResources, specResourcesForUkprnDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisaitonsFunding, orgs.SelectMany(o => o.OrgFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CoFRemovals, orgs.SelectMany(o => o.ConditionOfFundingRemovals).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CampusIdentifiers, campusIdentifiersDictionary.SelectMany(x => x.Value).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.ShortTermFundingInitiatives, shortTermFundingInitiativesDictionary.SelectMany(x => x.Value).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodeSpecialistResources, specResourcesForUkprnDictionary.SelectMany(x => x.Value).Count());
 
                 return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }

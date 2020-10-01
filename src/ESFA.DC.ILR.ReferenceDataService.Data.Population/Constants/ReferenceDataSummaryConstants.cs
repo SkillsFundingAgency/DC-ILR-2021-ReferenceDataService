@@ -3,10 +3,8 @@
     public class ReferenceDataSummaryConstants
     {
         public const string ValidationErrors = "Validation Errors";
-        public const string DevolvedContracts = "Deveolved Contracts";
         public const string DevolvedPostcodes = "Devolved Postcodes";
         public const string McaSofLookups = "McaSOf Lookups";
-        public const string EmployerIDs = "Employer IDs";
         public const string LargeEmployers = "Large Employers";
         public const string EPAOrganisations = "EPA Organisations";
         public const string OrganisationsDetails = "Organisations Details";
@@ -29,10 +27,10 @@
         public const string LarsStandardCommonComponents = "LARS Standard Common Components";
         public const string LarsStandardFundings = "LARS Standard Fundings";
         public const string LarsStandardValidities = "LARS Standard Validities";
-        public const string PostcodesONSData = "Postecodes ONS Data";
-        public const string PostcodesDASDisadvantages = "Postecodes DAS Disadvantages";
-        public const string PostcodesEFADisadvantages = "Postecodes EFA Disadvantages";
-        public const string PostcodesSFADisadvantages = "Postecodes SFA Disadvantages";
-        public const string PostcodesSFAAreaCosts = "Postecodes SFA Area Costs";
+        public const string PostcodesONSData = "Postcodes ONS Data";
+        public const string PostcodesDASDisadvantages = "Postcodes DAS Disadvantages";
+        public const string PostcodesEFADisadvantages = "Postcodes EFA Disadvantages";
+        public const string PostcodesSFADisadvantages = "Postcodes SFA Disadvantages";
+        public const string PostcodesSFAAreaCosts = "Postcodes SFA Area Costs";
     }
 }

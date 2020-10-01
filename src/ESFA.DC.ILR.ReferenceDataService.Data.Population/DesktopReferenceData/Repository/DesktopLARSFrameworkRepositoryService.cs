@@ -36,8 +36,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                 .ToListAsync(cancellationToken);
 
                 _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworks, larsFrameworks.Count);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksCommonComponents, larsFrameworks.Select(lf => lf.LarsFrameworkCmnComps).Count());
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksApprenticeshipFunding, larsFrameworks.Select(lf => lf.LarsApprenticeshipFworkFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksCommonComponents, larsFrameworks.SelectMany(lf => lf.LarsFrameworkCmnComps).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksApprenticeshipFunding, larsFrameworks.SelectMany(lf => lf.LarsApprenticeshipFworkFundings).Count());
 
                 return larsFrameworks
                     .Select(lf => new LARSFrameworkDesktop

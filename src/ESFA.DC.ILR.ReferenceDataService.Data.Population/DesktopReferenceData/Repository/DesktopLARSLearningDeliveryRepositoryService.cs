@@ -33,14 +33,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             {
                 var learningDeliveries = await BuildLARSLearningDelvieries(context, cancellationToken);
                 _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveries, learningDeliveries.Count);
+
                 var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsAnnualValues, larsAnnualValuesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsAnnualValues, larsAnnualValuesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveryategories, larsLearningDeliveryCategoriesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveryategories, larsLearningDeliveryCategoriesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFunding, larsFundingsDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFunding, larsFundingsDictionary.SelectMany(x => x.Value).Count());
+
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(context, cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsValidities, larsValiditiesDictionary.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsValidities, larsValiditiesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 var defaultLarsAnnualValues = new List<LARSAnnualValue>();

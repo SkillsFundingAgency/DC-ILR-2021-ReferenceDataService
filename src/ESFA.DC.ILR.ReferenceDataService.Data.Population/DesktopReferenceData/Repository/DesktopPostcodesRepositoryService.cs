@@ -39,11 +39,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
 
-            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesONSData, onsData.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesDASDisadvantages, dasPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesEFADisadvantages, efaPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFADisadvantages, sfaPostcodeDisadvantages.Result.Count);
-            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFAAreaCosts, sfaAreaCosts.Result.Count);
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesONSData, onsData.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesDASDisadvantages, dasPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesEFADisadvantages, efaPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFADisadvantages, sfaPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFAAreaCosts, sfaAreaCosts.Result.SelectMany(x => x.Value).Count());
 
             var taskList = new List<Task>
             {

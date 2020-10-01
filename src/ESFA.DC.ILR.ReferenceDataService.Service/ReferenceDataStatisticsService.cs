@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Service.Model;
 
@@ -19,7 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
 
         public IEnumerable<IReferenceDataSummaryStatistics> GetStatistics()
         {
-            return _desktopReferenceDataSummaryReports;
+            return _desktopReferenceDataSummaryReports.OrderBy(x => x.DataSource);
         }
     }
 }
