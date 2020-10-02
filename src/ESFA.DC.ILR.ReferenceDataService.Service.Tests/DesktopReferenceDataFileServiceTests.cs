@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
@@ -26,6 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var container = "Container";
             var collectionName = "Collection";
             var filePrefix = "FISReferenceData";
+            var submissionDateTimeUtc = new DateTime(2020, 01, 01, 12, 00, 00);
             var cancellationToken = CancellationToken.None;
             var zipFileServiceMock = new Mock<IZipFileService>();
             var loggerMock = new Mock<ILogger>();
@@ -40,7 +42,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
             var outputFileName = $@"{filePath}/FISReferenceData_0.1.0.zip";
 
-            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix)).Returns(outputFileName);
+            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, submissionDateTimeUtc)).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 
