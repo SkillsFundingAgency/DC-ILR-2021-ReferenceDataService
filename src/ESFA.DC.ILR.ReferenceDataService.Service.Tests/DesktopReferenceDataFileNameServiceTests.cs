@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
 
             var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), rdsModelVersion, ".202008010900", ".zip");
 
-            NewService().BuildFileName("FilePath", "FileName", new System.DateTime(2020, 8, 1, 12, 00, 00)).Should().BeEquivalentTo(expectedFileName);
+            NewService().BuildFileName("FilePath", "FileName", new System.DateTime(2020, 8, 1, 9, 00, 00)).Should().BeEquivalentTo(expectedFileName);
         }
 
         private DesktopReferenceDataFileNameService NewService(ILogger logger = null)
