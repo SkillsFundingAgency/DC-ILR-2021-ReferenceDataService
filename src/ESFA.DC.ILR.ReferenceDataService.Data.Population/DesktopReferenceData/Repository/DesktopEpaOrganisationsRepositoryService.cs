@@ -29,8 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         {
             using (var context = _epaContextFactory.Create())
             {
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EPAOrganisations, context.Periods.Count());
-                return await context?
+                var periods = await context?
                         .Periods?
                         .Select(epa => new EPAOrganisation
                         {
@@ -39,6 +38,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                             EffectiveFrom = epa.EffectiveFrom,
                             EffectiveTo = epa.EffectiveTo,
                         }).ToListAsync(cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EPAOrganisations, periods.Count());
+                return periods;
             }
         }
     }
