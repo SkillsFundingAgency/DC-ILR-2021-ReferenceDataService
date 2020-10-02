@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using ESFA.DC.DateTimeProvider.Interface;
@@ -11,21 +12,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
     {
         private const string _referenceDataFileExtension = ".zip";
         private const string _dateTimeFormat = "yyyyMMddHHmm";
-        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ILogger _logger;
 
-        public DesktopReferenceDataFileNameService(IDateTimeProvider dateTimeProvider, ILogger logger)
+        public DesktopReferenceDataFileNameService(ILogger logger)
         {
-            _dateTimeProvider = dateTimeProvider;
             _logger = logger;
         }
 
-        public string BuildFileName(string filePath, string fileName)
+        public string BuildFileName(string filePath, string fileName, DateTime submissionDateTimeUtc)
         {
             _logger.LogInfo("Builiding Desktop reference data file name.");
             var referenceDataModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
 
-            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, ".", _dateTimeProvider.GetNowUtc().ToString(_dateTimeFormat), _referenceDataFileExtension);
+            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, ".", submissionDateTimeUtc.ToString(_dateTimeFormat), _referenceDataFileExtension);
         }
     }
 }

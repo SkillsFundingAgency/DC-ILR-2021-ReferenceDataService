@@ -36,11 +36,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger.LogInfo("Generating Reference Data Report Summary");
             var filePath = BuildFilePath(context);
             var statistics = (List<DesktopReferenceDataSummaryReport>)_referenceDataStatisticsService.GetStatistics();
-            await _csvFileService.WriteAsync<DesktopReferenceDataSummaryReport, ReferenceDataSummaryFileMapper>(statistics, FileNameBuilder(context.CollectionName, filePath), context.Container, cancellationToken);
+            await _csvFileService.WriteAsync<DesktopReferenceDataSummaryReport, ReferenceDataSummaryFileMapper>(statistics, FileNameBuilder(context.CollectionName, filePath, context.SubmissionDateTimeUTC), context.Container, cancellationToken);
         }
 
-        private string FileNameBuilder(string prefix, string filePath) =>
-            Path.Combine(filePath, string.Format(filePrefix, prefix, DateTime.Now.ToString("yyyyMMddHHmm")));
+        private string FileNameBuilder(string prefix, string filePath, DateTime submissionDateTimeUtc) =>
+            Path.Combine(filePath, string.Format(filePrefix, prefix, submissionDateTimeUtc.ToString("yyyyMMddHHmm")));
 
         private string BuildFilePath(IReferenceDataContext context)
         {

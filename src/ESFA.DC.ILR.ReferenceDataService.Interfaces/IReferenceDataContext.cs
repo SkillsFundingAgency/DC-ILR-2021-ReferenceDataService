@@ -1,4 +1,6 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+﻿using System;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
     public interface IReferenceDataContext
     {
@@ -27,5 +29,7 @@
         int Ukprn { get; set; }
 
         string CollectionName { get; }
+
+        DateTime SubmissionDateTimeUTC { get; }
     }
 }

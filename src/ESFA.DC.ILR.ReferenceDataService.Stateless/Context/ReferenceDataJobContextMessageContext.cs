@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 using ESFA.DC.JobContext.Interface;
@@ -56,5 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             get => int.Parse(_jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn].ToString());
             set => throw new System.NotImplementedException();
         }
+
+        public DateTime SubmissionDateTimeUTC => _jobContextMessage.SubmissionDateTimeUtc;
     }
 }

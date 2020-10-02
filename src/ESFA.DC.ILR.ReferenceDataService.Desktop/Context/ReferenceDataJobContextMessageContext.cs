@@ -56,5 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
         public long JobId => throw new NotImplementedException();
 
         public string CollectionName => throw new NotImplementedException();
+
+        public DateTime SubmissionDateTimeUTC => throw new NotImplementedException();
     }
 }
