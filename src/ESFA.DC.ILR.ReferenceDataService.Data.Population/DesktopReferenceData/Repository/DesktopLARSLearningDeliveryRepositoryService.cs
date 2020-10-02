@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -15,10 +17,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     public class DesktopLarsLearningDeliveryRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSLearningDelivery>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsLearningDeliveryRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsLearningDeliveryRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSLearningDelivery>> RetrieveAsync(CancellationToken cancellationToken)
@@ -26,10 +32,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             using (var context = _larsContextFactory.Create())
             {
                 var learningDeliveries = await BuildLARSLearningDelvieries(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveries, learningDeliveries.Count);
+
                 var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsAnnualValues, larsAnnualValuesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsLearningDeliveryategories, larsLearningDeliveryCategoriesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFunding, larsFundingsDictionary.SelectMany(x => x.Value).Count());
+
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsValidities, larsValiditiesDictionary.SelectMany(x => x.Value).Count());
+
                 var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 var defaultLarsAnnualValues = new List<LARSAnnualValue>();
