@@ -12,19 +12,25 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
     {
         private const string _referenceDataFileExtension = ".zip";
         private const string _dateTimeFormat = "yyyyMMddHHmm";
+
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ILogger _logger;
 
-        public DesktopReferenceDataFileNameService(ILogger logger)
+        public DesktopReferenceDataFileNameService(IDateTimeProvider dateTimeProvider, ILogger logger)
         {
+            _dateTimeProvider = dateTimeProvider;
             _logger = logger;
         }
 
         public string BuildFileName(string filePath, string fileName, DateTime submissionDateTimeUtc)
         {
             _logger.LogInfo("Builiding Desktop reference data file name.");
+
+            var ukDateTime = _dateTimeProvider.ConvertUtcToUk(submissionDateTimeUtc);
+
             var referenceDataModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
 
-            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, ".", submissionDateTimeUtc.ToString(_dateTimeFormat), _referenceDataFileExtension);
+            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, ".", ukDateTime.ToString(_dateTimeFormat), _referenceDataFileExtension);
         }
     }
 }
