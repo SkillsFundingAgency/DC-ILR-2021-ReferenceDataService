@@ -41,16 +41,19 @@
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="CsvHelper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.12.1.2\lib\net45\CsvHelper.dll</HintPath>
+      <HintPath>..\packages\CsvHelper.12.1.3\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="DotNetZip, Version=1.13.4.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.4\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.CsvService, Version=0.1.41.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.CsvService.0.1.41-beta0001\lib\netstandard2.0\ESFA.DC.CsvService.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.DateTimeProvider.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.DateTimeProvider.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.DateTimeProvider.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.FileService, Version=0.1.39.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.FileService.0.1.39-beta0001\lib\netstandard2.0\ESFA.DC.FileService.dll</HintPath>
+    <Reference Include="ESFA.DC.FileService, Version=0.1.41.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.FileService.0.1.41-beta0001\lib\netstandard2.0\ESFA.DC.FileService.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.FileService.Interface, Version=0.1.39.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.FileService.Interface.0.1.39-beta0001\lib\netstandard2.0\ESFA.DC.FileService.Interface.dll</HintPath>
@@ -160,6 +163,7 @@
   <ItemGroup>
     <Compile Include="CsvRetrievalServiceTests.cs" />
     <Compile Include="DesktopReferenceDataFileNameServiceTests.cs" />
+    <Compile Include="DesktopReferenceDataSummaryFileServiceTests.cs" />
     <Compile Include="Mappers\TestMapper.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="ValidationMessagesTaskTests.cs" />
@@ -188,6 +192,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj">
       <Project>{6991FF63-4C2C-41E1-9909-53CF6BE74CE1}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model.Internal\ESFA.DC.ILR.ReferenceDataService.Model.Internal.csproj">
+      <Project>{9A5F0772-B88E-409F-B7EC-3E41C7FC0797}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Model.Internal</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj">
       <Project>{4127C037-0DE3-408C-9D62-F9FFB3FA0540}</Project>

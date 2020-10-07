@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="12.1.2" />
+    <PackageReference Include="ESFA.DC.CsvService" Version="0.1.41-beta0001" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.FileService" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Data.Population\ESFA.DC.ILR.ReferenceDataService.Data.Population.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model.Internal\ESFA.DC.ILR.ReferenceDataService.Model.Internal.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Providers\ESFA.DC.ILR.ReferenceDataService.Providers.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Config;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
@@ -22,15 +23,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger = logger;
         }
 
-        public async Task ProcessAync(string container, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken)
+        public async Task ProcessAsync(IReferenceDataContext context, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Generating Desktop Reference Data File.");
 
-            var fileName = _desktopReferenceDataFileNameService.BuildFileName(_desktopRefDataConfig.DesktopReferenceDataStoragePath, _desktopRefDataConfig.DesktopReferenceDataFilePreFix);
-
+            var filePath = BuildFilePath(context);
+            var fileName = _desktopReferenceDataFileNameService.BuildFileName(filePath, _desktopRefDataConfig.DesktopReferenceDataFilePreFix, context.SubmissionDateTimeUTC);
             await _zipFileService.SaveCollectionZipAsync(
                 fileName,
-                container,
+                context.Container,
                 desktopReferenceDataRoot.MetaDatas,
                 desktopReferenceDataRoot.DevolvedPostcodes,
                 desktopReferenceDataRoot.Employers,
@@ -42,6 +43,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 desktopReferenceDataRoot.Organisations,
                 desktopReferenceDataRoot.Postcodes,
                 cancellationToken);
+        }
+
+        private string BuildFilePath(IReferenceDataContext context)
+        {
+            return $@"{context.CollectionName}\{context.JobId}";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 using ESFA.DC.JobContext.Interface;
@@ -27,6 +28,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             set => _jobContextMessage.KeyValuePairs[JobContextMessageKey.OriginalFilename] = value;
         }
 
+        public long JobId => _jobContextMessage.JobId;
+
+        public string CollectionName => _jobContextMessage.KeyValuePairs[JobContextMessageKey.CollectionName].ToString();
+
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
         public string DesktopInputReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.DesktopInputReferenceDataKey].ToString();
@@ -52,5 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
             get => int.Parse(_jobContextMessage.KeyValuePairs[JobContextMessageKey.UkPrn].ToString());
             set => throw new System.NotImplementedException();
         }
+
+        public DateTime SubmissionDateTimeUTC => _jobContextMessage.SubmissionDateTimeUtc;
     }
 }

@@ -1,7 +1,11 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+﻿using System;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
     public interface IReferenceDataContext
     {
+        long JobId { get; }
+
         string FileReference { get; set; }
 
         string OriginalFileReference { get; set; }
@@ -23,5 +27,9 @@
         string ValidationMessagesFileReference { get; }
 
         int Ukprn { get; set; }
+
+        string CollectionName { get; }
+
+        DateTime SubmissionDateTimeUTC { get; }
     }
 }

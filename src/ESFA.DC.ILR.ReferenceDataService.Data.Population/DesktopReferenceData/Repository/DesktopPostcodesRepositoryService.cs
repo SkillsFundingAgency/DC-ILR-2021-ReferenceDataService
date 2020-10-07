@@ -5,8 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ReferenceData.Postcodes.Model;
 
@@ -16,13 +18,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
     {
         private readonly IReferenceDataOptions _referenceDataOptions;
         private readonly IPostcodesEntityModelMapper _postcodesEntityModelMapper;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
         public DesktopPostcodesRepositoryService(
             IReferenceDataOptions referenceDataOptions,
-            IPostcodesEntityModelMapper postcodesEntityModelMapper)
+            IPostcodesEntityModelMapper postcodesEntityModelMapper,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _referenceDataOptions = referenceDataOptions;
             _postcodesEntityModelMapper = postcodesEntityModelMapper;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<Postcode>> RetrieveAsync(CancellationToken cancellationToken)
@@ -33,6 +38,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var efaPostcodeDisadvantages = RetrieveEfaPostcodeDisadvantages(cancellationToken);
             var dasPostcodeDisadvantages = RetrieveDasPostcodeDisadvantages(cancellationToken);
             var onsData = RetrieveOnsData(cancellationToken);
+
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesONSData, onsData.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesDASDisadvantages, dasPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesEFADisadvantages, efaPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFADisadvantages, sfaPostcodeDisadvantages.Result.SelectMany(x => x.Value).Count());
+            _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodesSFAAreaCosts, sfaAreaCosts.Result.SelectMany(x => x.Value).Count());
 
             var taskList = new List<Task>
             {

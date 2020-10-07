@@ -12,15 +12,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
     {
         private readonly IDesktopReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IDesktopReferenceDataFileService _desktopReferenceDataFileService;
+        private readonly IDesktopReferenceDataSummaryFileService _desktopReferenceDataSummaryFileService;
         private readonly ILogger _logger;
 
         public DesktopReferenceDataTask(
             IDesktopReferenceDataPopulationService referenceDataPopulationService,
             IDesktopReferenceDataFileService desktopReferenceDataFileService,
+            IDesktopReferenceDataSummaryFileService desktopReferenceDataSummaryFileService,
             ILogger logger)
         {
             _referenceDataPopulationService = referenceDataPopulationService;
             _desktopReferenceDataFileService = desktopReferenceDataFileService;
+            _desktopReferenceDataSummaryFileService = desktopReferenceDataSummaryFileService;
             _logger = logger;
         }
 
@@ -35,8 +38,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _desktopReferenceDataFileService.ProcessAync(referenceDataContext.Container, referenceData, cancellationToken);
+                await _desktopReferenceDataFileService.ProcessAsync(referenceDataContext, referenceData, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
+
+                // output summary.
+                _logger.LogInfo("Starting Reference Summary Output");
+                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext, cancellationToken);
+                _logger.LogInfo("Finished Reference Summary Output");
             }
             catch (Exception exception)
             {

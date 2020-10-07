@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model.Internal\ESFA.DC.ILR.ReferenceDataService.Model.Internal.csproj" />
+  </ItemGroup>
+
 </Project>
