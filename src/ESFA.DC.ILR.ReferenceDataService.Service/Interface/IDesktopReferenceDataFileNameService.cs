@@ -1,7 +1,9 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
+﻿using System;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
 {
     public interface IDesktopReferenceDataFileNameService
     {
-        string BuildFileName(string filePath, string fileName);
+        string BuildFileName(string filePath, string fileName, DateTime submissionDateTimeUtc);
     }
 }

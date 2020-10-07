@@ -1,13 +1,10 @@
 ﻿using Autofac;
-using Autofac.Core;
 using ESFA.DC.CsvService;
 using ESFA.DC.CsvService.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Service;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Service.Model;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceData
