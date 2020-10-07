@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.CsvService.Interface;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Model.Internal;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Mappers;
-using ESFA.DC.ILR.ReferenceDataService.Service.Model;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service
@@ -43,8 +42,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             var filePath = BuildFilePath(context);
             var fileName = FileNameBuilder(context.CollectionName, filePath, ukDateTime);
 
-            var statistics = (List<DesktopReferenceDataSummaryReport>)_referenceDataStatisticsService.GetStatistics();
-            await _csvFileService.WriteAsync<DesktopReferenceDataSummaryReport, ReferenceDataSummaryFileMapper>(statistics, fileName, context.Container, cancellationToken);
+            var statistics = _referenceDataStatisticsService.GetStatistics();
+            await _csvFileService.WriteAsync<ReferenceDataSummaryStatistics, ReferenceDataSummaryFileMapper>(statistics, fileName, context.Container, cancellationToken);
         }
 
         private string FileNameBuilder(string prefix, string filePath, DateTime dateTime) =>

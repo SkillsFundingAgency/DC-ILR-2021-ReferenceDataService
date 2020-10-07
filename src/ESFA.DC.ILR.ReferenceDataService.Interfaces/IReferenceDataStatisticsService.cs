@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using ESFA.DC.ILR.ReferenceDataService.Model.Internal;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
@@ -8,6 +7,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
     {
         void AddRecordCount(string name, int count);
 
-       IEnumerable<IReferenceDataSummaryStatistics> GetStatistics();
+        IEnumerable<ReferenceDataSummaryStatistics> GetStatistics();
     }
 }

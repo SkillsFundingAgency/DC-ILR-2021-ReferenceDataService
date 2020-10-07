@@ -1,9 +1,9 @@
 ﻿using CsvHelper.Configuration;
-using ESFA.DC.ILR.ReferenceDataService.Service.Model;
+using ESFA.DC.ILR.ReferenceDataService.Model.Internal;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Mappers
 {
-    public class ReferenceDataSummaryFileMapper : ClassMap<DesktopReferenceDataSummaryReport>
+    public class ReferenceDataSummaryFileMapper : ClassMap<ReferenceDataSummaryStatistics>
     {
         public ReferenceDataSummaryFileMapper()
         {
