@@ -12,7 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 {
     public class IlrMessageTask : ITask
     {
-        private const string TempFileKey = "{0}/{1}/webservice-output.json";
+        private const string TempFileKey = "{0}/{1}/edrs-webservice-output.json";
         private readonly bool compressOutput = false;
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
