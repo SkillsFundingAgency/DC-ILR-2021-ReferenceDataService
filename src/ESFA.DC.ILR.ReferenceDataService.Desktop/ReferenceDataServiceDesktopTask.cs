@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop
 
             // output model.
             _logger.LogInfo("Starting Reference Data Output");
-            await _filePersister.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceData, compressOutput, cancellationToken);
+            await _filePersister.StoreAsync(referenceDataContext.OutputIlrReferenceDataFileKey, referenceDataContext.Container, referenceData, compressOutput, cancellationToken);
             _logger.LogInfo("Finished Reference Data Output");
 
             // set return period

@@ -86,7 +86,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Tests
 
             messageProviderMock.Setup(p => p.ProvideAsync(It.IsAny<IReferenceDataContext>(), cancellationToken)).Returns(Task.FromResult(message)).Verifiable();
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(It.IsAny<IReferenceDataContext>(), message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
-            filePersisterMock.Setup(s => s.StoreAsync(referenceDataContext.OutputReferenceDataFileKey, referenceDataContext.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
+            filePersisterMock.Setup(s => s.StoreAsync(referenceDataContext.OutputIlrReferenceDataFileKey, referenceDataContext.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
             desktopContextReturnPeriodUpdateServiceMock.Setup(m => m.UpdateCollectionPeriod(It.IsAny<IReferenceDataContext>(), It.IsAny<DateTime>(), referenceDataRoot.MetaDatas.CollectionDates.ReturnPeriods)).Verifiable();
 
             var task = NewTask(

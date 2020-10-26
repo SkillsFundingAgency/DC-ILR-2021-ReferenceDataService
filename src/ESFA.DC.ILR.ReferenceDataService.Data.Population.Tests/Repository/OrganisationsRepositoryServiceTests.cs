@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -59,6 +59,30 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             EffectiveFrom = new DateTime(2018, 8, 1),
                         },
                     },
+                    ConditionOfFundingRemovals = new List<ConditionOfFundingRemoval>
+                    {
+                        new ConditionOfFundingRemoval
+                        {
+                            Ukprn = 1,
+                            CoFremoval = 1m,
+                            EffectiveFrom = new DateTime(2019, 8, 1),
+                            EffectiveTo = new DateTime(2020, 7, 31),
+                        },
+                        new ConditionOfFundingRemoval
+                        {
+                            Ukprn = 1,
+                            CoFremoval = 1m,
+                            EffectiveFrom = new DateTime(2020, 8, 1),
+                            EffectiveTo = new DateTime(2021, 7, 31),
+                        },
+                        new ConditionOfFundingRemoval
+                        {
+                            Ukprn = 1,
+                            CoFremoval = 1m,
+                            EffectiveFrom = new DateTime(2021, 8, 1),
+                            EffectiveTo = new DateTime(2022, 7, 31),
+                        }
+                    }
                 },
                 new MasterOrganisation
                 {
@@ -143,7 +167,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisationsMock.Setup(o => o.ProviderPostcodeSpecialistResources).Returns(postcodeSpecResourcesMock.Object);
             organisationsMock.Setup(o => o.ShortTermFundingInitiatives).Returns(shortTermFundingInitMock.Object);
 
-            var organisationsContextFactoryMock = new Mock<IDbContextFactory<IOrganisationsContext>>();
+            var organisationsContextFactoryMock = new Mock<Configuration.Interface.IDbContextFactory<IOrganisationsContext>>();
             organisationsContextFactoryMock.Setup(c => c.Create()).Returns(organisationsMock.Object);
 
             var organisations = await NewService(organisationsContextFactoryMock.Object).RetrieveAsync(ukprns, CancellationToken.None);
@@ -164,6 +188,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 1).PostcodeSpecialistResources.Should().HaveCount(2);
             organisations.First(o => o.UKPRN == 1).OrganisationShortTermFundingInitiatives.Should().HaveCount(1);
             organisations.First(o => o.UKPRN == 1).OrganisationShortTermFundingInitiatives.First().LdmCode.Should().Be("ldm_1");
+            organisations.First(o => o.UKPRN == 1).OrganisationCoFRemovals.Should().HaveCount(1);
 
             organisations.First(o => o.UKPRN == 2).UKPRN.Should().Be(2);
             organisations.First(o => o.UKPRN == 2).LegalOrgType.Should().Be("LegalType2");
@@ -173,6 +198,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 2).LongTermResid.Should().BeFalse();
             organisations.First(o => o.UKPRN == 2).OrganisationFundings.Should().BeNullOrEmpty();
             organisations.First(o => o.UKPRN == 2).PostcodeSpecialistResources.Should().BeNullOrEmpty();
+            organisations.First(o => o.UKPRN == 2).OrganisationCoFRemovals.Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -409,9 +435,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             NewService().GetShortTermFundingInitiatives(1, new Dictionary<long, List<OrganisationShortTermFundingInitiative>>()).Should().BeNullOrEmpty();
         }
 
-        private OrganisationsRepositoryService NewService(IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)
+        private OrganisationsRepositoryService NewService(Configuration.Interface.IDbContextFactory<IOrganisationsContext> organisationsContextFactory = null)
         {
-            return new OrganisationsRepositoryService(organisationsContextFactory);
+            return new OrganisationsRepositoryService(organisationsContextFactory, new AcademicYearDataService());
         }
     }
 }

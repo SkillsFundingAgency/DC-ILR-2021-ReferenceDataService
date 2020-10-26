@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using ESFA.DC.CsvService;
+using ESFA.DC.CsvService.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service;
@@ -14,7 +16,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
             containerBuilder.RegisterModule<DesktopReferenceDataRepositoryServicesModule>();
             containerBuilder.RegisterType<DesktopReferenceDataPopulationService>().As<IDesktopReferenceDataPopulationService>();
             containerBuilder.RegisterType<DesktopReferenceDataFileService>().As<IDesktopReferenceDataFileService>();
+            containerBuilder.RegisterType<DesktopReferenceDataSummaryFileService>().As<IDesktopReferenceDataSummaryFileService>();
             containerBuilder.RegisterType<DesktopReferenceDataFileNameService>().As<IDesktopReferenceDataFileNameService>();
+            containerBuilder.RegisterType<CsvFileService>().As<ICsvFileService>();
             containerBuilder.RegisterType<ZipFileService>().As<IZipFileService>();
             containerBuilder.RegisterType<DesktopReferenceDataTask>().Keyed<ITask>(TaskKeys.DesktopReferenceData);
         }

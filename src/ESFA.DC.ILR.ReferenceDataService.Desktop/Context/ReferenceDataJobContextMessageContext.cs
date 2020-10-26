@@ -29,9 +29,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string Container => _desktopContext.KeyValuePairs[ILRContextKeys.Container].ToString();
 
-        public string InputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
+        public string DesktopInputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
 
-        public string OutputReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
+        public string OutputIlrReferenceDataFileKey => _desktopContext.KeyValuePairs[ILRContextKeys.IlrReferenceData].ToString();
 
         public string FrmReferenceDataFileKey => throw new NotImplementedException();
 
@@ -47,12 +47,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public string ValidationMessagesFileReference => _desktopContext.KeyValuePairs[ReferenceDataContextKeys.ValidationMessagesFileReferenceKey].ToString();
 
-        public string DesktopReferenceDataStoragePath => throw new NotImplementedException();
-
         public int Ukprn
         {
             get => int.Parse(_desktopContext.KeyValuePairs[ILRContextKeys.Ukprn].ToString());
             set => _desktopContext.KeyValuePairs[ILRContextKeys.Ukprn] = value;
         }
+
+        public long JobId => throw new NotImplementedException();
+
+        public string CollectionName => throw new NotImplementedException();
+
+        public DateTime SubmissionDateTimeUTC => throw new NotImplementedException();
     }
 }

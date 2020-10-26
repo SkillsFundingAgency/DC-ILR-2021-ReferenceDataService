@@ -5,8 +5,8 @@ using ESFA.DC.ILR.ReferenceDataService.Model;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
 {
-    public interface IDesktopReferenceDataFileService
+    public interface IDesktopReferenceDataSummaryFileService
     {
-        Task ProcessAsync(IReferenceDataContext context, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken);
+        Task ProcessAync(IReferenceDataContext context, CancellationToken cancellationToken);
     }
 }

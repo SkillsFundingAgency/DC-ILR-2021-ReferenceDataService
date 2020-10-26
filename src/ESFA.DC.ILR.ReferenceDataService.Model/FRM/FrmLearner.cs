@@ -19,6 +19,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public string OrgName { get; set; }
 
+        public string PartnerUKPRN { get; set; }
+
         public string PartnerOrgName { get; set; }
 
         public int? ProgTypeNullable { get; set; }
@@ -38,8 +40,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
         public long? PrevUKPRN { get; set; }
 
         public long? PMUKPRN { get; set; }
-
-        public long? PartnerUKPRN { get; set; }
 
         public string PrevLearnRefNumber { get; set; }
 

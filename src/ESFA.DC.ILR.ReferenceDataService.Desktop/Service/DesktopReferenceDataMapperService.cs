@@ -46,9 +46,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service
         {
             var desktopReferenceData = new DesktopReferenceDataRoot();
 
-            var zipFilePath = referenceDataContext.InputReferenceDataFileKey;
-
-            using (var zipFileStream = await _fileService.OpenReadStreamAsync(referenceDataContext.InputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
+            using (var zipFileStream = await _fileService.OpenReadStreamAsync(referenceDataContext.DesktopInputReferenceDataFileKey, referenceDataContext.Container, cancellationToken))
             {
                 using (var zip = new ZipArchive(zipFileStream, ZipArchiveMode.Read))
                 {
