@@ -16,7 +16,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IEdrsApiService _edrsApiService;
-        private readonly IExecutionContext _executionContext;
         private readonly IFilePersister _filePersister;
         private readonly FeatureConfiguration _featureConfiguration;
         private readonly ILogger _logger;
@@ -25,7 +24,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
             IMessageProvider messageProvider,
             IReferenceDataPopulationService referenceDataPopulationService,
             IEdrsApiService edrsApiService,
-            IExecutionContext executionContext,
             IFilePersister filePersister,
             FeatureConfiguration featureConfiguration,
             ILogger logger)
@@ -33,7 +31,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
             _messageProvider = messageProvider;
             _referenceDataPopulationService = referenceDataPopulationService;
             _edrsApiService = edrsApiService;
-            _executionContext = executionContext;
             _filePersister = filePersister;
             _featureConfiguration = featureConfiguration;
             _logger = logger;
@@ -60,7 +57,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
                     _logger.LogInfo("Finished EDRS API validation");
 
                     _logger.LogInfo("Starting EDRS API Output");
-                    var tempFileKey = $"{referenceDataContext.Ukprn}/{_executionContext.JobId}/webservice-output.json";
+                    var tempFileKey = $"{referenceDataContext.Ukprn}/{referenceDataContext.JobId}/webservice-output.json";
                     await _filePersister.StoreAsync(tempFileKey, referenceDataContext.Container, apiData, compressOutput, cancellationToken);
                     _logger.LogInfo("Finished EDRS API Output");
                 }

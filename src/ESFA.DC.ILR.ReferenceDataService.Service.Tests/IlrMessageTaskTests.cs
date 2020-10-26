@@ -29,8 +29,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var loggerMock = new Mock<ILogger>();
             var edrsApiServiceMock = new Mock<IEdrsApiService>();
 
-            var executionContextMock = new Mock<IExecutionContext>();
-
             IMessage message = new TestMessage();
             var referenceDataRoot = new ReferenceDataRoot();
 
@@ -43,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             referenceDataPopulationServiceMock.Setup(s => s.PopulateAsync(referenceDataContextMock.Object, message, cancellationToken)).Returns(Task.FromResult(referenceDataRoot)).Verifiable();
             filePersisterMock.Setup(s => s.StoreAsync(referenceDataContextMock.Object.OutputIlrReferenceDataFileKey, referenceDataContextMock.Object.Container, referenceDataRoot, false, cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, edrsApiServiceMock.Object, executionContextMock.Object, filePersisterMock.Object, loggerMock.Object, featureConfiguration);
+            var service = NewService(messageProviderMock.Object, referenceDataPopulationServiceMock.Object, edrsApiServiceMock.Object, filePersisterMock.Object, loggerMock.Object, featureConfiguration);
 
             await service.ExecuteAsync(referenceDataContextMock.Object, cancellationToken);
 
@@ -56,12 +54,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             IMessageProvider messageProvider = null,
             IReferenceDataPopulationService referenceDataPopulationService = null,
             IEdrsApiService edrsApiService = null,
-            IExecutionContext executionContext = null,
             IFilePersister filePersister = null,
             ILogger logger = null,
             FeatureConfiguration featureConfiguration = null)
         {
-            return new IlrMessageTask(messageProvider, referenceDataPopulationService, edrsApiService, executionContext, filePersister, featureConfiguration, logger);
+            return new IlrMessageTask(messageProvider, referenceDataPopulationService, edrsApiService, filePersister, featureConfiguration, logger);
         }
     }
 }
