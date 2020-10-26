@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Interface;
@@ -14,18 +15,27 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
         private readonly bool compressOutput = false;
         private readonly IMessageProvider _messageProvider;
         private readonly IReferenceDataPopulationService _referenceDataPopulationService;
+        private readonly IEdrsApiService _edrsApiService;
+        private readonly IExecutionContext _executionContext;
         private readonly IFilePersister _filePersister;
+        private readonly FeatureConfiguration _featureConfiguration;
         private readonly ILogger _logger;
 
         public IlrMessageTask(
             IMessageProvider messageProvider,
             IReferenceDataPopulationService referenceDataPopulationService,
+            IEdrsApiService edrsApiService,
+            IExecutionContext executionContext,
             IFilePersister filePersister,
+            FeatureConfiguration featureConfiguration,
             ILogger logger)
         {
             _messageProvider = messageProvider;
             _referenceDataPopulationService = referenceDataPopulationService;
+            _edrsApiService = edrsApiService;
+            _executionContext = executionContext;
             _filePersister = filePersister;
+            _featureConfiguration = featureConfiguration;
             _logger = logger;
         }
 
@@ -42,6 +52,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
                 _logger.LogInfo("Starting Reference Data Population");
                 var referenceData = await _referenceDataPopulationService.PopulateAsync(referenceDataContext, message, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Population");
+
+                if (Convert.ToBoolean(_featureConfiguration.EDRSAPIEnabled))
+                {
+                    _logger.LogInfo("Starting EDRS API validation");
+                    var apiData = await _edrsApiService.ValidateErnsAsync(message, cancellationToken);
+                    _logger.LogInfo("Finished EDRS API validation");
+
+                    _logger.LogInfo("Starting EDRS API Output");
+                    var tempFileKey = $"{referenceDataContext.Ukprn}/{_executionContext.JobId}/webservice-output.json";
+                    await _filePersister.StoreAsync(tempFileKey, referenceDataContext.Container, apiData, compressOutput, cancellationToken);
+                    _logger.LogInfo("Finished EDRS API Output");
+                }
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
