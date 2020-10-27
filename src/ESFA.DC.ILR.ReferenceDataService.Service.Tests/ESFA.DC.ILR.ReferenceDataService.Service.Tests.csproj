@@ -164,6 +164,7 @@
     <Compile Include="CsvRetrievalServiceTests.cs" />
     <Compile Include="DesktopReferenceDataFileNameServiceTests.cs" />
     <Compile Include="DesktopReferenceDataSummaryFileServiceTests.cs" />
+    <Compile Include="EdrsApiServiceTests.cs" />
     <Compile Include="Mappers\TestMapper.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="ValidationMessagesTaskTests.cs" />
