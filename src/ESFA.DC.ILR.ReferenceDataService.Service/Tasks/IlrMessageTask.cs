@@ -51,16 +51,23 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
                 var referenceData = await _referenceDataPopulationService.PopulateAsync(referenceDataContext, message, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Population");
 
-                if (Convert.ToBoolean(_featureConfiguration.EDRSAPIEnabled))
+                try
                 {
-                    _logger.LogInfo("Starting EDRS API validation");
-                    var apiData = await _edrsApiService.ValidateErnsAsync(message, cancellationToken);
-                    _logger.LogInfo("Finished EDRS API validation");
+                    if (Convert.ToBoolean(_featureConfiguration.EDRSAPIEnabled))
+                    {
+                        _logger.LogInfo("Starting EDRS API validation");
+                        var apiData = await _edrsApiService.ValidateErnsAsync(message, cancellationToken);
+                        _logger.LogInfo("Finished EDRS API validation");
 
-                    _logger.LogInfo("Starting EDRS API Output");
-                    var key = string.Format(TempFileKey, referenceDataContext.Ukprn, referenceDataContext.JobId);
-                    await _filePersister.StoreAsync(key, referenceDataContext.Container, apiData, compressOutput, cancellationToken);
-                    _logger.LogInfo("Finished EDRS API Output");
+                        _logger.LogInfo("Starting EDRS API Output");
+                        var key = string.Format(TempFileKey, referenceDataContext.Ukprn, referenceDataContext.JobId);
+                        await _filePersister.StoreAsync(key, referenceDataContext.Container, apiData, compressOutput, cancellationToken);
+                        _logger.LogInfo("Finished EDRS API Output");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("EDRS API path failed", ex);
                 }
 
                 // output model.
