@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Service;
 using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Service.Tasks;
 
@@ -10,6 +12,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
         {
             containerBuilder.RegisterModule<IlrMessageReferenceDataRepositoryServicesModule>();
             containerBuilder.RegisterType<IlrMessageTask>().Keyed<ITask>(TaskKeys.IlrMessage);
+            containerBuilder.RegisterType<EdrsApiService>().As<IEdrsApiService>();
         }
     }
 }
