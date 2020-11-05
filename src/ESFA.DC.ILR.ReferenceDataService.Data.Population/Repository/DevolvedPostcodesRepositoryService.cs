@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         public virtual async Task<List<DevolvedPostcode>> RetrieveDevolvedPostcodes(string jsonParams, CancellationToken cancellationToken)
         {
             var sqlSfaAreaCost = $@"SELECT
-                                       D.[Postcode]
+                                       P.[Postcode]
                                       ,D.[Area]
                                       ,D.[SourceOfFunding]
                                       ,D.[EffectiveFrom]

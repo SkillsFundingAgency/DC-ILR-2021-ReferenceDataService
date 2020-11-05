@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                 k => k.Key,
                 v => v.Select(fa => new LARSFrameworkAim
                 {
-                    LearnAimRef = fa.LearnAimRef.ToUpper(),
+                    LearnAimRef = fa.LearnAimRef,
                     FrameworkComponentType = fa.FrameworkComponentType,
                     EffectiveFrom = fa.EffectiveFrom,
                     EffectiveTo = fa.EffectiveTo,

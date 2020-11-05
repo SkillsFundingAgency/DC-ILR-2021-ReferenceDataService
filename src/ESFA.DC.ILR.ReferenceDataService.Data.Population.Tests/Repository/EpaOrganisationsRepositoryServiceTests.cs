@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         [Fact]
         public async Task RetrieveAsync()
         {
-            var epaOrgIds = new List<string> { "EpaOrg1", "EpaOrg2", "EpaOrg3" };
+            var epaOrgIds = new List<string> { "EPAORG1", "EPAORG2", "EPAORG3" };
 
             IEnumerable<Period> periodsList = new List<Period>
             {
@@ -72,18 +72,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var epaOganisations = await NewService(epaContextFactoryMock.Object).RetrieveAsync(epaOrgIds, CancellationToken.None);
 
             epaOganisations.Should().HaveCount(5);
-            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg1");
-            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg2");
-            epaOganisations.Select(e => e.ID).Should().Contain("EpaOrg3");
-            epaOganisations.Select(e => e.ID).Should().NotContain("EpaOrg4");
+            epaOganisations.Select(e => e.ID).Should().Contain("EPAORG1");
+            epaOganisations.Select(e => e.ID).Should().Contain("EPAORG2");
+            epaOganisations.Select(e => e.ID).Should().Contain("EPAORG3");
+            epaOganisations.Select(e => e.ID).Should().NotContain("EPAORG4");
 
-            epaOganisations.Where(e => e.ID == "EpaOrg1").Should().HaveCount(2);
-            epaOganisations.Where(e => e.ID == "EpaOrg2").Should().HaveCount(1);
-            epaOganisations.Where(e => e.ID == "EpaOrg3").Should().HaveCount(2);
+            epaOganisations.Where(e => e.ID == "EPAORG1").Should().HaveCount(2);
+            epaOganisations.Where(e => e.ID == "EPAORG2").Should().HaveCount(1);
+            epaOganisations.Where(e => e.ID == "EPAORG3").Should().HaveCount(2);
 
-            epaOganisations.Where(e => e.ID == "EpaOrg1").Select(e => e.Standard).Should().Contain("1", "2");
-            epaOganisations.Where(e => e.ID == "EpaOrg2").Select(e => e.Standard).Should().Contain("1");
-            epaOganisations.Where(e => e.ID == "EpaOrg3").Select(e => e.Standard).Should().Contain("1", "2");
+            epaOganisations.Where(e => e.ID == "EPAORG1").Select(e => e.Standard).Should().Contain("1", "2");
+            epaOganisations.Where(e => e.ID == "EPAORG2").Select(e => e.Standard).Should().Contain("1");
+            epaOganisations.Where(e => e.ID == "EPAORG3").Select(e => e.Standard).Should().Contain("1", "2");
         }
 
         private EpaOrganisationsRepositoryService NewService(IDbContextFactory<IEpaContext> epaContextFactory = null)

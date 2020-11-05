@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Mapper.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
@@ -61,7 +62,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<List<string>> RetrieveMasterPostcodes(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT P.[Postcode] FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
+            var sqlSfaAreaCost = $@"SELECT UPPER(P.[Postcode]) AS Postcode FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                     INNER JOIN [dbo].[MasterPostcodes] J ON J.[Postcode] = P.[Postcode]";
 
             var postcodes = await RetrieveAsync<MasterPostcode>(jsonParams, sqlSfaAreaCost, cancellationToken);
@@ -73,7 +74,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IDictionary<string, List<SfaAreaCost>>> RetrieveSfaAreaCosts(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT P.[Postcode], J.[AreaCostFactor], J.[EffectiveFrom], J.[EffectiveTo] 
+            var sqlSfaAreaCost = $@"SELECT UPPER(P.[Postcode]) AS Postcode, J.[AreaCostFactor], J.[EffectiveFrom], J.[EffectiveTo] 
                                                     FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                     INNER JOIN [dbo].[SFA_PostcodeAreaCost] J ON J.[Postcode] = P.[Postcode]";
 
@@ -86,7 +87,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IDictionary<string, List<SfaDisadvantage>>> RetrieveSfaPostcodeDisadvantages(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlSfaPostcodeDisadvantage = $@"SELECT P.[Postcode], J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
+            var sqlSfaPostcodeDisadvantage = $@"SELECT UPPER(P.[Postcode]) AS Postcode, J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
                                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                                 INNER JOIN [dbo].[SFA_PostcodeDisadvantage] J ON J.[Postcode] = P.[Postcode]";
 
@@ -99,7 +100,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IDictionary<string, List<EfaDisadvantage>>> RetrieveEfaPostcodeDisadvantages(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlEfaPostcodeDisadvantage = $@"SELECT P.[Postcode], J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
+            var sqlEfaPostcodeDisadvantage = $@"SELECT UPPER(P.[Postcode]) AS Postcode, J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
                                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                                 INNER JOIN [dbo].[EFA_PostcodeDisadvantage] J ON J.[Postcode] = P.[Postcode]";
 
@@ -112,7 +113,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IDictionary<string, List<DasDisadvantage>>> RetrieveDasPostcodeDisadvantages(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlDasPostcodeDisadvantage = $@"SELECT P.[Postcode], J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
+            var sqlDasPostcodeDisadvantage = $@"SELECT UPPER(P.[Postcode]) AS Postcode, J.[Uplift], J.[EffectiveFrom], J.[EffectiveTo] 
                                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                                 INNER JOIN [dbo].[DAS_PostcodeDisadvantage] J ON J.[Postcode] = P.[Postcode]";
 
@@ -125,7 +126,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         public async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(string jsonParams, CancellationToken cancellationToken)
         {
-            var sqlOnsData = $@"SELECT P.[Postcode], J.[Introduction], J.[Termination], J.[LocalAuthority], J.[Lep1], J.[Lep2], 
+            var sqlOnsData = $@"SELECT UPPER(P.[Postcode]) AS Postcode, J.[Introduction], J.[Termination], J.[LocalAuthority], J.[Lep1], J.[Lep2], 
                                                 J.[EffectiveFrom], J.[EffectiveTo], J.[Nuts]
                                                 FROM OPENJSON(@jsonParams) WITH (Postcode nvarchar(8) '$') P 
                                                 INNER JOIN [dbo].[ONS_Postcodes] J ON J.[Postcode] = P.[Postcode]";

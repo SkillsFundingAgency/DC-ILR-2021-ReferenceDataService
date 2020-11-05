@@ -18,8 +18,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var cancellationToken = CancellationToken.None;
-            IReadOnlyCollection<string> learnRefNumbers = new List<string> { "LearnRefNumber1", "LearnRefNumber2", "LearnRefNumber3", "LearnRefNumber4" };
-            var learnRefNumbersJson = @"[""LearnRefNumber1"",""LearnRefNumber2"",""LearnRefNumber3"",""LearnRefNumber4""]";
+            IReadOnlyCollection<string> learnRefNumbers = new List<string> { "LEARNREFNUMBER1", "LEARNREFNUMBER12", "LEARNREFNUMBER3", "LEARNREFNUMBER4" };
+            var learnRefNumbersJson = @"[""LEARNREFNUMBER1"",""LEARNREFNUMBER2"",""LEARNREFNUMBER3"",""LEARNREFNUMBER4""]";
 
             IReadOnlyCollection<int> ukprns = new List<int> { 1, 2, 3, 4 };
             var ukprnsJson = @"[1,2,3,4]";
@@ -30,15 +30,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new Learner
                 {
-                    LearnRefNumber = "LearnRefNumber1",
+                    LearnRefNumber = "LEARNREFNUMBER1",
                 },
                 new Learner
                 {
-                    LearnRefNumber = "LearnRefNumber2",
+                    LearnRefNumber = "LEARNREFNUMBER2",
                 },
                 new Learner
                 {
-                    LearnRefNumber = "LearnRefNumber3",
+                    LearnRefNumber = "LEARNREFNUMBER3",
                 }
             };
 

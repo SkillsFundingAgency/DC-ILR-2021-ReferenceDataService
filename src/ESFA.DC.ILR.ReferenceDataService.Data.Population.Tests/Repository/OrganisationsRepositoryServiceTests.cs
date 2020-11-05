@@ -180,7 +180,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             organisations.First(o => o.UKPRN == 1).UKPRN.Should().Be(1);
             organisations.First(o => o.UKPRN == 1).LegalOrgType.Should().Be("LegalType1");
             organisations.First(o => o.UKPRN == 1).Name.Should().Be("Name1");
-            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().CampusIdentifier.Should().Be("CampId_01");
+            organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().CampusIdentifier.Should().Be("CAMPID_01");
             organisations.First(o => o.UKPRN == 1).CampusIdentifers.First().SpecialistResources.FirstOrDefault().IsSpecialistResource.Should().BeTrue();
             organisations.First(o => o.UKPRN == 1).PartnerUKPRN.Should().BeTrue();
             organisations.First(o => o.UKPRN == 1).LongTermResid.Should().BeTrue();

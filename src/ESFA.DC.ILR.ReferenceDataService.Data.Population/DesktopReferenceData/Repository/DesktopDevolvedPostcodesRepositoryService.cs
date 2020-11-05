@@ -77,8 +77,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         public async Task<List<DevolvedPostcode>> RetrieveDevolvedPostcodes(CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT
-                                       D.[Postcode]
+            var devolvedPostcodes = $@"SELECT
+                                       UPPER(D.[Postcode]) AS Postcode
                                       ,D.[Area]
                                       ,D.[SourceOfFunding]
                                       ,D.[EffectiveFrom]
@@ -86,7 +86,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                                 FROM [dbo].[DevolvedPostcodesDataset] D 
                                 WHERE D.[SourceOfFunding] IS NOT NULL";
 
-            var postcodes = await ExectueSqlAsync<DevolvedPostcode>(sqlSfaAreaCost, cancellationToken);
+            var postcodes = await ExectueSqlAsync<DevolvedPostcode>(devolvedPostcodes, cancellationToken);
 
             return postcodes.ToList();
         }

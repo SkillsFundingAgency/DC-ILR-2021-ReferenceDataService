@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model;
@@ -93,14 +94,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 l => new Lookup
                 {
                     Name = l.Name,
-                    Code = l.Code,
+                    Code = l.Code.ToUpperCase(),
                     EffectiveFrom = l.EffectiveFrom,
                     EffectiveTo = l.EffectiveTo,
                     SubCategories = l.LookupSubCategories
                     .Select(
                         sc => new LookupSubCategory
                         {
-                            Code = sc.Code,
+                            Code = sc.Code.ToUpperCase(),
                             EffectiveFrom = sc.EffectiveFrom,
                             EffectiveTo = sc.EffectiveTo,
                         }).ToList(),

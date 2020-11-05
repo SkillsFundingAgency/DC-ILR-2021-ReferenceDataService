@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
@@ -39,7 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
                         ProgType = lf.ProgType,
                         PwayCode = lf.PwayCode,
                         FrameworkComponentType = lf.FrameworkComponentType,
-                        LearnAimRef = lf.LearnAimRef,
+                        LearnAimRef = lf.LearnAimRef.ToUpperCase(),
                         EffectiveFrom = lf.EffectiveFrom,
                         EffectiveTo = lf.EffectiveTo,
                     }).ToList();

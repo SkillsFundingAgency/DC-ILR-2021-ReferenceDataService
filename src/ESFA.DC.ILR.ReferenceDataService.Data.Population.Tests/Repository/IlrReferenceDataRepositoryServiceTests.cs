@@ -56,7 +56,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ReferenceDataService.Model.MetaData.Lookup
                 {
                     Name = "Lookup1",
-                    Code = "Code1",
+                    Code = "CODE1",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
                     SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ReferenceDataService.Model.MetaData.Lookup
                 {
                     Name = "Lookup1",
-                    Code = "Code2",
+                    Code = "CODE2",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
                     SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
@@ -72,26 +72,26 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 new ReferenceDataService.Model.MetaData.Lookup
                 {
                     Name = "Lookup2",
-                    Code = "Code1",
+                    Code = "CODE1",
                     SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>()
                 },
                 new ReferenceDataService.Model.MetaData.Lookup
                 {
                     Name = "Lookup3",
-                    Code = "Code1",
+                    Code = "CODE1",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
                     SubCategories = new List<ReferenceDataService.Model.MetaData.LookupSubCategory>
                     {
                         new ReferenceDataService.Model.MetaData.LookupSubCategory
                         {
-                            Code = "Code3_1",
+                            Code = "CODE3_1",
                             EffectiveFrom = new DateTime(1900, 1, 1),
                             EffectiveTo = new DateTime(2099, 1, 1),
                         },
                         new ReferenceDataService.Model.MetaData.LookupSubCategory
                         {
-                            Code = "Code3_2",
+                            Code = "CODE3_2",
                             EffectiveFrom = new DateTime(1900, 1, 1),
                             EffectiveTo = new DateTime(2099, 1, 1),
                         },
@@ -105,7 +105,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     ParentName = "Code3",
                     Name = "Code3SC",
-                    Code = "Code3_1",
+                    Code = "CODE3_1",
                     Description = "Description",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),
@@ -114,7 +114,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     ParentName = "Code3",
                     Name = "Code3SC",
-                    Code = "Code3_2",
+                    Code = "CODE3_2",
                     Description = "Description",
                     EffectiveFrom = new DateTime(1900, 1, 1),
                     EffectiveTo = new DateTime(2099, 1, 1),

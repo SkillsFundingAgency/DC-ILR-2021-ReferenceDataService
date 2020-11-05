@@ -20,12 +20,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
         private readonly string sql = @"SELECT  
                                            L.[UKPRN]
-                                          ,L.[LearnRefNumber]
-                                          ,L.[PrevLearnRefNumber]
+                                          ,UPPER(L.[LearnRefNumber]) AS LearnRefNumber
+                                          ,UPPER(L.[PrevLearnRefNumber]) AS PrevLearnRefNumber
                                           ,L.[PrevUKPRN]
                                           ,L.[PMUKPRN]
                                           ,L.[ULN]
-	                                      ,LD.[LearnAimRef]
+	                                      ,UPPER(LD.[LearnAimRef]) AS LearnAimRef
 	                                      ,LD.[ProgType] AS ProgTypeNullable
 	                                      ,LD.[PwayCode] AS PwayCodeNullable
 	                                      ,LD.[FworkCode] AS FworkCodeNullable

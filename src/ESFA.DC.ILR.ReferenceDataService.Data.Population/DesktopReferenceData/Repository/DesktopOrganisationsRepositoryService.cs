@@ -6,9 +6,11 @@ using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
+using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,7 +59,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>>> BuildCampusIdSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
         {
-            var campusIdentifierSpecResources = await context.CampusIdentifierSpecResources?.ToListAsync(cancellationToken);
+            var campusIdentifierSpecResources = await context.CampusIdentifierSpecResources?
+                .Select(x => new CampusIdentifierSpecResource()
+                {
+                    MasterUkprn = x.MasterUkprn,
+                    CampusIdentifier = x.CampusIdentifier.ToUpperCase(),
+                    EffectiveFrom = x.EffectiveFrom,
+                    EffectiveTo = x.EffectiveTo,
+                    SpecialistResources = x.SpecialistResources
+                })
+                .ToListAsync(cancellationToken);
 
             return BuildCampusIdSpecResourceDictionary(campusIdentifierSpecResources);
         }

@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "100",
+                    ContractAllocationNumber = "abc100",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     LearningRatePremiumFactor = 1.0m,
@@ -51,7 +51,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "101",
+                    ContractAllocationNumber = "abc101",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     LearningRatePremiumFactor = 2.0m,
@@ -76,7 +76,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "102",
+                    ContractAllocationNumber = "abc102",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -87,7 +87,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "103",
+                    ContractAllocationNumber = "abc103",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -97,7 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "104",
+                    ContractAllocationNumber = "abc104",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -298,19 +298,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var service = await NewService(fcsContextFactoryMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(4);
-            service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
+            service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "ABC100", "ABC101", "ABC102", "ABC103" });
 
-            service.Where(f => f.ContractAllocationNumber == "100").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
-            service.Where(f => f.ContractAllocationNumber == "101").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
-            service.Where(f => f.ContractAllocationNumber == "102").SelectMany(f => f.FCSContractDeliverables).Should().HaveCount(0);
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "ABC102").SelectMany(f => f.FCSContractDeliverables).Should().HaveCount(0);
 
-            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
-            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec1");
-            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
-            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
-            service.Where(f => f.ContractAllocationNumber == "102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec1");
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
+            service.Where(f => f.ContractAllocationNumber == "ABC102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
 
-            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Benefits.Should().BeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SingleOrDefault().EsfEligibilityRule.Benefits.Should().BeNull();
         }
 
         [Fact]
@@ -322,7 +322,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "100",
+                    ContractAllocationNumber = "abc100",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     LearningRatePremiumFactor = 1.0m,
@@ -348,7 +348,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "101",
+                    ContractAllocationNumber = "abc101",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     LearningRatePremiumFactor = 2.0m,
@@ -373,7 +373,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "102",
+                    ContractAllocationNumber = "abc102",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -384,7 +384,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "103",
+                    ContractAllocationNumber = "abc103",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -394,7 +394,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new ContractAllocation
                 {
-                    ContractAllocationNumber = "104",
+                    ContractAllocationNumber = "abc104",
                     FundingStreamCode = "Code1",
                     FundingStreamPeriodCode = "PeriodCode1",
                     Period = "R01",
@@ -595,17 +595,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var service = await NewService(fcsContextFactoryMock.Object).RetrieveAsync(ukprn, CancellationToken.None);
 
             service.Should().HaveCount(4);
-            service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "100", "101", "102", "103" });
+            service.Select(f => f.ContractAllocationNumber).Should().BeEquivalentTo(new List<string> { "ABC100", "ABC101", "ABC102", "ABC103" });
 
-            service.Where(f => f.ContractAllocationNumber == "100").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
-            service.Where(f => f.ContractAllocationNumber == "101").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
-            service.Where(f => f.ContractAllocationNumber == "102").SelectMany(f => f.FCSContractDeliverables).Should().HaveCount(0);
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SelectMany(f => f.FCSContractDeliverables).Should().NotBeNullOrEmpty();
+            service.Where(f => f.ContractAllocationNumber == "ABC102").SelectMany(f => f.FCSContractDeliverables).Should().HaveCount(0);
 
-            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
-            service.Where(f => f.ContractAllocationNumber == "100").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec1");
-            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
-            service.Where(f => f.ContractAllocationNumber == "101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
-            service.Where(f => f.ContractAllocationNumber == "102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC100").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec1");
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SingleOrDefault().EsfEligibilityRule.Should().NotBeNull();
+            service.Where(f => f.ContractAllocationNumber == "ABC101").SingleOrDefault().EsfEligibilityRule.TenderSpecReference.Should().BeEquivalentTo("TenderSpec2");
+            service.Where(f => f.ContractAllocationNumber == "ABC102").SingleOrDefault().EsfEligibilityRule.Should().BeNull();
         }
 
         private FcsRepositoryService NewService(IDbContextFactory<IFcsContext> fcsContextFactory = null)

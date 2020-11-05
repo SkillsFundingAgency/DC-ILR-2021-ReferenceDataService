@@ -79,7 +79,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<List<string>> RetrieveMasterPostcodes(CancellationToken cancellationToken)
         {
-            var sqlPostcodes = $@"SELECT [Postcode] FROM [dbo].[MasterPostcodes] order by Postcode";
+            var sqlPostcodes = $@"SELECT UPPER([Postcode]) AS Postcode FROM [dbo].[MasterPostcodes] order by Postcode";
 
             var postcodes = await RetrieveAsync<string>(sqlPostcodes, cancellationToken);
 
@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<IDictionary<string, List<SfaAreaCost>>> RetrieveSfaAreaCosts(CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT [Postcode], [AreaCostFactor], [EffectiveFrom], [EffectiveTo] 
+            var sqlSfaAreaCost = $@"SELECT UPPER([Postcode]) AS Postcode, [AreaCostFactor], [EffectiveFrom], [EffectiveTo] 
                                                     FROM [dbo].[SFA_PostcodeAreaCost]";
 
             var sfaAreaCosts = await RetrieveAsync<SfaPostcodeAreaCost>(sqlSfaAreaCost, cancellationToken);
@@ -100,7 +100,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<IDictionary<string, List<SfaDisadvantage>>> RetrieveSfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
-            var sqlSfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
+            var sqlSfaPostcodeDisadvantage = $@"SELECT UPPER([Postcode]) AS Postcode, [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[SFA_PostcodeDisadvantage]";
 
             var sfaDisadvantages = await RetrieveAsync<SfaPostcodeDisadvantage>(sqlSfaPostcodeDisadvantage, cancellationToken);
@@ -112,7 +112,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<IDictionary<string, List<EfaDisadvantage>>> RetrieveEfaPostcodeDisadvantages(CancellationToken cancellationToken)
         {
-            var sqlEfaPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
+            var sqlEfaPostcodeDisadvantage = $@"SELECT UPPER([Postcode]) AS Postcode, [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[EFA_PostcodeDisadvantage]";
 
             var efaDisadvantages = await RetrieveAsync<EfaPostcodeDisadvantage>(sqlEfaPostcodeDisadvantage, cancellationToken);
@@ -124,7 +124,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<IDictionary<string, List<DasDisadvantage>>> RetrieveDasPostcodeDisadvantages(CancellationToken cancellationToken)
         {
-            var sqlDasPostcodeDisadvantage = $@"SELECT [Postcode], [Uplift], [EffectiveFrom], [EffectiveTo] 
+            var sqlDasPostcodeDisadvantage = $@"SELECT UPPER([Postcode]) AS Postcode, [Uplift], [EffectiveFrom], [EffectiveTo] 
                                                                 FROM [dbo].[DAS_PostcodeDisadvantage]";
 
             var dasDisadvantages = await RetrieveAsync<DasPostcodeDisadvantage>(sqlDasPostcodeDisadvantage, cancellationToken);
@@ -136,7 +136,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
 
         private async Task<IDictionary<string, List<ONSData>>> RetrieveOnsData(CancellationToken cancellationToken)
         {
-            var sqlOnsData = $@"SELECT [Postcode], [Introduction], [Termination], [LocalAuthority], [Lep1], [Lep2], 
+            var sqlOnsData = $@"SELECT UPPER([Postcode]) AS Postcode, [Introduction], [Termination], [LocalAuthority], [Lep1], [Lep2], 
                                                 [EffectiveFrom], [EffectiveTo], [Nuts]
                                                 FROM [dbo].[ONS_Postcodes]";
 
