@@ -58,7 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             HistoricVirtualTNP4EndOfTheYearInput = aec.HistoricVirtualTnp4endOfTheYearInput,
                             HistoricLearnDelProgEarliestACT2DateInput = aec.HistoricLearnDelProgEarliestAct2dateInput,
                             LatestInYear = aec.LatestInYear,
-                            LearnRefNumber = aec.LearnRefNumber,
+                            LearnRefNumber = aec.LearnRefNumber.ToUpperCase(),
                             ProgrammeStartDateIgnorePathway = aec.ProgrammeStartDateIgnorePathway,
                             ProgrammeStartDateMatchPathway = aec.ProgrammeStartDateMatchPathway,
                             ProgType = aec.ProgType,

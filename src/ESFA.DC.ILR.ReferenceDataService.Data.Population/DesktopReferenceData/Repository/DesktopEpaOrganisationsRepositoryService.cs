@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
@@ -29,17 +30,19 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
         {
             using (var context = _epaContextFactory.Create())
             {
-                var periods = await context?
+                var epaOrgs = await context?
                         .Periods?
                         .Select(epa => new EPAOrganisation
                         {
-                            ID = epa.OrganisationId,
+                            ID = epa.OrganisationId.ToUpperCase(),
                             Standard = epa.StandardCode,
                             EffectiveFrom = epa.EffectiveFrom,
                             EffectiveTo = epa.EffectiveTo,
                         }).ToListAsync(cancellationToken);
-                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EPAOrganisations, periods.Count());
-                return periods;
+
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.EPAOrganisations, epaOrgs.Count());
+
+                return epaOrgs;
             }
         }
     }

@@ -22,8 +22,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveAsync()
         {
             var cancellationToken = CancellationToken.None;
-            IReadOnlyCollection<string> postcodes = new List<string> { "PostCode1", "PostCode2", "PostCode3", "PostCode4" };
-            var json = @"[""PostCode1"",""PostCode2"",""PostCode3"",""PostCode4""]";
+            IReadOnlyCollection<string> postcodes = new List<string> { "POSTCODE1", "POSTCODE2", "POSTCODE3", "POSTCODE4" };
+            var json = @"[""POSTCODE1"",""POSTCODE3"",""POSTCODE3"",""POSTCODE4""]";
 
             var masterPostcodeTaskResult = new TaskCompletionSource<IEnumerable<MasterPostcode>>();
             var sfaAreaCostTaskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeAreaCost>>();
@@ -31,21 +31,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var efaDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
             var dasDisadvantageTaskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
             var onsDataTaskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
-            var mcaglaSOFTaskResult = new TaskCompletionSource<IEnumerable<McaglaSof>>();
 
             var masterPostcodes = new List<MasterPostcode>
             {
                 new MasterPostcode
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "PostCode3",
+                    Postcode = "POSTCODE3",
                 }
             };
 
@@ -53,20 +52,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     AreaCostFactor = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -76,20 +75,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -99,20 +98,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -122,20 +121,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -145,14 +144,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new OnsPostcode
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Lep1 = "Lep1",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new OnsPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Lep1 = "Lep1",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 8, 1),
@@ -160,7 +159,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new OnsPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Lep1 = "Lep11",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 9, 2)
@@ -182,7 +181,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
             postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesContextMock.Object);
 
-            var service = NewServiceMock(postcodesContextFactory: postcodesContextFactoryMock.Object, jsonSerializationService: jsonSerializationMock.Object);
+            var service = NewServiceMock(postcodesContextFactoryMock.Object, jsonSerializationService: jsonSerializationMock.Object);
 
             service.Setup(s => s.RetrieveAsync<MasterPostcode>(json, It.IsAny<string>(), cancellationToken)).Returns(masterPostcodeTaskResult.Task);
             service.Setup(s => s.RetrieveAsync<SfaPostcodeAreaCost>(json, It.IsAny<string>(), cancellationToken)).Returns(sfaAreaCostTaskResult.Task);
@@ -197,7 +196,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new Postcode
                 {
-                    PostCode = "PostCode1",
+                    PostCode = "POSTCODE1",
                     SfaAreaCosts = new List<SfaAreaCost>
                     {
                         new SfaAreaCost
@@ -242,7 +241,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new Postcode
                 {
-                    PostCode = "PostCode2",
+                    PostCode = "POSTCODE2",
                     SfaAreaCosts = new List<SfaAreaCost>
                     {
                         new SfaAreaCost
@@ -318,7 +317,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new Postcode
                 {
-                    PostCode = "PostCode3"
+                    PostCode = "POSTCODE3"
                 }
             };
 
@@ -329,7 +328,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveMasterPostcodes()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<MasterPostcode>>();
 
@@ -337,15 +336,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new MasterPostcode
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                 },
                 new MasterPostcode
                 {
-                    Postcode = "PostCode3",
+                    Postcode = "POSTCODE3",
                 }
             };
 
@@ -353,9 +352,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var masterPostCodeList = new List<string>
             {
-                "PostCode1",
-                "PostCode2",
-                "PostCode3"
+                "POSTCODE1",
+                "POSTCODE2",
+                "POSTCODE3"
             };
 
             var service = NewServiceMock();
@@ -371,7 +370,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveSfaAreaCosts()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeAreaCost>>();
 
@@ -379,20 +378,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     AreaCostFactor = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new SfaPostcodeAreaCost
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     AreaCostFactor = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -403,7 +402,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var sfaAreaCostDictionary = new Dictionary<string, List<SfaAreaCost>>
             {
                 {
-                    "PostCode1", new List<SfaAreaCost>
+                    "POSTCODE1", new List<SfaAreaCost>
                     {
                         new SfaAreaCost
                         {
@@ -413,7 +412,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "PostCode2", new List<SfaAreaCost>
+                    "POSTCODE2", new List<SfaAreaCost>
                     {
                         new SfaAreaCost
                         {
@@ -443,7 +442,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveSfaPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<SfaPostcodeDisadvantage>>();
 
@@ -451,20 +450,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new SfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -475,7 +474,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var sfaDisadvantageDictionary = new Dictionary<string, List<SfaDisadvantage>>
             {
                 {
-                    "PostCode1", new List<SfaDisadvantage>
+                    "POSTCODE1", new List<SfaDisadvantage>
                     {
                         new SfaDisadvantage
                         {
@@ -485,7 +484,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "PostCode2", new List<SfaDisadvantage>
+                    "POSTCODE2", new List<SfaDisadvantage>
                     {
                         new SfaDisadvantage
                         {
@@ -515,7 +514,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveEfaPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<EfaPostcodeDisadvantage>>();
 
@@ -523,20 +522,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new EfaPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -547,7 +546,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var efaDisadvantageDictionary = new Dictionary<string, List<EfaDisadvantage>>
             {
                 {
-                    "PostCode1", new List<EfaDisadvantage>
+                    "POSTCODE1", new List<EfaDisadvantage>
                     {
                         new EfaDisadvantage
                         {
@@ -557,7 +556,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "PostCode2", new List<EfaDisadvantage>
+                    "POSTCODE2", new List<EfaDisadvantage>
                     {
                         new EfaDisadvantage
                         {
@@ -587,7 +586,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveDasPostcodeDisadvantages()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<DasPostcodeDisadvantage>>();
 
@@ -595,20 +594,20 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.2m,
                     EffectiveFrom = new DateTime(2018, 8, 1),
                     EffectiveTo = new DateTime(2018, 9, 1)
                 },
                 new DasPostcodeDisadvantage
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Uplift = 1.5m,
                     EffectiveFrom = new DateTime(2018, 9, 2)
                 }
@@ -619,7 +618,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var dasDisadvantageDictionary = new Dictionary<string, List<DasDisadvantage>>
             {
                 {
-                    "PostCode1", new List<DasDisadvantage>
+                    "POSTCODE1", new List<DasDisadvantage>
                     {
                         new DasDisadvantage
                         {
@@ -629,7 +628,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "PostCode2", new List<DasDisadvantage>
+                    "POSTCODE2", new List<DasDisadvantage>
                     {
                         new DasDisadvantage
                         {
@@ -659,7 +658,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         public async Task RetrieveOnsData()
         {
             var cancellationToken = CancellationToken.None;
-            var json = @"[""Postcode1"",""Postcode2"",""Postcode3""]";
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3""]";
 
             var taskResult = new TaskCompletionSource<IEnumerable<OnsPostcode>>();
 
@@ -667,14 +666,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new OnsPostcode
                 {
-                    Postcode = "PostCode1",
+                    Postcode = "POSTCODE1",
                     Lep1 = "Lep1",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 8, 1)
                 },
                 new OnsPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Lep1 = "Lep1",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 8, 1),
@@ -682,7 +681,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new OnsPostcode
                 {
-                    Postcode = "PostCode2",
+                    Postcode = "POSTCODE2",
                     Lep1 = "Lep11",
                     LocalAuthority = "LocalAuthority",
                     EffectiveFrom = new DateTime(2018, 9, 2)
@@ -694,7 +693,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var onsDictionary = new Dictionary<string, List<ONSData>>
             {
                 {
-                    "PostCode1", new List<ONSData>
+                    "POSTCODE1", new List<ONSData>
                     {
                         new ONSData
                         {
@@ -705,7 +704,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     }
                 },
                 {
-                    "PostCode2", new List<ONSData>
+                    "POSTCODE2", new List<ONSData>
                     {
                         new ONSData
                         {

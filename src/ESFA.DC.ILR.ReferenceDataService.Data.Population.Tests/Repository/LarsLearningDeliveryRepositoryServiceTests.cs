@@ -25,8 +25,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var larsLearningDeliveryKeys = new List<LARSLearningDeliveryKey>
             {
-                new LARSLearningDeliveryKey("LearnAimRef1", 1, 2, 3),
-                new LARSLearningDeliveryKey("LearnAimRef2", 1, 2, 3),
+                new LARSLearningDeliveryKey("LEARNAIMREF1", 1, 2, 3),
+                new LARSLearningDeliveryKey("LEARNAIMREF2", 1, 2, 3),
             };
 
             IEnumerable<LarsLearningDelivery> larsLearningDeliveryList = new List<LarsLearningDelivery>
@@ -260,7 +260,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             {
                 new LARSLearningDelivery
                 {
-                    LearnAimRef = "LearnAimRef1",
+                    LearnAimRef = "LEARNAIMREF1",
                     LearnAimRefTitle = "AimRefTitle1",
                     LearnAimRefTypeDesc = "LearnAimRefTypeDesc1",
                     SectorSubjectAreaTier2 = 1.1m,
@@ -315,7 +315,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSFunding
                         {
-                            LearnAimRef = "LearnAimRef1",
+                            LearnAimRef = "LEARNAIMREF1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat1",
@@ -325,7 +325,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSFunding
                         {
-                            LearnAimRef = "LearnAimRef1",
+                            LearnAimRef = "LEARNAIMREF1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat2",
@@ -335,7 +335,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSFunding
                         {
-                            LearnAimRef = "LearnAimRef1",
+                            LearnAimRef = "LEARNAIMREF1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             FundingCategory = "Cat3",
@@ -348,7 +348,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSValidity
                         {
-                            LearnAimRef = "LearnAimRef1",
+                            LearnAimRef = "LEARNAIMREF1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
@@ -356,7 +356,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LARSValidity
                         {
-                            LearnAimRef = "LearnAimRef1",
+                            LearnAimRef = "LEARNAIMREF1",
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                             LastNewStartDate = new DateTime(2018, 8, 1),
@@ -368,7 +368,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 },
                 new LARSLearningDelivery
                 {
-                    LearnAimRef = "LearnAimRef2",
+                    LearnAimRef = "LEARNAIMREF2",
                     LearnAimRefTitle = "AimRefTitle2",
                     LearnAimRefTypeDesc = "LearnAimRefTypeDesc2",
                     SectorSubjectAreaTier2 = 2.1m,
@@ -419,14 +419,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSLearningDeliveryCategory
                         {
-                            LearnAimRef = "LearnAimRef2",
+                            LearnAimRef = "LEARNAIMREF2",
                             CategoryRef = 1,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
                         },
                         new LARSLearningDeliveryCategory
                         {
-                            LearnAimRef = "LearnAimRef2",
+                            LearnAimRef = "LEARNAIMREF2",
                             CategoryRef = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),
                             EffectiveTo = null,
@@ -436,7 +436,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                     {
                         new LARSAnnualValue
                         {
-                            LearnAimRef = "LearnAimRef2",
+                            LearnAimRef = "LEARNAIMREF2",
                             BasicSkills = 1,
                             BasicSkillsType = 2,
                             EffectiveFrom = new DateTime(2018, 8, 1),

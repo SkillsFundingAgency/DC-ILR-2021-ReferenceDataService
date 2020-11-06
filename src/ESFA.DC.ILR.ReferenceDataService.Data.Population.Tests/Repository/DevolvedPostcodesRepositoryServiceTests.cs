@@ -20,8 +20,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
         {
             var cancellationToken = CancellationToken.None;
 
-            IReadOnlyCollection<string> postcodes = new List<string> { "PostCode1", "PostCode2", "PostCode3", "PostCode4" };
-            var json = @"[""PostCode1"",""PostCode2"",""PostCode3"",""PostCode4""]";
+            IReadOnlyCollection<string> postcodes = new List<string> { "POSTCODE1", "POSTCODE2", "POSTCODE3", "POSTCODE4" };
+            var json = @"[""POSTCODE1"",""POSTCODE2"",""POSTCODE3"",""POSTCODE4""]";
 
             var mcaGlataskResult = new TaskCompletionSource<List<McaGlaSofLookup>>();
             var devolvedPostcodesTaskResult = new TaskCompletionSource<List<DevolvedPostcode>>();
@@ -49,21 +49,21 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                     new DevolvedPostcode
                     {
-                        Postcode = "PostCode1",
+                        Postcode = "POSTCODE1",
                         Area = "Area",
                         SourceOfFunding = "105",
                         EffectiveFrom = new DateTime(2019, 8, 1)
                     },
                     new DevolvedPostcode
                     {
-                        Postcode = "PostCode2",
+                        Postcode = "POSTCODE3",
                         Area = "Area",
                         SourceOfFunding = "105",
                         EffectiveFrom = new DateTime(2019, 8, 1)
                     },
                     new DevolvedPostcode
                     {
-                        Postcode = "PostCode3",
+                        Postcode = "POSTCODE3",
                         Area = "Area",
                         SourceOfFunding = "110",
                         EffectiveFrom = new DateTime(2019, 8, 1)
@@ -76,7 +76,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             var postcodesContextMock = new Mock<IPostcodesContext>();
             var postcodesContextFactoryMock = new Mock<IDbContextFactory<IPostcodesContext>>();
-            var refdataOptionsMock = new Mock<IReferenceDataOptions>();
             var jsonSerializationMock = new Mock<IJsonSerializationService>();
 
             postcodesContextFactoryMock.Setup(c => c.Create()).Returns(postcodesContextMock.Object);

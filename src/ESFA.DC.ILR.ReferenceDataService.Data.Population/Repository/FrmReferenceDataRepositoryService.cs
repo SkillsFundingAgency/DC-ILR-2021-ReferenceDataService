@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
@@ -56,8 +57,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         AimType = ld.AimType,
                         FundModel = ld.FundModel,
                         FworkCodeNullable = ld.FworkCode,
-                        LearnAimRef = ld.LearnAimRef,
-                        LearnRefNumber = ld.LearnRefNumber,
+                        LearnAimRef = ld.LearnAimRef.ToUpperCase(),
+                        LearnRefNumber = ld.LearnRefNumber.ToUpperCase(),
                         LearnStartDate = ld.LearnStartDate,
                         ProgTypeNullable = ld.ProgType,
                         StdCodeNullable = ld.StdCode,
@@ -66,7 +67,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         PartnerUKPRN = ld.PartnerUKPRN,
                         PrevUKPRN = ld.Learner.PrevUKPRN,
                         PMUKPRN = ld.Learner.PMUKPRN,
-                        PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber,
+                        PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber.ToUpperCase(),
                         CompStatus = ld.CompStatus,
                         Outcome = ld.Outcome,
                         PriorLearnFundAdj = ld.PriorLearnFundAdj,
@@ -80,7 +81,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                                 new ReferenceDataService.Model.FRM.LearningDeliveryFAM
                                 {
                                     LearnDelFAMCode = x.LearnDelFAMCode,
-                                    LearnDelFAMType = x.LearnDelFAMType,
+                                    LearnDelFAMType = x.LearnDelFAMType.ToUpperCase(),
                                     LearnDelFAMDateFrom = x.LearnDelFAMDateFrom,
                                     LearnDelFAMDateTo = x.LearnDelFAMDateTo
                                 }).ToList(),
@@ -88,18 +89,18 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                             .Select(lm =>
                                 new ReferenceDataService.Model.FRM.ProviderSpecLearnerMonitoring
                                 {
-                                    ProvSpecLearnMon = lm.ProvSpecLearnMon,
+                                    ProvSpecLearnMon = lm.ProvSpecLearnMon.ToUpperCase(),
                                     ProvSpecLearnMonOccur = lm.ProvSpecLearnMonOccur
                                 }).ToList(),
                         ProvSpecDeliveryMonitorings = ld.ProviderSpecDeliveryMonitorings
                             .Select(dm => new ReferenceDataService.Model.FRM.ProviderSpecDeliveryMonitoring
                             {
-                                ProvSpecDelMon = dm.ProvSpecDelMon,
+                                ProvSpecDelMon = dm.ProvSpecDelMon.ToUpperCase(),
                                 ProvSpecDelMonOccur = dm.ProvSpecDelMonOccur
                             }).ToList()
                     }).ToListAsync(cancellationToken);
 
-                var learnAimRefs = frmLearners.Select(l => l.LearnAimRef).Distinct();
+                var learnAimRefs = new HashSet<string>(frmLearners.Select(l => l.LearnAimRef), StringComparer.OrdinalIgnoreCase);
 
                 var larsLearningDeliveries = await RetrieveLarsLearningDeliveries(cancellationToken, learnAimRefs);
 

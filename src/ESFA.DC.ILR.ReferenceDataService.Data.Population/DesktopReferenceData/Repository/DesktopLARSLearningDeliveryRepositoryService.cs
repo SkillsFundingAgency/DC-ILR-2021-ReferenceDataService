@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
-using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -73,7 +73,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
               .Select(
               ld => new LARSLearningDelivery
               {
-                  LearnAimRef = ld.LearnAimRef,
+                  LearnAimRef = ld.LearnAimRef.ToUpperCase(),
                   LearnAimRefTitle = ld.LearnAimRefTitle,
                   LearnAimRefType = ld.LearnAimRefType,
                   LearningDeliveryGenre = ld.LearningDeliveryGenre,
@@ -101,7 +101,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var larsAnnualValuesList = await context.LARS_AnnualValues
             .Select(la => new LARSAnnualValue
             {
-                LearnAimRef = la.LearnAimRef,
+                LearnAimRef = la.LearnAimRef.ToUpperCase(),
                 BasicSkills = la.BasicSkills,
                 BasicSkillsType = la.BasicSkillsType,
                 EffectiveFrom = la.EffectiveFrom,
@@ -125,7 +125,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var larsLearningDeliveryCategoriesList = await context.LARS_LearningDeliveryCategories
             .Select(ldc => new LARSLearningDeliveryCategory
             {
-                LearnAimRef = ldc.LearnAimRef,
+                LearnAimRef = ldc.LearnAimRef.ToUpperCase(),
                 CategoryRef = ldc.CategoryRef,
                 EffectiveFrom = ldc.EffectiveFrom,
                 EffectiveTo = ldc.EffectiveTo,
@@ -144,7 +144,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var larsFundingList = await context.LARS_Fundings
             .Select(lf => new LARSFunding
             {
-                LearnAimRef = lf.LearnAimRef,
+                LearnAimRef = lf.LearnAimRef.ToUpperCase(),
                 FundingCategory = lf.FundingCategory,
                 EffectiveFrom = lf.EffectiveFrom,
                 EffectiveTo = lf.EffectiveTo,
@@ -166,7 +166,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.
             var larsValiditiesList = await context.LARS_Validities
             .Select(lv => new LARSValidity
             {
-                LearnAimRef = lv.LearnAimRef,
+                LearnAimRef = lv.LearnAimRef.ToUpperCase(),
                 EffectiveFrom = lv.StartDate,
                 EffectiveTo = lv.EndDate,
                 LastNewStartDate = lv.LastNewStartDate,

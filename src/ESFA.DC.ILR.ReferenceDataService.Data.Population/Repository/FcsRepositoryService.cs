@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FCS;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
@@ -29,7 +30,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .Where(ca => ca.DeliveryUkprn == ukprn)
                 .Select(ca => new FcsContractAllocation
                 {
-                    ContractAllocationNumber = ca.ContractAllocationNumber,
+                    ContractAllocationNumber = ca.ContractAllocationNumber.ToUpperCase(),
                     FundingStreamPeriodCode = ca.FundingStreamPeriodCode,
                     LearningRatePremiumFactor = ca.LearningRatePremiumFactor,
                     LotReference = ca.LotReference,

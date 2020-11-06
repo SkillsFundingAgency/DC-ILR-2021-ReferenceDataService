@@ -188,7 +188,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.Count.Should().Be(1);
 
             var learner = serviceResult.First();
-            learner.LearnAimRef.Should().Be("ValidAim");
+            learner.LearnAimRef.Should().Be("VALIDAIM");
             learner.AimType.Should().Be(4);
             learner.FundModel.Should().Be(25);
         }

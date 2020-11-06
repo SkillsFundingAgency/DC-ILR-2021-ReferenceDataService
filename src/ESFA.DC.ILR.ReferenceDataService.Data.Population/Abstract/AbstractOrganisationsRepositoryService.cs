@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -51,13 +52,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
 
         protected OrganisationCampusIdentifier BuildCampusIdentifiers(CampusIdentifier campusIdentifier, Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary)
         {
+            var campusId = campusIdentifier.CampusIdentifier1.ToUpperCase();
+
             return new OrganisationCampusIdentifier
             {
                 UKPRN = campusIdentifier.MasterUkprn,
-                CampusIdentifier = campusIdentifier.CampusIdentifier1,
+                CampusIdentifier = campusId,
                 EffectiveFrom = campusIdentifier.EffectiveFrom,
                 EffectiveTo = campusIdentifier.EffectiveTo,
-                SpecialistResources = GetCampusIdSpecialistResources(campusIdentifier.MasterUkprn, campusIdentifier.CampusIdentifier1, specResourcesForUkprnDictionary).ToList()
+                SpecialistResources = GetCampusIdSpecialistResources(campusIdentifier.MasterUkprn, campusId, specResourcesForUkprnDictionary).ToList()
             };
         }
 
@@ -94,7 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
                     v1 => v1.Select(sr => new OrganisationPostcodeSpecialistResource
                     {
                         UKPRN = sr.Ukprn,
-                        Postcode = sr.Postcode,
+                        Postcode = sr.Postcode.ToUpperCase(),
                         SpecialistResources = sr.SpecialistResources,
                         EffectiveFrom = sr.EffectiveFrom,
                         EffectiveTo = sr.EffectiveTo
