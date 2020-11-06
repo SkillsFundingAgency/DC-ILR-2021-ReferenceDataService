@@ -228,6 +228,7 @@
   <ItemGroup>
     <Compile Include="Desktop\DesktopReferenceDataPopulationServicePerformanceTests.cs" />
     <Compile Include="Desktop\DesktopReferenceDataPopulationServiceTests.cs" />
+    <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="LearnerDataRetrievalServiceTests.cs" />
     <Compile Include="Mapper\PostcodeEntityModelMapperTests.cs" />
     <Compile Include="Mapper\LearnRefNumberMapperTests.cs" />
@@ -283,6 +284,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
