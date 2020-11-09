@@ -7,11 +7,11 @@ using ESFA.DC.JobContextManager.Model;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 {
-    public class ReferenceDataJobContextMessageContext : IReferenceDataContext
+    public class IlrMessageJobContext : IReferenceDataContext
     {
         private readonly JobContextMessage _jobContextMessage;
 
-        public ReferenceDataJobContextMessageContext(JobContextMessage jobContextMessage)
+        public IlrMessageJobContext(JobContextMessage jobContextMessage)
         {
             _jobContextMessage = jobContextMessage;
         }
