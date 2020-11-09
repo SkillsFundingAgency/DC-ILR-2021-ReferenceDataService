@@ -429,7 +429,8 @@
     <Compile Include="Config\DesktopReferenceDataConfiguration.cs" />
     <Compile Include="Config\IOConfiguration.cs" />
     <Compile Include="Constants\StatelessContants.cs" />
-    <Compile Include="Context\ReferenceDataJobContextMessageContext.cs" />
+    <Compile Include="Context\DesktopReferenceDataJobContext.cs" />
+    <Compile Include="Context\IlrMessageJobContext.cs" />
     <Compile Include="Modules\FrmReferenceDataModule.cs" />
     <Compile Include="Modules\LearnerReferenceDataModule.cs" />
     <Compile Include="Modules\IlrMessageReferenceDataRepositoryServicesModule.cs" />

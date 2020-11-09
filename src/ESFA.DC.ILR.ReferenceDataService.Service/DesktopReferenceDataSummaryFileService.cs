@@ -33,7 +33,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task ProcessAync(IReferenceDataContext context, CancellationToken cancellationToken)
+        public async Task ProcessAync(IDesktopReferenceDataContext context, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Generating Reference Data Report Summary");
 
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
         private string FileNameBuilder(string prefix, string filePath, DateTime dateTime) =>
             Path.Combine(filePath, string.Format(filePrefix, prefix, dateTime.ToString("yyyyMMddHHmm")));
 
-        private string BuildFilePath(IReferenceDataContext context)
+        private string BuildFilePath(IDesktopReferenceDataContext context)
         {
             return $@"{context.CollectionName}\{context.JobId}";
         }

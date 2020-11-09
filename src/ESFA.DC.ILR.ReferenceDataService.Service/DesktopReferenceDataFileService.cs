@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger = logger;
         }
 
-        public async Task ProcessAsync(IReferenceDataContext context, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken)
+        public async Task ProcessAsync(IDesktopReferenceDataContext context, DesktopReferenceDataRoot desktopReferenceDataRoot, CancellationToken cancellationToken)
         {
             _logger.LogInfo("Generating Desktop Reference Data File.");
 
@@ -45,7 +45,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 cancellationToken);
         }
 
-        private string BuildFilePath(IReferenceDataContext context)
+        private string BuildFilePath(IDesktopReferenceDataContext context)
         {
             return $@"{context.CollectionName}\{context.JobId}";
         }

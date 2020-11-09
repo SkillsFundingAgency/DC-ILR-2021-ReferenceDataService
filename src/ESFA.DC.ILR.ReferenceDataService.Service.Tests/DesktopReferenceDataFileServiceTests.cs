@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var fileNameServiceMock = new Mock<IDesktopReferenceDataFileNameService>();
             var desktopRefDataConfigMock = new Mock<IDesktopReferenceDataConfiguration>();
 
-            var context = new Mock<IReferenceDataContext>();
+            var context = new Mock<IDesktopReferenceDataContext>();
             context.Setup(x => x.Container).Returns(container);
             context.Setup(x => x.JobId).Returns(1);
             context.Setup(x => x.CollectionName).Returns(collectionName);
