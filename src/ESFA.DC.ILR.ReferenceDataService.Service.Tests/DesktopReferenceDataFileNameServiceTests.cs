@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var dateTimeProviderMock = new Mock<IDateTimeProvider>();
             dateTimeProviderMock.Setup(x => x.ConvertUtcToUk(dateTimeUtc)).Returns(dateTimeUk);
 
-            NewService(dateTimeProviderMock.Object).BuildFileName("FilePath", "FileName", dateTimeUtc).Should().BeEquivalentTo(expectedFileName);
+            NewService(dateTimeProviderMock.Object).BuildFileName("FilePath", "FileName", "2").Should().BeEquivalentTo(expectedFileName);
         }
 
         private DesktopReferenceDataFileNameService NewService(IDateTimeProvider dateTimeProvider)

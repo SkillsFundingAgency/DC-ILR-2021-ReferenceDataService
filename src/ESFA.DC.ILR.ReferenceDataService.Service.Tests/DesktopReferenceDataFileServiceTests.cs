@@ -41,9 +41,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             context.Setup(x => x.SubmissionDateTimeUTC).Returns(submissionDateTime);
 
             var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
-            var outputFileName = $@"{filePath}/FISReferenceData_0.1.0.202008010900.zip";
+            var outputFileName = $@"{filePath}/FISReferenceData.2.zip";
 
-            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, context.Object.SubmissionDateTimeUTC)).Returns(outputFileName);
+            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, "2")).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 

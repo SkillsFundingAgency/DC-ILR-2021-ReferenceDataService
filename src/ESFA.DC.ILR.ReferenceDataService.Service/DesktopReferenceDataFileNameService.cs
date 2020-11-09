@@ -22,15 +22,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger = logger;
         }
 
-        public string BuildFileName(string filePath, string fileName, DateTime submissionDateTimeUtc)
+        public string BuildFileName(string filePath, string fileName, string FISReferenceDataVersion)
         {
             _logger.LogInfo("Builiding Desktop reference data file name.");
 
-            var ukDateTime = _dateTimeProvider.ConvertUtcToUk(submissionDateTimeUtc);
-
-            var referenceDataModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
-
-            return string.Concat(Path.Combine(filePath, fileName), ".", referenceDataModelVersion, ".", ukDateTime.ToString(_dateTimeFormat), _referenceDataFileExtension);
+            return string.Concat(Path.Combine(filePath, fileName), ".", FISReferenceDataVersion, _referenceDataFileExtension);
         }
     }
 }

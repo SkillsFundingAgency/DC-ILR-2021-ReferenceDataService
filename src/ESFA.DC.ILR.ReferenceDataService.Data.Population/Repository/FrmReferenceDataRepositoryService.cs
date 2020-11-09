@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         StdCodeNullable = ld.StdCode,
                         PwayCodeNullable = ld.PwayCode,
                         AimSeqNumber = ld.AimSeqNumber,
-                        PartnerUKPRN = ld.PartnerUKPRN,
+                        PartnerUKPRN = ld.PartnerUKPRN.ToString(),
                         PrevUKPRN = ld.Learner.PrevUKPRN,
                         PMUKPRN = ld.Learner.PMUKPRN,
                         PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber.ToUpperCase(),
@@ -140,7 +140,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var orgContext = _orgContextFactory.Create())
             {
-                var partnerUKPRNs = returnList.Where(x => x.PartnerUKPRN.HasValue).Select(x => x.PartnerUKPRN.Value).Distinct()
+                var partnerUKPRNs = returnList.Select(x => long.Parse(x.PartnerUKPRN)).Distinct()
                     .Union(new[] { ukprn });
 
                 var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn))
@@ -151,9 +151,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 foreach (var learner in returnList)
                 {
                     learner.OrgName = orgName;
-                    if (learner.PartnerUKPRN.HasValue)
+                    if (!string.IsNullOrEmpty(learner.PartnerUKPRN))
                     {
-                        learner.PartnerOrgName = orgNames.SingleOrDefault(o => o.UKPRN == learner.PartnerUKPRN)?.OrgName ?? string.Empty;
+                        learner.PartnerOrgName = orgNames.SingleOrDefault(o => o.UKPRN == long.Parse(learner.PartnerUKPRN))?.OrgName ?? string.Empty;
                     }
                 }
             }
