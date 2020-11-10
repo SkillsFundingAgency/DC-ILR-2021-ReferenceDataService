@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Constants;
 using ESFA.DC.JobContext.Interface;
 using ESFA.DC.JobContextManager.Model;
 
@@ -22,5 +23,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
         public string Container => _jobContextMessage.KeyValuePairs[JobContextMessageKey.Container].ToString();
 
         public DateTime SubmissionDateTimeUTC => _jobContextMessage.SubmissionDateTimeUtc;
+
+        public string FISReferenceDataVersion => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FISReferenceDataVersion].ToString();
     }
 }

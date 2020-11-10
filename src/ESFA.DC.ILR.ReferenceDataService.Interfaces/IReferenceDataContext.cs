@@ -18,8 +18,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 
         string FrmReferenceDataFileKey { get; }
 
-        string FISReferenceDataVersion { get; }
-
         string LearnerReferenceDataFileKey { get; }
 
         string Task { get; }

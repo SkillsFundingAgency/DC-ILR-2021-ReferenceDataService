@@ -40,8 +40,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public string FrmReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FrmReferenceDataFileKey].ToString();
 
-        public string FISReferenceDataVersion => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FISReferenceDataVersion].ToString();
-
         public string LearnerReferenceDataFileKey => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.LearnerReferenceDataFileKey].ToString();
 
         public string Task => _jobContextMessage.Topics[_jobContextMessage.TopicPointer].Tasks.SelectMany(x => x.Tasks).First();
