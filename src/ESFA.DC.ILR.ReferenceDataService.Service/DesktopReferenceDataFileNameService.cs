@@ -22,11 +22,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger = logger;
         }
 
-        public string BuildFileName(string filePath, string fileName, string FISReferenceDataVersion)
+        public string BuildFileName(string filePath, string fileName, string versionNumber)
         {
             _logger.LogInfo("Builiding Desktop reference data file name.");
 
-            return string.Concat(Path.Combine(filePath, fileName), ".", FISReferenceDataVersion, _referenceDataFileExtension);
+            return string.Concat(Path.Combine(filePath, fileName), ".", versionNumber, _referenceDataFileExtension);
         }
     }
 }

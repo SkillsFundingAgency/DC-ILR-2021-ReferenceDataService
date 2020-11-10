@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             _logger.LogInfo("Generating Desktop Reference Data File.");
 
             var filePath = BuildFilePath(context);
-            var fileName = _desktopReferenceDataFileNameService.BuildFileName(filePath, _desktopRefDataConfig.DesktopReferenceDataFilePreFix, context.FISReferenceDataVersion);
+            var fileName = _desktopReferenceDataFileNameService.BuildFileName(filePath, _desktopRefDataConfig.DesktopReferenceDataFilePreFix, context.VersionNumber);
             await _zipFileService.SaveCollectionZipAsync(
                 fileName,
                 context.Container,

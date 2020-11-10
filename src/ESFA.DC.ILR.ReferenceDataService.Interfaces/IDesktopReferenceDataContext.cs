@@ -12,6 +12,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 
         DateTime SubmissionDateTimeUTC { get; }
 
-        string FISReferenceDataVersion { get; }
+        string VersionNumber { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
@@ -62,8 +63,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
                 HmppPostcodesVersion = postcodeRefDataVersions.HmppPostcodesVersion,
                 PostcodeFactorsVersion = postcodeRefDataVersions.PostcodeFactorsVersion,
             };
+            metaData.SchemaVersion = GetAssemblyVersion();
 
             return Validate(metaData);
+        }
+
+        private string GetAssemblyVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
         }
 
         private async Task<EmployersVersion> RetrieveEmployersVersionAsync(CancellationToken cancellationToken)

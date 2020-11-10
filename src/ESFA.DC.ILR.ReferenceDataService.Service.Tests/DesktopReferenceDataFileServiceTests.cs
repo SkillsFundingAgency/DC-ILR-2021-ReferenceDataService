@@ -27,6 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var container = "Container";
             var collectionName = "Collection";
             var filePrefix = "FISReferenceData";
+            var versionNumber = "2";
             var submissionDateTime = new DateTime(2020, 01, 01, 9, 00, 00);
             var cancellationToken = CancellationToken.None;
             var zipFileServiceMock = new Mock<IZipFileService>();
@@ -39,6 +40,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             context.Setup(x => x.JobId).Returns(1);
             context.Setup(x => x.CollectionName).Returns(collectionName);
             context.Setup(x => x.SubmissionDateTimeUTC).Returns(submissionDateTime);
+            context.Setup(x => x.VersionNumber).Returns(versionNumber);
 
             var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
             var outputFileName = $@"{filePath}/FISReferenceData.2.zip";

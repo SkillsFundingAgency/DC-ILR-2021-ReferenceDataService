@@ -140,10 +140,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var orgContext = _orgContextFactory.Create())
             {
-                var partnerUKPRNs = returnList.Select(x => long.Parse(x.PartnerUKPRN)).Distinct()
-                    .Union(new[] { ukprn });
+                var partnerUKPRNs = returnList.Select(x => x.PartnerUKPRN).Distinct()
+                    .Union(new[] { ukprn.ToString() });
 
-                var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn))
+                var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn.ToString()))
                     .Select(n => new { UKPRN = n.Ukprn, OrgName = n.Name }).ToListAsync(cancellationToken);
 
                 var orgName = orgNames.SingleOrDefault(o => o.UKPRN == ukprn)?.OrgName ?? string.Empty;

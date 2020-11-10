@@ -59,6 +59,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
 
         public DateTime SubmissionDateTimeUTC => throw new NotImplementedException();
 
-        public string FISReferenceDataVersion => throw new NotImplementedException();
+        public string VersionNumber => throw new NotImplementedException();
     }
 }

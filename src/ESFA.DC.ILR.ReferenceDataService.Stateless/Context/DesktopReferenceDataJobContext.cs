@@ -24,6 +24,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Context
 
         public DateTime SubmissionDateTimeUTC => _jobContextMessage.SubmissionDateTimeUtc;
 
-        public string FISReferenceDataVersion => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.FISReferenceDataVersion].ToString();
+        public string VersionNumber => _jobContextMessage.KeyValuePairs[ReferenceDataContextKeys.VersionNumber].ToString();
     }
 }
