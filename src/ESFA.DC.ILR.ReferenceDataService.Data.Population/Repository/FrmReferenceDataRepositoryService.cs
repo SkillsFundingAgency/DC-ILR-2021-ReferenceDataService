@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         StdCodeNullable = ld.StdCode,
                         PwayCodeNullable = ld.PwayCode,
                         AimSeqNumber = ld.AimSeqNumber,
-                        PartnerUKPRN = ld.PartnerUKPRN.ToString(),
+                        PartnerUKPRN = ld.PartnerUKPRN,
                         PrevUKPRN = ld.Learner.PrevUKPRN,
                         PMUKPRN = ld.Learner.PMUKPRN,
                         PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber.ToUpperCase(),
@@ -140,10 +140,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
         {
             using (var orgContext = _orgContextFactory.Create())
             {
-                var partnerUKPRNs = returnList.Select(x => x.PartnerUKPRN).Distinct()
-                    .Union(new[] { ukprn.ToString() });
+                var partnerUKPRNs = returnList.Where(x => x.PartnerUKPRN.HasValue).Select(x => x.PartnerUKPRN.Value).Distinct()
+                    .Union(new[] { ukprn });
 
-                var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn.ToString()))
+                var orgNames = await orgContext.OrgDetails.Where(o => partnerUKPRNs.Contains(o.Ukprn))
                     .Select(n => new { UKPRN = n.Ukprn, OrgName = n.Name }).ToListAsync(cancellationToken);
 
                 var orgName = orgNames.SingleOrDefault(o => o.UKPRN == ukprn)?.OrgName ?? string.Empty;
@@ -151,9 +151,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 foreach (var learner in returnList)
                 {
                     learner.OrgName = orgName;
-                    if (!string.IsNullOrEmpty(learner.PartnerUKPRN))
+                    if (learner.PartnerUKPRN.HasValue)
                     {
-                        learner.PartnerOrgName = orgNames.SingleOrDefault(o => o.UKPRN == long.Parse(learner.PartnerUKPRN))?.OrgName ?? string.Empty;
+                        learner.PartnerOrgName = orgNames.SingleOrDefault(o => o.UKPRN == learner.PartnerUKPRN)?.OrgName ?? string.Empty;
                     }
                 }
             }

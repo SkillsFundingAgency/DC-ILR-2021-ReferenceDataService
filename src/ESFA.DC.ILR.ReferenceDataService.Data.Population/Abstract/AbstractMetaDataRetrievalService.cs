@@ -27,6 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
         private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IIlrReferenceDataRepositoryService _ilReferenceDataRepositoryService;
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly string referenceDataModelAssembly = "ESFA.DC.ILR.ReferenceDataService.Model";
 
         public AbstractMetaDataRetrievalService(
             IDbContextFactory<IEmployersContext> employersContextFactory,
@@ -63,14 +64,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract
                 HmppPostcodesVersion = postcodeRefDataVersions.HmppPostcodesVersion,
                 PostcodeFactorsVersion = postcodeRefDataVersions.PostcodeFactorsVersion,
             };
-            metaData.SchemaVersion = GetAssemblyVersion();
+            metaData.SchemaVersion = GetReferenceDataModelAssemblyVersion();
 
             return Validate(metaData);
         }
 
-        private string GetAssemblyVersion()
+        private string GetReferenceDataModelAssemblyVersion()
         {
-            return Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
+            return Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == referenceDataModelAssembly).Version.ToString(3);
         }
 
         private async Task<EmployersVersion> RetrieveEmployersVersionAsync(CancellationToken cancellationToken)

@@ -11,14 +11,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
     public class DesktopReferenceDataFileNameService : IDesktopReferenceDataFileNameService
     {
         private const string _referenceDataFileExtension = ".zip";
-        private const string _dateTimeFormat = "yyyyMMddHHmm";
 
-        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ILogger _logger;
 
-        public DesktopReferenceDataFileNameService(IDateTimeProvider dateTimeProvider, ILogger logger)
+        public DesktopReferenceDataFileNameService(ILogger logger)
         {
-            _dateTimeProvider = dateTimeProvider;
             _logger = logger;
         }
 

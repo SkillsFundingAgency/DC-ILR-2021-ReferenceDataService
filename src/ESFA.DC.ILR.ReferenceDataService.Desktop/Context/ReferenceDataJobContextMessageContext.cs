@@ -58,7 +58,5 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Context
         public string CollectionName => throw new NotImplementedException();
 
         public DateTime SubmissionDateTimeUTC => throw new NotImplementedException();
-
-        public string VersionNumber => throw new NotImplementedException();
     }
 }
