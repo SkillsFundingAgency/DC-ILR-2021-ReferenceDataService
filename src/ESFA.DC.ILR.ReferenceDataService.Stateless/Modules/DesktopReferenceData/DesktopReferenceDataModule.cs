@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules.DesktopReferenceDat
             containerBuilder.RegisterType<DesktopReferenceDataFileNameService>().As<IDesktopReferenceDataFileNameService>();
             containerBuilder.RegisterType<CsvFileService>().As<ICsvFileService>();
             containerBuilder.RegisterType<ZipFileService>().As<IZipFileService>();
-            containerBuilder.RegisterType<DesktopReferenceDataTask>().Keyed<ITask>(TaskKeys.DesktopReferenceData);
+            containerBuilder.RegisterType<DesktopReferenceDataTask>().As<IDesktopReferenceDataTask>();
         }
     }
 }

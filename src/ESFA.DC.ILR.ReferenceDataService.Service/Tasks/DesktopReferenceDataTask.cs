@@ -8,7 +8,7 @@ using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 {
-    public class DesktopReferenceDataTask : ITask
+    public class DesktopReferenceDataTask : IDesktopReferenceDataTask
     {
         private readonly IDesktopReferenceDataPopulationService _referenceDataPopulationService;
         private readonly IDesktopReferenceDataFileService _desktopReferenceDataFileService;
@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
             _logger = logger;
         }
 
-        public async Task ExecuteAsync(IReferenceDataContext referenceDataContext, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(IDesktopReferenceDataContext context, CancellationToken cancellationToken)
         {
             try
             {
@@ -38,12 +38,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tasks
 
                 // output model.
                 _logger.LogInfo("Starting Reference Data Output");
-                await _desktopReferenceDataFileService.ProcessAsync(referenceDataContext, referenceData, cancellationToken);
+                await _desktopReferenceDataFileService.ProcessAsync(context, referenceData, cancellationToken);
                 _logger.LogInfo("Finished Reference Data Output");
 
                 // output summary.
                 _logger.LogInfo("Starting Reference Summary Output");
-                await _desktopReferenceDataSummaryFileService.ProcessAync(referenceDataContext, cancellationToken);
+                await _desktopReferenceDataSummaryFileService.ProcessAync(context, cancellationToken);
                 _logger.LogInfo("Finished Reference Summary Output");
             }
             catch (Exception exception)

@@ -92,9 +92,6 @@
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.2021.Model.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReferenceDataService.Model, Version=0.3.21.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.ReferenceDataService.Model.0.3.21\lib\netstandard2.0\ESFA.DC.ILR.ReferenceDataService.Model.dll</HintPath>
-    </Reference>
     <Reference Include="ESFA.DC.ILR1920.Database.EF, Version=0.0.580.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR1920.Database.EF.0.0.580\lib\netstandard2.0\ESFA.DC.ILR1920.Database.EF.dll</HintPath>
     </Reference>
@@ -432,7 +429,8 @@
     <Compile Include="Config\DesktopReferenceDataConfiguration.cs" />
     <Compile Include="Config\IOConfiguration.cs" />
     <Compile Include="Constants\StatelessContants.cs" />
-    <Compile Include="Context\ReferenceDataJobContextMessageContext.cs" />
+    <Compile Include="Context\DesktopReferenceDataJobContext.cs" />
+    <Compile Include="Context\IlrMessageJobContext.cs" />
     <Compile Include="Modules\FrmReferenceDataModule.cs" />
     <Compile Include="Modules\LearnerReferenceDataModule.cs" />
     <Compile Include="Modules\IlrMessageReferenceDataRepositoryServicesModule.cs" />
@@ -472,6 +470,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Interfaces\ESFA.DC.ILR.ReferenceDataService.Interfaces.csproj">
       <Project>{6991FF63-4C2C-41E1-9909-53CF6BE74CE1}</Project>
       <Name>ESFA.DC.ILR.ReferenceDataService.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Model\ESFA.DC.ILR.ReferenceDataService.Model.csproj">
+      <Project>{B4E84ADC-C04F-4EF8-98A2-5ADDBF1FEEF1}</Project>
+      <Name>ESFA.DC.ILR.ReferenceDataService.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.ReferenceDataService.Modules\ESFA.DC.ILR.ReferenceDataService.Modules.csproj">
       <Project>{19CAC6C4-4FA1-4ACA-AFD0-9668339AA5FE}</Project>

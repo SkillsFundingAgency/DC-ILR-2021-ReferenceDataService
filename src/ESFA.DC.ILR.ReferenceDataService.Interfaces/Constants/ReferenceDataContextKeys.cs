@@ -8,5 +8,6 @@
         public const string ValidationMessagesFileReferenceKey = "ValidationMessagesFileReference";
         public const string DesktopReferenceDataFileNameKey = "DesktopReferenceDataFileName";
         public const string DesktopReferenceDataStoragePathKey = "DesktopReferenceDataStoragePath";
+        public const string VersionNumber = "VersionNumber";
     }
 }

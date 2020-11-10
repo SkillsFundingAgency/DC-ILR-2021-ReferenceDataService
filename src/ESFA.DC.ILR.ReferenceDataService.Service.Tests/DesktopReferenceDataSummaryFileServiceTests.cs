@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var referenceDataStatisticsService = new Mock<IReferenceDataStatisticsService>();
             referenceDataStatisticsService.Setup(x => x.GetStatistics()).Returns(stats);
 
-            var context = new Mock<IReferenceDataContext>();
+            var context = new Mock<IDesktopReferenceDataContext>();
             context.Setup(x => x.SubmissionDateTimeUTC).Returns(dateTimeUtc);
             context.Setup(x => x.CollectionName).Returns("FISReferenceData");
             context.Setup(x => x.Container).Returns(container);

@@ -44,6 +44,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var utcDateTime = new DateTime(2019, 8, 1);
             var easDateTime = new DateTime(2019, 8, 2);
             var easFilename = "Eas2.csv";
+            var schemaVersion = "0.4.0";
 
             IEnumerable<SourceFile> easSourceFileList = new List<SourceFile>
             {
@@ -191,6 +192,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ReferenceDataVersions.EasFileDetails.UploadDateTime.Should().BeSameDateAs(easDateTime);
             serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
             serviceResult.ValidationRules.Should().BeEquivalentTo(validationRules);
+            serviceResult.SchemaVersion.Should().BeEquivalentTo(schemaVersion);
         }
 
         [Fact]

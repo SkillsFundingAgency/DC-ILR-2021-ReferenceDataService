@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         {
             var cancellationToken = CancellationToken.None;
 
-            var referenceDataContextMock = new Mock<IReferenceDataContext>();
+            var referenceDataContextMock = new Mock<IDesktopReferenceDataContext>();
 
             var referenceDataPopulationServiceMock = new Mock<IDesktopReferenceDataPopulationService>();
             var desktopReferenceDataFileServiceMock = new Mock<IDesktopReferenceDataFileService>();

@@ -15,22 +15,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         [Fact]
         public async Task ProcessAync()
         {
-            var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
+            var versionNumber = "2";
 
-            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), rdsModelVersion, ".202008010900", ".zip");
+            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), versionNumber, ".zip");
 
-            var dateTimeUtc = new System.DateTime(2020, 8, 1, 10, 0, 0);
-            var dateTimeUk = new System.DateTime(2020, 8, 1, 9, 0, 0);
-
-            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
-            dateTimeProviderMock.Setup(x => x.ConvertUtcToUk(dateTimeUtc)).Returns(dateTimeUk);
-
-            NewService(dateTimeProviderMock.Object).BuildFileName("FilePath", "FileName", dateTimeUtc).Should().BeEquivalentTo(expectedFileName);
+            NewService().BuildFileName("FilePath", "FileName", "2").Should().BeEquivalentTo(expectedFileName);
         }
 
-        private DesktopReferenceDataFileNameService NewService(IDateTimeProvider dateTimeProvider)
+        private DesktopReferenceDataFileNameService NewService()
         {
-            return new DesktopReferenceDataFileNameService(dateTimeProvider, Mock.Of<ILogger>());
+            return new DesktopReferenceDataFileNameService(Mock.Of<ILogger>());
         }
     }
 }

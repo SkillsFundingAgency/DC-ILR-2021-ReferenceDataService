@@ -27,6 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var container = "Container";
             var collectionName = "Collection";
             var filePrefix = "FISReferenceData";
+            var versionNumber = "2";
             var submissionDateTime = new DateTime(2020, 01, 01, 9, 00, 00);
             var cancellationToken = CancellationToken.None;
             var zipFileServiceMock = new Mock<IZipFileService>();
@@ -34,16 +35,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
             var fileNameServiceMock = new Mock<IDesktopReferenceDataFileNameService>();
             var desktopRefDataConfigMock = new Mock<IDesktopReferenceDataConfiguration>();
 
-            var context = new Mock<IReferenceDataContext>();
+            var context = new Mock<IDesktopReferenceDataContext>();
             context.Setup(x => x.Container).Returns(container);
             context.Setup(x => x.JobId).Returns(1);
             context.Setup(x => x.CollectionName).Returns(collectionName);
             context.Setup(x => x.SubmissionDateTimeUTC).Returns(submissionDateTime);
+            context.Setup(x => x.VersionNumber).Returns(versionNumber);
 
             var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
-            var outputFileName = $@"{filePath}/FISReferenceData_0.1.0.202008010900.zip";
+            var outputFileName = $@"{filePath}/FISReferenceData.2.zip";
 
-            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, context.Object.SubmissionDateTimeUTC)).Returns(outputFileName);
+            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, "2")).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 

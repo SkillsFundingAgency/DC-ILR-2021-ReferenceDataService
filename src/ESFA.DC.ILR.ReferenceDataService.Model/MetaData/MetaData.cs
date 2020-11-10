@@ -17,5 +17,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.MetaData
         public IReadOnlyCollection<Lookup> Lookups { get; set; }
 
         public IlrCollectionDates CollectionDates { get; set; }
+
+        public string SchemaVersion { get; set; }
     }
 }
