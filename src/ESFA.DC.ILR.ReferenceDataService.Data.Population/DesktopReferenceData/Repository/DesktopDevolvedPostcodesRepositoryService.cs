@@ -6,28 +6,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ReferenceData.Postcodes.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopDevolvedPostcodesRepositoryService : IDesktopReferenceDataRepositoryService<DevolvedPostcodes>
     {
         private readonly IDbContextFactory<IPostcodesContext> _postcodesContextFactory;
         private readonly IReferenceDataOptions _referenceDataOptions;
         private readonly IJsonSerializationService _jsonSerializationService;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
         public DesktopDevolvedPostcodesRepositoryService(
             IDbContextFactory<IPostcodesContext> postcodesContextFactory,
             IReferenceDataOptions referenceDataOptions,
-            IJsonSerializationService jsonSerializationService)
+            IJsonSerializationService jsonSerializationService,
+            IReferenceDataStatisticsService referenceDataStatisticService)
         {
             _postcodesContextFactory = postcodesContextFactory;
             _referenceDataOptions = referenceDataOptions;
             _jsonSerializationService = jsonSerializationService;
+            _referenceDataStatisticsService = referenceDataStatisticService;
         }
 
         public async Task<DevolvedPostcodes> RetrieveAsync(CancellationToken cancellationToken)
@@ -35,8 +40,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
             using (var context = _postcodesContextFactory.Create())
             {
                 var mcaGlaSofLookups = await RetrieveMcaGlaLookups(context, cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.McaSofLookups, mcaGlaSofLookups.Count);
 
                 var devolvedPostcodesList = await RetrieveDevolvedPostcodes(cancellationToken);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.DevolvedPostcodes, devolvedPostcodesList.Count);
 
                 return new DevolvedPostcodes
                 {
@@ -70,8 +77,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
 
         public async Task<List<DevolvedPostcode>> RetrieveDevolvedPostcodes(CancellationToken cancellationToken)
         {
-            var sqlSfaAreaCost = $@"SELECT
-                                       D.[Postcode]
+            var devolvedPostcodes = $@"SELECT
+                                       UPPER(D.[Postcode]) AS Postcode
                                       ,D.[Area]
                                       ,D.[SourceOfFunding]
                                       ,D.[EffectiveFrom]
@@ -79,7 +86,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                                 FROM [dbo].[DevolvedPostcodesDataset] D 
                                 WHERE D.[SourceOfFunding] IS NOT NULL";
 
-            var postcodes = await ExectueSqlAsync<DevolvedPostcode>(sqlSfaAreaCost, cancellationToken);
+            var postcodes = await ExectueSqlAsync<DevolvedPostcode>(devolvedPostcodes, cancellationToken);
 
             return postcodes.ToList();
         }

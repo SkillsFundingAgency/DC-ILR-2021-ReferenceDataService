@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
+﻿namespace ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model
 {
     public partial class Rule
     {

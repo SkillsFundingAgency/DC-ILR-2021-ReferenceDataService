@@ -11,6 +11,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 using ESFA.DC.ILR.ReferenceDataService.Providers.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ESFA.DC.Serialization.Interfaces;
 
@@ -33,9 +34,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             string zipFileName,
             string container,
             MetaData metaDatas,
-            DevolvedPostcodes devolvedPostocdes,
+            DevolvedPostcodes devolvedPostcodes,
             IReadOnlyCollection<Employer> employers,
-            IReadOnlyCollection<EPAOrganisation> ePAOrganisations,
+            IReadOnlyCollection<EPAOrganisation> epaOrganisations,
             IReadOnlyCollection<LARSFrameworkDesktop> larsFrameworks,
             IReadOnlyCollection<LARSFrameworkAimDesktop> larsFrameworkAims,
             IReadOnlyCollection<LARSLearningDelivery> larsLearningDeliveries,
@@ -50,10 +51,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
                 using (var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create, true))
                 {
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.MetaDataFile, metaDatas);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostocdes.Postcodes);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, devolvedPostocdes.McaGlaSofLookups);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedPostcodesFile, devolvedPostcodes.Postcodes);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.DevolvedMcaGlaSofFile, devolvedPostcodes.McaGlaSofLookups);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.EmployersFile, employers);
-                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, ePAOrganisations);
+                    AddFileToZip(zipArchive, DesktopReferenceDataConstants.EPAOrganisationsFile, epaOrganisations);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworksFile, larsFrameworks);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSFrameworkAimsFile, larsFrameworkAims);
                     AddFileToZip(zipArchive, DesktopReferenceDataConstants.LARSLearningDeliveriesFile, larsLearningDeliveries);

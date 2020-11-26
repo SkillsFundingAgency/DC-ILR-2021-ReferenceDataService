@@ -19,6 +19,10 @@
     <Parameter Name="ConnectionString" Value="" />
     <Parameter Name="ContainerName" Value="" />
   </Section>
+  <Section Name="DesktopReferenceDataSection">
+    <Parameter Name="DesktopReferenceDataFilePreFix" Value="" />
+    <Parameter Name="DesktopReferenceDataStoragePath" Value="" />
+  </Section>
   <Section  Name="ReferenceDataSection">
     <Parameter Name="LARSConnectionString" Value="" />
     <Parameter Name="PostcodesConnectionString" Value="" />
@@ -30,6 +34,12 @@
     <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
     <Parameter Name="IlrReferenceDataConnectionString" Value=""/>
     <Parameter Name="EasConnectionString" Value=""/>
-    <Parameter Name="Ilr1819ConnectionString" Value=""/>
+    <Parameter Name="Ilr1920ConnectionString" Value=""/>
+  </Section>
+  <Section Name="FeatureConfiguration">
+    <Parameter Name="EDRSAPIEnabled" Value="" />
+  </Section>
+  <Section Name="ApiSettings">
+    <Parameter Name="EDRSApiBaseUrl" Value="" />
   </Section>
 </Settings>

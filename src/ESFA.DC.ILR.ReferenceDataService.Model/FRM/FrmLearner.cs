@@ -19,6 +19,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public string OrgName { get; set; }
 
+        public long? PartnerUKPRN { get; set; }
+
         public string PartnerOrgName { get; set; }
 
         public int? ProgTypeNullable { get; set; }
@@ -39,8 +41,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
 
         public long? PMUKPRN { get; set; }
 
-        public long? PartnerUKPRN { get; set; }
-
         public string PrevLearnRefNumber { get; set; }
 
         public string SWSupAimId { get; set; }
@@ -56,6 +56,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.FRM
         public int CompStatus { get; set; }
 
         public int? Outcome { get; set; }
+
+        public DateTime? OrigLearnStartDate { get; set; }
 
         public ICollection<LearningDeliveryFAM> LearningDeliveryFAMs { get; set; }
 

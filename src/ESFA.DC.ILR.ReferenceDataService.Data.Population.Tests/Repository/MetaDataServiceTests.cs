@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.DateTimeProvider.Interface;
-using ESFA.DC.EAS1920.EF;
-using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.EAS2021.EF;
+using ESFA.DC.EAS2021.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.MetaData;
@@ -42,12 +42,15 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var hmppPostcodesVersion = "Version6";
             var postcodeFactorsVersion = "Version7";
             var utcDateTime = new DateTime(2019, 8, 1);
-            var easDateTime = new DateTime(2019, 8, 1);
+            var easDateTime = new DateTime(2019, 8, 2);
+            var easFilename = "Eas2.csv";
+            var schemaVersion = "0.4.0";
 
-            IEnumerable<EasSubmission> easSubmissionsList = new List<EasSubmission>
+            IEnumerable<SourceFile> easSourceFileList = new List<SourceFile>
             {
-                new EasSubmission { Ukprn = "1", UpdatedOn = new DateTime(2019, 8, 1) },
-                new EasSubmission { Ukprn = "2", UpdatedOn = new DateTime(2019, 9, 1) }
+                new SourceFile { SourceFileId = 1,  Ukprn = "1", DateTime = new DateTime(2019, 8, 1), FileName = "1/Eas1.csv" },
+                new SourceFile { SourceFileId = 2, Ukprn = "1", DateTime = new DateTime(2019, 8, 2), FileName = "1/Eas2.csv" },
+                new SourceFile { SourceFileId = 3, Ukprn = "2", DateTime = new DateTime(2019, 9, 1), FileName = "2/Eas1.csv" }
             };
 
             IEnumerable<LargeEmployerSourceFile> empSourceFileList = new List<LargeEmployerSourceFile>
@@ -126,7 +129,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 ValidationRules = validationRules
             };
 
-            var easDbMock = easSubmissionsList.AsQueryable().BuildMockDbSet();
+            var easDbMock = easSourceFileList.AsQueryable().BuildMockDbSet();
             var empDbMock = empSourceFileList.AsQueryable().BuildMockDbSet();
             var larsDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgDbMock = orgList.AsQueryable().BuildMockDbSet();
@@ -150,7 +153,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             dateTimeProviderMock.Setup(dm => dm.GetNowUtc()).Returns(utcDateTime);
 
-            easMock.Setup(e => e.EasSubmissions).Returns(easDbMock.Object);
+            easMock.Setup(e => e.SourceFiles).Returns(easDbMock.Object);
             employersMock.Setup(e => e.LargeEmployerSourceFiles).Returns(empDbMock.Object);
             larsMock.Setup(l => l.LARS_Versions).Returns(larsDbMock.Object);
             orgMock.Setup(o => o.OrgVersions).Returns(orgDbMock.Object);
@@ -185,9 +188,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.ReferenceDataVersions.DevolvedPostcodesVersion.Version.Should().BeEquivalentTo(devolvedPostcodesVersion);
             serviceResult.ReferenceDataVersions.HmppPostcodesVersion.Version.Should().BeEquivalentTo(hmppPostcodesVersion);
             serviceResult.ReferenceDataVersions.PostcodeFactorsVersion.Version.Should().BeEquivalentTo(postcodeFactorsVersion);
-            serviceResult.ReferenceDataVersions.EasUploadDateTime.UploadDateTime.Should().BeSameDateAs(easDateTime);
+            serviceResult.ReferenceDataVersions.EasFileDetails.FileName.Should().BeEquivalentTo(easFilename);
+            serviceResult.ReferenceDataVersions.EasFileDetails.UploadDateTime.Should().BeSameDateAs(easDateTime);
             serviceResult.ValidationErrors.Should().BeEquivalentTo(validationErrors);
             serviceResult.ValidationRules.Should().BeEquivalentTo(validationRules);
+            serviceResult.SchemaVersion.Should().BeEquivalentTo(schemaVersion);
         }
 
         [Fact]

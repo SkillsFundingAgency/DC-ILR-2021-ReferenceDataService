@@ -67,14 +67,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var lempDbMock = lempList.AsQueryable().BuildMockDbSet();
 
             var employersMock = new Mock<IEmployersContext>();
-
             employersMock.Setup(e => e.Employers).Returns(edrsDbMock.Object);
             employersMock.Setup(e => e.LargeEmployers).Returns(lempDbMock.Object);
 
             var employersContextFactoryMock = new Mock<IDbContextFactory<IEmployersContext>>();
             employersContextFactoryMock.Setup(c => c.Create()).Returns(employersMock.Object);
 
-            var serviceResult = await NewService(employersContextFactoryMock.Object).RetrieveAsync(empIds, CancellationToken.None);
+            var serviceResult = await NewService(employersContextFactoryMock.Object)
+                .RetrieveAsync(empIds, CancellationToken.None);
 
             serviceResult.Should().HaveCount(21);
             serviceResult.Select(e => e.ERN).Should().BeEquivalentTo(edrsList.Select(u => u.Urn).ToList());

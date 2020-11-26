@@ -1,18 +1,24 @@
-﻿namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
+﻿using System;
+
+namespace ESFA.DC.ILR.ReferenceDataService.Interfaces
 {
     public interface IReferenceDataContext
     {
+        long JobId { get; }
+
         string FileReference { get; set; }
 
         string OriginalFileReference { get; set; }
 
         string Container { get; }
 
-        string InputReferenceDataFileKey { get; }
+        string DesktopInputReferenceDataFileKey { get; }
 
-        string OutputReferenceDataFileKey { get; }
+        string OutputIlrReferenceDataFileKey { get; }
 
         string FrmReferenceDataFileKey { get; }
+
+        string LearnerReferenceDataFileKey { get; }
 
         string Task { get; }
 
@@ -20,8 +26,10 @@
 
         string ValidationMessagesFileReference { get; }
 
-        string DesktopReferenceDataStoragePath { get; }
-
         int Ukprn { get; set; }
+
+        string CollectionName { get; }
+
+        DateTime SubmissionDateTimeUTC { get; }
     }
 }

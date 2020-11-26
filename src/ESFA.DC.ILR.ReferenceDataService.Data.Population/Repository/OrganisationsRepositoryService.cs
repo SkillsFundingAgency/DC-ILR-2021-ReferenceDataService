@@ -2,22 +2,24 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
+using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
-    public class OrganisationsRepositoryService : IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>
+    public class OrganisationsRepositoryService : AbstractOrganisationsRepositoryService, IReferenceDataRetrievalService<IReadOnlyCollection<int>, IReadOnlyCollection<Organisation>>
     {
-        private const int LongTermResidValue = 1;
-        private readonly IDbContextFactory<IOrganisationsContext> _organisationsFactory;
-
-        public OrganisationsRepositoryService(IDbContextFactory<IOrganisationsContext> organisationsFactory)
+        public OrganisationsRepositoryService(
+            IDbContextFactory<IOrganisationsContext> organisationsFactory,
+            IAcademicYearDataService academicYearDataService)
+            : base(organisationsFactory, academicYearDataService)
         {
-            _organisationsFactory = organisationsFactory;
         }
 
         public async Task<IReadOnlyCollection<Organisation>> RetrieveAsync(IReadOnlyCollection<int> ukprnsInput, CancellationToken cancellationToken)
@@ -26,110 +28,71 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
             using (var context = _organisationsFactory.Create())
             {
-                var specResourcesForUkprnDictionary = await BuildSpecResourceDictionary(ukprns, context, cancellationToken);
+                var specResourcesForUkprnDictionary = await BuildCampusIdSpecResourceDictionary(ukprns, context, cancellationToken);
                 var campusIdentifiersDictionary = await BuildCampusIdentifiersDictionary(ukprns, specResourcesForUkprnDictionary, context, cancellationToken);
+                var postcodeSpecResourcesDictionary = await BuildPostcodeSpecResDictionary(ukprns, context, cancellationToken);
+                var shortTermFundingInitiativesDictionary = await BuildShortTermFundingInitiativesDictionary(ukprns, context, cancellationToken);
 
-                return await context
+                var orgs = await context
                     .MasterOrganisations
-                      .Include(mo => mo.OrgDetail)
-                      .Include(mo => mo.OrgPartnerUkprns)
-                      .Include(mo => mo.OrgFundings)
-                      .Where(mo => ukprns.Contains(mo.Ukprn))
-                      .Select(
-                          o => new Organisation
-                          {
-                              UKPRN = (int)o.Ukprn,
-                              Name = o.OrgDetail.Name,
-                              LegalOrgType = o.OrgDetail.LegalOrgType,
-                              PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
-                              LongTermResid = o.OrgDetail.LongTermResid == LongTermResidValue,
-                              CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
-                              OrganisationFundings = o.OrgFundings.Select(of =>
-                              new OrganisationFunding()
-                              {
-                                  OrgFundFactor = of.FundingFactor,
-                                  OrgFundFactType = of.FundingFactorType,
-                                  OrgFundFactValue = of.FundingFactorValue,
-                                  EffectiveFrom = of.EffectiveFrom,
-                                  EffectiveTo = of.EffectiveTo,
-                              }).ToList(),
-                              OrganisationCoFRemovals = o.ConditionOfFundingRemovals.Select(c =>
-                              new OrganisationCoFRemoval
-                              {
-                                  CoFRemoval = c.CoFremoval,
-                                  EffectiveFrom = c.EffectiveFrom,
-                                  EffectiveTo = c.EffectiveTo,
-                              }).ToList(),
-                          }).ToListAsync(cancellationToken);
+                    .Include(mo => mo.OrgDetail)
+                    .Include(mo => mo.OrgPartnerUkprns)
+                    .Include(mo => mo.OrgFundings)
+                    .Include(mo => mo.ConditionOfFundingRemovals)
+                    .Where(mo => ukprns.Contains(mo.Ukprn))
+                    .ToListAsync(cancellationToken);
+
+                return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }
         }
 
-        public List<OrganisationCampusIdentifier> GetCampusIdentifiers(long ukprn, Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiers)
-        {
-            campusIdentifiers.TryGetValue(ukprn, out var campusIds);
-
-            return campusIds ?? new List<OrganisationCampusIdentifier>();
-        }
-
-        private async Task<Dictionary<long, Dictionary<string, List<SpecialistResource>>>> BuildSpecResourceDictionary(
+        private async Task<Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>>> BuildCampusIdSpecResourceDictionary(
             List<long> ukprns,
             IOrganisationsContext context,
             CancellationToken cancellationToken)
         {
-            var campusIdentifierSpecResources = await context
-            .CampusIdentifierSpecResources
-             .Where(c => ukprns.Contains(c.MasterUkprn))
-            .ToListAsync(cancellationToken);
+            var campusIdentifierSpecResources = await context.CampusIdentifierSpecResources
+                .Where(c => ukprns.Contains(c.MasterUkprn))
+                .Select(x => new CampusIdentifierSpecResource()
+                {
+                    MasterUkprn = x.MasterUkprn,
+                    CampusIdentifier = x.CampusIdentifier.ToUpperCase(),
+                    EffectiveFrom = x.EffectiveFrom,
+                    EffectiveTo = x.EffectiveTo,
+                    SpecialistResources = x.SpecialistResources
+                })
+                .ToListAsync(cancellationToken);
 
-            return campusIdentifierSpecResources?
-               .Where(c => ukprns.Contains(c.MasterUkprn))
-               .GroupBy(sr => sr.MasterUkprn)
-               .ToDictionary(
-                  k1 => k1.Key,
-                  v1 => v1.GroupBy(ci => ci.CampusIdentifier)
-                  .ToDictionary(
-                      k2 => k2.Key,
-                      v2 => v2.Select(sr => new SpecialistResource
-                      {
-                          IsSpecialistResource = sr.SpecialistResources,
-                          EffectiveFrom = sr.EffectiveFrom,
-                          EffectiveTo = sr.EffectiveTo
-                      }).ToList()));
+            return BuildCampusIdSpecResourceDictionary(campusIdentifierSpecResources);
         }
 
         private async Task<Dictionary<long, List<OrganisationCampusIdentifier>>> BuildCampusIdentifiersDictionary(
             List<long> ukprns,
-            Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesForUkprnDictionary,
+            Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary,
             IOrganisationsContext context,
             CancellationToken cancellationToken)
         {
             var campusIdentifiers = await context
-              .CampusIdentifiers?
-              .Where(c => ukprns.Contains(c.MasterUkprn))
-              .Select(ci => new OrganisationCampusIdentifier
-              {
-                  UKPRN = ci.MasterUkprn,
-                  CampusIdentifier = ci.CampusIdentifier1,
-                  EffectiveFrom = ci.EffectiveFrom,
-                  EffectiveTo = ci.EffectiveTo,
-                  SpecialistResources = GetSpecialistResources(ci.MasterUkprn, ci.CampusIdentifier1, specResourcesForUkprnDictionary).ToList()
-              })
-              .ToListAsync(cancellationToken);
+                .CampusIdentifiers?
+                .Where(c => ukprns.Contains(c.MasterUkprn))
+                .Select(ci => BuildCampusIdentifiers(ci, specResourcesForUkprnDictionary))
+                .ToListAsync(cancellationToken);
 
-            return
-                campusIdentifiers
-                .GroupBy(ci => ci.UKPRN)
-                .ToDictionary(
-                k => k.Key,
-                v => v.Select(c => c).ToList());
+            return BuildCampusIdentifiersDictionary(campusIdentifiers);
         }
 
-        private IEnumerable<SpecialistResource> GetSpecialistResources(long ukprn, string campusIdentifier, Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesDictionary)
+        private async Task<Dictionary<long, List<OrganisationPostcodeSpecialistResource>>> BuildPostcodeSpecResDictionary(List<long> ukprns, IOrganisationsContext context, CancellationToken cancellationToken)
         {
-            specResourcesDictionary.TryGetValue(ukprn, out var campusIdSpecResources);
+            var specResources = await context.ProviderPostcodeSpecialistResources.Where(c => ukprns.Contains(c.Ukprn)).ToListAsync(cancellationToken);
 
-            return campusIdSpecResources != null ?
-                  campusIdSpecResources.TryGetValue(campusIdentifier, out var resources) ? resources : Enumerable.Empty<SpecialistResource>() : Enumerable.Empty<SpecialistResource>();
+            return BuildPostcodeSpecResDictionary(specResources);
+        }
+
+        private async Task<Dictionary<long, List<OrganisationShortTermFundingInitiative>>> BuildShortTermFundingInitiativesDictionary(List<long> ukprns, IOrganisationsContext context, CancellationToken cancellationToken)
+        {
+            var shortTermFundingInitiatives = await context.ShortTermFundingInitiatives.Where(c => ukprns.Contains(c.Ukprn)).ToListAsync(cancellationToken);
+
+            return BuildShortTermFundingInitiativesDictionary(shortTermFundingInitiatives);
         }
     }
 }

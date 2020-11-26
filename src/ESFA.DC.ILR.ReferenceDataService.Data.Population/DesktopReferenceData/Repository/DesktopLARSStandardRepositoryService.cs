@@ -3,20 +3,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopLarsStandardRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSStandard>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsStandardRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsStandardRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSStandard>> RetrieveAsync(CancellationToken cancellationToken)
@@ -30,6 +36,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 .Include(l => l.LarsStandardValidities)
                 .ToListAsync(cancellationToken);
 
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandards, larsStandards.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardApprenticeshipFunding, larsStandards.SelectMany(ls => ls.LarsApprenticeshipStdFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardCommonComponents, larsStandards.SelectMany(ls => ls.LarsStandardCommonComponents).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardFundings, larsStandards.SelectMany(ls => ls.LarsStandardFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsStandardValidities, larsStandards.SelectMany(ls => ls.LarsStandardValidities).Count());
+
                 return larsStandards
                     .Select(
                         ls => new LARSStandard
@@ -39,6 +51,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                             NotionalEndLevel = ls.NotionalEndLevel,
                             EffectiveFrom = ls.EffectiveFrom.Value,
                             EffectiveTo = ls.EffectiveTo,
+                            LastDateStarts = ls.LastDateStarts,
                             LARSStandardApprenticeshipFundings = ls.LarsApprenticeshipStdFundings.Select(lsa =>
                             new LARSStandardApprenticeshipFunding
                             {

@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
 {
     public class LarsLearningDeliveryReferenceDataMapper : IDesktopReferenceDataMapper<IReadOnlyCollection<LARSLearningDeliveryKey>, IReadOnlyCollection<LARSLearningDelivery>>
     {
-        public IReadOnlyCollection<LARSLearningDelivery> Retrieve(IReadOnlyCollection<LARSLearningDeliveryKey> input, DesktopReferenceDataRoot referenceData)
+        public IReadOnlyCollection<LARSLearningDelivery> Map(IReadOnlyCollection<LARSLearningDeliveryKey> input, DesktopReferenceDataRoot referenceData)
         {
             var larsFrameworks = new List<LARSFrameworkKey>();
 
@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Desktop.Service.Mappers
                 k => k.Key,
                 v => v.Select(fa => new LARSFrameworkAim
                 {
-                    LearnAimRef = fa.LearnAimRef.ToUpper(),
+                    LearnAimRef = fa.LearnAimRef,
                     FrameworkComponentType = fa.FrameworkComponentType,
                     EffectiveFrom = fa.EffectiveFrom,
                     EffectiveTo = fa.EffectiveTo,

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.FRM;
-using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ILR1920.DataStore.EF.Valid;
+using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
@@ -17,16 +20,17 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 {
     public class FrmReferenceDataRepositoryService : IFrmReferenceDataRepositoryService
     {
-        private readonly IDbContextFactory<IILR1819_DataStoreEntitiesValid> _ilrContextFactory;
+        private readonly IDbContextFactory<IILR1920_DataStoreEntitiesValid> _ilrContextFactory;
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
         private readonly IDbContextFactory<IOrganisationsContext> _orgContextFactory;
         private readonly IAcademicYearDataService _academicYearDataService;
 
-        private readonly int _excludedAimType = 3;
         private readonly int _excludedFundModel = 99;
+        private readonly string _excludedFAMType = "ADL";
+        private readonly string _excludedFAMCode = "1";
         private readonly HashSet<int> _excludedCategories = new HashSet<int> { 23, 24, 27, 28, 29, 34, 35, 36 };
 
-        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
+        public FrmReferenceDataRepositoryService(IDbContextFactory<IILR1920_DataStoreEntitiesValid> ilrContextFactory, IDbContextFactory<ILARSContext> larsContextFactory, IDbContextFactory<IOrganisationsContext> orgContextFactory, IAcademicYearDataService academicYearDataService)
         {
             _ilrContextFactory = ilrContextFactory;
             _larsContextFactory = larsContextFactory;
@@ -45,8 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .SelectMany(l => l.LearningDeliveries.Where(ld =>
                         ld.CompStatus == 1
                         && ld.LearnPlanEndDate >= _academicYearDataService.CurrentYearStart
-                        && ld.AimType != _excludedAimType
-                        && ld.FundModel != _excludedFundModel))
+                        && !FM99Exclusion(ld)))
                     .Select(ld => new FrmLearner
                     {
                         UKPRN = ld.UKPRN,
@@ -54,8 +57,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         AimType = ld.AimType,
                         FundModel = ld.FundModel,
                         FworkCodeNullable = ld.FworkCode,
-                        LearnAimRef = ld.LearnAimRef,
-                        LearnRefNumber = ld.LearnRefNumber,
+                        LearnAimRef = ld.LearnAimRef.ToUpperCase(),
+                        LearnRefNumber = ld.LearnRefNumber.ToUpperCase(),
                         LearnStartDate = ld.LearnStartDate,
                         ProgTypeNullable = ld.ProgType,
                         StdCodeNullable = ld.StdCode,
@@ -64,7 +67,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         PartnerUKPRN = ld.PartnerUKPRN,
                         PrevUKPRN = ld.Learner.PrevUKPRN,
                         PMUKPRN = ld.Learner.PMUKPRN,
-                        PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber,
+                        PrevLearnRefNumber = ld.Learner.PrevLearnRefNumber.ToUpperCase(),
                         CompStatus = ld.CompStatus,
                         Outcome = ld.Outcome,
                         PriorLearnFundAdj = ld.PriorLearnFundAdj,
@@ -72,31 +75,32 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         LearnPlanEndDate = ld.LearnPlanEndDate,
                         LearnActEndDate = ld.LearnActEndDate,
                         SWSupAimId = ld.SWSupAimId,
+                        OrigLearnStartDate = ld.OrigLearnStartDate,
                         LearningDeliveryFAMs = ld.LearningDeliveryFAMs
                             .Select(x =>
-                                new LearningDeliveryFAM
+                                new ReferenceDataService.Model.FRM.LearningDeliveryFAM
                                 {
                                     LearnDelFAMCode = x.LearnDelFAMCode,
-                                    LearnDelFAMType = x.LearnDelFAMType,
+                                    LearnDelFAMType = x.LearnDelFAMType.ToUpperCase(),
                                     LearnDelFAMDateFrom = x.LearnDelFAMDateFrom,
                                     LearnDelFAMDateTo = x.LearnDelFAMDateTo
                                 }).ToList(),
                         ProviderSpecLearnerMonitorings = ld.Learner.ProviderSpecLearnerMonitorings
                             .Select(lm =>
-                                new ProviderSpecLearnerMonitoring
+                                new ReferenceDataService.Model.FRM.ProviderSpecLearnerMonitoring
                                 {
-                                    ProvSpecLearnMon = lm.ProvSpecLearnMon,
+                                    ProvSpecLearnMon = lm.ProvSpecLearnMon.ToUpperCase(),
                                     ProvSpecLearnMonOccur = lm.ProvSpecLearnMonOccur
                                 }).ToList(),
                         ProvSpecDeliveryMonitorings = ld.ProviderSpecDeliveryMonitorings
-                            .Select(dm => new ProviderSpecDeliveryMonitoring
+                            .Select(dm => new ReferenceDataService.Model.FRM.ProviderSpecDeliveryMonitoring
                             {
-                                ProvSpecDelMon = dm.ProvSpecDelMon,
+                                ProvSpecDelMon = dm.ProvSpecDelMon.ToUpperCase(),
                                 ProvSpecDelMonOccur = dm.ProvSpecDelMonOccur
                             }).ToList()
                     }).ToListAsync(cancellationToken);
 
-                var learnAimRefs = frmLearners.Select(l => l.LearnAimRef).Distinct();
+                var learnAimRefs = new HashSet<string>(frmLearners.Select(l => l.LearnAimRef), StringComparer.OrdinalIgnoreCase);
 
                 var larsLearningDeliveries = await RetrieveLarsLearningDeliveries(cancellationToken, learnAimRefs);
 
@@ -121,11 +125,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             return returnList;
         }
 
+        private bool FM99Exclusion(LearningDelivery learningDelivery) =>
+            learningDelivery.FundModel == _excludedFundModel && learningDelivery.LearningDeliveryFAMs.Any(ldf => ldf.LearnDelFAMCode == _excludedFAMCode && ldf.LearnDelFAMType == _excludedFAMType);
+
         private async Task<List<LarsLearningDelivery>> RetrieveLarsLearningDeliveries(CancellationToken cancellationToken, IEnumerable<string> learnAimRefs)
         {
             using (var larsContext = _larsContextFactory.Create())
             {
-                return await larsContext.LARS_LearningDeliveries.Where(ld => learnAimRefs.Contains(ld.LearnAimRef)).ToListAsync(cancellationToken);
+                return await larsContext.LARS_LearningDeliveries.Include(ld => ld.LarsLearningDeliveryCategories).Where(ld => learnAimRefs.Contains(ld.LearnAimRef)).ToListAsync(cancellationToken);
             }
         }
 

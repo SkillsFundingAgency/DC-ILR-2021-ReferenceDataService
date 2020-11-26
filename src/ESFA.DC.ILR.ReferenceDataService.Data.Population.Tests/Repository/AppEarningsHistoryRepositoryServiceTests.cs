@@ -27,7 +27,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_1_10000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1920",
+                     CollectionYear = "2021",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
@@ -60,7 +60,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_2_10000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1920",
+                     CollectionYear = "2021",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
@@ -93,7 +93,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                 {
                      AppIdentifier = "AppIdentifier_1_20000000",
                      AppProgCompletedInTheYearInput = true,
-                     CollectionYear = "1920",
+                     CollectionYear = "2021",
                      CollectionReturnCode = "R01",
                      DaysInYear = 1,
                      FworkCode = 2,
@@ -144,6 +144,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
 
             appHistoryResult.Where(u => u.ULN == 10000000).Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_10000000", "AppIdentifier_2_10000000");
             appHistoryResult.Where(u => u.ULN == 20000000).Select(e => e.AppIdentifier).Should().Contain("AppIdentifier_1_20000000");
+
+            appHistoryResult.Where(u => u.ULN == 10000000).Select(e => e.LearnRefNumber).Should().Contain("LEARNREFNUMBER1");
+            appHistoryResult.Where(u => u.ULN == 20000000).Select(e => e.LearnRefNumber).Should().Contain("LEARNREFNUMBER1");
         }
 
         private AppEarningsHistoryRepositoryService NewService(IDbContextFactory<IAppEarnHistoryContext> appHistoryContextFactory = null)

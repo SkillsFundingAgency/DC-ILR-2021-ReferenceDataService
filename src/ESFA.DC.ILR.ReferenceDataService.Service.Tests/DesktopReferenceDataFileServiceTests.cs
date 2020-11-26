@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Interfaces;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces.Config;
 using ESFA.DC.ILR.ReferenceDataService.Model;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
@@ -24,24 +24,34 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         [Fact]
         public async Task ProcessAync()
         {
-            var outputFileName = "desktop/1920/referencedata/FISReferenceData_0.1.0.zip";
+            var container = "Container";
+            var collectionName = "Collection";
+            var filePrefix = "FISReferenceData";
+            var versionNumber = "2";
+            var submissionDateTime = new DateTime(2020, 01, 01, 9, 00, 00);
             var cancellationToken = CancellationToken.None;
-            var referenceDataContextMock = new Mock<IReferenceDataContext>();
             var zipFileServiceMock = new Mock<IZipFileService>();
             var loggerMock = new Mock<ILogger>();
             var fileNameServiceMock = new Mock<IDesktopReferenceDataFileNameService>();
+            var desktopRefDataConfigMock = new Mock<IDesktopReferenceDataConfiguration>();
 
-            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(It.IsAny<string>(), It.IsAny<string>())).Returns(outputFileName);
+            var context = new Mock<IDesktopReferenceDataContext>();
+            context.Setup(x => x.Container).Returns(container);
+            context.Setup(x => x.JobId).Returns(1);
+            context.Setup(x => x.CollectionName).Returns(collectionName);
+            context.Setup(x => x.SubmissionDateTimeUTC).Returns(submissionDateTime);
+            context.Setup(x => x.VersionNumber).Returns(versionNumber);
+
+            var filePath = $@"{context.Object.CollectionName}\{context.Object.JobId}";
+            var outputFileName = $@"{filePath}/FISReferenceData.2.zip";
+
+            fileNameServiceMock.Setup(fsm => fsm.BuildFileName(filePath, filePrefix, "2")).Returns(outputFileName);
 
             var desktopReferenceDataRoot = new DesktopReferenceDataRoot();
 
-          //  var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
-
-          //  referenceDataContextMock.Setup(d => d.DesktopReferenceDataStoragePath).Returns(filePath);
-
             zipFileServiceMock.Setup(s => s.SaveCollectionZipAsync(
                 outputFileName,
-                referenceDataContextMock.Object.Container,
+                container,
                 It.IsAny<MetaData>(),
                 It.IsAny<DevolvedPostcodes>(),
                 It.IsAny<IReadOnlyCollection<Employer>>(),
@@ -54,20 +64,24 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
                 It.IsAny<IReadOnlyCollection<Postcode>>(),
                 cancellationToken)).Returns(Task.CompletedTask).Verifiable();
 
-            var service = NewService(fileNameServiceMock.Object, zipFileServiceMock.Object, loggerMock.Object);
+            desktopRefDataConfigMock.Setup(x => x.DesktopReferenceDataFilePreFix).Returns(filePrefix);
 
-            await service.ProcessAync(referenceDataContextMock.Object, desktopReferenceDataRoot, cancellationToken);
+            var service = NewService(desktopRefDataConfigMock.Object, fileNameServiceMock.Object, zipFileServiceMock.Object, loggerMock.Object);
 
+            await service.ProcessAsync(context.Object, desktopReferenceDataRoot, cancellationToken);
+
+            desktopRefDataConfigMock.VerifyAll();
             fileNameServiceMock.VerifyAll();
             zipFileServiceMock.VerifyAll();
         }
 
         private DesktopReferenceDataFileService NewService(
+            IDesktopReferenceDataConfiguration desktopConfig = null,
             IDesktopReferenceDataFileNameService fileNameService = null,
             IZipFileService zipFileService = null,
             ILogger logger = null)
         {
-            return new DesktopReferenceDataFileService(fileNameService, zipFileService, logger);
+            return new DesktopReferenceDataFileService(desktopConfig, fileNameService, zipFileService, logger);
         }
     }
 }

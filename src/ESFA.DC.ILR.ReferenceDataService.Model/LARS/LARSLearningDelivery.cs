@@ -9,6 +9,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public string LearnAimRefType { get; set; }
 
+        public string LearnAimRefTypeDesc { get; set; }
+
         public string LearnAimRefTitle { get; set; }
 
         public int? EnglPrscID { get; set; }
@@ -29,6 +31,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
 
         public decimal? SectorSubjectAreaTier2 { get; set; }
 
+        public string SectorSubjectAreaTier2Desc { get; set; }
+
         public string LearningDeliveryGenre { get; set; }
 
         public int? RegulatedCreditValue { get; set; }
@@ -38,6 +42,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.LARS
         public string AwardOrgCode { get; set; }
 
         public int? EFACOFType { get; set; }
+
+        public int? GuidedLearningHours { get; set; }
 
         public List<LARSAnnualValue> LARSAnnualValues { get; set; }
 

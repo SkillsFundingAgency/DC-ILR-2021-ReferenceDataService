@@ -3,20 +3,27 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
     public class DesktopLarsFrameworkRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<LARSFrameworkDesktop>>
     {
         private readonly IDbContextFactory<ILARSContext> _larsContextFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopLarsFrameworkRepositoryService(IDbContextFactory<ILARSContext> larsContextFactory)
+        public DesktopLarsFrameworkRepositoryService(
+            IDbContextFactory<ILARSContext> larsContextFactory,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
         {
             _larsContextFactory = larsContextFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<LARSFrameworkDesktop>> RetrieveAsync(CancellationToken cancellationToken)
@@ -27,6 +34,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceDa
                 .Include(l => l.LarsApprenticeshipFworkFundings)
                 .Include(l => l.LarsFrameworkCmnComps)
                 .ToListAsync(cancellationToken);
+
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworks, larsFrameworks.Count);
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksCommonComponents, larsFrameworks.SelectMany(lf => lf.LarsFrameworkCmnComps).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.LarsFrameworksApprenticeshipFunding, larsFrameworks.SelectMany(lf => lf.LarsApprenticeshipFworkFundings).Count());
 
                 return larsFrameworks
                     .Select(lf => new LARSFrameworkDesktop

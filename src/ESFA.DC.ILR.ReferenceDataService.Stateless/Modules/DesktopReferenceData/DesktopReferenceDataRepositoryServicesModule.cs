@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository;
 using ESFA.DC.ILR.ReferenceDataService.Model.Employers;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;

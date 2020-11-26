@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -14,16 +15,16 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service.Tests
         [Fact]
         public async Task ProcessAync()
         {
-            var rdsModelVersion = Assembly.GetExecutingAssembly().GetReferencedAssemblies().First(a => a.Name == "ESFA.DC.ILR.ReferenceDataService.Model").Version.ToString(3);
+            var versionNumber = "2";
 
-            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), rdsModelVersion, ".zip");
+            var expectedFileName = string.Concat(Path.Combine("FilePath", "FileName."), versionNumber, ".zip");
 
-            NewService().BuildFileName("FilePath", "FileName").Should().BeEquivalentTo(expectedFileName);
+            NewService().BuildFileName("FilePath", "FileName", "2").Should().BeEquivalentTo(expectedFileName);
         }
 
-        private DesktopReferenceDataFileNameService NewService(ILogger logger = null)
+        private DesktopReferenceDataFileNameService NewService()
         {
-            return new DesktopReferenceDataFileNameService(logger ?? Mock.Of<ILogger>());
+            return new DesktopReferenceDataFileNameService(Mock.Of<ILogger>());
         }
     }
 }

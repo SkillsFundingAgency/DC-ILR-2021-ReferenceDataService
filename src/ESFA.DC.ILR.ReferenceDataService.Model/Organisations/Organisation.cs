@@ -16,8 +16,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
 
         public List<OrganisationCampusIdentifier> CampusIdentifers { get; set; }
 
+        public List<OrganisationPostcodeSpecialistResource> PostcodeSpecialistResources { get; set; }
+
         public List<OrganisationFunding> OrganisationFundings { get; set; }
 
         public List<OrganisationCoFRemoval> OrganisationCoFRemovals { get; set; }
+
+        public List<OrganisationShortTermFundingInitiative> OrganisationShortTermFundingInitiatives { get; set; }
     }
 }

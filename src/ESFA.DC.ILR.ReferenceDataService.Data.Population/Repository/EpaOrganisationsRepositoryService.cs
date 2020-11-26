@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Model.EPAOrganisations;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
@@ -28,7 +29,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                         .Periods?.Where(o => epaOrgIds.Contains(o.OrganisationId, StringComparer.OrdinalIgnoreCase))
                         .Select(epa => new EPAOrganisation
                         {
-                            ID = epa.OrganisationId,
+                            ID = epa.OrganisationId.ToUpperCase(),
                             Standard = epa.StandardCode,
                             EffectiveFrom = epa.EffectiveFrom,
                             EffectiveTo = epa.EffectiveTo,

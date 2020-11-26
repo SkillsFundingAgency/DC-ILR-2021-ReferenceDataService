@@ -24,12 +24,11 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
                 // Registering a service maps a service type name to a .NET type.
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
-
                 var builder = BuildContainerBuilder();
 
                 builder.RegisterServiceFabricSupport();
 
-                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR1920.ReferenceDataService.StatelessType");
+                builder.RegisterStatelessService<ServiceFabric.Common.Stateless>("ESFA.DC.ILR2021.ReferenceDataService.StatelessType");
 
                 using (var container = builder.Build())
                 {
@@ -59,6 +58,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless
             containerBuilder.RegisterModule<DesktopReferenceDataModule>();
             containerBuilder.RegisterModule<ValidationMessagesTaskModule>();
             containerBuilder.RegisterModule<FrmReferenceDataModule>();
+            containerBuilder.RegisterModule<LearnerReferenceDataModule>();
 
             return containerBuilder;
         }

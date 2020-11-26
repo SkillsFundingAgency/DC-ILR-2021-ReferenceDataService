@@ -2,125 +2,102 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Abstract;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
-using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Constants;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Interfaces;
 using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
+using ESFA.DC.ReferenceData.Organisations.Model;
 using ESFA.DC.ReferenceData.Organisations.Model.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktoptopReferenceData.Repository
+namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.DesktopReferenceData.Repository
 {
-    public class DesktopOrganisationsRepositoryService : IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>
+    public class DesktopOrganisationsRepositoryService : AbstractOrganisationsRepositoryService, IDesktopReferenceDataRepositoryService<IReadOnlyCollection<Organisation>>
     {
-        private const int LongTermResidValue = 1;
-        private readonly IDbContextFactory<IOrganisationsContext> _organisationsFactory;
+        private readonly IReferenceDataStatisticsService _referenceDataStatisticsService;
 
-        public DesktopOrganisationsRepositoryService(IDbContextFactory<IOrganisationsContext> organisationsFactory)
+        public DesktopOrganisationsRepositoryService(
+            IDbContextFactory<IOrganisationsContext> organisationsFactory,
+            IAcademicYearDataService academicYearDataService,
+            IReferenceDataStatisticsService referenceDataStatisticsService)
+            : base(organisationsFactory, academicYearDataService)
         {
-            _organisationsFactory = organisationsFactory;
+            _referenceDataStatisticsService = referenceDataStatisticsService;
         }
 
         public async Task<IReadOnlyCollection<Organisation>> RetrieveAsync(CancellationToken cancellationToken)
         {
             using (var context = _organisationsFactory.Create())
             {
-                var specResourcesForUkprnDictionary = await BuildSpecResourceDictionary(context, cancellationToken);
+                var specResourcesForUkprnDictionary = await BuildCampusIdSpecResourceDictionary(context, cancellationToken);
                 var campusIdentifiersDictionary = await BuildCampusIdentifiersDictionary(specResourcesForUkprnDictionary, context, cancellationToken);
+                var postcodeSpecResourcesDictionary = await BuildPostcodeSpecResDictionary(context, cancellationToken);
+                var shortTermFundingInitiativesDictionary = await BuildShortTermFundingInitiativesDictionary(context, cancellationToken);
 
-                return await context
-                    .MasterOrganisations
-                      .Include(mo => mo.OrgDetail)
-                      .Include(mo => mo.OrgPartnerUkprns)
-                      .Include(mo => mo.OrgFundings)
-                      .Include(mo => mo.ConditionOfFundingRemovals)
-                      .Select(
-                          o => new Organisation
-                          {
-                              UKPRN = (int)o.Ukprn,
-                              Name = o.OrgDetail.Name,
-                              LegalOrgType = o.OrgDetail.LegalOrgType,
-                              PartnerUKPRN = o.OrgPartnerUkprns.Any(op => op.Ukprn == o.Ukprn),
-                              LongTermResid = o.OrgDetail.LongTermResid == LongTermResidValue,
-                              CampusIdentifers = GetCampusIdentifiers(o.Ukprn, campusIdentifiersDictionary),
-                              OrganisationFundings = o.OrgFundings.Select(of =>
-                              new OrganisationFunding()
-                              {
-                                  OrgFundFactor = of.FundingFactor,
-                                  OrgFundFactType = of.FundingFactorType,
-                                  OrgFundFactValue = of.FundingFactorValue,
-                                  EffectiveFrom = of.EffectiveFrom,
-                                  EffectiveTo = of.EffectiveTo,
-                              }).ToList(),
-                              OrganisationCoFRemovals = o.ConditionOfFundingRemovals.Select(c =>
-                              new OrganisationCoFRemoval
-                              {
-                                  CoFRemoval = c.CoFremoval,
-                                  EffectiveFrom = c.EffectiveFrom,
-                                  EffectiveTo = c.EffectiveTo,
-                              }).ToList(),
-                          }).ToListAsync(cancellationToken);
+                var orgs = await context
+                  .MasterOrganisations
+                  .Include(mo => mo.OrgDetail)
+                  .Include(mo => mo.OrgPartnerUkprns)
+                  .Include(mo => mo.OrgFundings)
+                  .Include(mo => mo.ConditionOfFundingRemovals)
+                  .ToListAsync(cancellationToken);
+
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisationsDetails, orgs.Select(o => o.OrgDetail).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.OrganisaitonsFunding, orgs.SelectMany(o => o.OrgFundings).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CoFRemovals, orgs.SelectMany(o => o.ConditionOfFundingRemovals).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.CampusIdentifiers, campusIdentifiersDictionary.SelectMany(x => x.Value).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.ShortTermFundingInitiatives, shortTermFundingInitiativesDictionary.SelectMany(x => x.Value).Count());
+                _referenceDataStatisticsService.AddRecordCount(ReferenceDataSummaryConstants.PostcodeSpecialistResources, specResourcesForUkprnDictionary.SelectMany(x => x.Value).Count());
+
+                return BuildOrganisations(orgs, specResourcesForUkprnDictionary, campusIdentifiersDictionary, postcodeSpecResourcesDictionary, shortTermFundingInitiativesDictionary);
             }
         }
 
-        public List<OrganisationCampusIdentifier> GetCampusIdentifiers(long ukprn, Dictionary<long, List<OrganisationCampusIdentifier>> campusIdentifiers)
+        private async Task<Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>>> BuildCampusIdSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
         {
-            campusIdentifiers.TryGetValue(ukprn, out var campusIds);
+            var campusIdentifierSpecResources = await context.CampusIdentifierSpecResources?
+                .Select(x => new CampusIdentifierSpecResource()
+                {
+                    MasterUkprn = x.MasterUkprn,
+                    CampusIdentifier = x.CampusIdentifier.ToUpperCase(),
+                    EffectiveFrom = x.EffectiveFrom,
+                    EffectiveTo = x.EffectiveTo,
+                    SpecialistResources = x.SpecialistResources
+                })
+                .ToListAsync(cancellationToken);
 
-            return campusIds ?? new List<OrganisationCampusIdentifier>();
-        }
-
-        private async Task<Dictionary<long, Dictionary<string, List<SpecialistResource>>>> BuildSpecResourceDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
-        {
-            var campusIdentifierSpecResources = await context
-             .CampusIdentifierSpecResources?
-             .ToListAsync(cancellationToken);
-
-            return campusIdentifierSpecResources?
-               .GroupBy(sr => sr.MasterUkprn)
-               .ToDictionary(
-                  k1 => k1.Key,
-                  v1 => v1.GroupBy(ci => ci.CampusIdentifier)
-                  .ToDictionary(
-                      k2 => k2.Key,
-                      v2 => v2.Select(sr => new SpecialistResource
-                      {
-                          IsSpecialistResource = sr.SpecialistResources,
-                          EffectiveFrom = sr.EffectiveFrom,
-                          EffectiveTo = sr.EffectiveTo
-                      }).ToList()));
+            return BuildCampusIdSpecResourceDictionary(campusIdentifierSpecResources);
         }
 
         private async Task<Dictionary<long, List<OrganisationCampusIdentifier>>> BuildCampusIdentifiersDictionary(
-            Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesForUkprnDictionary,
+            Dictionary<long, Dictionary<string, List<OrganisationCampusIdSpecialistResource>>> specResourcesForUkprnDictionary,
             IOrganisationsContext context,
             CancellationToken cancellationToken)
         {
             var campusIdentifiers = await context
-              .CampusIdentifiers?
-              .Select(ci => new OrganisationCampusIdentifier
-              {
-                  UKPRN = ci.MasterUkprn,
-                  CampusIdentifier = ci.CampusIdentifier1,
-                  EffectiveFrom = ci.EffectiveFrom,
-                  EffectiveTo = ci.EffectiveTo,
-                  SpecialistResources = GetSpecialistResources(ci.MasterUkprn, ci.CampusIdentifier1, specResourcesForUkprnDictionary).ToList()
-              })
-              .ToListAsync(cancellationToken);
+                .CampusIdentifiers?
+                .Select(ci => BuildCampusIdentifiers(ci, specResourcesForUkprnDictionary))
+                .ToListAsync(cancellationToken);
 
-            return
-                campusIdentifiers
-                .GroupBy(ci => ci.UKPRN)
-                .ToDictionary(
-                k => k.Key,
-                v => v.Select(c => c).ToList());
+            return BuildCampusIdentifiersDictionary(campusIdentifiers);
         }
 
-        private IEnumerable<SpecialistResource> GetSpecialistResources(long ukprn, string campusIdentifier, Dictionary<long, Dictionary<string, List<SpecialistResource>>> specResourcesDictionary)
+        private async Task<Dictionary<long, List<OrganisationPostcodeSpecialistResource>>> BuildPostcodeSpecResDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
         {
-            specResourcesDictionary.TryGetValue(ukprn, out var campusIdSpecResources);
+            var specResources = await context.ProviderPostcodeSpecialistResources.ToListAsync(cancellationToken);
 
-            return campusIdSpecResources != null ?
-                  campusIdSpecResources.TryGetValue(campusIdentifier, out var resources) ? resources : Enumerable.Empty<SpecialistResource>() : Enumerable.Empty<SpecialistResource>();
+            return BuildPostcodeSpecResDictionary(specResources);
+        }
+
+        private async Task<Dictionary<long, List<OrganisationShortTermFundingInitiative>>> BuildShortTermFundingInitiativesDictionary(IOrganisationsContext context, CancellationToken cancellationToken)
+        {
+            var stfis = await context.ShortTermFundingInitiatives.ToListAsync(cancellationToken);
+
+            return BuildShortTermFundingInitiativesDictionary(stfis);
         }
     }
 }

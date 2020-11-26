@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
+using ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Keys;
 using ESFA.DC.ILR.ReferenceDataService.Model.LARS;
@@ -27,12 +28,13 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             {
                 var larsFrameworks = new List<LARSFrameworkKey>();
 
-                var learningDeliveries = await BuildLARSLearningDelvieries(inputKeys, context, cancellationToken);
+                var learningDeliveries = await BuildLARSLearningDelivieries(inputKeys, context, cancellationToken);
                 var larsAnnualValuesDictionary = await BuildLARSAnnualValueDictionary(inputKeys, context, cancellationToken);
                 var larsLearningDeliveryCategoriesDictionary = await BuildLARSLearningDeliveryCategoryDictionary(inputKeys, context, cancellationToken);
                 var larsFundingsDictionary = await BuildLARSFundingDictionary(inputKeys, context, cancellationToken);
                 var larsValiditiesDictionary = await BuildLARSValidityDictionary(inputKeys, context, cancellationToken);
                 var frameworkAimDictionary = await BuildLARSFrameworkAimDictionary(inputKeys, context, cancellationToken);
+                var larsSectorSubjectAreaTier2Dictionary = await BuildLARSSectorSubjectAreaTier2Dictionary(context, cancellationToken);
 
                 foreach (var key in inputKeys)
                 {
@@ -95,6 +97,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
 
                 foreach (var learningDelivery in learningDeliveries)
                 {
+                    learningDelivery.SectorSubjectAreaTier2Desc = larsSectorSubjectAreaTier2Dictionary.TryGetValue(learningDelivery.SectorSubjectAreaTier2.GetValueOrDefault(), out var sectorSubjectAreaTier2Desc) ? sectorSubjectAreaTier2Desc : string.Empty;
                     learningDelivery.LARSAnnualValues = larsAnnualValuesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var annualValues) ? annualValues : defaultLarsAnnualValues;
                     learningDelivery.LARSLearningDeliveryCategories = larsLearningDeliveryCategoriesDictionary.TryGetValue(learningDelivery.LearnAimRef, out var categories) ? categories : defaultLarsLearningDeliveryCategories;
                     learningDelivery.LARSFundings = larsFundingsDictionary.TryGetValue(learningDelivery.LearnAimRef, out var fundings) ? fundings : defaultLarsFundings;
@@ -106,7 +109,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
             }
         }
 
-        private async Task<List<LARSLearningDelivery>> BuildLARSLearningDelvieries(
+        private async Task<List<LARSLearningDelivery>> BuildLARSLearningDelivieries(
             IReadOnlyCollection<LARSLearningDeliveryKey> inputKeys, ILARSContext context, CancellationToken cancellationToken)
         {
             return await context.LARS_LearningDeliveries
@@ -114,9 +117,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                 .Select(
                 ld => new LARSLearningDelivery
                 {
-                    LearnAimRef = ld.LearnAimRef,
+                    LearnAimRef = ld.LearnAimRef.ToUpperCase(),
                     LearnAimRefTitle = ld.LearnAimRefTitle,
                     LearnAimRefType = ld.LearnAimRefType,
+                    LearnAimRefTypeDesc = ld.LearnAimRefTypeNavigation.LearnAimRefTypeDesc,
                     LearningDeliveryGenre = ld.LearningDeliveryGenre,
                     LearnDirectClassSystemCode1 = ld.LearnDirectClassSystemCode1,
                     LearnDirectClassSystemCode2 = ld.LearnDirectClassSystemCode2,
@@ -128,6 +132,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     EnglandFEHEStatus = ld.EnglandFehestatus,
                     EnglPrscID = ld.EnglPrscId,
                     FrameworkCommonComponent = ld.FrameworkCommonComponent,
+                    GuidedLearningHours = ld.GuidedLearningHours,
                     NotionalNVQLevel = ld.NotionalNvqlevel,
                     NotionalNVQLevelv2 = ld.NotionalNvqlevelv2,
                     RegulatedCreditValue = ld.RegulatedCreditValue,
@@ -143,7 +148,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(la => new LARSAnnualValue
                 {
-                    LearnAimRef = la.LearnAimRef,
+                    LearnAimRef = la.LearnAimRef.ToUpperCase(),
                     BasicSkills = la.BasicSkills,
                     BasicSkillsType = la.BasicSkillsType,
                     EffectiveFrom = la.EffectiveFrom,
@@ -169,7 +174,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(ldc => new LARSLearningDeliveryCategory
                 {
-                    LearnAimRef = ldc.LearnAimRef,
+                    LearnAimRef = ldc.LearnAimRef.ToUpperCase(),
                     CategoryRef = ldc.CategoryRef,
                     EffectiveFrom = ldc.EffectiveFrom,
                     EffectiveTo = ldc.EffectiveTo,
@@ -190,7 +195,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(lf => new LARSFunding
                 {
-                    LearnAimRef = lf.LearnAimRef,
+                    LearnAimRef = lf.LearnAimRef.ToUpperCase(),
                     FundingCategory = lf.FundingCategory,
                     EffectiveFrom = lf.EffectiveFrom,
                     EffectiveTo = lf.EffectiveTo,
@@ -214,7 +219,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                  .Where(l => inputKeys.Select(lldk => lldk.LearnAimRef).Contains(l.LearnAimRef, StringComparer.OrdinalIgnoreCase))
                 .Select(lv => new LARSValidity
                 {
-                    LearnAimRef = lv.LearnAimRef,
+                    LearnAimRef = lv.LearnAimRef.ToUpperCase(),
                     EffectiveFrom = lv.StartDate,
                     EffectiveTo = lv.EndDate,
                     LastNewStartDate = lv.LastNewStartDate,
@@ -244,6 +249,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     EffectiveFrom = fa.EffectiveFrom,
                     EffectiveTo = fa.EffectiveTo,
                 }).FirstOrDefault());
+        }
+
+        private async Task<Dictionary<decimal, string>> BuildLARSSectorSubjectAreaTier2Dictionary(ILARSContext context, CancellationToken cancellationToken)
+        {
+            return await context.LARS_SectorSubjectAreaTier2Lookups.ToDictionaryAsync(
+                    x => x.SectorSubjectAreaTier2,
+                    x => x.SectorSubjectAreaTier2Desc,
+                    cancellationToken);
         }
     }
 }

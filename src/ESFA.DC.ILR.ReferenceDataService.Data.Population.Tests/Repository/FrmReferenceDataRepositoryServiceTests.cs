@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository;
-using ESFA.DC.ILR1819.DataStore.EF.Valid;
-using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ILR1920.DataStore.EF.Valid;
+using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.LARS.Model;
 using ESFA.DC.ReferenceData.LARS.Model.Interface;
 using ESFA.DC.ReferenceData.Organisations.Model;
@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                         },
                         new LearningDelivery
                         {
-                            LearnAimRef = "ExcludedByFundModel",
+                            LearnAimRef = "ExcludedByFM99Exclusion",
                             CompStatus = 1,
                             LearnPlanEndDate = new DateTime(2020, 01, 01),
                             AimType = 4,
@@ -60,23 +60,14 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                                 ULN = 1,
                                 ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
                             },
-                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
-                            ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
-                        },
-                        new LearningDelivery
-                        {
-                            LearnAimRef = "ExcludedByProgType",
-                            CompStatus = 1,
-                            LearnPlanEndDate = new DateTime(2020, 01, 01),
-                            AimType = 3,
-                            FundModel = 25,
-                            Learner = new Learner
-                            {
-                                UKPRN = 1,
-                                ULN = 1,
-                                ProviderSpecLearnerMonitorings = new List<ProviderSpecLearnerMonitoring>(),
+                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>()
+                             {
+                                new LearningDeliveryFAM()
+                                {
+                                    LearnDelFAMType = "ADL",
+                                    LearnDelFAMCode = "1"
+                                }
                             },
-                            LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
                             ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
                         },
                         new LearningDelivery
@@ -126,7 +117,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
                             },
                             LearningDeliveryFAMs = new List<LearningDeliveryFAM>(),
                             ProviderSpecDeliveryMonitorings = new List<ProviderSpecDeliveryMonitoring>()
-                        }
+                        },
                     }
                 }
             };
@@ -170,8 +161,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             var larsListDbMock = larsList.AsQueryable().BuildMockDbSet();
             var orgListDbMock = orgDetails.AsQueryable().BuildMockDbSet();
 
-            var ilrContextMock = new Mock<IILR1819_DataStoreEntitiesValid>();
-            var ilrContextFactoryMock = new Mock<IDbContextFactory<IILR1819_DataStoreEntitiesValid>>();
+            var ilrContextMock = new Mock<IILR1920_DataStoreEntitiesValid>();
+            var ilrContextFactoryMock = new Mock<IDbContextFactory<IILR1920_DataStoreEntitiesValid>>();
 
             ilrContextMock.Setup(v => v.Learners).Returns(learnerListDbMock.Object);
             ilrContextFactoryMock.Setup(c => c.Create()).Returns(ilrContextMock.Object);
@@ -197,12 +188,12 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Tests.Repository
             serviceResult.Count.Should().Be(1);
 
             var learner = serviceResult.First();
-            learner.LearnAimRef.Should().Be("ValidAim");
+            learner.LearnAimRef.Should().Be("VALIDAIM");
             learner.AimType.Should().Be(4);
             learner.FundModel.Should().Be(25);
         }
 
-        private FrmReferenceDataRepositoryService NewService(IDbContextFactory<IILR1819_DataStoreEntitiesValid> ilrContextFactory = null, IDbContextFactory<ILARSContext> larsContextFactory = null, IDbContextFactory<IOrganisationsContext> orgContextFactory = null, IAcademicYearDataService academicYearDataService = null)
+        private FrmReferenceDataRepositoryService NewService(IDbContextFactory<IILR1920_DataStoreEntitiesValid> ilrContextFactory = null, IDbContextFactory<ILARSContext> larsContextFactory = null, IDbContextFactory<IOrganisationsContext> orgContextFactory = null, IAcademicYearDataService academicYearDataService = null)
         {
             return new FrmReferenceDataRepositoryService(ilrContextFactory, larsContextFactory, orgContextFactory, academicYearDataService);
         }

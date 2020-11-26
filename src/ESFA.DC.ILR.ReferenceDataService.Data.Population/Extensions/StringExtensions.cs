@@ -13,5 +13,10 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions
 
             return source?.Equals(data, StringComparison.OrdinalIgnoreCase) ?? false;
         }
+
+        public static string ToUpperCase(this string source)
+        {
+            return source?.ToUpperInvariant();
+        }
     }
 }

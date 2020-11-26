@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR1920.ReferenceDataServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ESFA.DC.ILR2021.ReferenceDataServiceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="ESFA.DC.ILR.ReferenceDataService.Stateless_InstanceCount" DefaultValue="-1" />
     <Parameter Name="ServiceBusConnectionString" DefaultValue="" />
@@ -25,13 +25,17 @@
     <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="" />
     <Parameter Name="IlrReferenceDataConnectionString" DefaultValue="" />
     <Parameter Name="EasConnectionString" DefaultValue="" />
-    <Parameter Name="Ilr1819ConnectionString" DefaultValue="" />
+    <Parameter Name="Ilr1920ConnectionString" DefaultValue="" />
+    <Parameter Name="DesktopReferenceDataFilePreFix" DefaultValue="" />
+    <Parameter Name="DesktopReferenceDataStoragePath" DefaultValue="" />
+    <Parameter Name="EDRSAPIEnabled" DefaultValue="" />
+    <Parameter Name="EDRSApiBaseUrl" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR1920.ReferenceDataService.StatelessPkg" ServiceManifestVersion="1.0.0" />
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR2021.ReferenceDataService.StatelessPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
       <ConfigOverride Name="Config">
         <Settings>
@@ -54,6 +58,16 @@
             <Parameter Name="ConnectionString" Value="[AzureStorageConnectionString]" />
             <Parameter Name="ContainerName" Value="[AzureStorageContainerName]" />
           </Section>
+          <Section Name="DesktopReferenceDataSection">
+            <Parameter Name="DesktopReferenceDataFilePreFix" Value="[DesktopReferenceDataFilePreFix]" />
+            <Parameter Name="DesktopReferenceDataStoragePath" Value="[DesktopReferenceDataStoragePath]" />
+          </Section>
+          <Section Name="FeatureConfiguration">
+            <Parameter Name="EDRSAPIEnabled" Value="[EDRSAPIEnabled]" />
+          </Section>
+          <Section Name="ApiSettings">
+            <Parameter Name="EDRSApiBaseUrl" Value="[EDRSApiBaseUrl]" />
+          </Section>
           <Section Name="ReferenceDataSection">
             <Parameter Name="LARSConnectionString" Value="[LARSConnectionString]" />
             <Parameter Name="PostcodesConnectionString" Value="[PostcodesConnectionString]" />
@@ -65,7 +79,7 @@
             <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
             <Parameter Name="IlrReferenceDataConnectionString" Value="[IlrReferenceDataConnectionString]" />
             <Parameter Name="EasConnectionString" Value="[EasConnectionString]" />
-            <Parameter Name="Ilr1819ConnectionString" Value="[Ilr1819ConnectionString]" />
+            <Parameter Name="Ilr1920ConnectionString" Value="[Ilr1920ConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -77,8 +91,8 @@
          ServiceFabric PowerShell module.
          
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="ESFA.DC.ILR1920.ReferenceDataService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="ESFA.DC.ILR1920.ReferenceDataService.StatelessType" InstanceCount="[ESFA.DC.ILR.ReferenceDataService.Stateless_InstanceCount]">
+    <Service Name="ESFA.DC.ILR2021.ReferenceDataService.Stateless" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ESFA.DC.ILR2021.ReferenceDataService.StatelessType" InstanceCount="[ESFA.DC.ILR.ReferenceDataService.Stateless_InstanceCount]">
         <SingletonPartition />
         <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatelessService>

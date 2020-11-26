@@ -6,5 +6,6 @@
         DesktopReferenceData,
         ValidationMessages,
         FrmReferenceData,
+        LearnerReferenceData,
     }
 }

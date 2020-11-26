@@ -9,7 +9,7 @@ using ESFA.DC.ILR.ReferenceDataService.Model.Organisations;
 using ESFA.DC.ILR.ReferenceDataService.Model.Postcodes;
 using ESFA.DC.ILR.ReferenceDataService.Model.PostcodesDevolution;
 
-namespace ESFA.DC.ILR.ReferenceDataService.Service
+namespace ESFA.DC.ILR.ReferenceDataService.Service.Interface
 {
     public interface IZipFileService
     {
@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.ReferenceDataService.Service
             string zipFileName,
             string container,
             MetaData metaDatas,
-            DevolvedPostcodes devolvedPostocdes,
+            DevolvedPostcodes devolvedPostcodes,
             IReadOnlyCollection<Employer> employers,
-            IReadOnlyCollection<EPAOrganisation> ePAOrganisations,
+            IReadOnlyCollection<EPAOrganisation> epaOrganisations,
             IReadOnlyCollection<LARSFrameworkDesktop> larsFrameworks,
             IReadOnlyCollection<LARSFrameworkAimDesktop> larsFrameworkAims,
             IReadOnlyCollection<LARSLearningDelivery> larsLearningDeliveries,

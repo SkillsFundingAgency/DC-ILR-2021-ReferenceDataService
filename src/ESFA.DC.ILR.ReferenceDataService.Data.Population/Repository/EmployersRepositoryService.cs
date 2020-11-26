@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +49,7 @@ namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Repository
                     .Select(empId => new Employer
                     {
                         ERN = empId,
-                        LargeEmployerEffectiveDates = largeEmployers?.Where(le => le.Ern == empId)
+                        LargeEmployerEffectiveDates = largeEmployers.Where(le => le.Ern == empId)
                         .Select(le => new LargeEmployerEffectiveDates
                         {
                             EffectiveFrom = le.EffectiveFrom,

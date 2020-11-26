@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ESFA.DC.ILR.ReferenceDataService.Data.Population.Extensions

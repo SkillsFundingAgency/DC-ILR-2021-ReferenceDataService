@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interface;
-using ESFA.DC.EAS1920.EF.Interface;
+using ESFA.DC.EAS2021.EF.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration;
 using ESFA.DC.ILR.ReferenceDataService.Data.Population.Configuration.Interface;
 using ESFA.DC.ILR.ReferenceDataService.ILRReferenceData.Model.Interface;
 using ESFA.DC.ILR.ReferenceDataService.Stateless.Constants;
-using ESFA.DC.ILR1819.DataStore.EF.Valid.Interface;
+using ESFA.DC.ILR1920.DataStore.EF.Valid.Interface;
 using ESFA.DC.ReferenceData.Employers.Model.Interface;
 using ESFA.DC.ReferenceData.EPA.Model.Interface;
 using ESFA.DC.ReferenceData.FCS.Model.Interface;
@@ -27,7 +27,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
 
         protected override void Load(ContainerBuilder containerBuilder)
         {
-
             containerBuilder.RegisterInstance(_referenceDataOptions).As<IReferenceDataOptions>();
 
             containerBuilder.RegisterType<AppsEarningsHistoryDbContextFactory>().As<IDbContextFactory<IAppEarnHistoryContext>>()
@@ -60,8 +59,8 @@ namespace ESFA.DC.ILR.ReferenceDataService.Stateless.Modules
             containerBuilder.RegisterType<UlnDbContextFactory>().As<IDbContextFactory<IUlnContext>>()
                .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.ULNConnectionstring);
 
-            containerBuilder.RegisterType<IlrDbContextFactory>().As<IDbContextFactory<IILR1819_DataStoreEntitiesValid>>()
-                .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.Ilr1819ConnectionString);
+            containerBuilder.RegisterType<IlrDbContextFactory>().As<IDbContextFactory<IILR1920_DataStoreEntitiesValid>>()
+                .WithParameter(StatelessConstants.ConnectionString, _referenceDataOptions.Ilr1920ConnectionString);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace ESFA.DC.ILR.ReferenceDataService.Model.Organisations
 
         public string CampusIdentifier { get; set; }
 
-        public List<SpecialistResource> SpecialistResources { get; set; }
+        public List<OrganisationCampusIdSpecialistResource> SpecialistResources { get; set; }
     }
 }
